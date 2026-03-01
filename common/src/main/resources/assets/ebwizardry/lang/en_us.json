@@ -112,6 +112,7 @@
   "ebwizardry.raw_line_10": "========================================================",
   "ebwizardry.spells.desc": "EBWIZARDRY SPELLS (With spell descriptions)",
   "ebwizardry.raw_line_11": "========================================================",
+  "spell.ebwizardry.conjure_item.no_space": "You must have an empty slot in your inventory to conjure an item.",
   "spell.ebwizardry.agility": "Agility",
   "spell.ebwizardry.arc": "Arc",
   "spell.ebwizardry.arcane_jammer": "Arcane Jammer",

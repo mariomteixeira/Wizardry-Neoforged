@@ -2,6 +2,7 @@ package com.binaris.wizardry.content.spell.earth;
 
 import com.binaris.wizardry.api.content.spell.SpellAction;
 import com.binaris.wizardry.api.content.spell.SpellType;
+import com.binaris.wizardry.api.content.spell.internal.CastContext;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
 import com.binaris.wizardry.content.entity.construct.TornadoConstruct;
 import com.binaris.wizardry.content.spell.DefaultProperties;
@@ -9,10 +10,8 @@ import com.binaris.wizardry.content.spell.abstr.ConstructSpell;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Tornado extends ConstructSpell<TornadoConstruct> {
     public Tornado() {
@@ -21,9 +20,9 @@ public class Tornado extends ConstructSpell<TornadoConstruct> {
     }
 
     @Override
-    protected void addConstructExtras(TornadoConstruct construct, Direction side, @Nullable LivingEntity caster) {
+    protected void addConstructExtras(CastContext ctx, TornadoConstruct construct, Direction side) {
         float speed = property(DefaultProperties.SPEED);
-        Vec3 direction = caster == null ? new Vec3(side.getStepX(), side.getStepY(), side.getStepZ()) : caster.getLookAngle();
+        Vec3 direction = ctx.caster() == null ? new Vec3(side.getStepX(), side.getStepY(), side.getStepZ()) : ctx.caster().getLookAngle();
         construct.setHorizontalVelocity((float) (direction.x * speed), (float) (direction.z * speed));
     }
 

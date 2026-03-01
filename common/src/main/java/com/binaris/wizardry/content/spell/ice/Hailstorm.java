@@ -10,7 +10,6 @@ import com.binaris.wizardry.content.spell.abstr.ConstructSpell;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,9 +26,9 @@ public class Hailstorm extends ConstructSpell<HailstormConstruct> {
     }
 
     @Override
-    protected void addConstructExtras(HailstormConstruct construct, Direction side, @Nullable LivingEntity caster) {
-        if (caster != null) {
-            construct.setYRot(caster.getYHeadRot());
+    protected void addConstructExtras(CastContext ctx, HailstormConstruct construct, Direction side) {
+        if (ctx.caster() != null) {
+            construct.setYRot(ctx.caster().getYHeadRot());
         } else {
             construct.setYRot(side.toYRot());
         }

@@ -2,6 +2,7 @@ package com.binaris.wizardry.content.spell.earth;
 
 import com.binaris.wizardry.api.content.spell.SpellAction;
 import com.binaris.wizardry.api.content.spell.SpellType;
+import com.binaris.wizardry.api.content.spell.internal.CastContext;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperty;
 import com.binaris.wizardry.api.content.util.GeometryUtil;
@@ -11,10 +12,8 @@ import com.binaris.wizardry.content.spell.abstr.ConstructSpell;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Boulder extends ConstructSpell<BoulderConstruct> {
     public static final SpellProperty<Integer> KNOCKBACK_STRENGTH = SpellProperty.intProperty("knockback_strength", 1);
@@ -25,12 +24,12 @@ public class Boulder extends ConstructSpell<BoulderConstruct> {
     }
 
     @Override
-    protected void addConstructExtras(BoulderConstruct construct, Direction side, @Nullable LivingEntity caster) {
+    protected void addConstructExtras(CastContext ctx, BoulderConstruct construct, Direction side) {
         float speed = property(SPEED);
-        Vec3 direction = caster == null ? new Vec3(side.step()) : GeometryUtil.horizontalise(caster.getLookAngle());
+        Vec3 direction = ctx.caster() == null ? new Vec3(side.step()) : GeometryUtil.horizontalise(ctx.caster().getLookAngle());
         construct.setHorizontalVelocity(direction.x * speed, direction.z * speed);
-        construct.setYRot(caster == null ? side.toYRot() : caster.getYRot());
-        double yOffset = caster == null ? 0 : 1.6;
+        construct.setYRot(ctx.caster() == null ? side.toYRot() : ctx.caster().getYRot());
+        double yOffset = ctx.caster() == null ? 0 : 1.6;
         construct.setPos(construct.getX() + direction.x, construct.getY() + yOffset, construct.getZ() + direction.z);
     }
 

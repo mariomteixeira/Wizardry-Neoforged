@@ -8,14 +8,30 @@ import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
 import com.binaris.wizardry.api.content.util.EntityUtil;
 import com.binaris.wizardry.content.spell.DefaultProperties;
 import com.binaris.wizardry.setup.registries.EBItems;
+import com.binaris.wizardry.setup.registries.Spells;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
+
+/**
+ * Base class for spells that shoot magical projectile entities ({@link MagicProjectileEntity}). Handles the creation,
+ * positioning, and launching of projectiles with support for damage modifiers, velocity scaling, and spread patterns.
+ * <p>
+ * This spell can be cast by players (shooting in their look direction), entities (shooting towards a target), and
+ * by location (shooting in the direction of a block face).
+ * <p>
+ * Check {@link Spells#POISON_BOMB} and {@link Spells#ICE_CHARGE} for examples of projectile spells.
+ * <p>
+ * You must override the {@link #properties()} to return an actual instance of {@link SpellProperties} for this spell or
+ * use {@link Spell#assignProperties(SpellProperties)}, otherwise the spell will have no properties and may not function
+ * as intended.
+ *
+ * @param <T> The type of {@link MagicProjectileEntity} this spell shoots.
+ * @see MagicProjectileEntity
+ */
 
 public class ProjectileSpell<T extends MagicProjectileEntity> extends Spell {
     private static final float FALLBACK_VELOCITY = 1.5f;
@@ -43,7 +59,7 @@ public class ProjectileSpell<T extends MagicProjectileEntity> extends Spell {
             projectile.damageMultiplier = ctx.modifiers().get(SpellModifiers.POTENCY);
             if (projectile instanceof BombEntity bomb)
                 bomb.blastMultiplier = ctx.modifiers().get(EBItems.BLAST_UPGRADE.get());
-            addProjectileExtras(projectile, ctx.caster());
+            addProjectileExtras(ctx, projectile);
             ctx.world().addFreshEntity(projectile);
         }
 
@@ -65,7 +81,7 @@ public class ProjectileSpell<T extends MagicProjectileEntity> extends Spell {
             projectile.damageMultiplier = ctx.modifiers().get(SpellModifiers.POTENCY);
             if (projectile instanceof BombEntity bomb)
                 bomb.blastMultiplier = ctx.modifiers().get(EBItems.BLAST_UPGRADE.get());
-            addProjectileExtras(projectile, ctx.caster());
+            addProjectileExtras(ctx, projectile);
             ctx.world().addFreshEntity(projectile);
         }
 
@@ -84,7 +100,7 @@ public class ProjectileSpell<T extends MagicProjectileEntity> extends Spell {
             projectile.damageMultiplier = ctx.modifiers().get(SpellModifiers.POTENCY);
             if (projectile instanceof BombEntity bomb)
                 bomb.blastMultiplier = ctx.modifiers().get(EBItems.BLAST_UPGRADE.get());
-            addProjectileExtras(projectile, null);
+            addProjectileExtras(ctx, projectile);
             ctx.world().addFreshEntity(projectile);
         }
 
@@ -94,6 +110,15 @@ public class ProjectileSpell<T extends MagicProjectileEntity> extends Spell {
         return true;
     }
 
+    /**
+     * Calculates the velocity at which the projectile should be launched based on the spell's range property, the
+     * caster's modifiers, and whether the projectile is affected by gravity.
+     *
+     * @param ctx          the cast context containing spell information and modifiers
+     * @param projectile   the projectile entity that will be launched
+     * @param launchHeight the height from which the projectile is launched (used for gravity-affected projectiles)
+     * @return the calculated velocity for launching the projectile
+     */
     protected float calculateVelocity(CastContext ctx, MagicProjectileEntity projectile, float launchHeight) {
         float range = property(DefaultProperties.RANGE) * ctx.modifiers().get(EBItems.RANGE_UPGRADE.get());
 
@@ -106,8 +131,13 @@ public class ProjectileSpell<T extends MagicProjectileEntity> extends Spell {
         }
     }
 
-    protected void addProjectileExtras(T projectile, @Nullable LivingEntity caster) {
-        // Subclasses can put spell-specific stuff here
+    /**
+     * Allows subclasses to apply additional modifications to the projectile before it is launched.
+     *
+     * @param ctx        the cast context containing spell information and modifiers
+     * @param projectile the projectile entity that will be launched
+     */
+    protected void addProjectileExtras(CastContext ctx, T projectile) {
     }
 
     @Override

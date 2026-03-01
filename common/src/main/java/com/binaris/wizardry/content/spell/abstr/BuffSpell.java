@@ -30,7 +30,7 @@ import java.util.function.Supplier;
  * calculation based on potency modifier. You can also easily add particles and sounds to the spell by overriding the
  * respective methods.
  * <p>
- * Check {@link Spells#AGILITY} and {@link Heal} for some examples of this spell.
+ * Check {@link Spells#AGILITY} and {@link Heal} for some examples of buff spells.
  * <p>
  * You must override the {@link #properties()} to return an actual instance of {@link SpellProperties} for this spell or
  * use {@link Spell#assignProperties(SpellProperties)}, otherwise the spell will have no properties and may not function

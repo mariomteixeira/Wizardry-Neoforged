@@ -34,6 +34,9 @@ import java.util.List;
  * particle density by calling {@link #particleDensity(float)} and override {@link #spawnParticle(Level, double, double, double)}
  * to define which particles to spawn.
  * <p>
+ * Check {@link com.binaris.wizardry.content.spell.fire.Firestorm Firestorm} and {@link com.binaris.wizardry.content.spell.healing.FontOfMana FontOfMana}
+ * for examples of area effect spells.
+ * <p>
  * You must override the {@link #properties()} to return an actual instance of {@link SpellProperties} for this spell or
  * use {@link Spell#assignProperties(SpellProperties)}, otherwise the spell will have no properties and may not function
  * as intended.

@@ -15,7 +15,6 @@ import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -41,8 +40,8 @@ public class ZombieApocalypse extends ConstructSpell<ZombieSpawnerConstruct> {
     }
 
     @Override
-    protected void addConstructExtras(ZombieSpawnerConstruct construct, Direction side, @Nullable LivingEntity caster) {
-        construct.spawnHusks = caster instanceof Player && EBAccessoriesIntegration.isEquipped((Player) caster, EBItems.CHARM_MINION_VARIANTS.get());
+    protected void addConstructExtras(CastContext ctx, ZombieSpawnerConstruct construct, Direction side) {
+        construct.spawnHusks = ctx.caster() instanceof Player && EBAccessoriesIntegration.isEquipped((Player) ctx.caster(), EBItems.CHARM_MINION_VARIANTS.get());
     }
 
     @Override
