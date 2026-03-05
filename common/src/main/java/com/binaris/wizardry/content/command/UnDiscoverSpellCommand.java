@@ -1,4 +1,4 @@
-package com.binaris.wizardry.content.command.debug;
+package com.binaris.wizardry.content.command;
 
 import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.content.command.argument.SpellArgument;
@@ -12,16 +12,16 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
-public final class DiscoverSpellCommand {
+public final class UnDiscoverSpellCommand {
 
-    private DiscoverSpellCommand() {
+    private UnDiscoverSpellCommand() {
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("discover")
+        dispatcher.register(Commands.literal("undiscover")
                 .then(Commands.argument("player", EntityArgument.player())
-                        .then(Commands.argument("spell", SpellArgument.spell()))
-                        .executes((c) -> execute(c, EntityArgument.getPlayer(c, "player"), SpellArgument.getSpell(c, "spell")))
+                        .then(Commands.argument("spell", SpellArgument.spell())
+                                .executes((c) -> execute(c, EntityArgument.getPlayer(c, "player"), SpellArgument.getSpell(c, "spell"))))
                         .then(Commands.argument("all", StringArgumentType.string())
                                 .executes((c) -> execute(c, EntityArgument.getPlayer(c, "player")))
                         )
@@ -33,13 +33,13 @@ public final class DiscoverSpellCommand {
         CommandSourceStack source = context.getSource();
         var data = Services.OBJECT_DATA.getSpellManagerData(player);
 
-        if (data.hasSpellBeenDiscovered(spell)) {
-            source.sendFailure(Component.translatable("command.ebwizardry.discover.already_discovered", player.getName(), spell.getDescriptionFormatted()));
+        if (!data.hasSpellBeenDiscovered(spell)) {
+            source.sendFailure(Component.translatable("command.ebwizardry.undiscover.not_discovered", player.getName(), spell.getDescriptionFormatted()));
             return 0;
         }
 
-        data.discoverSpell(spell);
-        source.sendSystemMessage(Component.translatable("command.ebwizardry.discover.success", player.getName(), spell.getDescriptionFormatted()));
+        data.undiscoverSpell(spell);
+        source.sendSystemMessage(Component.translatable("command.ebwizardry.undiscover.success", player.getName(), spell.getDescriptionFormatted()));
         return 1;
     }
 
@@ -49,13 +49,13 @@ public final class DiscoverSpellCommand {
 
         int count = 0;
         for (Spell spell : Services.REGISTRY_UTIL.getSpells()) {
-            if (!data.hasSpellBeenDiscovered(spell)) {
-                data.discoverSpell(spell);
+            if (data.hasSpellBeenDiscovered(spell)) {
+                data.undiscoverSpell(spell);
                 count++;
             }
         }
 
-        source.sendSystemMessage(Component.translatable("command.ebwizardry.discover.discovered_all", player.getName(), count));
+        source.sendSystemMessage(Component.translatable("command.ebwizardry.undiscover.undiscovered_all", player.getName(), count));
         return count;
     }
 }

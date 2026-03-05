@@ -23,7 +23,8 @@ public final class EBCommands {
             ListElementsCommand::register,
             ListTiersCommand::register,
             AllyCommand::register,
-            DiscoverSpellCommand::register
+            DiscoverSpellCommand::register,
+            UnDiscoverSpellCommand::register
     );
     public static final List<Consumer<CommandDispatcher<CommandSourceStack>>> DEBUG_COMMANDS = ImmutableList.of(
             WandSpellCommand::register,
@@ -33,7 +34,6 @@ public final class EBCommands {
             CastCommand::register,
             ForfeitTestCommand::register,
             SpellContextCommand::register,
-            UnDiscoverSpellCommand::register,
             WizardSpellTestCommand::register
     );
 
