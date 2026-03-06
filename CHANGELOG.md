@@ -1,6 +1,6 @@
 - Added documentation for all Spell subclasses.
 - Now for ArrowSpells, MinionSpells, ProjectileSpells and ConstructSpells will have the cast context as a parameter in the add extra info method, so that the spell can add extra mechanics to the spell
-
 - Fixed translation keys for ally command
 - Added /undiscover as a normal command, including support for forget individual and all spells
 - Fixed a bug where the /discovery command wasn't working for individual spells
+- Added Purifying Elixir

@@ -110,7 +110,7 @@ public final class EBItems {
     public static final DeferredObject<Item> RESPLENDENT_THREAD = armorUpgrade("resplendent_thread");
     public static final DeferredObject<Item> IDENTIFICATION_SCROLL = item("identification_scroll", () -> new IdentificationScrollItem(new Item.Properties().stacksTo(16)), true, true);
     public static final DeferredObject<Item> MAGIC_SILK = item("magic_silk");
-    public static final DeferredObject<Item> PURIFYING_ELIXIR = item("purifying_elixir");
+    public static final DeferredObject<Item> PURIFYING_ELIXIR = item("purifying_elixir", PurifyingElixirItem::new, true, true);
     //Flasks
     public static final DeferredObject<Item> SMALL_MANA_FLASK = item("mana_flask_small", () -> new ManaFlaskItem(ManaFlaskItem.Size.SMALL), true, true);
     public static final DeferredObject<Item> MEDIUM_MANA_FLASK = item("mana_flask_medium", () -> new ManaFlaskItem(ManaFlaskItem.Size.MEDIUM), true, true);
