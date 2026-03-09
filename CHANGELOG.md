@@ -4,3 +4,4 @@
 - Added /undiscover as a normal command, including support for forget individual and all spells
 - Fixed a bug where the /discovery command wasn't working for individual spells
 - Added Purifying Elixir
+- Fixed a bug that made addons not be able to add custom icons
