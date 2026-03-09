@@ -1,4 +1,4 @@
-// 1.20.1	2026-02-24T10:31:55.679246143	Spell Data Provider: ebwizardry
+// 1.20.1	2026-03-06T12:08:16.706544074	Spell Data Provider: ebwizardry
 59709226fef8219dd2c5cd41cb6bb719de55c656 data/ebwizardry/spells/agility.json
 34ede34dc275e94721ac699f01685084738cbd27 data/ebwizardry/spells/arcane_lock.json
 e11cad8049f551f1dd69b0deb78e7ddfa7a0a087 data/ebwizardry/spells/arrow_rain.json
@@ -50,6 +50,7 @@ b445f49ab954b136b965526d53cf0f80902bcca2 data/ebwizardry/spells/forests_curse.js
 853d214e61e8a01f0d85366b876ff84a08d8b64a data/ebwizardry/spells/frost_axe.json
 d8e3114d5d43df84c2c52b1329521f38d2db1e3d data/ebwizardry/spells/frost_ray.json
 d60779173abcfc7bdaa6cb56efb9b2d5ccd126df data/ebwizardry/spells/frost_sigil.json
+17625877d71faf534d0ee034522ca7230c2c7b3f data/ebwizardry/spells/frost_step.json
 1e9a73f34f25648c9585f5c3ec209954ac7e41d5 data/ebwizardry/spells/greater_heal.json
 3f8c2f22014c6039908078ac8142ce03dbf2233b data/ebwizardry/spells/greater_ward.json
 6be845f4a0765df0f5ed28a7fb12799a92403386 data/ebwizardry/spells/group_heal.json

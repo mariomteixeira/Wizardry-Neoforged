@@ -5,3 +5,5 @@
 - Fixed a bug where the /discovery command wasn't working for individual spells
 - Added Purifying Elixir
 - Fixed a bug that made addons not be able to add custom icons
+- Change wand recipe from PLANKS to STICKS (more consistent with vanilla) (Why did I even use planks in the first place?)
+- Add empty loot table for obsidian_crust and frost_step

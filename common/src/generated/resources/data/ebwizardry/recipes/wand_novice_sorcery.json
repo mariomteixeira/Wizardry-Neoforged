@@ -6,7 +6,7 @@
       "item": "minecraft:gold_nugget"
     },
     "y": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:stick"
     },
     "z": {
       "item": "ebwizardry:magic_crystal_sorcery"
