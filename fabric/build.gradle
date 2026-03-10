@@ -61,6 +61,7 @@ dependencies {
 sourceSets.main.resources {
     srcDir project(":common").file('src/generated/resources').getAbsolutePath()
     exclude '.cache'
+    exclude 'docs/spells/ebwizardry/**'
 }
 
 loom {

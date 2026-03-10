@@ -1,9 +1,2 @@
-- Added documentation for all Spell subclasses.
-- Now for ArrowSpells, MinionSpells, ProjectileSpells and ConstructSpells will have the cast context as a parameter in the add extra info method, so that the spell can add extra mechanics to the spell
-- Fixed translation keys for ally command
-- Added /undiscover as a normal command, including support for forget individual and all spells
-- Fixed a bug where the /discovery command wasn't working for individual spells
-- Added Purifying Elixir
-- Fixed a bug that made addons not be able to add custom icons
-- Change wand recipe from PLANKS to STICKS (more consistent with vanilla) (Why did I even use planks in the first place?)
-- Add empty loot table for obsidian_crust and frost_step
+- Now you can datagen the Markdown documentation for the spells
+- Now you can datagen a Markdown table for all the spells added

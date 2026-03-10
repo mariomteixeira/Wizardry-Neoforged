@@ -44,6 +44,7 @@ public class EBForgeDataGenerators {
         generator.addProvider(event.includeClient(), new EBBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new EBItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), new EBSpellsProvider(packOutput));
+        generator.addProvider(event.includeServer(), new EBSpellDocsProvider(packOutput));
 
         EBBlockTagProvider blockTagProvider = generator.addProvider(event.includeServer(), new EBBlockTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new EBItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper));
