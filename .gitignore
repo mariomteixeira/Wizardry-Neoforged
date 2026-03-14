@@ -21,5 +21,4 @@ build
 # other
 eclipse
 run
-/common/src/generated/resources/docs/spells/ebwizardry/
-/common/src/generated/resources/docs/spells.md
+/common/src/generated/resources/docs/

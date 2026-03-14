@@ -34,6 +34,13 @@ import java.util.List;
 public class ArtifactItem extends Item {
     private final @Nullable IArtifactEffect effect;
 
+    /** This is used for filtering only */
+    public enum Type {
+        RING,
+        NECKLACE,
+        CHARM
+    }
+
     public ArtifactItem(Rarity rarity) {
         super(new Item.Properties().stacksTo(1).rarity(rarity));
         effect = null;

@@ -1,2 +1,4 @@
 - Now you can datagen the Markdown documentation for the spells
 - Now you can datagen a Markdown table for all the spells added
+- Added the possibility to datagen artifacts
+- Moved MAGIC_TIER to it's own class

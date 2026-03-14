@@ -48,9 +48,9 @@ public final class EBCreativeTabs {
             () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                     .icon(() -> new ItemStack(EBItems.AMULET_RESURRECTION.get()))
                     .title(Component.translatable("creativetab.ebwizardry_artifacts"))
-                    .displayItems((parameters, output) -> EBItems.ARTIFACTS.forEach(i -> {
-                        if (!NotImplementedItems.notImplemented(i.get())) output.accept(i.get());
-                    }))
+                    .displayItems((parameters, output) ->
+                            EBItems.ARTIFACTS.forEach((i, t) -> output.accept(i.get()))
+                    )
                     .build()
     );
     // All Spell Books and scrolls

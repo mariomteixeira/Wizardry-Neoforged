@@ -303,11 +303,9 @@ public abstract class SpellDocsProvider implements DataProvider {
         md.append("# Spells\n\n");
         md.append("This is a complete list of all spells currently available.\n\n");
 
-        // Create table header
-        md.append("| ID | Icon | Name | Element | Type | Tier | Mana Cost | Cooldown | Charge Time | Location |\n");
-        md.append("|----|------|------|---------|------|------|-----------|----------|-------------|----------|\n");
+        md.append("| ID | Icon | Name | Element | Type | Tier |\n");
+        md.append("|----|------|------|---------|------|------|\n");
 
-        // Add each spell as a row
         int id = 1;
         for (Spell spell : spellsList) {
             ResourceLocation location = spell.getLocation();
@@ -316,21 +314,12 @@ public abstract class SpellDocsProvider implements DataProvider {
             String iconPath = iconBasePath + location.getPath() + ".png";
             String spellLink = getSpellLinkPath(spell);
 
-            // Format mana cost
-            String manaCost;
-            if (spell.isInstantCast()) manaCost = String.valueOf(spell.getCost());
-            else manaCost = spell.getCost() + " per tick";
-
             md.append("| ").append(id++).append(" ");
             md.append("| ![](").append(iconPath).append(") ");
             md.append("| [").append(displayName).append("](").append(spellLink).append(") ");
             md.append("| ").append(formatElement(spell.getElement())).append(" ");
             md.append("| ").append(formatSpellType(spell.getType())).append(" ");
             md.append("| ").append(formatTier(spell.getTier())).append(" ");
-            md.append("| ").append(manaCost).append(" ");
-            md.append("| ").append(formatCooldown(spell.getCooldown())).append(" ");
-            md.append("| ").append(spell.getChargeUp()).append(" ticks ");
-            md.append("| `").append(location).append("` ");
             md.append("|\n");
         }
 
