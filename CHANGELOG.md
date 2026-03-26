@@ -1,6 +1,6 @@
-- Change to spell tier accessors to use getter methods for better consistency
-- Added spell sorting on creative tab
-- Refactor to methods inside artifact classes to make it easier to understand and maintain
-- Deleted artifact testing class as it was no longer needed
-- Refactor to ArrowSpell to give the whole CastContext instead of just the player when adding more data to arrows, allowing for more flexibility in spell casting
-- Fixed ForceArrow return mana logic
+- Now you can datagen the Markdown documentation for the spells
+- Now you can datagen a Markdown table for all the spells added
+- Added the possibility to datagen artifacts
+- Moved MAGIC_TIER (item tiers) to its own class
+- Added Arcane Jammer Spell
+- Change to warlock robe texture, now has more consistency with the colors

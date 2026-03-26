@@ -9,8 +9,8 @@ import com.binaris.wizardry.setup.registries.client.EBParticles;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -72,7 +72,6 @@ public class MinionDataHolder implements INBTSerializable<CompoundTag>, MinionDa
             ParticleBuilder.create(EBParticles.DARK_MAGIC).pos(provider.xo, provider.yo + (provider.level().random.nextDouble() * 1.5 + 1), provider.zo).color(0.1f, 0.0f, 0.0f).spawn(provider.level());
         }
 
-        setLifetime(getLifetime() - 1);
         sync();
     }
 
@@ -129,8 +128,17 @@ public class MinionDataHolder implements INBTSerializable<CompoundTag>, MinionDa
     }
 
     @Override
-    public Player getOwner() {
-        return ownerUUID == null ? null : provider.level().getPlayerByUUID(ownerUUID);
+    public @Nullable LivingEntity getOwner() {
+        if (ownerUUID == null) return null;
+        if (provider.level().isClientSide()) return null;
+
+        return provider.getServer().getLevel(provider.level().dimension()).getEntity(ownerUUID) instanceof LivingEntity livingEntity ? livingEntity : null;
+    }
+
+    @Override
+    public void setOwner(LivingEntity owner) {
+        this.ownerUUID = owner.getUUID();
+        sync();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.binaris.wizardry;
 
-import com.binaris.wizardry.api.EBLogger;
+import com.binaris.wizardry.core.EBLogger;
 import com.binaris.wizardry.content.ForfeitRegistry;
 import com.binaris.wizardry.core.config.EBConfig;
 import com.binaris.wizardry.core.config.EBConfigManager;

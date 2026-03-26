@@ -12,6 +12,7 @@ import com.binaris.wizardry.content.entity.goal.WizardLookAtTradePlayer;
 import com.binaris.wizardry.content.entity.goal.WizardTradeGoal;
 import com.binaris.wizardry.content.item.SpellBookItem;
 import com.binaris.wizardry.content.item.WizardArmorType;
+import com.binaris.wizardry.core.AllyDesignation;
 import com.binaris.wizardry.core.event.WizardryEventBus;
 import com.binaris.wizardry.core.integrations.accessories.EBAccessoriesIntegration;
 import com.binaris.wizardry.core.platform.Services;
@@ -26,8 +27,9 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -75,6 +77,24 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
         super.registerGoals();
         this.goalSelector.addGoal(1, new WizardTradeGoal(this));
         this.goalSelector.addGoal(1, new WizardLookAtTradePlayer(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers(Wizard.class));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, this::checkTarget));
+    }
+
+    /**
+     * Checks if the given entity is a valid target for the wizard to attack. The wizard should attack any non-ally mobs
+     * (not counting friendly mobs, which are checked by the mob type)
+     */
+    private boolean checkTarget(LivingEntity entity) {
+        if (entity instanceof Mob mob) {
+            if (Services.OBJECT_DATA.isMinion(mob)) {
+                return !AllyDesignation.isMinionAlly(this, mob);
+            }
+        }
+
+        boolean isAlly = AllyDesignation.isAllied(this, entity);
+        // sometimes mobs aren't allies (passive mobs) but we still don't want to attack them, so also check if it's a friendly mob type
+        return !isAlly && !(entity.getType().getCategory().isFriendly());
     }
 
     @Override
@@ -209,7 +229,8 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
             case 1 -> addNoviceTrades(usedSpells, usedItems);
             case 2 -> addApprenticeTrades(usedSpells, usedItems);
             case 3 -> addAdvancedTrades(usedSpells, usedItems);
-            case 4, 5 -> addMasterTrades(usedSpells, usedItems);
+            case 4 -> addMasterTrades(usedSpells, usedItems, false);
+            case 5 -> addMasterTrades(usedSpells, usedItems, true);
         }
     }
 
@@ -291,7 +312,7 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
         possibleTrades.add(createTrade(
                 new ItemStack(Items.GOLD_INGOT, 10 + random.nextInt(3)),
                 new ItemStack(Items.BOOK),
-                SpellUtil.arcaneTomeItem(SpellTiers.APPRENTICE),
+                EBItems.APPRENTICE_ARCANE_TOME.get().getDefaultInstance(),
                 3, 30, 0.2f
         ));
 
@@ -320,7 +341,7 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
         possibleTrades.add(createTrade(
                 new ItemStack(Items.GOLD_INGOT, 14 + random.nextInt(3)),
                 new ItemStack(Items.BOOK),
-                SpellUtil.arcaneTomeItem(SpellTiers.ADVANCED),
+                EBItems.ADVANCED_ARCANE_TOME.get().getDefaultInstance(),
                 3, 30, 0.2f
         ));
 
@@ -343,7 +364,7 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
         addRandomTrades(possibleTrades);
     }
 
-    private void addMasterTrades(List<Spell> usedSpells, List<Item> usedItems) {
+    private void addMasterTrades(List<Spell> usedSpells, List<Item> usedItems, boolean isMaxLevel) {
         List<MerchantOffer> possibleTrades = new ArrayList<>();
 
         // 14-19 gold ingots + 4-5 paper → random wand upgrade
@@ -361,13 +382,15 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
         MerchantOffer spell = createSpellTrade(SpellTiers.MASTER, 20 + random.nextInt(6), 15 + random.nextInt(6), usedSpells);
         if (spell != null) possibleTrades.add(spell);
 
-        // 20-25 gold ingots + 1 astral diamond → Tome of Arcana (advanced to master)
-        possibleTrades.add(createTrade(
-                new ItemStack(Items.GOLD_INGOT, 20 + random.nextInt(6)),
-                new ItemStack(EBItems.ASTRAL_DIAMOND.get()),
-                SpellUtil.arcaneTomeItem(SpellTiers.MASTER),
-                3, 50, 0.2f
-        ));
+        if (isMaxLevel) {
+            // 20-25 gold ingots + 1 astral diamond → Tome of Arcana (advanced to master)
+            possibleTrades.add(createTrade(
+                    new ItemStack(Items.GOLD_INGOT, 20 + random.nextInt(6)),
+                    new ItemStack(EBItems.ASTRAL_DIAMOND.get()),
+                    EBItems.MASTER_ARCANE_TOME.get().getDefaultInstance(),
+                    3, 50, 0.2f
+            ));
+        }
 
         addRandomTrades(possibleTrades);
     }

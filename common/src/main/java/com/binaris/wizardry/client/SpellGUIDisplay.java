@@ -1,7 +1,7 @@
 package com.binaris.wizardry.client;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.api.EBLogger;
+import com.binaris.wizardry.core.EBLogger;
 import com.binaris.wizardry.api.client.util.GlyphClientHandler;
 import com.binaris.wizardry.api.content.event.EBLivingTick;
 import com.binaris.wizardry.api.content.item.ISpellCastingItem;
@@ -133,11 +133,6 @@ public final class SpellGUIDisplay {
             Component prevSpellName = getFormattedSpellName(((ISpellCastingItem) wand.getItem()).getPreviousSpell(wand), player, 0);
             Component spellName = getFormattedSpellName(((ISpellCastingItem) wand.getItem()).getCurrentSpell(wand), player, cooldown);
             Component nextSpellName = getFormattedSpellName(((ISpellCastingItem) wand.getItem()).getNextSpell(wand), player, 0);
-
-            Spell prevSpell = ((ISpellCastingItem) wand.getItem()).getPreviousSpell(wand);
-            Spell nextSpell = ((ISpellCastingItem) wand.getItem()).getNextSpell(wand);
-            Spell currentSpell = ((ISpellCastingItem) wand.getItem()).getCurrentSpell(wand);
-
             skin.drawText(guiGraphics, x, y, flipX, flipY, prevSpellName, spellName, nextSpellName, animationProgress);
         } else {
             boolean discovered = true;
@@ -146,7 +141,10 @@ public final class SpellGUIDisplay {
                 discovered = Services.OBJECT_DATA.getSpellManagerData(player).hasSpellBeenDiscovered(spell);
             }
 
-            ResourceLocation icon = discovered ? WizardryMainMod.location("textures/spells/%s.png".formatted(spell.getLocation().getPath())) : WizardryMainMod.location("textures/spells/none.png");
+            ResourceLocation location = spell.getLocation();
+            ResourceLocation icon = discovered ?
+                    WizardryMainMod.location(location.getNamespace(), "textures/spells/%s.png".formatted(location.getPath()))
+                    : WizardryMainMod.location("textures/spells/none.png");
 
             float progress = 1;
             if (!player.isCreative()) {
@@ -173,7 +171,7 @@ public final class SpellGUIDisplay {
 
         Spell spell = ((ISpellCastingItem) wand.getItem()).getCurrentSpell(wand);
 
-        int chargeup = spell.getCharge();
+        int chargeup = spell.getChargeUp();
 
         chargeup = (int) (chargeup * Services.OBJECT_DATA.getWizardData(player).getSpellModifiers().get(SpellModifiers.CHARGEUP));
 

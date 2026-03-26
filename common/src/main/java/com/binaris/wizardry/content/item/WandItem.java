@@ -63,34 +63,6 @@ public class WandItem extends Item implements ISpellCastingItem, IManaStoringIte
         this.element = element;
     }
 
-    /**
-     * Calculates the accumulated mana cost for a continuous spell based on the casting ticks.
-     *
-     * @param spell       The spell being cast
-     * @param castingTick The number of ticks the spell has been cast for
-     * @param totalCost   The total mana cost of the spell
-     * @return The accumulated mana cost for the given casting ticks
-     */
-    protected static int getAccumulatedCost(Spell spell, int castingTick, int totalCost) {
-        int accumulatedCost = 0;
-        if (!spell.isInstantCast() && castingTick > 0) {
-            int completeCycles = castingTick / 20;  // Number of complete 20-tick cycles
-            int remainingTicks = castingTick % 20;  // Ticks in the partial cycle (0-19)
-
-            // Each complete cycle applies cost twice: at tick 0 and tick 10
-            // This equals totalCost per cycle (cost/2 + cost%2 + cost/2 = cost)
-            accumulatedCost = completeCycles * totalCost;
-
-            // Only add partial cycle costs if there are remaining ticks
-            // (remainingTicks == 0 means we completed exactly at a cycle boundary)
-            if (remainingTicks > 0) {
-                accumulatedCost += totalCost / 2 + totalCost % 2;
-                if (remainingTicks >= 10) accumulatedCost += totalCost / 2;
-            }
-        }
-        return accumulatedCost;
-    }
-
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
@@ -149,6 +121,34 @@ public class WandItem extends Item implements ISpellCastingItem, IManaStoringIte
             return false;
         }
         return canCastRequirements(stack, spell, ctx);
+    }
+
+    /**
+     * Calculates the accumulated mana cost for a continuous spell based on the casting ticks.
+     *
+     * @param spell       The spell being cast
+     * @param castingTick The number of ticks the spell has been cast for
+     * @param totalCost   The total mana cost of the spell
+     * @return The accumulated mana cost for the given casting ticks
+     */
+    protected static int getAccumulatedCost(Spell spell, int castingTick, int totalCost) {
+        int accumulatedCost = 0;
+        if (!spell.isInstantCast() && castingTick > 0) {
+            int completeCycles = castingTick / 20;  // Number of complete 20-tick cycles
+            int remainingTicks = castingTick % 20;  // Ticks in the partial cycle (0-19)
+
+            // Each complete cycle applies cost twice: at tick 0 and tick 10
+            // This equals totalCost per cycle (cost/2 + cost%2 + cost/2 = cost)
+            accumulatedCost = completeCycles * totalCost;
+
+            // Only add partial cycle costs if there are remaining ticks
+            // (remainingTicks == 0 means we completed exactly at a cycle boundary)
+            if (remainingTicks > 0) {
+                accumulatedCost += totalCost / 2 + totalCost % 2;
+                if (remainingTicks >= 10) accumulatedCost += totalCost / 2;
+            }
+        }
+        return accumulatedCost;
     }
 
     private boolean canCastRequirements(ItemStack stack, Spell spell, PlayerCastContext ctx) {
@@ -232,7 +232,7 @@ public class WandItem extends Item implements ISpellCastingItem, IManaStoringIte
 
     @Override
     public ItemStack applyUpgrade(@Nullable Player player, ItemStack wand, ItemStack upgrade) {
-        if (upgrade.getItem() == EBItems.ARCANE_TOME.get()) {
+        if (upgrade.getItem() instanceof ArcaneTomeItem) {
             return applyTierUpgrade(player, wand, upgrade);
         } else if (WandUpgrades.isWandUpgrade(upgrade.getItem())) {
             applySpecialUpgrade(player, wand, upgrade);
@@ -369,7 +369,7 @@ public class WandItem extends Item implements ISpellCastingItem, IManaStoringIte
      * @return The calculated charge time
      */
     private int calculateCharge(Spell spell, SpellModifiers modifiers) {
-        return (int) (spell.getCharge() * modifiers.get(SpellModifiers.CHARGEUP));
+        return (int) (spell.getChargeUp() * modifiers.get(SpellModifiers.CHARGEUP));
     }
 
     /**

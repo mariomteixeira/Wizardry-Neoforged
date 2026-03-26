@@ -14,6 +14,7 @@ import com.binaris.wizardry.content.effect.WardMobEffect;
 import com.binaris.wizardry.content.entity.construct.BubbleConstruct;
 import com.binaris.wizardry.content.item.WandUpgradeItem;
 import com.binaris.wizardry.content.item.WizardArmorItem;
+import com.binaris.wizardry.content.spell.healing.ArcaneJammer;
 import com.binaris.wizardry.content.spell.healing.FontOfMana;
 import com.binaris.wizardry.content.spell.lightning.Charge;
 import com.binaris.wizardry.content.spell.necromancy.CurseOfSoulbinding;
@@ -114,6 +115,7 @@ public final class EBEventHelper {
         bus.register(SpellCastEvent.Pre.class, ArtifactItem::onSpellPreCast);
         bus.register(SpellCastEvent.Pre.class, EBEventHelper::castContextCheck);
         bus.register(SpellCastEvent.Pre.class, FontOfMana::onSpellCastPreEvent);
+        bus.register(SpellCastEvent.Pre.class, ArcaneJammer::onSpellCastPreEvent);
     }
 
     private static void onSpellPostCast(WizardryEventBus bus) {

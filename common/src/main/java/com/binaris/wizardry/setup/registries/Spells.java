@@ -38,14 +38,14 @@ public final class Spells {
     public static final Spell MAGIC_MISSILE;
     public static final Spell IGNITE;
     public static final Spell FREEZE;
-    // snowball
+//    public static final Spell SNOWBALL;
     public static final Spell ARC;
     public static final Spell THUNDERBOLT;
     public static final Spell SUMMON_ZOMBIE;
     // snare
     public static final Spell DART;
     // light
-    // telekinesis
+    public static final Spell TELEKINESIS;
     public static final Spell HEAL;
 
     public static final Spell FIREBALL;
@@ -108,7 +108,7 @@ public final class Spells {
     // shadow ward
     public static final Spell DECAY;
     public static final Spell WATER_BREATHING;
-    // tornado
+    public static final Spell TORNADO;
     // glide
     // summon spirit horse
     public static final Spell SPIDER_SWARM;
@@ -134,7 +134,7 @@ public final class Spells {
     // thunderstorm
     // lightning hammer
     public static final Spell PLAGUE_DARKNESS;
-    // summon skeleton legion
+    public static final Spell SUMMON_SKELETON_LEGION;
     // summon shadow wraith
     public static final Spell FOREST_CURSE;
     public static final Spell FLIGHT;
@@ -168,7 +168,7 @@ public final class Spells {
     public static final Spell COBWEBS;
     // decoy
     public static final Spell CONJURE_ARMOR;
-    // arcane jammer
+    public static final Spell ARCANE_JAMMER;
     public static final Spell GROUP_HEAL;
     public static final Spell HAILSTORM;
     // lightning web
@@ -178,7 +178,7 @@ public final class Spells {
     // mine
     // conjure block
     // muffle
-    // ward
+    public static final Spell WARD;
     public static final Spell EVADE;
     public static final Spell ICE_BALL;
     public static final Spell CHARGE;
@@ -188,7 +188,7 @@ public final class Spells {
     // empowering presence
     // disintegration
     public static final Spell COMBUSTION_RUNE;
-    // frost step
+    public static final Spell FROST_STEP;
     // paralysis
     public static final Spell SHULKER_BULLET;
     public static final Spell CURSE_OF_UNDEATH;
@@ -196,7 +196,7 @@ public final class Spells {
     public static final Spell GREATER_TELEKINESIS;
     public static final Spell VEX_SWARM;
     public static final Spell ARCANE_LOCK;
-    // containment
+    public static final Spell CONTAINMENT;
     public static final Spell SATIETY;
     public static final Spell GREATER_WARD;
     public static final Spell RAY_OF_PURIFICATION;
@@ -229,6 +229,7 @@ public final class Spells {
     public static final Spell BLOCK_SURPRISE;
     public static final Spell PLAYER_HAND;
     public static final Spell WIZARD_HAND;
+    public static final Spell QUICK_FLAMECATCHER;
 
     public static Map<String, Spell> SPELLS = new LinkedHashMap<>();
 
@@ -242,6 +243,16 @@ public final class Spells {
                         .add(DefaultProperties.DAMAGE, 3f)
                         .build()
         ));
+
+//        SNOWBALL = spell("snowball", () -> new ProjectileSpell<>((e) -> new Snowball(EntityType.SNOWBALL, e)).assignProperties(
+//                SpellProperties.builder()
+//                        .assignBaseProperties(SpellTiers.NOVICE, Elements.ICE, SpellType.PROJECTILE, SpellAction.POINT, 5, 0, 10)
+//                        .add(DefaultProperties.RANGE, 15f)
+//                        .add(DefaultProperties.DAMAGE, 2f)
+//                        .add(DefaultProperties.EFFECT_DURATION, 100)
+//                        .add(DefaultProperties.EFFECT_STRENGTH, 1)
+//                        .build()
+//        ));
 
         SMOKE_BOMB = spell("smoke_bomb", () -> new ProjectileSpell<>(SmokeBombEntity::new).assignProperties(
                 SpellProperties.builder()
@@ -529,6 +540,13 @@ public final class Spells {
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.DEFENCE, SpellAction.POINT_UP, 20, 0, 50)
                         .add(BuffSpell.getEffectDurationProperty(EBMobEffects.OAKFLESH.get()), 600)
                         .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.OAKFLESH.get()), 0)
+                        .build()));
+
+        FROST_STEP = spell("frost_step", () -> new BuffSpell(0.3f, 0.4f, 0.8f, EBMobEffects.FROST_STEP).soundValues(0.7f, 1.2f, 0.4f)
+                .assignProperties(SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.ICE, SpellType.UTILITY, SpellAction.POINT_UP, 50, 0, 250)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.FROST_STEP.get()), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.FROST_STEP.get()), 0)
                         .build()));
 
         PERMAFROST = spell("permafrost", Permafrost::new);
@@ -826,6 +844,24 @@ public final class Spells {
                                 .build()
                 );
 
+        TELEKINESIS = spell("telekinesis", Telekinesis::new);
+
+        CONTAINMENT = spell("containment", Containment::new);
+
+        SUMMON_SKELETON_LEGION = spell("summon_skeleton_legion", SummonSkeletonLegion::new);
+
+        TORNADO = spell("tornado", Tornado::new);
+
+        WARD = spell("ward", () -> new BuffSpell( 0.75f, 0.6f, 0.8f, EBMobEffects.WARD).assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.NOVICE, Elements.HEALING, SpellType.BUFF, SpellAction.POINT_UP, 5, 0, 30)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.WARD.get()), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.WARD.get()), 0)
+                        .build()
+        ));
+
+        ARCANE_JAMMER = spell("arcane_jammer", ArcaneJammer::new);
+
         SUMMON_ICE_GIANT = spell("summon_ice_giant", SummonIceGiant::new);
 
         RAY_OF_PURIFICATION = spell("ray_of_purification", RayOfPurification::new);
@@ -845,6 +881,14 @@ public final class Spells {
         PLAYER_HAND = spell("player_hand", PlayerHand::new);
 
         WIZARD_HAND = spell("wizard_hand", WizardHand::new);
+
+        QUICK_FLAMECATCHER = spell("quick_flamecatcher", () -> new ConjureItemSpell(EBItems.FLAMECATCHER.get()).assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.APPRENTICE, Elements.SORCERY, SpellType.UTILITY, SpellAction.SUMMON, 25, 0, 50)
+                        .add(DefaultProperties.ITEM_LIFETIME, 100)
+                        .add(DefaultProperties.SENSIBLE, true)
+                        .build()
+        ));
     }
 
     private Spells() {

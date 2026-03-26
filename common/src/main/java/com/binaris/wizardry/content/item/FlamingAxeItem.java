@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class FlamingAxeItem extends AxeItem {
 
     public FlamingAxeItem() {
-        super(EBItems.MAGICAL, 8, -3, new Properties().durability(12000).rarity(Rarity.UNCOMMON));
+        super(MagicItemTier.TIER, 8, -3, new Properties().durability(12000).rarity(Rarity.UNCOMMON));
     }
 
     @Override

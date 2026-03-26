@@ -10,7 +10,6 @@ import com.binaris.wizardry.content.spell.abstr.ConstructSpell;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,12 +25,11 @@ public class ArrowRain extends ConstructSpell<ArrowRainConstruct> {
         return super.spawnConstruct(ctx, vec3.add(0, 5, 0), side);
     }
 
-
     @Override
-    protected void addConstructExtras(ArrowRainConstruct construct, Direction side, @Nullable LivingEntity caster) {
+    protected void addConstructExtras(CastContext ctx, ArrowRainConstruct construct, Direction side) {
         // Makes the arrows shoot in the direction the caster was looking when they cast the spell.
-        if (caster != null) {
-            construct.setYRot(caster.getYHeadRot());
+        if (ctx.caster() != null) {
+            construct.setYRot(ctx.caster().getYHeadRot());
         } else {
             construct.setYRot(side.toYRot());
         }

@@ -192,7 +192,7 @@ public class SpellProperties {
     }
 
     // I'm not proud of this method
-    private boolean isBaseProperty(@NotNull SpellProperty<?> prop) {
+    public boolean isBaseProperty(@NotNull SpellProperty<?> prop) {
         return prop.identifier.equals(DefaultProperties.ENABLED.identifier)
                 || prop.identifier.equals(DefaultProperties.TIER.identifier)
                 || prop.identifier.equals(DefaultProperties.ELEMENT.identifier)

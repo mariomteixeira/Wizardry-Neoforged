@@ -312,7 +312,7 @@ public final class EBRecipeProvider extends RecipeProvider {
     private void wand(Item wand, Item crystal, @NotNull Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, wand)
                 .define('x', Items.GOLD_NUGGET)
-                .define('y', ItemTags.PLANKS)
+                .define('y', Items.STICK)
                 .define('z', crystal)
                 .pattern("  z")
                 .pattern(" y ")

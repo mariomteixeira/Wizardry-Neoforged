@@ -25,7 +25,7 @@ public class HealAuraConstruct extends ScaledConstructEntity {
 
     public HealAuraConstruct(Level world) {
         super(EBEntities.HEAL_AURA.get(), world);
-        setSize(Spells.HEALING_AURA.property(DefaultProperties.EFFECT_RADIUS) * 2, 1);
+        setSize(Spells.HEALING_AURA.property(DefaultProperties.EFFECT_RADIUS) * 5, 1);
     }
 
     @Override

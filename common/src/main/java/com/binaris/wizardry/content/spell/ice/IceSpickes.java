@@ -15,7 +15,6 @@ import com.binaris.wizardry.setup.registries.SpellTiers;
 import com.binaris.wizardry.setup.registries.Spells;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +65,7 @@ public class IceSpickes extends ConstructRangedSpell<IceSpikeConstruct> {
     }
 
     @Override
-    protected void addConstructExtras(IceSpikeConstruct construct, Direction side, @Nullable LivingEntity caster) {
+    protected void addConstructExtras(CastContext ctx, IceSpikeConstruct construct, Direction side) {
         construct.lifetime = 30 + construct.level().random.nextInt(15);
         construct.setFacing(side);
     }

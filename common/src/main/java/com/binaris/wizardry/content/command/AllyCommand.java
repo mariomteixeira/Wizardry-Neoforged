@@ -1,6 +1,5 @@
 package com.binaris.wizardry.content.command;
 
-import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.data.WizardData;
 import com.binaris.wizardry.core.platform.Services;
 import com.mojang.brigadier.CommandDispatcher;
@@ -13,9 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
 public final class AllyCommand {
-    private AllyCommand() {
-    }
-
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("ally")
                 .then(Commands.literal("add")
@@ -49,16 +45,15 @@ public final class AllyCommand {
         boolean result = data.toggleAlly(ally);
         // If the result is the same as the operation, the change was successful
         boolean success = (addOperation == result);
-        String key = "commands." + WizardryMainMod.MOD_ID + ":ally." + opKey + (success ? ".success" : ".failure");
+        String key = "command.ebwizardry.ally." + opKey + (success ? ".success" : ".failure");
         source.sendSystemMessage(Component.translatable(key, origin.getDisplayName(), ally.getDisplayName()));
         return success ? 1 : 0;
     }
 
     private static int executeAddAlly(CommandContext<CommandSourceStack> context, Player ally) throws CommandSyntaxException {
         CommandSourceStack source = context.getSource();
-        // You need to be a player to execute this!!
         if (!source.isPlayer()) {
-            source.sendFailure(Component.translatable("commands." + WizardryMainMod.MOD_ID + ":ally.add.failure", ally.getDisplayName()));
+            source.sendFailure(Component.translatable("command.ebwizardry.ally.add.not_player"));
             return 0;
         }
         Player origin = source.getPlayerOrException();
@@ -68,12 +63,14 @@ public final class AllyCommand {
 
     private static int executeRemoveAlly(CommandContext<CommandSourceStack> context, Player ally) throws CommandSyntaxException {
         CommandSourceStack source = context.getSource();
-        // You need to be a player to execute this!!
         if (!source.isPlayer()) {
-            source.sendFailure(Component.translatable("commands." + WizardryMainMod.MOD_ID + ":ally.remove.failure", ally.getDisplayName()));
+            source.sendFailure(Component.translatable("command.ebwizardry.ally.remove.not_player"));
             return 0;
         }
         Player origin = source.getPlayerOrException();
         return processAllyChange(source, origin, ally, false, "remove");
+    }
+
+    private AllyCommand() {
     }
 }
