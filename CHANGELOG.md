@@ -1,4 +1,6 @@
 - Now you can datagen the Markdown documentation for the spells
 - Now you can datagen a Markdown table for all the spells added
 - Added the possibility to datagen artifacts
-- Moved MAGIC_TIER to it's own class
+- Moved MAGIC_TIER (item tiers) to its own class
+- Added Arcane Jammer Spell
+- Change to warlock robe texture, now has more consistency with the colors
