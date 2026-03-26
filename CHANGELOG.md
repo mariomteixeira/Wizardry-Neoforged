@@ -4,3 +4,6 @@
 - Moved MAGIC_TIER (item tiers) to its own class
 - Added Arcane Jammer Spell
 - Change to warlock robe texture, now has more consistency with the colors
+- Added WIP config for public use
+- Minions can target nearby mobs without requiring owner interaction. This can be modified inside MinionSpell
+- Now can mark if minions should delete its original goals inside MinionSpell

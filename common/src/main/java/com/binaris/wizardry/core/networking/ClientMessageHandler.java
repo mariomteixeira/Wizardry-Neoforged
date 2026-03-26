@@ -1,7 +1,6 @@
 package com.binaris.wizardry.core.networking;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.api.EBLogger;
 import com.binaris.wizardry.api.client.util.ClientUtils;
 import com.binaris.wizardry.api.client.util.GlyphClientHandler;
 import com.binaris.wizardry.api.content.entity.living.ISpellCaster;
@@ -15,6 +14,7 @@ import com.binaris.wizardry.client.ParticleSpawner;
 import com.binaris.wizardry.content.data.SpellGlyphData;
 import com.binaris.wizardry.content.item.ScrollItem;
 import com.binaris.wizardry.content.item.WandItem;
+import com.binaris.wizardry.core.EBLogger;
 import com.binaris.wizardry.core.config.ConfigOption;
 import com.binaris.wizardry.core.config.EBConfigManager;
 import com.binaris.wizardry.core.event.WizardryEventBus;

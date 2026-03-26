@@ -51,6 +51,11 @@ public class MinionSpell<T extends Mob> extends Spell {
     protected boolean flying = false;
     /** When the created minion should follow the owner */
     protected boolean shouldFollowOwner = true;
+    /** Tag if the minion shouldn't have it's base goals when created (e.g. zombie breaks doors) */
+    protected boolean shouldDeleteBaseGoals = false;
+    /** Tag whether the minion should search for nearby targets or not */
+    private boolean searchNearbyTargets = true;
+
 
     public MinionSpell(Function<Level, T> minionFactory) {
         this.minionFactory = minionFactory;
@@ -64,6 +69,30 @@ public class MinionSpell<T extends Mob> extends Spell {
      */
     public MinionSpell<T> setShouldFollowOwner(boolean shouldFollowOwner) {
         this.shouldFollowOwner = shouldFollowOwner;
+        return this;
+    }
+
+    /**
+     * Sets whether the minion shouldn't have its original goals, used to normally get rid of problematic goals that
+     * are in the base mob, this doesn't include the target goals. Defaults to false.
+     *
+     * @param shouldDeleteGoals True if the mod should delete the base goals, false if they should stay the same
+     * @return The spell instance, allowing this method to be chained onto the constructor.
+     */
+    public MinionSpell<T> setShouldDeleteGoals(boolean shouldDeleteGoals) {
+        this.shouldDeleteBaseGoals = shouldDeleteGoals;
+        return this;
+    }
+
+    /**
+     * Sets whether the minion should search for nearby targets and target them. The target conditions are: Doesn't attack
+     * owner's minions, can't attack allies minions and can't target passive mobs.
+     *
+     * @param searchNearbyTargets true to search nearby targets, false if they shouldn't have this goal
+     * @return The spell instance, allowing this method to be chained onto the constructor.
+     */
+    public MinionSpell<T> setSearchNearbyTargets(boolean searchNearbyTargets) {
+        this.searchNearbyTargets = searchNearbyTargets;
         return this;
     }
 
@@ -176,6 +205,8 @@ public class MinionSpell<T extends Mob> extends Spell {
             data.setOwnerUUID(ctx.caster().getUUID());
             setLifetime(minion, (int) (property(DefaultProperties.MINION_LIFETIME) * ctx.modifiers().get(EBItems.DURATION_UPGRADE.get())));
             data.setShouldFollowOwner(shouldFollowOwner);
+            data.setShouldDeleteGoals(shouldDeleteBaseGoals);
+            data.setSearchNearbyTargets(searchNearbyTargets);
 
             if (minion.getAttribute(Attributes.ATTACK_DAMAGE) != null)
                 minion.getAttribute(Attributes.ATTACK_DAMAGE).addPermanentModifier(new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, ctx.modifiers().get(SpellModifiers.POTENCY) - 1, AttributeModifier.Operation.MULTIPLY_TOTAL));

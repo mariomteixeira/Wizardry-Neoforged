@@ -1,8 +1,8 @@
 package com.binaris.wizardry.core.config;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.api.EBLogger;
 import com.binaris.wizardry.api.content.event.EBPlayerJoinServerEvent;
+import com.binaris.wizardry.core.EBLogger;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
