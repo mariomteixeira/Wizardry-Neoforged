@@ -14,3 +14,4 @@
 - New extension of Attribute modifiers to handle spell conditions
 - Added command `/magic_attribute` to add attribute modifiers with spell conditions to entities, similar to how `/attribute` works
 - Fix to 'attributes deleting spell properties'
+- Added direct compatibility with Curios and Trinkets

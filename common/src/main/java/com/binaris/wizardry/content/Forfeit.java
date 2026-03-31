@@ -14,7 +14,7 @@ import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
 import com.binaris.wizardry.api.content.util.EntityUtil;
 import com.binaris.wizardry.core.config.EBConfig;
 import com.binaris.wizardry.core.event.WizardryEventBus;
-import com.binaris.wizardry.core.integrations.accessories.EBAccessoriesIntegration;
+import com.binaris.wizardry.core.integrations.ArtifactChannel;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.EBAdvancementTriggers;
 import com.binaris.wizardry.setup.registries.EBItems;
@@ -93,7 +93,7 @@ public class Forfeit {
      */
     private static ForfeitResult calculateForfeit(Player player, SpellManagerData spellData, WizardData wizardData, Spell spell) {
         float chance = EBConfig.FORFEIT_CHANCE.get();
-        if (EBAccessoriesIntegration.isEquipped(player, EBItems.AMULET_WISDOM.get())) chance *= 0.5F;
+        if (ArtifactChannel.isEquipped(player, EBItems.AMULET_WISDOM.get())) chance *= 0.5F;
 
         boolean isUndiscovered = !spellData.hasSpellBeenDiscovered(spell);
 

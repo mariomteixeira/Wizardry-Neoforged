@@ -1,6 +1,8 @@
 package com.binaris.wizardry.platform;
 
+import com.binaris.wizardry.core.integrations.ArtifactIntegration;
 import com.binaris.wizardry.core.platform.services.IPlatformHelper;
+import com.binaris.wizardry.integration.TrinketsIntegration;
 import com.mojang.brigadier.arguments.ArgumentType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
@@ -78,5 +80,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public boolean fireMobBlockBreakEvent(Level level, BlockPos pos, Mob mob) {
         return !level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING);
+    }
+
+    @Override
+    public ArtifactIntegration getArtifactIntegration() {
+        return TrinketsIntegration.INSTANCE;
     }
 }

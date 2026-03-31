@@ -16,7 +16,7 @@ import com.binaris.wizardry.content.spell.sorcery.ImbueWeapon;
 import com.binaris.wizardry.core.IArtifactEffect;
 import com.binaris.wizardry.core.QuickArtifactEffect;
 import com.binaris.wizardry.core.config.EBConfig;
-import com.binaris.wizardry.core.integrations.accessories.EBAccessoriesIntegration;
+import com.binaris.wizardry.core.integrations.ArtifactChannel;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.datagen.EBDataGenProcessor;
 import net.minecraft.core.Direction;
@@ -475,7 +475,7 @@ public final class EBItems {
     }
 
     static DeferredObject<Item> artifact(String name, Rarity rarity, ArtifactItem.Type type, @Nullable IArtifactEffect effect) {
-        return artifact(name, () -> EBAccessoriesIntegration.getArtifact(rarity, effect), type);
+        return artifact(name, () -> ArtifactChannel.createArtifact(rarity, effect), type);
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.binaris.wizardry.platform;
 
+import com.binaris.wizardry.core.integrations.ArtifactIntegration;
 import com.binaris.wizardry.core.platform.services.IPlatformHelper;
+import com.binaris.wizardry.integration.curios.CuriosIntegration;
 import com.binaris.wizardry.registry.EBArgumentTypesForge;
 import com.mojang.brigadier.arguments.ArgumentType;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
@@ -81,5 +83,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public boolean fireMobBlockBreakEvent(Level level, BlockPos pos, Mob mob) {
         return !ForgeEventFactory.getMobGriefingEvent(level, mob);
+    }
+
+    @Override
+    public ArtifactIntegration getArtifactIntegration() {
+        return CuriosIntegration.INSTANCE;
     }
 }

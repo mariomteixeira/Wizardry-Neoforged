@@ -10,7 +10,7 @@ import com.binaris.wizardry.api.content.util.EntityUtil;
 import com.binaris.wizardry.content.entity.MeteorEntity;
 import com.binaris.wizardry.content.spell.DefaultProperties;
 import com.binaris.wizardry.content.spell.abstr.RaySpell;
-import com.binaris.wizardry.core.integrations.accessories.EBAccessoriesIntegration;
+import com.binaris.wizardry.core.integrations.ArtifactChannel;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
@@ -23,7 +23,7 @@ public class Meteor extends RaySpell {
 
     @Override
     public boolean cast(PlayerCastContext ctx) {
-        if (!(EBAccessoriesIntegration.isEquipped(ctx.caster(), EBItems.RING_METEOR.get()))) return super.cast(ctx);
+        if (!(ArtifactChannel.isEquipped(ctx.caster(), EBItems.RING_METEOR.get()))) return super.cast(ctx);
 
         if (!ctx.world().isClientSide) {
             MeteorEntity meteor = new MeteorEntity(ctx.world(), ctx.caster().getX(), ctx.caster().getY() + ctx.caster().getEyeHeight(), ctx.caster().getZ(),
