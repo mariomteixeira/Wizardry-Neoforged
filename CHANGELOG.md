@@ -1,4 +1,5 @@
-- Now you can datagen the Markdown documentation for the spells
-- Now you can datagen a Markdown table for all the spells added
-- Added the possibility to datagen artifacts
-- Moved MAGIC_TIER to it's own class
+- added British translation ([#16](https://github.com/Binaris00/ElectroblobsWizardryRedux/pull/16))
+- added Korean translation ([#15](https://github.com/Binaris00/ElectroblobsWizardryRedux/pull/15))
+- wizard tower now has biome tags for fabric and forge ([#18](https://github.com/Binaris00/ElectroblobsWizardryRedux/pull/18))
+- fixed some typo issues with "Baubles" mentions in artifacts
+- rollback to how spell modifier calculation was before refactoring (only applying to armor and wand logic)
