@@ -31,9 +31,10 @@ public class RandomSpellBookItem extends Item {
     }
 
     public static void create(Level level, Player player, ItemStack original) {
-        if (level.isClientSide) return;
         ItemStack stack;
         CompoundTag tag = original.getTag();
+        original.shrink(1);
+        if (level.isClientSide) return;
 
         if (tag == null || !tag.contains("LootTable")) {
             stack = RegistryUtils.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), Spells.MAGIC_MISSILE);
@@ -61,8 +62,6 @@ public class RandomSpellBookItem extends Item {
 
         List<ItemStack> loot = lootTable.getRandomItems(lootParams);
         loot.forEach(i -> spawn(level, player.blockPosition(), i));
-
-        original.shrink(1);
     }
 
     public static void onPickup(EBItemPickupEvent event) {
