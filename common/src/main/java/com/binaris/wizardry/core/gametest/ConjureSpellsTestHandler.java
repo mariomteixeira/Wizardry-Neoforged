@@ -18,14 +18,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-public final class ConjureItemSpellsTestHandler {
+public final class ConjureSpellsTestHandler {
     private static final Vec3 PLAYER_POS = new Vec3(1.5, 2.0, 1.5);
 
-    /**
-     * Test if the Conjure Item Spells are working, spawning the item and placing it in the player's inventory, taking the
-     * spell Flamecatcher as an example.
-     */
-    public static void spawnConjureItem(GameTestHelper helper) {
+    static void spawnConjureItem(GameTestHelper helper) {
         Player player = GST.mockPlayer(helper, PLAYER_POS);
         Spells.FLAMECATCHER.cast(new PlayerCastContext(helper.getLevel(), player, InteractionHand.MAIN_HAND, 0, new SpellModifiers()));
 
@@ -34,8 +30,7 @@ public final class ConjureItemSpellsTestHandler {
                         () -> helper.fail("Player did not receive the conjured item (flamecatcher)"));
     }
 
-    /** Test if the Conjure Item Spells are working, despawing the item after the time limit */
-    public static void conjureItemDespawn(GameTestHelper helper) {
+    static void conjureItemDespawn(GameTestHelper helper) {
         TestContext ctx = setupTest(helper, EBItems.FLAMECATCHER.get(), 20);
         helper.runAtTickTime(30, () -> {
             DataEvents.conjureItemTick(ctx.player);
@@ -49,7 +44,7 @@ public final class ConjureItemSpellsTestHandler {
         });
     }
 
-    public static void buildTable(GameTestHelper helper) {
+    static void buildTable(GameTestHelper helper) {
         SpellTables.Builder table = new SpellTables.Builder()
                 .addColumn(SpellTables.columnByProperty("Lifetime", DefaultProperties.ITEM_LIFETIME, SpellModifiers.DURATION));
 
@@ -75,6 +70,6 @@ public final class ConjureItemSpellsTestHandler {
     protected record TestContext(Player player, ConjureData data, ItemStack stack) {
     }
 
-    private ConjureItemSpellsTestHandler() {
+    private ConjureSpellsTestHandler() {
     }
 }

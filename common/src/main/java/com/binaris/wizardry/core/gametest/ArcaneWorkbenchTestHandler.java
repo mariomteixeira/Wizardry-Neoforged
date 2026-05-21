@@ -24,11 +24,10 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("unused")
-public class AWTestHandler {
+public class ArcaneWorkbenchTestHandler {
     private static final BlockPos WORKBENCH_POS = new BlockPos(1, 2, 1);
     private static final Vec3 PLAYER_POS = new Vec3(1.5, 2.0, 1.5);
 
-    /** Applies the given spells to the wand */
     static void applySpellsToWand(GameTestHelper helper, Item wand, Spell... spells) {
         GST.assertFalse(helper, "Invalid parameters", !(wand instanceof WandItem) || spells.length == 0);
         assert wand instanceof WandItem;
@@ -51,11 +50,7 @@ public class AWTestHandler {
         validSpells.forEach(spell -> GST.assertTrue(helper, "Wand %s should contain %s spell after applying.".formatted(wandItem, spell), wandSpells.contains(spell)));
     }
 
-    /**
-     * Different to {@link #canUpgradeToNextTier}. <p>
-     * Checks if the given wand can be upgraded to the next tier (in case if it's not a master wand) based on a NBT arcane tome
-     */
-    public static void upgradeWandNextTierNBT(GameTestHelper helper, Item wand) {
+    static void upgradeWandNextTierNBT(GameTestHelper helper, Item wand) {
         GST.assertFalse(helper, "Invalid parameters", !(wand instanceof WandItem));
         assert wand instanceof WandItem;
         WandItem wandItem = (WandItem) wand;
@@ -75,12 +70,8 @@ public class AWTestHandler {
         GST.assertEmpty(helper, "Upgrade item should be consumed.", ctx.workbench.getItem(ArcaneWorkbenchMenu.UPGRADE_SLOT));
     }
 
-    /**
-     * Different to {@link #upgradeWandNextTierNBT}. <p>
-     * Checks if the given wand can be upgraded to the next tier (in case if it's not a master wand) based on an item
-     * instance based arcane tome.
-     */
-    public static void canUpgradeToNextTier(GameTestHelper helper, Item wand) {
+
+    static void canUpgradeToNextTier(GameTestHelper helper, Item wand) {
         GST.assertFalse(helper, "Invalid parameters", !(wand instanceof WandItem));
         assert wand instanceof WandItem;
         WandItem wandItem = (WandItem) wand;
@@ -100,8 +91,7 @@ public class AWTestHandler {
         GST.assertEmpty(helper, "Upgrade item should be consumed.", ctx.workbench.getItem(ArcaneWorkbenchMenu.UPGRADE_SLOT));
     }
 
-    /** Puts the given spell into a new spell scroll using a blank scroll */
-    public static void putSpellOnBlankScroll(GameTestHelper helper, Spell spell) {
+    static void putSpellOnBlankScroll(GameTestHelper helper, Spell spell) {
         TestContext ctx = setupTest(helper, EBItems.BLANK_SCROLL.get().getDefaultInstance());
 
         ctx.workbench.setItem(0, RegistryUtils.spellBookItem(spell));
@@ -116,8 +106,7 @@ public class AWTestHandler {
         GST.assertTrue(helper, "Crystals should only be partially consumed.", ctx.workbench.getItem(ArcaneWorkbenchMenu.CRYSTAL_SLOT).getCount() < 10);
     }
 
-    /** Try to put a spell into a not blank scroll, should be false */
-    public static void putSpellOnScrollFilled(GameTestHelper helper) {
+    static void putSpellOnScrollFilled(GameTestHelper helper) {
         ItemStack scroll = RegistryUtils.setSpell(EBItems.SCROLL.get().getDefaultInstance(), Spells.FIREBALL);
         TestContext ctx = setupTest(helper, scroll);
 
@@ -133,8 +122,7 @@ public class AWTestHandler {
         helper.succeed();
     }
 
-    /** Tests upgrading normal wizard armor to a higher tier using an upgrade item. */
-    public static void upgradeNormalArmor(GameTestHelper helper, Item armor, Item upgradeItem) {
+    static void upgradeNormalArmor(GameTestHelper helper, Item armor, Item upgradeItem) {
         GST.assertFalse(helper, "Invalid parameters", !(armor instanceof WizardArmorItem));
         assert armor instanceof WizardArmorItem;
         WizardArmorItem wizardArmorItem = (WizardArmorItem) armor;
@@ -150,8 +138,7 @@ public class AWTestHandler {
         GST.assertEmpty(helper, "Upgrade item should be consumed.", ctx.workbench.getItem(ArcaneWorkbenchMenu.UPGRADE_SLOT));
     }
 
-    /** Tests that maxed out wizard armor cannot be upgraded further. */
-    public static void cannotUpgradeMaxedArmor(GameTestHelper helper, Item armor, Item upgradeItem) {
+    static void cannotUpgradeMaxedArmor(GameTestHelper helper, Item armor, Item upgradeItem) {
         GST.assertFalse(helper, "Invalid parameters", !(armor instanceof WizardArmorItem));
         assert armor instanceof WizardArmorItem;
         WizardArmorItem wizardArmorItem = (WizardArmorItem) armor;
@@ -166,8 +153,7 @@ public class AWTestHandler {
         GST.assertNotEmpty(helper, "Upgrade item should not be consumed.", ctx.workbench.getItem(ArcaneWorkbenchMenu.UPGRADE_SLOT));
     }
 
-    /** Tests repairing a damaged wand using 1 crystal. */
-    public static void repairWand(GameTestHelper helper, Item wand, Item crystal) {
+    static void repairWand(GameTestHelper helper, Item wand, Item crystal) {
         GST.assertFalse(helper, "Invalid parameters", !(wand instanceof WandItem) || !(crystal instanceof CrystalItem));
 
         ItemStack wandStack = wand.getDefaultInstance();
@@ -182,8 +168,7 @@ public class AWTestHandler {
         GST.assertTrue(helper, "Crystal %s should be consumed after repairing wand %s.".formatted(crystal, wand), ctx.workbench.getItem(ArcaneWorkbenchMenu.CRYSTAL_SLOT).isEmpty());
     }
 
-    /** Tests that blank scrolls cannot exceed the stack limit of 16 in the workbench center slot. */
-    public static void cannotExceedBlankScrollLimit(GameTestHelper helper) {
+    static void cannotExceedBlankScrollLimit(GameTestHelper helper) {
         TestContext ctx = setupTest(helper, ItemStack.EMPTY);
         ctx.workbench.setItem(ArcaneWorkbenchMenu.CENTRE_SLOT, new ItemStack(EBItems.BLANK_SCROLL.get(), 16));
         ctx.player.getInventory().add(new ItemStack(EBItems.BLANK_SCROLL.get(), 64));
@@ -198,8 +183,7 @@ public class AWTestHandler {
         helper.succeed();
     }
 
-    /** Tests that spell books cannot exceed the stack limit of 1 per slot in the workbench. */
-    public static void cannotExceedSpellBookLimit(GameTestHelper helper, Spell spell) {
+    static void cannotExceedSpellBookLimit(GameTestHelper helper, Spell spell) {
         TestContext ctx = setupTest(helper, EBItems.NOVICE_HEALING_WAND.get().getDefaultInstance());
         ctx.workbench.setItem(0, RegistryUtils.spellBookItem(spell));
 
@@ -217,8 +201,7 @@ public class AWTestHandler {
         helper.succeed();
     }
 
-    /** Tests that upgrade items cannot exceed the stack limit of 1 in the upgrade slot. */
-    public static void cannotExceedUpgradeLimit(GameTestHelper helper, Item upgradeItem) {
+    static void cannotExceedUpgradeLimit(GameTestHelper helper, Item upgradeItem) {
         TestContext ctx = setupTest(helper, EBItems.ADVANCED_EARTH_WAND.get().getDefaultInstance());
         ctx.workbench.setItem(ArcaneWorkbenchMenu.UPGRADE_SLOT, new ItemStack(upgradeItem, 1));
         ctx.player.getInventory().add(new ItemStack(upgradeItem, 64));
@@ -294,6 +277,6 @@ public class AWTestHandler {
     record TestContext(ArcaneWorkbenchBlockEntity workbench, Player player, ArcaneWorkbenchMenu menu) {
     }
 
-    private AWTestHandler() {
+    private ArcaneWorkbenchTestHandler() {
     }
 }

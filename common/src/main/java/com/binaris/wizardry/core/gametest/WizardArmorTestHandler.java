@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 public final class WizardArmorTestHandler {
     private static final Vec3 PLAYER_POS = new Vec3(1.5, 2.0, 1.5);
 
-    public static void armorNeverBreaks(GameTestHelper helper) {
+    static void armorNeverBreaks(GameTestHelper helper) {
         ItemStack stack = EBItems.WIZARD_BOOTS_FIRE.get().getDefaultInstance();
         IManaItem manaItem = (IManaItem) stack.getItem();
         Player player = GST.mockPlayer(helper, PLAYER_POS);
@@ -26,7 +26,7 @@ public final class WizardArmorTestHandler {
         helper.succeed();
     }
 
-    public static void armorAttributesWithMana(GameTestHelper helper) {
+    static void armorAttributesWithMana(GameTestHelper helper) {
         ItemStack stack = EBItems.WIZARD_BOOTS.get().getDefaultInstance();
         WizardArmorItem armorItem = (WizardArmorItem) stack.getItem();
         var modifiers = armorItem.getCustomAttributes(stack, EquipmentSlot.FEET);
@@ -34,7 +34,7 @@ public final class WizardArmorTestHandler {
         helper.succeed();
     }
 
-    public static void armorNoAttributesWithoutMana(GameTestHelper helper) {
+    static void armorNoAttributesWithoutMana(GameTestHelper helper) {
         ItemStack stack = EBItems.WIZARD_HAT.get().getDefaultInstance();
         WizardArmorItem armorItem = (WizardArmorItem) stack.getItem();
         IManaItem manaItem = (IManaItem) stack.getItem();

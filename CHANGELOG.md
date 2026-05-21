@@ -1,4 +1,5 @@
 - feat: added Russian language (thanks to @maxwell_pov on Discord)
 - refactor: added imbuement enchant tests
+- refactor: game tests are protected, and you can't access them normally anymore (only through the EBTestCentral)
 - fix: avoid ghost item when repairing ruining spell books
 - fix: avoid always needing to put the spectral dust first and then the ruined spell book, now the order doesn't matter

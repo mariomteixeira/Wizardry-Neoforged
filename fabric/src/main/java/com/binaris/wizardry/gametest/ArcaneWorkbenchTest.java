@@ -3,7 +3,6 @@ package com.binaris.wizardry.gametest;
 import com.binaris.wizardry.api.content.DeferredObject;
 import com.binaris.wizardry.content.item.armor.WizardArmorItem;
 import com.binaris.wizardry.content.item.armor.WizardArmorType;
-import com.binaris.wizardry.core.gametest.AWTestHandler;
 import com.binaris.wizardry.core.gametest.EBTestCentral;
 import com.binaris.wizardry.setup.datagen.EBDataGenProcessor;
 import com.binaris.wizardry.setup.registries.EBItems;
@@ -27,19 +26,19 @@ public class ArcaneWorkbenchTest {
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void canUpgradeToNextTier(GameTestHelper helper) {
         EBDataGenProcessor.wandItems().values().forEach(wand ->
-                AWTestHandler.canUpgradeToNextTier(helper, wand.get()));
+                EBTestCentral.ArcaneWorkbench.canUpgradeToNextTier(helper, wand.get()));
         helper.succeed();
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void putSpellOnBlankScroll(GameTestHelper helper) {
-        AWTestHandler.putSpellOnBlankScroll(helper, Spells.ARCANE_LOCK);
+        EBTestCentral.ArcaneWorkbench.putSpellOnBlankScroll(helper, Spells.ARCANE_LOCK);
         helper.succeed();
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void putSpellOnScroll(GameTestHelper helper) {
-        AWTestHandler.putSpellOnScrollFilled(helper);
+        EBTestCentral.ArcaneWorkbench.putSpellOnScrollFilled(helper);
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
@@ -54,7 +53,7 @@ public class ArcaneWorkbenchTest {
                 .map(DeferredObject::get)
                 .filter(item -> ((WizardArmorItem) item).getWizardArmorType() == WizardArmorType.WIZARD)
                 .forEach(armor -> upgrades.forEach(upgrade ->
-                        AWTestHandler.upgradeNormalArmor(helper, armor, upgrade)));
+                        EBTestCentral.ArcaneWorkbench.upgradeNormalArmor(helper, armor, upgrade)));
         helper.succeed();
     }
 
@@ -70,25 +69,25 @@ public class ArcaneWorkbenchTest {
                 .map(DeferredObject::get)
                 .filter(item -> ((WizardArmorItem) item).getWizardArmorType() != WizardArmorType.WIZARD)
                 .forEach(armor -> upgrades.forEach(upgrade ->
-                        AWTestHandler.cannotUpgradeMaxedArmor(helper, armor, upgrade)));
+                        EBTestCentral.ArcaneWorkbench.cannotUpgradeMaxedArmor(helper, armor, upgrade)));
         helper.succeed();
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void repairWand(GameTestHelper helper) {
         EBDataGenProcessor.wandItems().values().forEach(wand ->
-                AWTestHandler.repairWand(helper, wand.get(), EBItems.MAGIC_CRYSTAL.get()));
+                EBTestCentral.ArcaneWorkbench.repairWand(helper, wand.get(), EBItems.MAGIC_CRYSTAL.get()));
         helper.succeed();
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void cannotExceedBlankScrollLimit(GameTestHelper helper) {
-        AWTestHandler.cannotExceedBlankScrollLimit(helper);
+        EBTestCentral.ArcaneWorkbench.cannotExceedBlankScrollLimit(helper);
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void cannotExceedSpellBookLimit(GameTestHelper helper) {
-        AWTestHandler.cannotExceedSpellBookLimit(helper, Spells.FIREBALL);
+        EBTestCentral.ArcaneWorkbench.cannotExceedSpellBookLimit(helper, Spells.FIREBALL);
         helper.succeed();
     }
 
@@ -105,13 +104,13 @@ public class ArcaneWorkbenchTest {
         );
 
         upgrades.forEach(upgrade ->
-                AWTestHandler.cannotExceedUpgradeLimit(helper, upgrade));
+                EBTestCentral.ArcaneWorkbench.cannotExceedUpgradeLimit(helper, upgrade));
         helper.succeed();
     }
 
     @GameTest(template = "ebwizardry:arcane_workbench_3x3x3")
     public static void upgradeWandNextTierNBT(GameTestHelper helper) {
-        EBDataGenProcessor.wandItems().values().forEach(wand -> AWTestHandler.upgradeWandNextTierNBT(helper, wand.get()));
+        EBDataGenProcessor.wandItems().values().forEach(wand -> EBTestCentral.ArcaneWorkbench.upgradeWandNextTierNBT(helper, wand.get()));
         helper.succeed();
     }
 }

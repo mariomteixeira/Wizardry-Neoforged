@@ -26,11 +26,7 @@ public final class WandTestHandler {
     /** List of spells used in full spell list tests. */
     private static final List<Spell> FULL_SPELL_LIST = List.of(Spells.FIREBALL, Spells.ICE_SHARD, Spells.HEAL, Spells.LIFE_DRAIN, Spells.EVADE);
 
-    /**
-     * Tests basic spell navigation through a wand's spell list. Basically, checks if the previous/next spell selection
-     * on wand is working.
-     */
-    public static void wandBasicMovement(GameTestHelper helper) {
+    static void wandBasicMovement(GameTestHelper helper) {
         ItemStack wand = setupWandWithSpells(helper, FULL_SPELL_LIST);
         ICastItem wandItem = (ICastItem) wand.getItem();
 
@@ -47,11 +43,7 @@ public final class WandTestHandler {
         GST.assertSpellEquals(helper, wand, Spells.FIREBALL, "selecting previous spell from 'Evade'");
     }
 
-    /**
-     * Tests spell navigation when a wand has only one spell loaded, this should be cycling starting on that spell and
-     * then return to it
-     */
-    public static void wandPartiallyEmpty(GameTestHelper helper) {
+    static void wandPartiallyEmpty(GameTestHelper helper) {
         ItemStack wand = setupWandWithSpells(helper, List.of(Spells.FIREBALL));
         ICastItem wandItem = (ICastItem) wand.getItem();
 
@@ -63,11 +55,7 @@ public final class WandTestHandler {
         GST.assertSpellEquals(helper, wand, Spells.FIREBALL, "cycling through empty slots");
     }
 
-    /**
-     * Verifies that selecting next/previous spells wraps around correctly when cyclin through all spell slots multiple
-     * times.
-     */
-    public static void wandCircularSelection(GameTestHelper helper) {
+    static void wandCircularSelection(GameTestHelper helper) {
         ItemStack wand = setupWandWithSpells(helper, List.of(Spells.FIREBALL));
         ICastItem wandItem = (ICastItem) wand.getItem();
 
@@ -78,11 +66,7 @@ public final class WandTestHandler {
         GST.assertSpellEquals(helper, wand, Spells.FIREBALL, "cycling previous through all slots");
     }
 
-    /**
-     * Verifies that selecting a specific spell slot by literal index correctly
-     * changes the active spell to the spell at that index.
-     */
-    public static void wandLiteralIndex(GameTestHelper helper) {
+    static void wandLiteralIndex(GameTestHelper helper) {
         ItemStack wand = setupWandWithSpells(helper, FULL_SPELL_LIST);
         ICastItem wandItem = (ICastItem) wand.getItem();
 
@@ -96,8 +80,7 @@ public final class WandTestHandler {
         GST.assertSpellEquals(helper, wand, Spells.FIREBALL, "selecting index 0");
     }
 
-    /** Tests direct spell selection by index on a wand with only one spell loaded. */
-    public static void wandLiteralIndexPartiallyEmpty(GameTestHelper helper) {
+    static void wandLiteralIndexPartiallyEmpty(GameTestHelper helper) {
         ItemStack wand = setupWandWithSpells(helper, List.of(Spells.ICE_SHARD));
         ICastItem wandItem = (ICastItem) wand.getItem();
 
@@ -108,8 +91,7 @@ public final class WandTestHandler {
         GST.assertIndexEquals(helper, wand, 2, "selecting index 2 on a partially empty wand");
     }
 
-    /** Tests the siphon upgrade's behavior when a player kills a mob. */
-    public static void siphonUpgradePlayerKillMob(GameTestHelper helper) {
+    static void siphonUpgradePlayerKillMob(GameTestHelper helper) {
         Player player = GST.mockPlayer(helper, new Vec3(1, 2.0, 1));
         ItemStack wand = EBItems.MASTER_WAND.get().getDefaultInstance();
         CastItemDataHelper.applyUpgrade(wand, EBItems.SIPHON_UPGRADE.get());
@@ -130,9 +112,9 @@ public final class WandTestHandler {
     }
 
     /** Sets up a wand with the specified spells loaded into the Arcane Workbench. */
-    private static ItemStack setupWandWithSpells(GameTestHelper helper, List<Spell> spells) {
+    static ItemStack setupWandWithSpells(GameTestHelper helper, List<Spell> spells) {
         ItemStack wand = EBItems.MASTER_WAND.get().getDefaultInstance();
-        AWTestHandler.TestContext ctx = AWTestHandler.setupTest(helper, wand);
+        ArcaneWorkbenchTestHandler.TestContext ctx = ArcaneWorkbenchTestHandler.setupTest(helper, wand);
 
         IntStream.range(0, spells.size()).forEach(i -> ctx.workbench().setItem(i, RegistryUtils.spellBookItem(spells.get(i))));
         ctx.menu().onApplyButtonPressed(ctx.player());
