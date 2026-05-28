@@ -1,4 +1,6 @@
 - feat: added Russian language (thanks to @maxwell_pov on Discord)
+- feat: added French language (thanks to @KilgarrahThomas on GitHub)
+- feat: added Swedish language (thanks to @sugarooo on Discord)
 - refactor: added imbuement enchant tests
 - refactor: game tests are protected, and you can't access them normally anymore (only through the EBTestCentral)
 - fix: now you can't move items in the imbuement altar/receptacle when you're crafting
