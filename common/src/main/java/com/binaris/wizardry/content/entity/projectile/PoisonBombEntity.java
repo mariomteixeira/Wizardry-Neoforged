@@ -49,6 +49,11 @@ public class PoisonBombEntity extends BombEntity {
         if (hitResult instanceof EntityHitResult entityHitResult) {
             Entity entity = entityHitResult.getEntity();
             MagicDamageSource.causeMagicDamage(this, entity, damage, EBDamageSources.POISON);
+            if (entity instanceof LivingEntity living) {
+                living.addEffect(new MobEffectInstance(MobEffects.POISON,
+                        Spells.POISON_BOMB.property(DefaultProperties.EFFECT_DURATION),
+                        Spells.POISON_BOMB.property(DefaultProperties.EFFECT_STRENGTH)));
+            }
         }
 
         if (hitResult instanceof BlockHitResult) {
@@ -70,7 +75,6 @@ public class PoisonBombEntity extends BombEntity {
 
         this.level().broadcastEntityEvent(this, (byte) 3);
         this.discard();
-
     }
 
     @Override

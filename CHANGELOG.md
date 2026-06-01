@@ -1,23 +1,2 @@
-- feat: added Russian language (thanks to @maxwell_pov on Discord)
-- feat: added French language (thanks to @KilgarrahThomas on GitHub)
-- feat: added Swedish language (thanks to @sugarooo on Discord)
-- feat: added new config values for server side!
-  - max recent spells lookup (more = more memory usage and cast penalty for casting old spells repeatedly)
-  - recent spells time (in ticks) (time that a spell is considered recent)
-  - potency multiplier for upgrade
-  - blast radius multiplier for upgrade
-  - duration multiplier for upgrade
-  - range multiplier for upgrade
-  - cooldown multiplier for upgrade
-  - condenser tick interval for mana increase
-  - siphon mana increase for level upgrade
-- refactor: added imbuement enchant tests
-- refactor: game tests are protected, and you can't access them normally anymore (only through the EBTestCentral)
-- refactor: game tests now needs parameters that are passed to them inside the EBTestCentral
-- fix: now you can't move items in the imbuement altar/receptacle when you're crafting
-- fix: new config option to allow creative mode players to bypass arcane lock (default to false)
-- fix: new config option to allow OPs of a specific permission level to bypass arcane lock (default to 2 or above)
-- fix: avoid ghost item when repairing ruining spell books
-- fix: avoid always needing to put the spectral dust first and then the ruined spell book, now the order doesn't matter
-
-**Try to delete your configs to create the new ones with the new config values.**
+- fix: firebomb now can burn entities on direct hit
+- fix: poison bomb now poisons entities on direct hit
