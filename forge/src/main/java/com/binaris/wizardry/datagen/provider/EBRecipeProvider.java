@@ -1,7 +1,7 @@
 package com.binaris.wizardry.datagen.provider;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.api.content.util.SpellUtil;
+import com.binaris.wizardry.api.content.util.RegistryUtils;
 import com.binaris.wizardry.core.ImbuementAltarRecipeBuilder;
 import com.binaris.wizardry.datagen.help.ArmorData;
 import com.binaris.wizardry.datagen.help.ElementData;
@@ -202,7 +202,7 @@ public final class EBRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gunpowder", has(Items.GUNPOWDER))
                 .save(consumer);
 
-        imbuementFixRuinedBook(EBItems.SPECTRAL_DUST_EARTH.get(), WizardryMainMod.location("gameplay/imbuement/ruined_spell_book_sorcery"), WizardryMainMod.location("imbuement/fix_ruined_spell_book_earth"), consumer);
+        imbuementFixRuinedBook(EBItems.SPECTRAL_DUST_EARTH.get(), WizardryMainMod.location("gameplay/imbuement/ruined_spell_book_earth"), WizardryMainMod.location("imbuement/fix_ruined_spell_book_earth"), consumer);
         imbuementFixRuinedBook(EBItems.SPECTRAL_DUST_FIRE.get(), WizardryMainMod.location("gameplay/imbuement/ruined_spell_book_fire"), WizardryMainMod.location("imbuement/fix_ruined_spell_book_fire"), consumer);
         imbuementFixRuinedBook(EBItems.SPECTRAL_DUST_HEALING.get(), WizardryMainMod.location("gameplay/imbuement/ruined_spell_book_healing"), WizardryMainMod.location("imbuement/fix_ruined_spell_book_healing"), consumer);
         imbuementFixRuinedBook(EBItems.SPECTRAL_DUST_ICE.get(), WizardryMainMod.location("gameplay/imbuement/ruined_spell_book_ice"), WizardryMainMod.location("imbuement/fix_ruined_spell_book_ice"), consumer);
@@ -289,7 +289,7 @@ public final class EBRecipeProvider extends RecipeProvider {
     }
 
     private ItemLike spellBook() {
-        return SpellUtil.setSpell(EBItems.SPELL_BOOK.get().getDefaultInstance(), Spells.MAGIC_MISSILE).getItem();
+        return RegistryUtils.setSpell(EBItems.SPELL_BOOK.get().getDefaultInstance(), Spells.MAGIC_MISSILE).getItem();
     }
 
 

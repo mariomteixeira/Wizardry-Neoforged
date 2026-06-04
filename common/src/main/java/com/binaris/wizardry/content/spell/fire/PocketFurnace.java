@@ -8,10 +8,11 @@ import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperty;
 import com.binaris.wizardry.api.content.util.InventoryUtil;
-import com.binaris.wizardry.core.config.EBConfig;
+import com.binaris.wizardry.core.config.EBServerConfig;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ArmorItem;
@@ -50,7 +51,7 @@ public class PocketFurnace extends Spell {
             result = optionalSmeltingRecipe.get().getResultItem(null);
             if (result.isEmpty() || stack.getItem() instanceof TieredItem || stack.getItem() instanceof ArmorItem)
                 continue;
-            if (EBConfig.isOnList(EBConfig.MELT_ITEMS_BLACKLIST, stack)) continue;
+            if (EBServerConfig.isOnList(EBServerConfig.MELT_ITEMS_BLACKLIST, stack)) continue;
 
             hasSmeltableItems = true;
             break;
@@ -62,14 +63,7 @@ public class PocketFurnace extends Spell {
 
         this.playSound(ctx.world(), ctx.caster(), ctx.castingTicks(), -1);
 
-        if (ctx.world().isClientSide) {
-            for (int i = 0; i < 10; i++) {
-                double x1 = (float) ctx.caster().position().x + ctx.world().random.nextFloat() * 2 - 1.0F;
-                double y1 = (float) ctx.caster().position().y + ctx.caster().getEyeHeight() - 0.5F + ctx.world().random.nextFloat();
-                double z1 = (float) ctx.caster().position().z + ctx.world().random.nextFloat() * 2 - 1.0F;
-                ctx.world().addParticle(ParticleTypes.FLAME, x1, y1, z1, 0, 0.01F, 0);
-            }
-        } else {
+        if (!ctx.world().isClientSide) {
             for (int i = 0; i < ctx.caster().getInventory().getContainerSize() && usesLeft > 0; i++) {
                 stack = ctx.caster().getInventory().getItem(i);
                 if (stack.isEmpty()) continue;
@@ -83,7 +77,7 @@ public class PocketFurnace extends Spell {
                 result = optionalSmeltingRecipe.get().getResultItem(null);
                 if (result.isEmpty() || stack.getItem() instanceof TieredItem || stack.getItem() instanceof ArmorItem)
                     continue;
-                if (EBConfig.isOnList(EBConfig.MELT_ITEMS_BLACKLIST, stack)) continue;
+                if (EBServerConfig.isOnList(EBServerConfig.MELT_ITEMS_BLACKLIST, stack)) continue;
 
                 if (stack.getCount() <= usesLeft) {
                     ItemStack stack2 = new ItemStack(result.getItem(), stack.getCount());
@@ -105,6 +99,18 @@ public class PocketFurnace extends Spell {
                 }
             }
         }
+
+        // This could be done only in client side, but the auto smelt charm only applies on ItemEntity#playerTouch, and that only happens in server side
+        // So we send the particles to both cases, spell cast and auto smelt charm cast
+        if (itemsSmelted && !ctx.world().isClientSide) {
+            for (int i = 0; i < 10; i++) {
+                double x1 = (float) ctx.caster().position().x + ctx.world().random.nextFloat() * 2 - 1.0F;
+                double y1 = (float) ctx.caster().position().y + ctx.caster().getEyeHeight() - 0.5F + ctx.world().random.nextFloat();
+                double z1 = (float) ctx.caster().position().z + ctx.world().random.nextFloat() * 2 - 1.0F;
+                ( (ServerLevel) ctx.world()).sendParticles(ParticleTypes.FLAME, x1, y1, z1, 1, 0.01F, 0, 0, 0);
+            }
+        }
+
         return itemsSmelted;
     }
 

@@ -39,7 +39,7 @@ public class FireBombEntity extends BombEntity {
         super.onHit(hitResult);
         if (hitResult instanceof EntityHitResult entityHitResult) {
             Entity entity = entityHitResult.getEntity();
-
+            entity.setSecondsOnFire(Spells.FIREBOMB.property(DefaultProperties.EFFECT_DURATION));
             float damage = Spells.FIREBOMB.property(DefaultProperties.DAMAGE);
             MagicDamageSource.causeMagicDamage(this, entity, damage, EBDamageSources.FIRE);
         } else if (hitResult instanceof BlockHitResult) {

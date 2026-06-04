@@ -1,13 +1,15 @@
 package com.binaris.wizardry.content.item;
 
+import com.binaris.wizardry.api.content.event.EBItemPickupEvent;
+import com.binaris.wizardry.api.content.util.RegistryUtils;
 import com.binaris.wizardry.core.EBLogger;
-import com.binaris.wizardry.api.content.util.SpellUtil;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.Spells;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -29,12 +31,13 @@ public class RandomSpellBookItem extends Item {
     }
 
     public static void create(Level level, Player player, ItemStack original) {
-        if (level.isClientSide) return;
         ItemStack stack;
         CompoundTag tag = original.getTag();
+        original.shrink(1);
+        if (level.isClientSide) return;
 
         if (tag == null || !tag.contains("LootTable")) {
-            stack = SpellUtil.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), Spells.MAGIC_MISSILE);
+            stack = RegistryUtils.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), Spells.MAGIC_MISSILE);
             spawn(level, player.blockPosition(), stack);
             EBLogger.error("Attempted to use a RandomSpellBookItem without a LootTable NBT tag.");
             return;
@@ -44,7 +47,7 @@ public class RandomSpellBookItem extends Item {
         ResourceLocation lootTableLocation = ResourceLocation.tryParse(lootTableId);
 
         if (lootTableLocation == null) {
-            stack = SpellUtil.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), Spells.MAGIC_MISSILE);
+            stack = RegistryUtils.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), Spells.MAGIC_MISSILE);
             spawn(level, player.blockPosition(), stack);
             EBLogger.error("Attempted to use a RandomSpellBookItem with an invalid LootTable NBT tag.");
             return;
@@ -59,8 +62,17 @@ public class RandomSpellBookItem extends Item {
 
         List<ItemStack> loot = lootTable.getRandomItems(lootParams);
         loot.forEach(i -> spawn(level, player.blockPosition(), i));
+    }
 
-        original.shrink(1);
+    public static void onPickup(EBItemPickupEvent event) {
+        ItemStack stack = event.getItemEntity().getItem();
+
+        if (stack.getItem() instanceof RandomSpellBookItem) {
+            RandomSpellBookItem.create(event.getEntity().level(), event.getEntity(), stack);
+            event.getEntity().awardStat(Stats.ITEM_PICKED_UP.get(stack.getItem()), stack.getCount());
+            event.getItemEntity().discard();
+            event.setCanceled(true);
+        }
     }
 
     private static void spawn(Level level, BlockPos pos, ItemStack stack) {

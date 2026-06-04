@@ -3,30 +3,22 @@ package com.binaris.wizardry.setup.registries;
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.DeferredObject;
 import com.binaris.wizardry.api.content.item.ArtifactItem;
-import com.binaris.wizardry.api.content.item.ISpellCastingItem;
 import com.binaris.wizardry.api.content.spell.Element;
 import com.binaris.wizardry.api.content.spell.SpellTier;
+import com.binaris.wizardry.api.content.spell.SpellType;
 import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
-import com.binaris.wizardry.api.content.util.RegisterFunction;
 import com.binaris.wizardry.content.item.*;
+import com.binaris.wizardry.content.item.armor.*;
 import com.binaris.wizardry.content.item.artifact.*;
-import com.binaris.wizardry.content.spell.abstr.ConjureItemSpell;
-import com.binaris.wizardry.content.spell.necromancy.Banish;
-import com.binaris.wizardry.content.spell.sorcery.ImbueWeapon;
 import com.binaris.wizardry.core.IArtifactEffect;
-import com.binaris.wizardry.core.QuickArtifactEffect;
-import com.binaris.wizardry.core.config.EBConfig;
+import com.binaris.wizardry.core.config.EBServerConfig;
 import com.binaris.wizardry.core.integrations.ArtifactChannel;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.datagen.EBDataGenProcessor;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -35,7 +27,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static com.binaris.wizardry.core.ArtifactUtils.meleeRing;
+import static com.binaris.wizardry.core.QuickArtifactEffect.*;
 
 
 /**
@@ -128,16 +120,16 @@ public final class EBItems {
     public static final DeferredObject<Item> ADVANCED_SORCERY_WAND = wand("wand_advanced_sorcery", SpellTiers.ADVANCED, Elements.SORCERY);
     public static final DeferredObject<Item> MASTER_SORCERY_WAND = wand("wand_master_sorcery", SpellTiers.MASTER, Elements.SORCERY);
     //Crystals
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_SHARD = crystal("magic_crystal_shard", EBConfig.MANA_PER_SHARD.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL = crystal("magic_crystal", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_EARTH = crystal("magic_crystal_earth", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_FIRE = crystal("magic_crystal_fire", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_HEALING = crystal("magic_crystal_healing", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_ICE = crystal("magic_crystal_ice", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_LIGHTNING = crystal("magic_crystal_lightning", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_NECROMANCY = crystal("magic_crystal_necromancy", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_SORCERY = crystal("magic_crystal_sorcery", EBConfig.MANA_PER_CRYSTAL.get());
-    public static final DeferredObject<Item> MAGIC_CRYSTAL_GRAND = crystal("magic_crystal_grand", EBConfig.GRAND_CRYSTAL_MANA.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_SHARD = crystal("magic_crystal_shard", EBServerConfig.MANA_PER_SHARD.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL = crystal("magic_crystal", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_EARTH = crystal("magic_crystal_earth", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_FIRE = crystal("magic_crystal_fire", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_HEALING = crystal("magic_crystal_healing", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_ICE = crystal("magic_crystal_ice", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_LIGHTNING = crystal("magic_crystal_lightning", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_NECROMANCY = crystal("magic_crystal_necromancy", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_SORCERY = crystal("magic_crystal_sorcery", EBServerConfig.MANA_PER_CRYSTAL.get());
+    public static final DeferredObject<Item> MAGIC_CRYSTAL_GRAND = crystal("magic_crystal_grand", EBServerConfig.GRAND_CRYSTAL_MANA.get());
     //Wand Upgrades
     public static final DeferredObject<Item> ATTUNEMENT_UPGRADE = wandUpgrade("attunement_upgrade");
     public static final DeferredObject<Item> BLAST_UPGRADE = wandUpgrade("blast_upgrade");
@@ -149,38 +141,38 @@ public final class EBItems {
     public static final DeferredObject<Item> SIPHON_UPGRADE = wandUpgrade("siphon_upgrade");
     public static final DeferredObject<Item> STORAGE_UPGRADE = wandUpgrade("storage_upgrade");
     // Wizard Armors
-    public static final DeferredObject<Item> WIZARD_HAT = armor("wizard_hat", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, null);
-    public static final DeferredObject<Item> WIZARD_ROBE = armor("wizard_robe", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, null);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS = armor("wizard_leggings", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, null);
-    public static final DeferredObject<Item> WIZARD_BOOTS = armor("wizard_boots", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, null);
-    public static final DeferredObject<Item> WIZARD_HAT_EARTH = armor("wizard_hat_earth", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.EARTH);
-    public static final DeferredObject<Item> WIZARD_ROBE_EARTH = armor("wizard_robe_earth", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.EARTH);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_EARTH = armor("wizard_leggings_earth", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.EARTH);
-    public static final DeferredObject<Item> WIZARD_BOOTS_EARTH = armor("wizard_boots_earth", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.EARTH);
-    public static final DeferredObject<Item> WIZARD_HAT_FIRE = armor("wizard_hat_fire", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.FIRE);
-    public static final DeferredObject<Item> WIZARD_ROBE_FIRE = armor("wizard_robe_fire", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.FIRE);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_FIRE = armor("wizard_leggings_fire", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.FIRE);
-    public static final DeferredObject<Item> WIZARD_BOOTS_FIRE = armor("wizard_boots_fire", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.FIRE);
-    public static final DeferredObject<Item> WIZARD_HAT_HEALING = armor("wizard_hat_healing", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.HEALING);
-    public static final DeferredObject<Item> WIZARD_ROBE_HEALING = armor("wizard_robe_healing", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.HEALING);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_HEALING = armor("wizard_leggings_healing", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.HEALING);
-    public static final DeferredObject<Item> WIZARD_BOOTS_HEALING = armor("wizard_boots_healing", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.HEALING);
-    public static final DeferredObject<Item> WIZARD_HAT_ICE = armor("wizard_hat_ice", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.ICE);
-    public static final DeferredObject<Item> WIZARD_ROBE_ICE = armor("wizard_robe_ice", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.ICE);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_ICE = armor("wizard_leggings_ice", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.ICE);
-    public static final DeferredObject<Item> WIZARD_BOOTS_ICE = armor("wizard_boots_ice", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.ICE);
-    public static final DeferredObject<Item> WIZARD_HAT_LIGHTNING = armor("wizard_hat_lightning", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.LIGHTNING);
-    public static final DeferredObject<Item> WIZARD_ROBE_LIGHTNING = armor("wizard_robe_lightning", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.LIGHTNING);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_LIGHTNING = armor("wizard_leggings_lightning", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.LIGHTNING);
-    public static final DeferredObject<Item> WIZARD_BOOTS_LIGHTNING = armor("wizard_boots_lightning", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.LIGHTNING);
-    public static final DeferredObject<Item> WIZARD_HAT_NECROMANCY = armor("wizard_hat_necromancy", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.NECROMANCY);
-    public static final DeferredObject<Item> WIZARD_ROBE_NECROMANCY = armor("wizard_robe_necromancy", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.NECROMANCY);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_NECROMANCY = armor("wizard_leggings_necromancy", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.NECROMANCY);
-    public static final DeferredObject<Item> WIZARD_BOOTS_NECROMANCY = armor("wizard_boots_necromancy", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.NECROMANCY);
-    public static final DeferredObject<Item> WIZARD_HAT_SORCERY = armor("wizard_hat_sorcery", WizardArmorType.WIZARD, ArmorItem.Type.HELMET, Elements.SORCERY);
-    public static final DeferredObject<Item> WIZARD_ROBE_SORCERY = armor("wizard_robe_sorcery", WizardArmorType.WIZARD, ArmorItem.Type.CHESTPLATE, Elements.SORCERY);
-    public static final DeferredObject<Item> WIZARD_LEGGINGS_SORCERY = armor("wizard_leggings_sorcery", WizardArmorType.WIZARD, ArmorItem.Type.LEGGINGS, Elements.SORCERY);
-    public static final DeferredObject<Item> WIZARD_BOOTS_SORCERY = armor("wizard_boots_sorcery", WizardArmorType.WIZARD, ArmorItem.Type.BOOTS, Elements.SORCERY);
+    public static final DeferredObject<Item> WIZARD_HAT = armor("wizard_hat", ArmorItem.Type.HELMET, null);
+    public static final DeferredObject<Item> WIZARD_ROBE = armor("wizard_robe", ArmorItem.Type.CHESTPLATE, null);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS = armor("wizard_leggings", ArmorItem.Type.LEGGINGS, null);
+    public static final DeferredObject<Item> WIZARD_BOOTS = armor("wizard_boots", ArmorItem.Type.BOOTS, null);
+    public static final DeferredObject<Item> WIZARD_HAT_EARTH = armor("wizard_hat_earth", ArmorItem.Type.HELMET, Elements.EARTH);
+    public static final DeferredObject<Item> WIZARD_ROBE_EARTH = armor("wizard_robe_earth", ArmorItem.Type.CHESTPLATE, Elements.EARTH);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_EARTH = armor("wizard_leggings_earth", ArmorItem.Type.LEGGINGS, Elements.EARTH);
+    public static final DeferredObject<Item> WIZARD_BOOTS_EARTH = armor("wizard_boots_earth", ArmorItem.Type.BOOTS, Elements.EARTH);
+    public static final DeferredObject<Item> WIZARD_HAT_FIRE = armor("wizard_hat_fire", ArmorItem.Type.HELMET, Elements.FIRE);
+    public static final DeferredObject<Item> WIZARD_ROBE_FIRE = armor("wizard_robe_fire", ArmorItem.Type.CHESTPLATE, Elements.FIRE);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_FIRE = armor("wizard_leggings_fire", ArmorItem.Type.LEGGINGS, Elements.FIRE);
+    public static final DeferredObject<Item> WIZARD_BOOTS_FIRE = armor("wizard_boots_fire", ArmorItem.Type.BOOTS, Elements.FIRE);
+    public static final DeferredObject<Item> WIZARD_HAT_HEALING = armor("wizard_hat_healing", ArmorItem.Type.HELMET, Elements.HEALING);
+    public static final DeferredObject<Item> WIZARD_ROBE_HEALING = armor("wizard_robe_healing", ArmorItem.Type.CHESTPLATE, Elements.HEALING);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_HEALING = armor("wizard_leggings_healing", ArmorItem.Type.LEGGINGS, Elements.HEALING);
+    public static final DeferredObject<Item> WIZARD_BOOTS_HEALING = armor("wizard_boots_healing", ArmorItem.Type.BOOTS, Elements.HEALING);
+    public static final DeferredObject<Item> WIZARD_HAT_ICE = armor("wizard_hat_ice", ArmorItem.Type.HELMET, Elements.ICE);
+    public static final DeferredObject<Item> WIZARD_ROBE_ICE = armor("wizard_robe_ice", ArmorItem.Type.CHESTPLATE, Elements.ICE);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_ICE = armor("wizard_leggings_ice", ArmorItem.Type.LEGGINGS, Elements.ICE);
+    public static final DeferredObject<Item> WIZARD_BOOTS_ICE = armor("wizard_boots_ice", ArmorItem.Type.BOOTS, Elements.ICE);
+    public static final DeferredObject<Item> WIZARD_HAT_LIGHTNING = armor("wizard_hat_lightning", ArmorItem.Type.HELMET, Elements.LIGHTNING);
+    public static final DeferredObject<Item> WIZARD_ROBE_LIGHTNING = armor("wizard_robe_lightning", ArmorItem.Type.CHESTPLATE, Elements.LIGHTNING);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_LIGHTNING = armor("wizard_leggings_lightning", ArmorItem.Type.LEGGINGS, Elements.LIGHTNING);
+    public static final DeferredObject<Item> WIZARD_BOOTS_LIGHTNING = armor("wizard_boots_lightning", ArmorItem.Type.BOOTS, Elements.LIGHTNING);
+    public static final DeferredObject<Item> WIZARD_HAT_NECROMANCY = armor("wizard_hat_necromancy", ArmorItem.Type.HELMET, Elements.NECROMANCY);
+    public static final DeferredObject<Item> WIZARD_ROBE_NECROMANCY = armor("wizard_robe_necromancy", ArmorItem.Type.CHESTPLATE, Elements.NECROMANCY);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_NECROMANCY = armor("wizard_leggings_necromancy", ArmorItem.Type.LEGGINGS, Elements.NECROMANCY);
+    public static final DeferredObject<Item> WIZARD_BOOTS_NECROMANCY = armor("wizard_boots_necromancy", ArmorItem.Type.BOOTS, Elements.NECROMANCY);
+    public static final DeferredObject<Item> WIZARD_HAT_SORCERY = armor("wizard_hat_sorcery", ArmorItem.Type.HELMET, Elements.SORCERY);
+    public static final DeferredObject<Item> WIZARD_ROBE_SORCERY = armor("wizard_robe_sorcery", ArmorItem.Type.CHESTPLATE, Elements.SORCERY);
+    public static final DeferredObject<Item> WIZARD_LEGGINGS_SORCERY = armor("wizard_leggings_sorcery", ArmorItem.Type.LEGGINGS, Elements.SORCERY);
+    public static final DeferredObject<Item> WIZARD_BOOTS_SORCERY = armor("wizard_boots_sorcery", ArmorItem.Type.BOOTS, Elements.SORCERY);
     // Sage Armors
     public static final DeferredObject<Item> SAGE_HAT = armor("sage_hat", WizardArmorType.SAGE, ArmorItem.Type.HELMET, null);
     public static final DeferredObject<Item> SAGE_ROBE = armor("sage_robe", WizardArmorType.SAGE, ArmorItem.Type.CHESTPLATE, null);
@@ -284,19 +276,19 @@ public final class EBItems {
     public static final DeferredObject<Item> CHARM_ABSEILING = charmArtifact("charm_abseiling", Rarity.RARE, null);
     public static final DeferredObject<Item> CHARM_AUTO_SMELT = charmArtifact("charm_auto_smelt", Rarity.RARE, null);
     public static final DeferredObject<Item> CHARM_BLACK_HOLE = charmArtifact("charm_black_hole", Rarity.EPIC, null);
-    public static final DeferredObject<Item> CHARM_EXPERIENCE_TOME = charmArtifact("charm_experience_tome", Rarity.EPIC, QuickArtifactEffect.spellPreCast((e, s) -> true, (e, s) -> e.getModifiers().multiply(SpellModifiers.PROGRESSION, 1.5f)));
+    public static final DeferredObject<Item> CHARM_EXPERIENCE_TOME = charmArtifact("charm_experience_tome", Rarity.EPIC, changeModifiers(SpellModifiers.PROGRESSION, 1.5F, SpellModifiers.Operation.MULTIPLY));
     public static final DeferredObject<Item> CHARM_FEEDING = charmArtifact("charm_feeding", Rarity.UNCOMMON, new FeedingCharmEffect());
-    public static final DeferredObject<Item> CHARM_FLIGHT = charmArtifact("charm_flight", Rarity.RARE, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell() == Spells.FLIGHT, (e, s) -> e.getModifiers().multiply(SpellModifiers.POTENCY, 1.5f)));
+    public static final DeferredObject<Item> CHARM_FLIGHT = charmArtifact("charm_flight", Rarity.RARE, changeModifiersIfCasting(() -> Spells.FLIGHT, SpellModifiers.POTENCY, 1.5f, SpellModifiers.Operation.MULTIPLY));
     public static final DeferredObject<Item> CHARM_GROWTH = charmArtifact("charm_growth", Rarity.UNCOMMON, null);
     public static final DeferredObject<Item> CHARM_HAGGLER = charmArtifact("charm_haggler", Rarity.RARE, null);
     public static final DeferredObject<Item> CHARM_HUNGER_CASTING = charmArtifact("charm_hunger_casting", Rarity.RARE, new HungerCastingCharmEffect());
     public static final DeferredObject<Item> CHARM_LAVA_WALKING = charmArtifact("charm_lava_walking", Rarity.EPIC, null);
     public static final DeferredObject<Item> CHARM_LIGHT = charmArtifact("charm_light", Rarity.RARE, null);
-    public static final DeferredObject<Item> CHARM_MINION_HEALTH = charmArtifact("charm_minion_health", Rarity.UNCOMMON, null);
+    public static final DeferredObject<Item> CHARM_MINION_HEALTH = charmArtifact("charm_minion_health", Rarity.UNCOMMON, changeModifiersIfCastingType(SpellType.MINION, SpellModifiers.HEALTH_MODIFIER, 1.5f, SpellModifiers.Operation.MULTIPLY));
     public static final DeferredObject<Item> CHARM_MINION_VARIANTS = charmArtifact("charm_minion_variants", Rarity.UNCOMMON, null);
     public static final DeferredObject<Item> CHARM_MOUNT_TELEPORTING = charmArtifact("charm_mount_teleporting", Rarity.RARE, null);
     public static final DeferredObject<Item> CHARM_MOVE_SPEED = charmArtifact("charm_move_speed", Rarity.RARE, null);
-    public static final DeferredObject<Item> CHARM_SILK_TOUCH = charmArtifact("charm_silk_touch", Rarity.EPIC, null);
+    public static final DeferredObject<Item> CHARM_SILK_TOUCH = charmArtifact("charm_silk_touch", Rarity.EPIC, null); // TODO
     public static final DeferredObject<Item> CHARM_SIXTH_SENSE = charmArtifact("charm_sixth_sense", Rarity.UNCOMMON, null);
     public static final DeferredObject<Item> CHARM_SPELL_DISCOVERY = charmArtifact("charm_spell_discovery", Rarity.UNCOMMON, null);
     public static final DeferredObject<Item> CHARM_STOP_TIME = charmArtifact("charm_stop_time", Rarity.EPIC, null);
@@ -308,48 +300,48 @@ public final class EBItems {
     public static final DeferredObject<Item> AMULET_ANCHORING = necklaceArtifact("amulet_anchoring", Rarity.RARE, null);
     public static final DeferredObject<Item> AMULET_ARCANE_DEFENCE = necklaceArtifact("amulet_arcane_defence", Rarity.RARE, new ArcaneDefenseAmuletEffect());
     public static final DeferredObject<Item> AMULET_AUTO_SHIELD = necklaceArtifact("amulet_auto_shield", Rarity.RARE, new AutoShieldAmuletEffect());
-    public static final DeferredObject<Item> AMULET_BANISHING = necklaceArtifact("amulet_banishing", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> e.getSource().getEntity() instanceof Player player && player.level().random.nextFloat() < 0.2f && !e.getSource().isIndirect() && e.getSource().getDirectEntity() instanceof LivingEntity target, (e, s) -> ((Banish) Spells.BANISH).teleport((LivingEntity) e.getSource().getDirectEntity(), e.getSource().getDirectEntity().level(), 8 + e.getSource().getDirectEntity().level().random.nextDouble() * 8)));
-    public static final DeferredObject<Item> AMULET_CHANNELING = necklaceArtifact("amulet_channeling", Rarity.RARE, QuickArtifactEffect.hurtEntity((e, s) -> e.getSource().getEntity() instanceof Player player && player.level().random.nextFloat() < 0.3f && e.getSource().is(EBDamageSources.FROST), (e, s) -> e.setCanceled(true)));
+    public static final DeferredObject<Item> AMULET_BANISHING = necklaceArtifact("amulet_banishing", Rarity.UNCOMMON, new BanishingAmuletEffect());
+    public static final DeferredObject<Item> AMULET_CHANNELING = necklaceArtifact("amulet_channeling", Rarity.RARE, new ChannelingAmuletEffect());
     public static final DeferredObject<Item> AMULET_FIRE_CLOAKING = necklaceArtifact("amulet_fire_cloaking", Rarity.RARE, new FireCloakingAmuletEffect());
-    public static final DeferredObject<Item> AMULET_FIRE_PROTECTION = necklaceArtifact("amulet_fire_protection", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> e.getSource().is(EBDamageSources.FIRE), (e, s) -> e.setAmount(e.getAmount() * 0.7f)));
+    public static final DeferredObject<Item> AMULET_FIRE_PROTECTION = necklaceArtifact("amulet_fire_protection", Rarity.UNCOMMON, changeDamageIfSource(EBDamageSources.FIRE, 0.7F, SpellModifiers.Operation.MULTIPLY));
     public static final DeferredObject<Item> AMULET_FROST_WARDING = necklaceArtifact("amulet_frost_warding", Rarity.RARE, new FrostWardingAmuletEffect());
     public static final DeferredObject<Item> AMULET_ICE_IMMUNITY = necklaceArtifact("amulet_ice_immunity", Rarity.EPIC, null);
-    public static final DeferredObject<Item> AMULET_ICE_PROTECTION = necklaceArtifact("amulet_ice_protection", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> e.getSource().getEntity() instanceof Player player && e.getSource().is(EBDamageSources.FROST), (e, s) -> e.setAmount(e.getAmount() * 0.7f)));
+    public static final DeferredObject<Item> AMULET_ICE_PROTECTION = necklaceArtifact("amulet_ice_protection", Rarity.UNCOMMON, changeDamageIfSource(EBDamageSources.FROST, 0.7F, SpellModifiers.Operation.MULTIPLY));
     public static final DeferredObject<Item> AMULET_LICH = necklaceArtifact("amulet_lich", Rarity.UNCOMMON, new LichAmuletEffect());
     public static final DeferredObject<Item> AMULET_POTENTIAL = necklaceArtifact("amulet_potential", Rarity.RARE, new AmuletPotentialEffect());
-    public static final DeferredObject<Item> AMULET_RECOVERY = necklaceArtifact("amulet_recovery", Rarity.UNCOMMON, null);
+    public static final DeferredObject<Item> AMULET_RECOVERY = necklaceArtifact("amulet_recovery", Rarity.UNCOMMON, new RecoveryAmuletEffect());
     public static final DeferredObject<Item> AMULET_RESURRECTION = necklaceArtifact("amulet_resurrection", Rarity.EPIC, null); // TODO PlayerDropsEvent
-    public static final DeferredObject<Item> AMULET_TRANSIENCE = necklaceArtifact("amulet_transience", Rarity.EPIC, QuickArtifactEffect.hurtEntity((e, s) -> e.getSource().getEntity() instanceof Player player && player.getHealth() <= 6 && player.level().random.nextFloat() < 0.25f, (e, s) -> ((Player) e.getSource().getEntity()).addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 300, 0, false, false))));
-    public static final DeferredObject<Item> AMULET_WARDING = necklaceArtifact("amulet_warding", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> EBDamageSources.isMagic(e.getSource()), (e, s) -> e.setAmount(e.getAmount() * 0.9f)));
+    public static final DeferredObject<Item> AMULET_TRANSIENCE = necklaceArtifact("amulet_transience", Rarity.EPIC, new TransienceAmuletEffect());
+    public static final DeferredObject<Item> AMULET_WARDING = necklaceArtifact("amulet_warding", Rarity.UNCOMMON, changeDamageIfSource(null, 0.9F, SpellModifiers.Operation.MULTIPLY));
     public static final DeferredObject<Item> AMULET_WISDOM = necklaceArtifact("amulet_wisdom", Rarity.RARE, null);
     public static final DeferredObject<Item> AMULET_WITHER_IMMUNITY = necklaceArtifact("amulet_wither_immunity", Rarity.EPIC, null);
     // Rings
-    public static final DeferredObject<Item> RING_FULL_MOON = ringArtifact("ring_full_moon", Rarity.RARE, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell().getElement() == Elements.EARTH && !e.getCaster().level().isDay() && e.getCaster().level().getMoonPhase() == 0, (e, s) -> e.getModifiers().multiply(SpellModifiers.COOLDOWN, 0.3f)));
-    public static final DeferredObject<Item> RING_STORM = ringArtifact("ring_storm", Rarity.RARE, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell().getElement() == Elements.LIGHTNING && e.getLevel().isThundering(), (e, s) -> e.getModifiers().multiply(SpellModifiers.COOLDOWN, 0.3f)));
-    public static final DeferredObject<Item> RING_CONJURER = ringArtifact("ring_conjurer", Rarity.RARE, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell() instanceof ConjureItemSpell, (e, s) -> e.getModifiers().multiply(SpellModifiers.DURATION, 2)));
+    public static final DeferredObject<Item> RING_FULL_MOON = ringArtifact("ring_full_moon", Rarity.RARE, new FullMoonRingEffect());
+    public static final DeferredObject<Item> RING_STORM = ringArtifact("ring_storm", Rarity.RARE, new RingStormEffect());
+    public static final DeferredObject<Item> RING_CONJURER = ringArtifact("ring_conjurer", Rarity.RARE, new ConjurerRingEffect());
     public static final DeferredObject<Item> RING_ARCANE_FROST = ringArtifact("ring_arcane_frost", Rarity.EPIC, new ArcaneFrostRingEffect());
-    public static final DeferredObject<Item> RING_BATTLEMAGE = ringArtifact("ring_battlemage", Rarity.UNCOMMON, QuickArtifactEffect.spellPreCast((e, s) -> e.getCaster() instanceof Player player && player.getOffhandItem().getItem() instanceof ISpellCastingItem && ImbueWeapon.isSword(player.getMainHandItem()), (e, s) -> e.getModifiers().multiply(SpellModifiers.POTENCY, 1.1f)));
-    public static final DeferredObject<Item> RING_BLOCKWRANGLER = ringArtifact("ring_blockwrangler", Rarity.RARE, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell() == Spells.GREATER_TELEKINESIS, (e, s) -> e.getModifiers().multiply(SpellModifiers.POTENCY, 2)));
-    public static final DeferredObject<Item> RING_COMBUSTION = ringArtifact("ring_combustion", Rarity.EPIC, QuickArtifactEffect.death((e, s) -> e.getSource().typeHolder().is(EBDamageSources.FIRE.location()), (e, s) -> e.getEntity().level().explode(e.getEntity(), e.getEntity().xo, e.getEntity().yo + 1, e.getEntity().zo, 2.0f, Level.ExplosionInteraction.NONE)));
+    public static final DeferredObject<Item> RING_BATTLEMAGE = ringArtifact("ring_battlemage", Rarity.UNCOMMON, new BattlemageRingEffect());
+    public static final DeferredObject<Item> RING_BLOCKWRANGLER = ringArtifact("ring_blockwrangler", Rarity.RARE, changeModifiersIfCasting(() -> Spells.GREATER_TELEKINESIS, SpellModifiers.POTENCY, 2, SpellModifiers.Operation.MULTIPLY));
+    public static final DeferredObject<Item> RING_COMBUSTION = ringArtifact("ring_combustion", Rarity.EPIC, new CombustionRingEffect());
     public static final DeferredObject<Item> RING_CONDENSING = ringArtifact("ring_condensing", Rarity.RARE, new CondensingRingEffect());
     public static final DeferredObject<Item> RING_DEFENDER = ringArtifact("ring_defender", Rarity.RARE, null);
     public static final DeferredObject<Item> RING_DISINTEGRATION = ringArtifact("ring_disintegration", Rarity.RARE, null);
-    public static final DeferredObject<Item> RING_EARTH_BIOME = ringArtifact("ring_earth_biome", Rarity.UNCOMMON, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell().getElement() == Elements.EARTH && Services.PLATFORM.inEarthBiomes(e.getCaster().level().getBiome(e.getCaster().blockPosition())), (e, s) -> e.getModifiers().multiply(SpellModifiers.POTENCY, 1.3f)));
-    public static final DeferredObject<Item> RING_EARTH_MELEE = ringArtifact("ring_earth_melee", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> meleeRing(e.getSource(), Elements.EARTH), (e, s) -> e.getDamagedEntity().addEffect(new MobEffectInstance(MobEffects.POISON, 200))));
+    public static final DeferredObject<Item> RING_EARTH_BIOME = ringArtifact("ring_earth_biome", Rarity.UNCOMMON, changeModifiersByBiomeElement(Elements.EARTH, Services.PLATFORM::inEarthBiomes, SpellModifiers.POTENCY, 1.3f, SpellModifiers.Operation.MULTIPLY));
+    public static final DeferredObject<Item> RING_EARTH_MELEE = ringArtifact("ring_earth_melee", Rarity.UNCOMMON, meleeRing(Elements.EARTH, MobEffects.POISON, 0, 200));
     public static final DeferredObject<Item> RING_EVOKER = ringArtifact("ring_evoker", Rarity.RARE, null);
     public static final DeferredObject<Item> RING_EXTRACTION = ringArtifact("ring_extraction", Rarity.UNCOMMON, new ExtractionRingEffect());
-    public static final DeferredObject<Item> RING_FIRE_BIOME = ringArtifact("ring_fire_biome", Rarity.UNCOMMON, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell().getElement() == Elements.FIRE && Services.PLATFORM.intHotBiomes(e.getCaster().level().getBiome(e.getCaster().blockPosition())), (e, s) -> e.getModifiers().multiply(SpellModifiers.POTENCY, 1.3f)));
-    public static final DeferredObject<Item> RING_FIRE_MELEE = ringArtifact("ring_fire_melee", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> meleeRing(e.getSource(), Elements.FIRE), (e, s) -> e.getDamagedEntity().setSecondsOnFire(5)));
+    public static final DeferredObject<Item> RING_FIRE_BIOME = ringArtifact("ring_fire_biome", Rarity.UNCOMMON,changeModifiersByBiomeElement(Elements.FIRE, Services.PLATFORM::intHotBiomes, SpellModifiers.POTENCY, 1.3f, SpellModifiers.Operation.MULTIPLY));
+    public static final DeferredObject<Item> RING_FIRE_MELEE = ringArtifact("ring_fire_melee", Rarity.UNCOMMON, meleeRing(Elements.FIRE, null, 0, 100));
     public static final DeferredObject<Item> RING_HAMMER = ringArtifact("ring_hammer", Rarity.EPIC, null);
-    public static final DeferredObject<Item> RING_ICE_BIOME = ringArtifact("ring_ice_biome", Rarity.UNCOMMON, QuickArtifactEffect.spellPreCast((e, s) -> e.getSpell().getElement() == Elements.ICE && Services.PLATFORM.inIceBiomes(e.getCaster().level().getBiome(e.getCaster().blockPosition())), (e, s) -> e.getModifiers().multiply(SpellModifiers.POTENCY, 1.3f)));
-    public static final DeferredObject<Item> RING_ICE_MELEE = ringArtifact("ring_ice_melee", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> meleeRing(e.getSource(), Elements.ICE), (e, s) -> e.getDamagedEntity().addEffect(new MobEffectInstance(EBMobEffects.FROST.get(), 200))));
+    public static final DeferredObject<Item> RING_ICE_BIOME = ringArtifact("ring_ice_biome", Rarity.UNCOMMON, changeModifiersByBiomeElement(Elements.ICE, Services.PLATFORM::inIceBiomes, SpellModifiers.POTENCY, 1.3f, SpellModifiers.Operation.MULTIPLY));
+    public static final DeferredObject<Item> RING_ICE_MELEE = ringArtifact("ring_ice_melee", Rarity.UNCOMMON, meleeRing(Elements.ICE, EBMobEffects.FROST.get(), 0, 200));
     public static final DeferredObject<Item> RING_INTERDICTION = ringArtifact("ring_interdiction", Rarity.EPIC, null);
     public static final DeferredObject<Item> RING_LEECHING = ringArtifact("ring_leeching", Rarity.RARE, new LeechingRingEffect());
     public static final DeferredObject<Item> RING_LIGHTNING_MELEE = ringArtifact("ring_lightning_melee", Rarity.UNCOMMON, new LightningMeleeEffect());
     public static final DeferredObject<Item> RING_MANA_RETURN = ringArtifact("ring_mana_return", Rarity.EPIC, null);
     public static final DeferredObject<Item> RING_METEOR = ringArtifact("ring_meteor", Rarity.EPIC, null);
     public static final DeferredObject<Item> RING_MIND_CONTROL = ringArtifact("ring_mind_control", Rarity.RARE, null);
-    public static final DeferredObject<Item> RING_NECROMANCY_MELEE = ringArtifact("ring_necromancy_melee", Rarity.UNCOMMON, QuickArtifactEffect.hurtEntity((e, s) -> meleeRing(e.getSource(), Elements.NECROMANCY), (e, s) -> e.getDamagedEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 200))));
+    public static final DeferredObject<Item> RING_NECROMANCY_MELEE = ringArtifact("ring_necromancy_melee", Rarity.UNCOMMON, meleeRing(Elements.NECROMANCY, MobEffects.WITHER, 0, 200));
     public static final DeferredObject<Item> RING_PALADIN = ringArtifact("ring_paladin", Rarity.UNCOMMON, new PaladinRingEffect());
     public static final DeferredObject<Item> RING_POISON = ringArtifact("ring_poison", Rarity.RARE, new PoisonRingEffect());
     public static final DeferredObject<Item> RING_SEEKING = ringArtifact("ring_seeking", Rarity.EPIC, null);
@@ -429,10 +421,28 @@ public final class EBItems {
     }
 
     /**
-     * Add armor with a default model and not inside the item creative tab
+     * Add armor with a default model and not inside the default item creative tab
      */
     static DeferredObject<Item> armor(String name, WizardArmorType wizardArmorType, ArmorItem.Type type, Element element) {
+        if (wizardArmorType.equals(WizardArmorType.WIZARD)) {
+            return armor(name, () -> new WizardArmorItem(wizardArmorType, type, element), type);
+        } else if (wizardArmorType.equals(WizardArmorType.BATTLEMAGE)) {
+            return armor(name, () -> new BattleMageArmorItem(type, element), type);
+        } else if (wizardArmorType.equals(WizardArmorType.SAGE)) {
+            return armor(name, () -> new SageArmorItem(type, element), type);
+        } else if (wizardArmorType.equals(WizardArmorType.WARLOCK)) {
+            return armor(name, () -> new WarlockArmorItem(type, element), type);
+        }
+
         return armor(name, () -> new WizardArmorItem(wizardArmorType, type, element), type);
+    }
+
+
+    /**
+     * Add armor with a default model and not inside the default item creative tab
+     */
+    static DeferredObject<Item> armor(String name, ArmorItem.Type type, Element element) {
+        return armor(name, () -> new WizardArmorItem(WizardArmorType.WIZARD, type, element), type);
     }
 
     /**

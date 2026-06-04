@@ -5,14 +5,14 @@ import com.binaris.wizardry.api.content.data.SpellManagerData;
 import com.binaris.wizardry.api.content.data.WizardData;
 import com.binaris.wizardry.api.content.event.EBDiscoverSpellEvent;
 import com.binaris.wizardry.api.content.event.SpellCastEvent;
-import com.binaris.wizardry.api.content.item.IManaStoringItem;
-import com.binaris.wizardry.api.content.item.ISpellCastingItem;
+import com.binaris.wizardry.api.content.item.IManaItem;
+import com.binaris.wizardry.api.content.item.ICastItem;
 import com.binaris.wizardry.api.content.spell.Element;
 import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.spell.SpellTier;
 import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
 import com.binaris.wizardry.api.content.util.EntityUtil;
-import com.binaris.wizardry.core.config.EBConfig;
+import com.binaris.wizardry.core.config.EBServerConfig;
 import com.binaris.wizardry.core.event.WizardryEventBus;
 import com.binaris.wizardry.core.integrations.ArtifactChannel;
 import com.binaris.wizardry.core.platform.Services;
@@ -92,7 +92,7 @@ public class Forfeit {
      * @return A ForfeitResult containing whether to trigger and which forfeit to apply.
      */
     private static ForfeitResult calculateForfeit(Player player, SpellManagerData spellData, WizardData wizardData, Spell spell) {
-        float chance = EBConfig.FORFEIT_CHANCE.get();
+        float chance = EBServerConfig.FORFEIT_CHANCE.get();
         if (ArtifactChannel.isEquipped(player, EBItems.AMULET_WISDOM.get())) chance *= 0.5F;
 
         boolean isUndiscovered = !spellData.hasSpellBeenDiscovered(spell);
@@ -175,7 +175,7 @@ public class Forfeit {
 
         if (event.getSource() == SpellCastEvent.Source.SCROLL) {
             if (!player.isCreative()) stack.shrink(1);
-        } else if (stack.getItem() instanceof IManaStoringItem manaItem) {
+        } else if (stack.getItem() instanceof IManaItem manaItem) {
             int cost = (int) (event.getSpell().getCost() * event.getModifiers().get(SpellModifiers.COST) + 0.1f);
             manaItem.consumeMana(stack, cost, player);
         }
@@ -189,9 +189,9 @@ public class Forfeit {
      */
     private static ItemStack findCastingItem(Player player) {
         ItemStack mainHand = player.getMainHandItem();
-        if (mainHand.getItem() instanceof ISpellCastingItem) return mainHand;
+        if (mainHand.getItem() instanceof ICastItem) return mainHand;
         ItemStack offHand = player.getOffhandItem();
-        if (offHand.getItem() instanceof ISpellCastingItem) return offHand;
+        if (offHand.getItem() instanceof ICastItem) return offHand;
         return ItemStack.EMPTY;
     }
 

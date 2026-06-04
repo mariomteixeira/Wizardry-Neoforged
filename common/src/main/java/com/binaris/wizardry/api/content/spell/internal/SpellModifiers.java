@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Glorified map for storing and saving spell modifier values such as potency, cost, chargeup and many others. This is
@@ -33,6 +34,8 @@ public final class SpellModifiers {
     public static final String RANGE = "ebwizardry.range";
     /** Constant string identifier for modifying cooldown of spells */
     public static final String COOLDOWN = "ebwizardry.cooldown";
+    /** Constant string identifier for modifying health of players and mobs, normally used for minions */
+    public static final String HEALTH_MODIFIER = "ebwizardry.health_modifier";
 
     private final Map<String, Float> multiplierMap;
 
@@ -82,6 +85,25 @@ public final class SpellModifiers {
     }
 
     /**
+     * Operates on the given key with the given value and operation.
+     *
+     * @param key The string identifier for the upgrade.
+     * @param value The value to be used in the operation.
+     * @param op The operation to be performed.
+     * @return This {@link SpellModifiers} instance after operating.
+     */
+    public SpellModifiers operate(String key, float value, Operation op) {
+        switch (op) {
+            case SET -> set(key, value);
+            case ADD -> add(key, value);
+            case SUBTRACT -> subtract(key, value);
+            case MULTIPLY -> multiply(key, value);
+            case DIVIDE -> divide(key, value);
+        }
+        return this;
+    }
+
+    /**
      * Sets the multiplier for a specific upgrade identified by the given key.
      *
      * @param key        The string identifier for the upgrade.
@@ -122,25 +144,27 @@ public final class SpellModifiers {
     /**
      * Multiply the value based on the given key. In case there's not already a value for this modifier it won't do anything.
      *
-     * @param key   The string identifier for the upgrade.
+     * @param key    The string identifier for the upgrade.
      * @param factor The value that's going to serve as the factor of the multiply
      * @return This {@link SpellModifiers} instance after setting the multiplier.
      */
     public SpellModifiers multiply(String key, float factor) {
-        multiplierMap.computeIfPresent(key, (k, v) -> v * factor);
+        if (multiplierMap.containsKey(key)) multiplierMap.compute(key, (k, v) -> v * factor);
+        else multiplierMap.put(key, get(key) * factor);
         return this;
     }
 
     /**
      * Divide the value based on the given key. In case there's not already a value for this modifier it won't do anything.
      *
-     * @param key   The string identifier for the upgrade.
+     * @param key     The string identifier for the upgrade.
      * @param divisor The value that's going to serve as the divisor
      * @return This {@link SpellModifiers} instance after setting the multiplier.
      */
     public SpellModifiers divide(String key, float divisor) {
         if (divisor == 0) throw new ArithmeticException("Cannot divide spell modifier by zero: " + key);
-        multiplierMap.computeIfPresent(key, (k, v) -> v / divisor);
+        if (multiplierMap.containsKey(key)) multiplierMap.compute(key, (s, v) -> v / divisor);
+        else multiplierMap.put(key, get(key) / divisor);
         return this;
     }
 
@@ -170,5 +194,17 @@ public final class SpellModifiers {
      */
     public void reset() {
         this.multiplierMap.clear();
+    }
+
+    public enum Operation {
+        SET, ADD, SUBTRACT, MULTIPLY, DIVIDE
+    }
+
+    @Override
+    public String toString() {
+        return multiplierMap.entrySet()
+                .stream()
+                .map(e -> e.getKey() + " (" + e.getValue() + "x)")
+                .collect(Collectors.joining(", "));
     }
 }

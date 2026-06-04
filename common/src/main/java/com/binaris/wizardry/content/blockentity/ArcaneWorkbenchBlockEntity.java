@@ -1,13 +1,13 @@
 package com.binaris.wizardry.content.blockentity;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.api.content.item.IManaStoringItem;
+import com.binaris.wizardry.api.content.item.IManaItem;
 import com.binaris.wizardry.api.content.item.IWorkbenchItem;
-import com.binaris.wizardry.api.content.util.WandHelper;
+import com.binaris.wizardry.api.content.util.CastItemDataHelper;
 import com.binaris.wizardry.content.item.CrystalItem;
 import com.binaris.wizardry.content.item.SpellBookItem;
 import com.binaris.wizardry.content.menu.ArcaneWorkbenchMenu;
-import com.binaris.wizardry.core.EBConstants;
+import com.binaris.wizardry.core.config.EBServerConfig;
 import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.WandUpgrades;
@@ -51,8 +51,8 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, ArcaneWorkbenchBlockEntity entity) {
         ItemStack stack = entity.getItem(ArcaneWorkbenchMenu.CENTRE_SLOT);
-        if (stack.getItem() instanceof IManaStoringItem manaItem && !level.isClientSide && !manaItem.isManaFull(stack) && level.getGameTime() % EBConstants.CONDENSER_TICK_INTERVAL == 0) {
-            manaItem.rechargeMana(stack, WandHelper.getUpgradeLevel(stack, EBItems.CONDENSER_UPGRADE.get()));
+        if (stack.getItem() instanceof IManaItem manaItem && !level.isClientSide && !manaItem.isManaFull(stack) && level.getGameTime() % EBServerConfig.CONDENSER_TICK_INTERVAL.get() == 0) {
+            manaItem.rechargeMana(stack, CastItemDataHelper.getUpgradeLevel(stack, EBItems.CONDENSER_UPGRADE.get()));
         }
     }
 

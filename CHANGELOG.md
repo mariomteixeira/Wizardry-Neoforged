@@ -1,5 +1,2 @@
-- added British translation ([#16](https://github.com/Binaris00/ElectroblobsWizardryRedux/pull/16))
-- added Korean translation ([#15](https://github.com/Binaris00/ElectroblobsWizardryRedux/pull/15))
-- wizard tower now has biome tags for fabric and forge ([#18](https://github.com/Binaris00/ElectroblobsWizardryRedux/pull/18))
-- fixed some typo issues with "Baubles" mentions in artifacts
-- rollback to how spell modifier calculation was before refactoring (only applying to armor and wand logic)
+- fix: firebomb now can burn entities on direct hit
+- fix: poison bomb now poisons entities on direct hit
