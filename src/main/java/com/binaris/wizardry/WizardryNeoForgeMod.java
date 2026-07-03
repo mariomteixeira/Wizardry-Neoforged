@@ -7,6 +7,7 @@ import com.binaris.wizardry.integration.curios.CuriosIntegration;
 import com.binaris.wizardry.network.EBForgeNetwork;
 import com.binaris.wizardry.registry.EBArgumentTypesForge;
 import com.binaris.wizardry.registry.EBRegistriesForge;
+import com.binaris.wizardry.setup.registries.EBAttachments;
 import com.binaris.wizardry.setup.registries.EBDataComponents;
 import com.binaris.wizardry.setup.registries.WandUpgrades;
 import net.neoforged.bus.api.IEventBus;
@@ -25,6 +26,7 @@ public final class WizardryNeoForgeMod {
         EBRegistriesForge.spells(modBus);
         EBArgumentTypesForge.register(modBus);
         EBDataComponents.COMPONENTS.register(modBus);
+        EBAttachments.ATTACHMENTS.register(modBus);
 
         modBus.addListener(WizardryNeoForgeMod::commonSetup);
         modBus.addListener(EBForgeNetwork::registerPayloads);

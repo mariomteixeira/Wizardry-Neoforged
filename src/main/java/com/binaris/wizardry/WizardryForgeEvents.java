@@ -3,7 +3,6 @@ package com.binaris.wizardry;
 import com.binaris.wizardry.api.content.event.*;
 import com.binaris.wizardry.setup.registries.RegisterFunction;
 import com.binaris.wizardry.capabilities.*;
-import com.binaris.wizardry.content.spell.abstr.ConjureItemSpell;
 import com.binaris.wizardry.core.PropertiesForgeDataManager;
 import com.binaris.wizardry.core.event.WizardryEventBus;
 import com.binaris.wizardry.core.platform.Services;
@@ -15,12 +14,7 @@ import com.binaris.wizardry.setup.registries.client.EBParticles;
 import com.binaris.wizardry.setup.registries.client.EBRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -28,9 +22,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -73,9 +65,9 @@ public class WizardryForgeEvents {
             WizardryEventBus.getInstance().fire(new EBPlayerJoinServerEvent(event.getEntity(), event.getEntity().getServer()));
             Player player = event.getEntity();
             if (!player.level().isClientSide()) {
-                player.getCapability(WizardDataHolder.INSTANCE).ifPresent(WizardDataHolder::sync);
-                player.getCapability(CastCommandDataHolder.INSTANCE).ifPresent(CastCommandDataHolder::sync);
-                player.getCapability(SpellManagerDataHolder.INSTANCE).ifPresent(SpellManagerDataHolder::sync);
+                player.getData(EBAttachments.WIZARD_DATA).sync();
+                player.getData(EBAttachments.CAST_COMMAND_DATA).sync();
+                player.getData(EBAttachments.SPELL_MANAGER_DATA).sync();
             }
         }
 
@@ -119,83 +111,30 @@ public class WizardryForgeEvents {
 
             for (BlockEntity blockEntity : chunk.getBlockEntities().values()) {
                 if (blockEntity instanceof BaseContainerBlockEntity) {
-                    blockEntity.getCapability(ArcaneLockDataHolder.INSTANCE).ifPresent(data -> {
-                        if (data.isArcaneLocked()) {
-                            // Send sync packet to the player
-                            ArcaneLockSyncPacketS2C packet =
-                                    new ArcaneLockSyncPacketS2C(blockEntity.getBlockPos(), data.serializeNBT());
-                            Services.NETWORK_HELPER.sendTo(event.getPlayer(), packet);
-                        }
-                    });
+                    ArcaneLockDataHolder data = blockEntity.getData(EBAttachments.ARCANE_LOCK_DATA);
+                    if (data.isArcaneLocked()) {
+                        // Send sync packet to the player
+                        ArcaneLockSyncPacketS2C packet =
+                                new ArcaneLockSyncPacketS2C(blockEntity.getBlockPos(), data.serializeNBT(level.registryAccess()));
+                        Services.NETWORK_HELPER.sendTo(event.getPlayer(), packet);
+                    }
                 }
             }
         }
 
-        @SubscribeEvent
-        public static void attachCapability(final AttachCapabilitiesEvent<Entity> event) {
-            if (event.getObject() instanceof Player player) {
-                event.addCapability(CastCommandDataHolder.LOCATION, new CastCommandDataHolder.Provider(player));
-                event.addCapability(SpellManagerDataHolder.LOCATION, new SpellManagerDataHolder.Provider(player));
-                event.addCapability(WizardDataHolder.LOCATION, new WizardDataHolder.Provider(player));
-            }
-
-            if (event.getObject() instanceof Mob mob) {
-                event.addCapability(MinionDataHolder.LOCATION, new MinionDataHolder.Provider(mob));
-            }
-
-            if (event.getObject() instanceof LivingEntity livingEntity) {
-                event.addCapability(ContainmentDataHolder.LOCATION, new ContainmentDataHolder.Provider(livingEntity));
-            }
-        }
-
-        @SubscribeEvent
-        public static void attachCapabilityBlock(final AttachCapabilitiesEvent<BlockEntity> event) {
-            if (event.getObject() instanceof BaseContainerBlockEntity)
-                event.addCapability(ArcaneLockDataHolder.LOCATION, new ArcaneLockDataHolder.Provider(event.getObject()));
-        }
-
-        @SubscribeEvent
-        public static void attachCapabilityItem(final AttachCapabilitiesEvent<ItemStack> event) {
-            ItemStack stack = event.getObject();
-
-            if (ConjureItemSpell.isSummonableItem(stack.getItem())) {
-                final ConjureDataHolder.Provider provider = new ConjureDataHolder.Provider(stack);
-                event.addCapability(ConjureDataHolder.LOCATION, provider);
-            }
-
-            if (stack.getItem() instanceof TieredItem && stack.isEnchantable()) {
-                event.addCapability(ImbuementEnchantDataHolder.LOCATION, new ImbuementEnchantDataHolder.Provider(stack));
-            }
-        }
-
-        @SubscribeEvent
-        public static void onPlayerCloned(PlayerEvent.Clone event) {
-            event.getOriginal().reviveCaps();
-
-            event.getOriginal().getCapability(WizardDataHolder.INSTANCE).ifPresent(old ->
-                    event.getEntity().getCapability(WizardDataHolder.INSTANCE).ifPresent(holder ->
-                            holder.copyFrom(old)));
-
-            event.getOriginal().getCapability(SpellManagerDataHolder.INSTANCE).ifPresent(old ->
-                    event.getEntity().getCapability(SpellManagerDataHolder.INSTANCE).ifPresent(holder ->
-                            holder.copyFrom(old)));
-
-            event.getOriginal().getCapability(CastCommandDataHolder.INSTANCE).ifPresent(old ->
-                    event.getEntity().getCapability(CastCommandDataHolder.INSTANCE).ifPresent(holder ->
-                            holder.copyFrom(old)));
-
-            // Invalidate the original player's capabilities again
-            event.getOriginal().invalidateCaps();
-        }
+        // Note: death-copy for WizardDataHolder/SpellManagerDataHolder/CastCommandDataHolder is handled
+        // automatically by NeoForge (AttachmentType.Builder#copyOnDeath, see EBAttachments), which internally
+        // subscribes to PlayerEvent.Clone and copies serializable attachments flagged copyOnDeath. No manual
+        // clone handler is needed here anymore.
 
         @SubscribeEvent
         public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
             // Sync all capabilities to client after respawn to ensure the client has the correct data
             Player player = event.getEntity();
             if (!player.level().isClientSide()) {
-                player.getCapability(WizardDataHolder.INSTANCE).ifPresent(WizardDataHolder::sync);
-                player.getCapability(SpellManagerDataHolder.INSTANCE).ifPresent(SpellManagerDataHolder::sync);
-                player.getCapability(CastCommandDataHolder.INSTANCE).ifPresent(CastCommandDataHolder::sync);
+                player.getData(EBAttachments.WIZARD_DATA).sync();
+                player.getData(EBAttachments.SPELL_MANAGER_DATA).sync();
+                player.getData(EBAttachments.CAST_COMMAND_DATA).sync();
             }
         }
 
@@ -204,23 +143,10 @@ public class WizardryForgeEvents {
             // Sync all capabilities to client after dimension change to ensure the client has the correct data
             Player player = event.getEntity();
             if (!player.level().isClientSide()) {
-                player.getCapability(WizardDataHolder.INSTANCE).ifPresent(WizardDataHolder::sync);
-                player.getCapability(SpellManagerDataHolder.INSTANCE).ifPresent(SpellManagerDataHolder::sync);
-                player.getCapability(CastCommandDataHolder.INSTANCE).ifPresent(CastCommandDataHolder::sync);
+                player.getData(EBAttachments.WIZARD_DATA).sync();
+                player.getData(EBAttachments.SPELL_MANAGER_DATA).sync();
+                player.getData(EBAttachments.CAST_COMMAND_DATA).sync();
             }
-        }
-
-
-        @SubscribeEvent
-        public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
-            event.register(WizardDataHolder.class);
-            event.register(SpellManagerDataHolder.class);
-            event.register(CastCommandDataHolder.class);
-            event.register(MinionDataHolder.class);
-            event.register(ContainmentDataHolder.class);
-            event.register(ConjureDataHolder.class);
-            event.register(ImbuementEnchantDataHolder.class);
-            event.register(ArcaneLockDataHolder.class);
         }
     }
 

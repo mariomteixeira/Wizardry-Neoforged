@@ -1,29 +1,18 @@
 package com.binaris.wizardry.capabilities;
 
-import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.data.ArcaneLockData;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.network.ArcaneLockSyncPacketS2C;
-import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.capabilities.Capability;
-import net.neoforged.neoforge.capabilities.CapabilityManager;
-import net.neoforged.neoforge.capabilities.CapabilityToken;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 public class ArcaneLockDataHolder implements INBTSerializable<CompoundTag>, ArcaneLockData {
-    public static final ResourceLocation LOCATION = WizardryMainMod.location("arcane_lock_data");
-    public static final Capability<ArcaneLockDataHolder> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {
-    });
     private final BlockEntity provider;
     private UUID ownerUUID = null;
 
@@ -33,7 +22,7 @@ public class ArcaneLockDataHolder implements INBTSerializable<CompoundTag>, Arca
 
     private void sync() {
         if (provider.getLevel() != null && !this.provider.getLevel().isClientSide()) {
-            CompoundTag tag = this.serializeNBT();
+            CompoundTag tag = this.serializeNBT(this.provider.getLevel().registryAccess());
             ArcaneLockSyncPacketS2C packet = new ArcaneLockSyncPacketS2C(this.provider.getBlockPos(), tag);
             Services.NETWORK_HELPER.sendToTracking((ServerLevel) this.provider.getLevel(), this.provider.getBlockPos(), packet);
         }
@@ -66,7 +55,7 @@ public class ArcaneLockDataHolder implements INBTSerializable<CompoundTag>, Arca
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         if (this.ownerUUID != null) {
             tag.putString(NBT_KEY, this.ownerUUID.toString());
@@ -75,34 +64,11 @@ public class ArcaneLockDataHolder implements INBTSerializable<CompoundTag>, Arca
     }
 
     @Override
-    public void deserializeNBT(CompoundTag tag) {
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
         if (tag.contains(NBT_KEY)) {
             this.ownerUUID = UUID.fromString(tag.getString(NBT_KEY));
         } else {
             this.ownerUUID = null;
-        }
-    }
-
-    public static class Provider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-        private final LazyOptional<ArcaneLockDataHolder> holder;
-
-        public Provider(BlockEntity entity) {
-            this.holder = LazyOptional.of(() -> new ArcaneLockDataHolder(entity));
-        }
-
-        @Override
-        public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-            return ArcaneLockDataHolder.INSTANCE.orEmpty(capability, holder.cast());
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            return holder.orElseThrow(NullPointerException::new).serializeNBT();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag arg) {
-            holder.orElseThrow(NullPointerException::new).deserializeNBT(arg);
         }
     }
 }

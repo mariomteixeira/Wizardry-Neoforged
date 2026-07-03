@@ -1,32 +1,40 @@
 package com.binaris.wizardry.capabilities;
 
-import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.data.ImbuementEnchantData;
-import net.minecraft.core.Direction;
+import com.binaris.wizardry.setup.registries.EBAttachments;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.capabilities.Capability;
-import net.neoforged.neoforge.capabilities.CapabilityManager;
-import net.neoforged.neoforge.capabilities.CapabilityToken;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
-import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImbuementEnchantDataHolder implements INBTSerializable<CompoundTag>, ImbuementEnchantData {
-    public static final ResourceLocation LOCATION = WizardryMainMod.location("imbuement_enchant");
-    public static final Capability<ImbuementEnchantDataHolder> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {
-    });
+/**
+ * Tracks temporary imbuement enchantments directly on the {@code ItemStack}. ItemStack is not a NeoForge
+ * {@link net.neoforged.neoforge.attachment.IAttachmentHolder} in 1.21 (see {@link EBAttachments}), so this
+ * stores its state in the {@link EBAttachments#IMBUEMENT_ENCHANT_DATA} data component on the stack instead of
+ * an attachment.
+ */
+public class ImbuementEnchantDataHolder implements ImbuementEnchantData {
+    private final ItemStack stack;
 
-    private CompoundTag tag = new CompoundTag();
+    private ImbuementEnchantDataHolder(ItemStack stack) {
+        this.stack = stack;
+    }
 
-    public ImbuementEnchantDataHolder() {
+    public static ImbuementEnchantDataHolder get(ItemStack stack) {
+        return new ImbuementEnchantDataHolder(stack);
+    }
+
+    private CompoundTag tag() {
+        CompoundTag tag = stack.get(EBAttachments.IMBUEMENT_ENCHANT_DATA.get());
+        return tag != null ? tag : new CompoundTag();
+    }
+
+    private void save(CompoundTag tag) {
+        stack.set(EBAttachments.IMBUEMENT_ENCHANT_DATA.get(), tag);
     }
 
     @Override
@@ -35,12 +43,17 @@ public class ImbuementEnchantDataHolder implements INBTSerializable<CompoundTag>
         if (enchantKey == null) return;
         String enchantId = enchantKey.toString();
 
-        if (!tag.contains(enchantId)) tag.putLong(enchantId, expireTime);
+        CompoundTag tag = tag();
+        if (!tag.contains(enchantId)) {
+            tag.putLong(enchantId, expireTime);
+            save(tag);
+        }
     }
 
     @Override
     public Map<ResourceLocation, Long> getImbuements() {
         Map<ResourceLocation, Long> result = new HashMap<>();
+        CompoundTag tag = tag();
 
         tag.getAllKeys().forEach(key -> {
             try {
@@ -61,63 +74,27 @@ public class ImbuementEnchantDataHolder implements INBTSerializable<CompoundTag>
         if (enchantKey == null) return;
         String enchantId = enchantKey.toString();
 
-        if (tag.contains(enchantId))
+        CompoundTag tag = tag();
+        if (tag.contains(enchantId)) {
             tag.remove(enchantId);
+            save(tag);
+        }
     }
 
     @Override
     public boolean isImbuement(Enchantment enchant) {
         ResourceLocation enchantId = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
         if (enchantId == null) return false;
-        return tag.contains(enchantId.toString());
+        return tag().contains(enchantId.toString());
     }
 
     @Override
     public long getExpirationTime(Enchantment enchantment) {
         ResourceLocation enchantId = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
         if (enchantId == null) return -1;
+        CompoundTag tag = tag();
         if (tag.contains(enchantId.toString()))
             return tag.getLong(enchantId.toString());
         return -1;
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = new CompoundTag();
-        if (!this.tag.isEmpty()) tag.put("imbuements", this.tag);
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag tag) {
-        if (tag.contains("imbuements")) {
-            this.tag = tag.getCompound("imbuements");
-        } else {
-            this.tag = new CompoundTag();
-        }
-    }
-
-    public static class Provider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-        private final LazyOptional<ImbuementEnchantDataHolder> dataHolder;
-
-        @SuppressWarnings("unused")
-        public Provider(ItemStack stack) {
-            this.dataHolder = LazyOptional.of(ImbuementEnchantDataHolder::new);
-        }
-
-        @Override
-        public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction arg) {
-            return ImbuementEnchantDataHolder.INSTANCE.orEmpty(capability, dataHolder.cast());
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            return dataHolder.orElseThrow(NullPointerException::new).serializeNBT();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag arg) {
-            dataHolder.orElseThrow(NullPointerException::new).deserializeNBT(arg);
-        }
     }
 }

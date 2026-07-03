@@ -1,33 +1,21 @@
 package com.binaris.wizardry.capabilities;
 
-import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.client.ParticleBuilder;
 import com.binaris.wizardry.api.content.data.MinionData;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.network.MinionSyncPacketS2C;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
-import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.neoforged.neoforge.capabilities.Capability;
-import net.neoforged.neoforge.capabilities.CapabilityManager;
-import net.neoforged.neoforge.capabilities.CapabilityToken;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 
 public class MinionDataHolder implements INBTSerializable<CompoundTag>, MinionData {
-    public static final ResourceLocation LOCATION = WizardryMainMod.location("minion_data");
-    public static final Capability<MinionDataHolder> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {
-    });
-
     private final Mob provider;
     private int lifetime = -1;
     private boolean summoned = false;
@@ -43,7 +31,7 @@ public class MinionDataHolder implements INBTSerializable<CompoundTag>, MinionDa
 
     private void sync() {
         if (!this.provider.level().isClientSide()) {
-            CompoundTag tag = this.serializeNBT();
+            CompoundTag tag = this.serializeNBT(this.provider.level().registryAccess());
 
             MinionSyncPacketS2C packet = new MinionSyncPacketS2C(this.provider.getId(), tag);
             Services.NETWORK_HELPER.sendToTracking(this.provider, packet);
@@ -164,7 +152,7 @@ public class MinionDataHolder implements INBTSerializable<CompoundTag>, MinionDa
 
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("lifetime", lifetime);
         tag.putBoolean("summoned", summoned);
@@ -177,36 +165,13 @@ public class MinionDataHolder implements INBTSerializable<CompoundTag>, MinionDa
     }
 
     @Override
-    public void deserializeNBT(CompoundTag tag) {
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
         this.lifetime = tag.getInt("lifetime");
         this.summoned = tag.getBoolean("summoned");
         this.shouldDeleteGoals = tag.getBoolean("shouldDeleteGoals");
         this.shouldFollowOwner = tag.getBoolean("shouldFollowOwner");
         if (tag.contains("ownerUUID")) {
             this.ownerUUID = tag.getUUID("ownerUUID");
-        }
-    }
-
-    public static class Provider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-        private final LazyOptional<MinionDataHolder> dataHolder;
-
-        public Provider(Mob mob) {
-            this.dataHolder = LazyOptional.of(() -> new MinionDataHolder(mob));
-        }
-
-        @Override
-        public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-            return MinionDataHolder.INSTANCE.orEmpty(capability, dataHolder.cast());
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            return dataHolder.orElseThrow(NullPointerException::new).serializeNBT();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag arg) {
-            dataHolder.orElseThrow(NullPointerException::new).deserializeNBT(arg);
         }
     }
 }

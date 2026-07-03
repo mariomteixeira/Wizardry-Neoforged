@@ -1,29 +1,17 @@
 package com.binaris.wizardry.capabilities;
 
-import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.data.ContainmentData;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.network.ContainmentSyncPacketS2C;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.capabilities.Capability;
-import net.neoforged.neoforge.capabilities.CapabilityManager;
-import net.neoforged.neoforge.capabilities.CapabilityToken;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ContainmentDataHolder implements INBTSerializable<CompoundTag>, ContainmentData {
-    public static final ResourceLocation LOCATION = WizardryMainMod.location("containment_data");
-    public static final Capability<ContainmentDataHolder> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {
-    });
-
     private final LivingEntity provider;
     private BlockPos containmentPos = null;
 
@@ -33,7 +21,7 @@ public class ContainmentDataHolder implements INBTSerializable<CompoundTag>, Con
 
     private void sync() {
         if (!this.provider.level().isClientSide()) {
-            CompoundTag tag = this.serializeNBT();
+            CompoundTag tag = this.serializeNBT(this.provider.level().registryAccess());
             ContainmentSyncPacketS2C packet = new ContainmentSyncPacketS2C(this.provider.getId(), tag);
             if (this.provider instanceof ServerPlayer serverPlayer) {
                 Services.NETWORK_HELPER.sendTo(serverPlayer, packet);
@@ -60,7 +48,7 @@ public class ContainmentDataHolder implements INBTSerializable<CompoundTag>, Con
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         if (containmentPos != null) {
             CompoundTag posTag = new CompoundTag();
@@ -73,7 +61,7 @@ public class ContainmentDataHolder implements INBTSerializable<CompoundTag>, Con
     }
 
     @Override
-    public void deserializeNBT(CompoundTag tag) {
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
         if (tag.contains("containmentPos")) {
             CompoundTag posTag = tag.getCompound("containmentPos");
             int x = posTag.getInt("x");
@@ -82,29 +70,6 @@ public class ContainmentDataHolder implements INBTSerializable<CompoundTag>, Con
             this.containmentPos = new BlockPos(x, y, z);
         } else {
             this.containmentPos = null;
-        }
-    }
-
-    public static class Provider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-        private final LazyOptional<ContainmentDataHolder> dataHolder;
-
-        public Provider(LivingEntity entity) {
-            this.dataHolder = LazyOptional.of(() -> new ContainmentDataHolder(entity));
-        }
-
-        @Override
-        public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-            return ContainmentDataHolder.INSTANCE.orEmpty(capability, dataHolder.cast());
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            return dataHolder.orElseThrow(NullPointerException::new).serializeNBT();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag arg) {
-            dataHolder.orElseThrow(NullPointerException::new).deserializeNBT(arg);
         }
     }
 }

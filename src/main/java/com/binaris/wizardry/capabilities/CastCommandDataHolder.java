@@ -1,6 +1,5 @@
 package com.binaris.wizardry.capabilities;
 
-import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.data.CastCommandData;
 import com.binaris.wizardry.api.content.event.SpellCastEvent;
 import com.binaris.wizardry.api.content.spell.NoneSpell;
@@ -11,7 +10,7 @@ import com.binaris.wizardry.core.event.WizardryEventBus;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.network.PlayerCapabilitySyncPacketS2C;
 import com.binaris.wizardry.setup.registries.Spells;
-import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -19,20 +18,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.capabilities.Capability;
-import net.neoforged.neoforge.capabilities.CapabilityManager;
-import net.neoforged.neoforge.capabilities.CapabilityToken;
-import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 
 public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, CastCommandData {
-    public static final ResourceLocation LOCATION = WizardryMainMod.location("cast_command_data");
-    public static final Capability<CastCommandDataHolder> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {
-    });
     private final Player provider;
     private Spell castCommandSpell = Spells.NONE;
     private int castCommandTick;
@@ -45,7 +34,7 @@ public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, Cas
 
     public void sync() {
         if (!this.provider.level().isClientSide()) {
-            CompoundTag tag = this.serializeNBT();
+            CompoundTag tag = this.serializeNBT(this.provider.level().registryAccess());
 
             PlayerCapabilitySyncPacketS2C packet = new PlayerCapabilitySyncPacketS2C(PlayerCapabilitySyncPacketS2C.CapabilityType.CAST_COMMAND, tag);
             Services.NETWORK_HELPER.sendTo((ServerPlayer) this.provider, packet);
@@ -100,7 +89,7 @@ public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, Cas
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
         tag.put("castCommandSpell", StringTag.valueOf(castCommandSpell.getLocation().toString()));
         tag.putInt("castCommandDuration", castCommandDuration);
@@ -110,7 +99,7 @@ public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, Cas
     }
 
     @Override
-    public void deserializeNBT(CompoundTag tag) {
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
         ResourceLocation spellLocation = ResourceLocation.tryParse(tag.getString("castCommandSpell"));
         Spell spell = Services.REGISTRY_UTIL.getSpell(spellLocation);
         if (spell != null) {
@@ -133,28 +122,5 @@ public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, Cas
         this.castCommandTick = old.castCommandTick;
         this.castCommandModifiers = old.castCommandModifiers;
         this.castCommandDuration = old.castCommandDuration;
-    }
-
-    public static class Provider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-        private final LazyOptional<CastCommandDataHolder> dataHolder;
-
-        public Provider(Player player) {
-            this.dataHolder = LazyOptional.of(() -> new CastCommandDataHolder(player));
-        }
-
-        @Override
-        public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-            return CastCommandDataHolder.INSTANCE.orEmpty(capability, dataHolder.cast());
-        }
-
-        @Override
-        public CompoundTag serializeNBT() {
-            return dataHolder.orElseThrow(NullPointerException::new).serializeNBT();
-        }
-
-        @Override
-        public void deserializeNBT(CompoundTag arg) {
-            dataHolder.orElseThrow(NullPointerException::new).deserializeNBT(arg);
-        }
     }
 }

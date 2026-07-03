@@ -2,6 +2,7 @@ package com.binaris.wizardry.network;
 
 import com.binaris.wizardry.capabilities.*;
 import com.binaris.wizardry.client.effect.ArcaneLockRender;
+import com.binaris.wizardry.setup.registries.EBAttachments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -23,11 +24,9 @@ public final class ClientMessageHandlerForge {
         BlockEntity blockEntity = level.getBlockEntity(m.getPos());
         if (blockEntity == null) return;
 
-        blockEntity.getCapability(ArcaneLockDataHolder.INSTANCE)
-                .ifPresent(arcaneLockData -> {
-                    arcaneLockData.deserializeNBT(m.getData());
-                    ArcaneLockRender.markDirty();
-                });
+        ArcaneLockDataHolder arcaneLockData = blockEntity.getData(EBAttachments.ARCANE_LOCK_DATA);
+        arcaneLockData.deserializeNBT(level.registryAccess(), m.getData());
+        ArcaneLockRender.markDirty();
     }
 
     public static void minionSync(MinionSyncPacketS2C m) {
@@ -38,8 +37,8 @@ public final class ClientMessageHandlerForge {
         var entity = level.getEntity(m.getEntityId());
         if (entity == null) return;
 
-        entity.getCapability(MinionDataHolder.INSTANCE).ifPresent(minionData ->
-                minionData.deserializeNBT(m.getData()));
+        MinionDataHolder minionData = entity.getData(EBAttachments.MINION_DATA);
+        minionData.deserializeNBT(level.registryAccess(), m.getData());
     }
 
     public static void containmentSync(ContainmentSyncPacketS2C m) {
@@ -50,8 +49,8 @@ public final class ClientMessageHandlerForge {
         var entity = level.getEntity(m.getEntityId());
         if (entity == null) return;
 
-        entity.getCapability(ContainmentDataHolder.INSTANCE).ifPresent(containmentData ->
-                containmentData.deserializeNBT(m.getData()));
+        ContainmentDataHolder containmentData = entity.getData(EBAttachments.CONTAINMENT_DATA);
+        containmentData.deserializeNBT(level.registryAccess(), m.getData());
     }
 
     public static void playerCapabilitySync(PlayerCapabilitySyncPacketS2C m) {
@@ -60,12 +59,12 @@ public final class ClientMessageHandlerForge {
         if (player == null) return;
 
         switch (m.getType()) {
-            case CAST_COMMAND -> player.getCapability(CastCommandDataHolder.INSTANCE)
-                    .ifPresent(d -> d.deserializeNBT(m.getData()));
-            case SPELL_MANAGER -> player.getCapability(SpellManagerDataHolder.INSTANCE)
-                    .ifPresent(d -> d.deserializeNBT(m.getData()));
-            case WIZARD_DATA -> player.getCapability(WizardDataHolder.INSTANCE)
-                    .ifPresent(d -> d.deserializeNBT(m.getData()));
+            case CAST_COMMAND -> player.getData(EBAttachments.CAST_COMMAND_DATA)
+                    .deserializeNBT(player.level().registryAccess(), m.getData());
+            case SPELL_MANAGER -> player.getData(EBAttachments.SPELL_MANAGER_DATA)
+                    .deserializeNBT(player.level().registryAccess(), m.getData());
+            case WIZARD_DATA -> player.getData(EBAttachments.WIZARD_DATA)
+                    .deserializeNBT(player.level().registryAccess(), m.getData());
         }
     }
 }
