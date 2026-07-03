@@ -34,16 +34,12 @@ public class ConjureDataHolder implements ConjureData {
     @Override
     public long getExpireTime() {
         CompoundTag tag = tag();
-        if (!tag.contains("expire_time")) {
-            tag.putLong("expire_time", -1L);
-            save(tag);
-        }
-        return tag.getLong("expire_time");
+        return tag.contains("expire_time") ? tag.getLong("expire_time") : -1L;
     }
 
     @Override
     public void setExpireTime(long expireTime) {
-        CompoundTag tag = tag();
+        CompoundTag tag = tag().copy();
         tag.putLong("expire_time", expireTime);
         save(tag);
     }
@@ -51,16 +47,12 @@ public class ConjureDataHolder implements ConjureData {
     @Override
     public int getDuration() {
         CompoundTag tag = tag();
-        if (!tag.contains("duration")) {
-            tag.putInt("duration", 0);
-            save(tag);
-        }
-        return tag.getInt("duration");
+        return tag.contains("duration") ? tag.getInt("duration") : 0;
     }
 
     @Override
     public void setDuration(int duration) {
-        CompoundTag tag = tag();
+        CompoundTag tag = tag().copy();
         tag.putInt("duration", duration);
         save(tag);
     }
@@ -68,16 +60,12 @@ public class ConjureDataHolder implements ConjureData {
     @Override
     public boolean isSummoned() {
         CompoundTag tag = tag();
-        if (!tag.contains("is_summoned")) {
-            tag.putBoolean("is_summoned", false);
-            save(tag);
-        }
-        return tag.getBoolean("is_summoned");
+        return tag.contains("is_summoned") && tag.getBoolean("is_summoned");
     }
 
     @Override
     public void setSummoned(boolean summoned) {
-        CompoundTag tag = tag();
+        CompoundTag tag = tag().copy();
         tag.putBoolean("is_summoned", summoned);
         save(tag);
     }

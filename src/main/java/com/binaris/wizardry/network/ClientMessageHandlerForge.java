@@ -4,6 +4,8 @@ import com.binaris.wizardry.capabilities.*;
 import com.binaris.wizardry.client.effect.ArcaneLockRender;
 import com.binaris.wizardry.setup.registries.EBAttachments;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -35,7 +37,7 @@ public final class ClientMessageHandlerForge {
         if (level == null) return;
 
         var entity = level.getEntity(m.getEntityId());
-        if (entity == null) return;
+        if (!(entity instanceof Mob)) return;
 
         MinionDataHolder minionData = entity.getData(EBAttachments.MINION_DATA);
         minionData.deserializeNBT(level.registryAccess(), m.getData());
@@ -47,7 +49,7 @@ public final class ClientMessageHandlerForge {
         if (level == null) return;
 
         var entity = level.getEntity(m.getEntityId());
-        if (entity == null) return;
+        if (!(entity instanceof LivingEntity)) return;
 
         ContainmentDataHolder containmentData = entity.getData(EBAttachments.CONTAINMENT_DATA);
         containmentData.deserializeNBT(level.registryAccess(), m.getData());
