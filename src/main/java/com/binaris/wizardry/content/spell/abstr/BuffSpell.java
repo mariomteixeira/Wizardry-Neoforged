@@ -8,6 +8,7 @@ import com.binaris.wizardry.api.content.spell.properties.SpellProperty;
 import com.binaris.wizardry.content.spell.healing.Heal;
 import com.binaris.wizardry.setup.registries.Spells;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -39,12 +40,12 @@ public class BuffSpell extends Spell {
     /** color of the particles spawned when the spell is cast. */
     protected final float r, g, b;
     /** set of mob effects applied by this spell. */
-    protected Set<MobEffect> mobEffects = new java.util.HashSet<>();
+    protected Set<Holder<MobEffect>> mobEffects = new java.util.HashSet<>();
     /** amount of particles spawned when the spell is cast. */
     protected float particleCount = 10;
 
     @SafeVarargs
-    public BuffSpell(float r, float g, float b, Supplier<MobEffect>... effects) {
+    public BuffSpell(float r, float g, float b, Supplier<Holder<MobEffect>>... effects) {
         this.r = r;
         this.g = g;
         this.b = b;
@@ -130,9 +131,9 @@ public class BuffSpell extends Spell {
     protected boolean applyEffects(CastContext ctx, LivingEntity target) {
         int bonusAmplifier = getStandardBonusAmplifier(ctx.modifiers().get(SpellModifiers.POTENCY));
 
-        for (MobEffect effect : mobEffects) {
+        for (Holder<MobEffect> effect : mobEffects) {
             if (ctx.world().isClientSide) continue;
-            target.addEffect(new MobEffectInstance(effect, effect.isInstantenous() ? 1 :
+            target.addEffect(new MobEffectInstance(effect, effect.value().isInstantenous() ? 1 :
                     (int) (this.property(getEffectDurationProperty(effect)) * ctx.modifiers().get(SpellModifiers.DURATION)),
                     this.property(getEffectStrengthProperty(effect)) + bonusAmplifier,
                     false, true));
@@ -189,8 +190,8 @@ public class BuffSpell extends Spell {
      * @param effect the mob effect for which to get the duration property, used to generate the property name.
      * @return the spell property for the duration of the given mob effect.
      */
-    public static SpellProperty<Integer> getEffectDurationProperty(MobEffect effect) {
-        return SpellProperty.intProperty(effect.getDescriptionId() + "_duration");
+    public static SpellProperty<Integer> getEffectDurationProperty(Holder<MobEffect> effect) {
+        return SpellProperty.intProperty(effect.value().getDescriptionId() + "_duration");
     }
 
     /**
@@ -204,8 +205,8 @@ public class BuffSpell extends Spell {
      * @param effect the mob effect for which to get the strength property, used to generate the property name.
      * @return the spell property for the strength of the given mob effect.
      */
-    public static SpellProperty<Integer> getEffectStrengthProperty(MobEffect effect) {
-        return SpellProperty.intProperty(effect.getDescriptionId() + "_strength");
+    public static SpellProperty<Integer> getEffectStrengthProperty(Holder<MobEffect> effect) {
+        return SpellProperty.intProperty(effect.value().getDescriptionId() + "_strength");
     }
 
     /**
@@ -214,7 +215,7 @@ public class BuffSpell extends Spell {
      *
      * @return the set of mob effects applied by this spell.
      */
-    public Set<MobEffect> getMobEffects() {
+    public Set<Holder<MobEffect>> getMobEffects() {
         return mobEffects;
     }
 

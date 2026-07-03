@@ -35,7 +35,7 @@ public class FlameCatcherItem extends BowItem {
         if (!(entity instanceof Player player)) return;
         if (level.isClientSide) return;
 
-        int charge = this.getUseDuration(stack) - timeLeft;
+        int charge = this.getUseDuration(stack, entity) - timeLeft;
         if (charge < 0) return;
 
         // Check shots (in case the flamecatcher is from the spell)
@@ -64,8 +64,10 @@ public class FlameCatcherItem extends BowItem {
         level.playSound(null, player.getX(), player.getY(), player.getZ(), EBSounds.ITEM_FLAMECATCHER_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
         level.playSound(null, player.getX(), player.getY(), player.getZ(), EBSounds.ITEM_FLAMECATCHER_FLAME.get(), SoundSource.PLAYERS, 1, 1);
 
-        stack.hurtAndBreak(this.getUseDuration(stack) - timeLeft, player, (p) ->
-                p.broadcastBreakEvent(p.getUsedItemHand()));
+        stack.hurtAndBreak(this.getUseDuration(stack, entity) - timeLeft, player,
+                player.getUsedItemHand() == net.minecraft.world.InteractionHand.OFF_HAND
+                        ? net.minecraft.world.entity.EquipmentSlot.OFFHAND
+                        : net.minecraft.world.entity.EquipmentSlot.MAINHAND);
     }
 
 

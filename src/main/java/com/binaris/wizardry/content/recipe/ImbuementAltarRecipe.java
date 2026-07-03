@@ -1,60 +1,38 @@
 package com.binaris.wizardry.content.recipe;
 
 import com.binaris.wizardry.setup.registries.EBRecipeTypes;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.TagParser;
-import net.minecraft.world.item.component.CustomData;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.Item;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class ImbuementAltarRecipe implements Recipe<Container> {
-    private final ResourceLocation id;
+import java.util.List;
+
+/**
+ * Recipe used by the Imbuement Altar. It is not a standard grid recipe: matching is done through the custom
+ * {@link #matches(ItemStack, ItemStack[])} against the four receptacle stacks plus the central stack, so the
+ * vanilla {@link Recipe#matches(RecipeInput, Level)} entry point is unused.
+ */
+public class ImbuementAltarRecipe implements Recipe<RecipeInput> {
     private final NonNullList<Ingredient> receptacleIngredients;
     private final Ingredient centerIngredient;
     private final ItemStack output;
 
-    public ImbuementAltarRecipe(ResourceLocation id, NonNullList<Ingredient> receptacleIngredients,
-                                Ingredient centerIngredient, ItemStack output) {
-        this.id = id;
+    public ImbuementAltarRecipe(NonNullList<Ingredient> receptacleIngredients, Ingredient centerIngredient, ItemStack output) {
         this.receptacleIngredients = receptacleIngredients;
         this.centerIngredient = centerIngredient;
         this.output = output;
-    }
-
-    private static ItemStack itemStackFromJson(JsonObject stackObject) {
-        Item item = ShapedRecipe.itemFromJson(stackObject);
-        int count = GsonHelper.getAsInt(stackObject, "count", 1);
-
-        if (count < 1) {
-            throw new JsonSyntaxException("Invalid output count: " + count);
-        }
-
-        ItemStack stack = new ItemStack(item, count);
-
-        // Soporte para NBT data
-        if (stackObject.has("nbt")) {
-            try {
-                CompoundTag nbt = TagParser.parseTag(GsonHelper.getAsString(stackObject, "nbt"));
-                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
-            } catch (Exception e) {
-                throw new JsonParseException("Invalid NBT data: " + e.getMessage());
-            }
-        }
-
-        return stack;
     }
 
     public boolean matches(ItemStack centerStack, ItemStack[] receptacleStacks) {
@@ -81,12 +59,12 @@ public class ImbuementAltarRecipe implements Recipe<Container> {
     }
 
     @Override
-    public boolean matches(@NotNull Container container, @NotNull Level level) {
+    public boolean matches(@NotNull RecipeInput input, @NotNull Level level) {
         return false;
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull Container container, @NotNull RegistryAccess access) {
+    public @NotNull ItemStack assemble(@NotNull RecipeInput input, HolderLookup.@NotNull Provider registries) {
         return output.copy();
     }
 
@@ -96,13 +74,8 @@ public class ImbuementAltarRecipe implements Recipe<Container> {
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess access) {
+    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
         return output.copy();
-    }
-
-    @Override
-    public @NotNull ResourceLocation getId() {
-        return id;
     }
 
     @Override
@@ -129,45 +102,56 @@ public class ImbuementAltarRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<ImbuementAltarRecipe> {
-        @Override
-        public @NotNull ImbuementAltarRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
-            NonNullList<Ingredient> receptacleIngredients = NonNullList.withSize(4, Ingredient.EMPTY);
-            var receptaclesArray = GsonHelper.getAsJsonArray(json, "receptacles");
+        private static final MapCodec<ImbuementAltarRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+                Ingredient.CODEC.listOf().fieldOf("receptacles")
+                        .flatXmap(Serializer::toNonNull, Serializer::fromNonNull)
+                        .forGetter(recipe -> recipe.receptacleIngredients),
+                Ingredient.CODEC.fieldOf("center").forGetter(recipe -> recipe.centerIngredient),
+                ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.output)
+        ).apply(instance, ImbuementAltarRecipe::new));
 
-            if (receptaclesArray.size() != 4) {
-                throw new JsonParseException("Imbuement recipe must have exactly 4 receptacle ingredients");
+        private static final StreamCodec<RegistryFriendlyByteBuf, ImbuementAltarRecipe> STREAM_CODEC =
+                StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
+
+        private static DataResult<NonNullList<Ingredient>> toNonNull(List<Ingredient> list) {
+            if (list.size() != 4) {
+                return DataResult.error(() -> "Imbuement recipe must have exactly 4 receptacle ingredients");
             }
-
-            for (int i = 0; i < 4; i++) {
-                receptacleIngredients.set(i, Ingredient.fromJson(receptaclesArray.get(i)));
-            }
-
-            Ingredient centerIngredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "center"));
-            ItemStack output = itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
-
-            return new ImbuementAltarRecipe(id, receptacleIngredients, centerIngredient, output);
+            NonNullList<Ingredient> receptacles = NonNullList.withSize(4, Ingredient.EMPTY);
+            for (int i = 0; i < 4; i++) receptacles.set(i, list.get(i));
+            return DataResult.success(receptacles);
         }
 
-        @Override
-        public @NotNull ImbuementAltarRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buf) {
-            NonNullList<Ingredient> receptacleIngredients = NonNullList.withSize(4, Ingredient.EMPTY);
-            for (int i = 0; i < 4; i++) {
-                receptacleIngredients.set(i, Ingredient.fromNetwork(buf));
-            }
-
-            Ingredient centerIngredient = Ingredient.fromNetwork(buf);
-            ItemStack output = buf.readItem();
-
-            return new ImbuementAltarRecipe(id, receptacleIngredients, centerIngredient, output);
+        private static DataResult<List<Ingredient>> fromNonNull(NonNullList<Ingredient> receptacles) {
+            return DataResult.success(List.copyOf(receptacles));
         }
 
-        @Override
-        public void toNetwork(@NotNull FriendlyByteBuf buf, ImbuementAltarRecipe recipe) {
+        private static ImbuementAltarRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
+            NonNullList<Ingredient> receptacleIngredients = NonNullList.withSize(4, Ingredient.EMPTY);
+            for (int i = 0; i < 4; i++) {
+                receptacleIngredients.set(i, Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
+            }
+            Ingredient centerIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
+            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+            return new ImbuementAltarRecipe(receptacleIngredients, centerIngredient, output);
+        }
+
+        private static void toNetwork(RegistryFriendlyByteBuf buf, ImbuementAltarRecipe recipe) {
             for (Ingredient ingredient : recipe.receptacleIngredients) {
-                ingredient.toNetwork(buf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient);
             }
-            recipe.centerIngredient.toNetwork(buf);
-            buf.writeItem(recipe.output);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.centerIngredient);
+            ItemStack.STREAM_CODEC.encode(buf, recipe.output);
+        }
+
+        @Override
+        public @NotNull MapCodec<ImbuementAltarRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public @NotNull StreamCodec<RegistryFriendlyByteBuf, ImbuementAltarRecipe> streamCodec() {
+            return STREAM_CODEC;
         }
     }
 }

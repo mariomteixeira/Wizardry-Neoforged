@@ -17,7 +17,7 @@ public class SoulBindingRingEffect implements IArtifactEffect {
     @Override
     public void onHurtEntity(Player player, LivingEntity damagedEntity, DamageSource source, AtomicDouble amount, AtomicBoolean canceled, ItemStack artifact) {
         if (damagedEntity.level().isClientSide) return;
-        damagedEntity.addEffect(new MobEffectInstance(EBMobEffects.CURSE_OF_SOULBINDING.get(), 400));
+        damagedEntity.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.CURSE_OF_SOULBINDING), 400));
         CurseOfSoulbinding.getSoulboundCreatures(Services.OBJECT_DATA.getSpellManagerData(player)).add(damagedEntity.getUUID());
     }
 }

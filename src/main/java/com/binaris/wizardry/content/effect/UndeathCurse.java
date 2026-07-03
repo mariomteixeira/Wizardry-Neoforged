@@ -15,7 +15,7 @@ public class UndeathCurse extends CurseMobEffect {
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity livingEntity, int $$1) {
+    public boolean applyEffectTick(@NotNull LivingEntity livingEntity, int $$1) {
         if (livingEntity.level().isDay() && !livingEntity.level().isClientSide) {
             float f = livingEntity.getLightLevelDependentMagicValue();
 
@@ -29,9 +29,9 @@ public class UndeathCurse extends CurseMobEffect {
                         itemstack.setDamageValue(itemstack.getDamageValue() + livingEntity.level().random.nextInt(2));
                         if (itemstack.getDamageValue() >= itemstack.getMaxDamage()) {
                             if (itemstack.getItem() instanceof WizardArmorItem) {
-                                livingEntity.setSecondsOnFire(8);
+                                livingEntity.igniteForSeconds(8);
                             } else {
-                                livingEntity.broadcastBreakEvent(EquipmentSlot.HEAD);
+                                livingEntity.onEquippedItemBroken(itemstack.getItem(), EquipmentSlot.HEAD);
                                 livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
                             }
                         }
@@ -41,14 +41,15 @@ public class UndeathCurse extends CurseMobEffect {
                 }
 
                 if (flag) {
-                    livingEntity.setSecondsOnFire(8);
+                    livingEntity.igniteForSeconds(8);
                 }
             }
         }
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int $$0, int $$1) {
+    public boolean shouldApplyEffectTickThisTick(int $$0, int $$1) {
         return true;
     }
 

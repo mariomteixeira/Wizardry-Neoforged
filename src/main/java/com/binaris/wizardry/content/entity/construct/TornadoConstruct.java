@@ -48,10 +48,10 @@ public class TornadoConstruct extends ScaledConstructEntity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(VEL_X, 0.0F);
-        this.entityData.define(VEL_Z, 0.0F);
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(VEL_X, 0.0F);
+        builder.define(VEL_Z, 0.0F);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class TornadoConstruct extends ScaledConstructEntity {
                 BlockUtil.SurfaceCriteria.NOT_AIR_TO_AIR);
 
         if (y != null && this.level().getBlockState(pos.above(y - pos.getY())).is(Blocks.LAVA)) {
-            this.setSecondsOnFire(5);
+            this.igniteForSeconds(5);
         }
 
         if (!this.level().isClientSide) {
@@ -110,7 +110,7 @@ public class TornadoConstruct extends ScaledConstructEntity {
         double dx = (this.getX() - target.getX() > 0 ? 0.5 : -0.5) - (this.getX() - target.getX()) * 0.125;
         double dz = (this.getZ() - target.getZ() > 0 ? 0.5 : -0.5) - (this.getZ() - target.getZ()) * 0.125;
 
-        if (this.isOnFire()) target.setSecondsOnFire(4);
+        if (this.isOnFire()) target.igniteForSeconds(4);
 
         float damage = Spells.TORNADO.property(DefaultProperties.DAMAGE) * damageMultiplier;
         MagicDamageSource.causeMagicDamage(this, target, damage, EBDamageSources.SORCERY);

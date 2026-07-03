@@ -10,9 +10,12 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -33,10 +36,10 @@ public class SpectralBowItem extends BowItem {
 
     @Override
     public void releaseUsing(@NotNull ItemStack stack, Level world, @NotNull LivingEntity entity, int timeLeft) {
-        if (!world.isClientSide) stack.setDamageValue(stack.getDamageValue() + (this.getUseDuration(stack) - timeLeft));
+        if (!world.isClientSide) stack.setDamageValue(stack.getDamageValue() + (this.getUseDuration(stack, entity) - timeLeft));
         if (!(entity instanceof Player player)) return;
 
-        int i = this.getUseDuration(stack) - timeLeft;
+        int i = this.getUseDuration(stack, entity) - timeLeft;
         if (i < 0) return;
         double f = getPowerForTime(i);
         if (f < 0.1D) return;
@@ -48,15 +51,16 @@ public class SpectralBowItem extends BowItem {
             if (f == 1.0F) arrow.setCritArrow(true);
 
 
-            int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stack);
+            HolderLookup.RegistryLookup<Enchantment> enchants = world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+
+            int j = EnchantmentHelper.getItemEnchantmentLevel(enchants.getOrThrow(Enchantments.POWER), stack);
             if (j > 0) arrow.setBaseDamage(arrow.getBaseDamage() + (double) j * 0.5D + 0.5D);
 
 
-            int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, stack);
-
-            if (k > 0) arrow.setKnockback(k);
-            if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, stack) > 0)
-                arrow.setSecondsOnFire(100);
+            // 1.21: AbstractArrow no longer exposes setKnockback; Punch knockback is applied automatically
+            // from the firing weapon's enchantments via EnchantmentHelper.modifyKnockback on hit.
+            if (EnchantmentHelper.getItemEnchantmentLevel(enchants.getOrThrow(Enchantments.FLAME), stack) > 0)
+                arrow.igniteForSeconds(100);
 
 
             arrow.pickup = AbstractArrow.Pickup.DISALLOWED;

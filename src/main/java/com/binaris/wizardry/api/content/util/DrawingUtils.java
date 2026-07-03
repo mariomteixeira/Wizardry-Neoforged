@@ -28,16 +28,14 @@ public class DrawingUtils {
         float v2 = flipY ? v : v + height;
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        BufferBuilder buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(poseStack.last().pose(), x, y + height, 0).setUv((u1 * f), (v2 * f1));
+        buffer.addVertex(poseStack.last().pose(), x + width, y + height, 0).setUv((u2 * f), (v2 * f1));
+        buffer.addVertex(poseStack.last().pose(), x + width, y, 0).setUv((u2 * f), (v1 * f1));
+        buffer.addVertex(poseStack.last().pose(), x, y, 0).setUv((u1 * f), (v1 * f1));
 
-        buffer.vertex(poseStack.last().pose(), x, y + height, 0).uv((u1 * f), (v2 * f1)).endVertex();
-        buffer.vertex(poseStack.last().pose(), x + width, y + height, 0).uv((u2 * f), (v2 * f1)).endVertex();
-        buffer.vertex(poseStack.last().pose(), x + width, y, 0).uv((u2 * f), (v1 * f1)).endVertex();
-        buffer.vertex(poseStack.last().pose(), x, y, 0).uv((u1 * f), (v1 * f1)).endVertex();
-
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     public static float smoothScaleFactor(int lifetime, int ticksExisted, float partialTicks, int startLength, int endLength) {
@@ -85,16 +83,14 @@ public class DrawingUtils {
         int v2 = flipY ? v : v + height;
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        BufferBuilder buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(stack.last().pose(), x, y + height, 0).setUv(((float) (u1) * f), ((float) (v2) * f1));
+        buffer.addVertex(stack.last().pose(), x + width, y + height, 0).setUv(((float) (u2) * f), ((float) (v2) * f1));
+        buffer.addVertex(stack.last().pose(), x + width, y, 0).setUv(((float) (u2) * f), ((float) (v1) * f1));
+        buffer.addVertex(stack.last().pose(), x, y, 0).setUv(((float) (u1) * f), ((float) (v1) * f1));
 
-        buffer.vertex(stack.last().pose(), x, y + height, 0).uv(((float) (u1) * f), ((float) (v2) * f1)).endVertex();
-        buffer.vertex(stack.last().pose(), x + width, y + height, 0).uv(((float) (u2) * f), ((float) (v2) * f1)).endVertex();
-        buffer.vertex(stack.last().pose(), x + width, y, 0).uv(((float) (u2) * f), ((float) (v1) * f1)).endVertex();
-        buffer.vertex(stack.last().pose(), x, y, 0).uv(((float) (u1) * f), ((float) (v1) * f1)).endVertex();
-
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     public static void drawTexturedRect(float x, float y, int width, int height) {

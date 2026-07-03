@@ -8,10 +8,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.common.data.ForgeAdvancementProvider;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
  * {@link EBDataGenProcessor EBDatagenProcessor} to avoid repetitive code,
  * also, <i>this is generated inside the common part of the mod.</i>
  */
-@Mod.EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class EBForgeDataGenerators {
 
     @SubscribeEvent
@@ -35,12 +35,12 @@ public class EBForgeDataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
 
-        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(
+        generator.addProvider(event.includeServer(), new AdvancementProvider(
                 packOutput, lookupProvider, existingFileHelper,
                 Collections.singletonList(new EBAdvancementsProvider())
         ));
 
-        generator.addProvider(event.includeServer(), EBLootTableProvider.create(packOutput));
+        generator.addProvider(event.includeServer(), EBLootTableProvider.create(packOutput, lookupProvider));
         generator.addProvider(event.includeClient(), new EBBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new EBItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeServer(), new EBSpellsProvider(packOutput));
@@ -50,7 +50,7 @@ public class EBForgeDataGenerators {
         EBBlockTagProvider blockTagProvider = generator.addProvider(event.includeServer(), new EBBlockTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new EBItemTagProvider(packOutput, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper));
 
-        event.getGenerator().addProvider(event.includeServer(), (DataProvider.Factory<EBRecipeProvider>) EBRecipeProvider::new);
+        event.getGenerator().addProvider(event.includeServer(), new EBRecipeProvider(packOutput, lookupProvider));
     }
 
 }

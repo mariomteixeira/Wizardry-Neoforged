@@ -4,6 +4,7 @@ import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.DeferredObject;
 import com.binaris.wizardry.api.content.effect.CurseMobEffect;
 import com.binaris.wizardry.content.effect.*;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -34,6 +35,14 @@ public final class EBMobEffects {
     public static void register(RegisterFunction<MobEffect> function) {
         MOB_EFFECTS.forEach(((id, mobEffect) ->
                 function.register(BuiltInRegistries.MOB_EFFECT, WizardryMainMod.location(id), mobEffect.get())));
+    }
+
+    /**
+     * Wraps one of the mod's registered effects as a {@link Holder}, as required by the 1.21 effect APIs
+     * ({@code LivingEntity.hasEffect/getEffect/removeEffect}, {@code MobEffectInstance} ctor).
+     */
+    public static Holder<MobEffect> holder(DeferredObject<MobEffect> effect) {
+        return BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effect.get());
     }
 
     // ======= Helpers =======

@@ -6,7 +6,10 @@ import com.binaris.wizardry.api.content.util.InventoryUtil;
 import com.binaris.wizardry.content.spell.abstr.ConjureItemSpell;
 import com.binaris.wizardry.core.config.EBServerConfig;
 import com.binaris.wizardry.core.platform.Services;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,6 +19,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * This class is used to save all the custom data events used in Electroblob's Wizardry, normally just including player
@@ -79,10 +83,11 @@ public final class DataEvents {
     private static void temporaryEnchantmentTick(Player player) {
         if (player.level().getGameTime() % IMBUEMENT_ENCHANTS_CHECK_INTERVAL != 0) return;
         long currentGameTime = player.level().getGameTime();
+        HolderLookup.RegistryLookup<Enchantment> enchants = player.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 
         for (ItemStack stack : InventoryUtil.getAllItems(player)) {
             if (stack.isEmpty()) continue;
-            if (EnchantmentHelper.getEnchantments(stack).isEmpty())
+            if (stack.getEnchantments().isEmpty())
                 continue; // An item with no enchantments can't have temporary ones
 
             ImbuementEnchantData data = Services.OBJECT_DATA.getImbuementData(stack);
@@ -91,24 +96,19 @@ public final class DataEvents {
             Map<ResourceLocation, Long> tempEnchants = data.getImbuements();
             if (tempEnchants.isEmpty()) continue;
 
-            Map<Enchantment, Integer> currentEnchants = EnchantmentHelper.getEnchantments(stack);
-            boolean changed = false;
-
             for (Map.Entry<ResourceLocation, Long> entry : tempEnchants.entrySet()) {
                 long expireTime = entry.getValue();
 
                 if (expireTime < 0 || currentGameTime < expireTime) continue;
 
-                Enchantment enchantment = BuiltInRegistries.ENCHANTMENT.get(entry.getKey());
-                if (enchantment != null) {
-                    currentEnchants.remove(enchantment);
-                    data.removeImbuement(enchantment);
-                    changed = true;
+                Optional<Holder.Reference<Enchantment>> enchantment =
+                        enchants.get(ResourceKey.create(Registries.ENCHANTMENT, entry.getKey()));
+                if (enchantment.isPresent()) {
+                    Holder<Enchantment> holder = enchantment.get();
+                    EnchantmentHelper.updateEnchantments(stack, mutable -> mutable.set(holder, 0));
+                    data.removeImbuement(holder);
                 }
-
             }
-
-            if (changed) EnchantmentHelper.setEnchantments(currentEnchants, stack);
         }
     }
 

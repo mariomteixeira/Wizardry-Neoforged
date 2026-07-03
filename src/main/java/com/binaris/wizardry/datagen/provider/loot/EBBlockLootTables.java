@@ -4,8 +4,10 @@ import com.binaris.wizardry.api.content.DeferredObject;
 import com.binaris.wizardry.setup.datagen.EBDataGenProcessor;
 import com.binaris.wizardry.setup.registries.EBBlocks;
 import com.binaris.wizardry.setup.registries.EBItems;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,8 +18,8 @@ import java.util.stream.Collectors;
 
 public final class EBBlockLootTables extends BlockLootSubProvider {
 
-    public EBBlockLootTables() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public EBBlockLootTables(HolderLookup.Provider registries) {
+        super(Set.<Item>of(), FeatureFlags.REGISTRY.allFlags(), registries);
     }
 
     @Override

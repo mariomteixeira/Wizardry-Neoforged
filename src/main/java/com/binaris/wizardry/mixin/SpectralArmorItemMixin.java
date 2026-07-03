@@ -10,6 +10,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
@@ -24,7 +26,7 @@ public abstract class SpectralArmorItemMixin extends ArmorItem {
     @Unique
     private final SpectralArmorItem wizardry$spectralArmorItem = (SpectralArmorItem) (Object) this;
 
-    public SpectralArmorItemMixin(ArmorMaterial material, Type type, Properties properties) {
+    public SpectralArmorItemMixin(Holder<ArmorMaterial> material, Type type, Properties properties) {
         super(material, type, properties);
     }
 
@@ -67,11 +69,11 @@ public abstract class SpectralArmorItemMixin extends ArmorItem {
     }
 
     @Override
-    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         String string = "ebwizardry:textures/armor/spectral_armor.png";
         if (slot == EquipmentSlot.LEGS) {
             string = "ebwizardry:textures/armor/spectral_armor_legs.png";
         }
-        return string;
+        return ResourceLocation.parse(string);
     }
 }

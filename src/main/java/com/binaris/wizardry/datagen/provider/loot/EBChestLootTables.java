@@ -1,7 +1,7 @@
 package com.binaris.wizardry.datagen.provider.loot;
 
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +12,7 @@ import java.util.function.BiConsumer;
 // it gives me an error, I still didn't figure out why, but for now I'm just commenting it out and hope to fix it later
 public final class EBChestLootTables implements LootTableSubProvider {
     @Override
-    public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
+    public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
 //        biConsumer.accept(EBLootTables.DUNGEON_ADDITIONS,
 //                LootTable.lootTable()
 //                        .withPool(LootPool.lootPool()

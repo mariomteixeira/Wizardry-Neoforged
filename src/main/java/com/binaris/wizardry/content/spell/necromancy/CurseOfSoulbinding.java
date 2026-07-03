@@ -58,7 +58,7 @@ public class CurseOfSoulbinding extends RaySpell {
             for (Iterator<UUID> iterator = getSoulboundCreatures(data).iterator(); iterator.hasNext(); ) {
                 Entity entity = EntityUtil.getEntityByUUID(playerDamaged.level(), iterator.next());
 
-                if (entity == null || (entity instanceof LivingEntity && !((LivingEntity) entity).hasEffect(EBMobEffects.CURSE_OF_SOULBINDING.get()))) {
+                if (entity == null || (entity instanceof LivingEntity && !((LivingEntity) entity).hasEffect(EBMobEffects.holder(EBMobEffects.CURSE_OF_SOULBINDING)))) {
                     iterator.remove();
                 } else if (entity instanceof LivingEntity) {
                     if (entity.hurt(MagicDamageSource.causeDirectMagicDamage(playerDamaged, EBDamageSources.SORCERY), event.getAmount())) {
@@ -75,7 +75,7 @@ public class CurseOfSoulbinding extends RaySpell {
             SpellManagerData data = Services.OBJECT_DATA.getSpellManagerData(caster);
 
             if (getSoulboundCreatures(data).add(livingTarget.getUUID())) {
-                livingTarget.addEffect(new MobEffectInstance(EBMobEffects.CURSE_OF_SOULBINDING.get(), Integer.MAX_VALUE));
+                livingTarget.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.CURSE_OF_SOULBINDING), Integer.MAX_VALUE));
             } else {
                 return false;
             }

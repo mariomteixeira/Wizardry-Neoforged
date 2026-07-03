@@ -1,7 +1,6 @@
 package com.binaris.wizardry.core.integrations;
 
 import com.binaris.wizardry.core.IArtifactEffect;
-import com.binaris.wizardry.core.integrations.accessories.AccessoriesIntegration;
 import com.binaris.wizardry.core.platform.Services;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -29,15 +28,7 @@ public final class ArtifactChannel {
     }
 
     public static ArtifactIntegration getIntegration(){
-        if (AccessoriesIntegration.INSTANCE.isLoaded()) {
-            return AccessoriesIntegration.INSTANCE;
-        }
-
-        if (Services.PLATFORM.getPlatformName().equals("Forge") && Services.PLATFORM.isModLoaded("curios")) {
-            return Services.PLATFORM.getArtifactIntegration();
-        }
-
-        if (Services.PLATFORM.getPlatformName().equals("Fabric") && Services.PLATFORM.isModLoaded("trinkets")) {
+        if (Services.PLATFORM.isModLoaded("curios")) {
             return Services.PLATFORM.getArtifactIntegration();
         }
 

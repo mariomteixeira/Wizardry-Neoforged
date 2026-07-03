@@ -52,7 +52,7 @@ public class Telekinesis extends RaySpell {
     protected boolean onBlockHit(CastContext ctx, BlockHitResult blockHit, Vec3 origin) {
         if (ctx.caster() instanceof Player player) {
             BlockState blockstate = ctx.world().getBlockState(blockHit.getBlockPos());
-            return blockstate.use(ctx.world(), player, InteractionHand.MAIN_HAND, blockHit).equals(InteractionResult.SUCCESS);
+            return blockstate.useWithoutItem(ctx.world(), player, blockHit).equals(InteractionResult.SUCCESS);
         }
 
         return false;

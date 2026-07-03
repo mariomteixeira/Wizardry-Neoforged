@@ -16,13 +16,13 @@ import org.jetbrains.annotations.NotNull;
 public class FrostAxeItem extends AxeItem {
 
     public FrostAxeItem() {
-        super(MagicItemTier.TIER, 8, -3, new Properties().durability(12000).rarity(Rarity.UNCOMMON));
+        super(MagicItemTier.TIER, new Properties().durability(12000).rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(MagicItemTier.TIER, 8, -3)));
     }
 
     @Override
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity entity) {
         if (!MagicDamageSource.isEntityImmune(EBDamageSources.FROST, target) && !entity.level().isClientSide)
-            target.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+            target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST),
                     Spells.FROST_AXE.property(DefaultProperties.EFFECT_DURATION),
                     Spells.FROST_AXE.property(DefaultProperties.EFFECT_STRENGTH)));
         return false;

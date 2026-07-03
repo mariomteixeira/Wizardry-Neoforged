@@ -39,7 +39,7 @@ public class FrostRay extends RaySpell {
         if (target.isOnFire()) target.clearFire();
         if (ctx.world().isClientSide) return true;
 
-        target.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+        target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST),
                 property(DefaultProperties.EFFECT_DURATION),
                 property(DefaultProperties.EFFECT_STRENGTH)));
 

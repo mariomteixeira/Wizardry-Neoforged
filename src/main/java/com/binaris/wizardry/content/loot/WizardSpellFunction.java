@@ -8,9 +8,8 @@ import com.binaris.wizardry.content.item.ScrollItem;
 import com.binaris.wizardry.content.item.SpellBookItem;
 import com.binaris.wizardry.setup.registries.EBLootFunctions;
 import com.binaris.wizardry.setup.registries.Spells;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
@@ -22,12 +21,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class WizardSpellFunction extends LootItemConditionalFunction {
-    protected WizardSpellFunction(LootItemCondition[] conditions) {
+
+    public static final MapCodec<WizardSpellFunction> CODEC = RecordCodecBuilder.mapCodec(inst ->
+            commonFields(inst).apply(inst, WizardSpellFunction::new));
+
+    protected WizardSpellFunction(List<LootItemCondition> conditions) {
         super(conditions);
     }
 
     @Override
-    public @NotNull LootItemFunctionType getType() {
+    public @NotNull LootItemFunctionType<WizardSpellFunction> getType() {
         return EBLootFunctions.WIZARD_SPELL;
     }
 
@@ -50,19 +53,5 @@ public class WizardSpellFunction extends LootItemConditionalFunction {
 
         RegistryUtils.setSpell(stack, spells.get(context.getRandom().nextInt(spells.size())));
         return stack;
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<WizardSpellFunction> {
-        public Serializer() {
-        }
-
-        @Override
-        public void serialize(@NotNull JsonObject json, @NotNull WizardSpellFunction loot, @NotNull JsonSerializationContext context) {
-        }
-
-        @Override
-        public @NotNull WizardSpellFunction deserialize(@NotNull JsonObject object, @NotNull JsonDeserializationContext context, LootItemCondition @NotNull [] conditions) {
-            return new WizardSpellFunction(conditions);
-        }
     }
 }

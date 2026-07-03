@@ -4,6 +4,7 @@ import com.binaris.wizardry.api.content.item.ICastItem;
 import com.binaris.wizardry.api.content.util.EntityUtil;
 import com.binaris.wizardry.core.AllyDesignation;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -70,7 +71,7 @@ public abstract class MagicConstructEntity extends Entity implements OwnableEnti
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
     }
 
     @Override

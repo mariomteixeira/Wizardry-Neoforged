@@ -1,10 +1,12 @@
 package com.binaris.wizardry.setup.registries;
 
+import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.content.advancement.SpellCastTrigger;
 import com.binaris.wizardry.content.advancement.SpellDiscoveryTrigger;
 import com.binaris.wizardry.content.advancement.WizardryAdvancementTrigger;
 import com.binaris.wizardry.content.advancement.WizardryContainerTrigger;
-import com.binaris.wizardry.core.mixin.accessor.CriteriaAccessor;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.CriterionTrigger;
 
 public final class EBAdvancementTriggers {
     public static final WizardryAdvancementTrigger MAX_OUT_WAND = new WizardryAdvancementTrigger("max_out_wand");
@@ -24,17 +26,21 @@ public final class EBAdvancementTriggers {
     }
 
     public static void register() {
-        CriteriaAccessor.callRegister(DISCOVER_SPELL);
-        CriteriaAccessor.callRegister(MAX_OUT_WAND);
-        CriteriaAccessor.callRegister(SPECIAL_UPGRADE);
-        CriteriaAccessor.callRegister(ANGER_WIZARD);
-        CriteriaAccessor.callRegister(BUY_MASTER_SPELL);
-        CriteriaAccessor.callRegister(SPELL_FAILURE);
-        CriteriaAccessor.callRegister(WIZARD_TRADE);
-        CriteriaAccessor.callRegister(WAND_LEVELUP);
-        CriteriaAccessor.callRegister(RESTORE_IMBUEMENT_ALTAR);
-        CriteriaAccessor.callRegister(CAST_SPELL);
-        CriteriaAccessor.callRegister(ARCANE_WORKBENCH);
-        CriteriaAccessor.callRegister(IMBUEMENT_ALTAR);
+        register("discover_spell", DISCOVER_SPELL);
+        register("max_out_wand", MAX_OUT_WAND);
+        register("special_upgrade", SPECIAL_UPGRADE);
+        register("anger_wizard", ANGER_WIZARD);
+        register("buy_master_spell", BUY_MASTER_SPELL);
+        register("spell_failure", SPELL_FAILURE);
+        register("wizard_trade", WIZARD_TRADE);
+        register("wand_levelup", WAND_LEVELUP);
+        register("restore_imbuement_altar", RESTORE_IMBUEMENT_ALTAR);
+        register("cast_spell", CAST_SPELL);
+        register("arcane_workbench", ARCANE_WORKBENCH);
+        register("imbuement_altar", IMBUEMENT_ALTAR);
+    }
+
+    private static <T extends CriterionTrigger<?>> void register(String name, T trigger) {
+        CriteriaTriggers.register(WizardryMainMod.location(name).toString(), trigger);
     }
 }

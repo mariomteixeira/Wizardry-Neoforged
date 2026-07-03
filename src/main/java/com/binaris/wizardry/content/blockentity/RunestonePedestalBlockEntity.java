@@ -13,10 +13,14 @@ import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.*;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -30,6 +34,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -182,7 +187,7 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
             BlockPos spawnPos = findSpawnPositionWizard(level.random.nextFloat() * 2 * (float) Math.PI);
             wizard.setPos(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
             wizard.setElement(getBlockState().getBlock() instanceof RunestonePedestalBlock runestone ? runestone.getElement() : Elements.FIRE);
-            wizard.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(getBlockPos()), MobSpawnType.STRUCTURE, null, null);
+            wizard.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(getBlockPos()), MobSpawnType.STRUCTURE, null);
             level.addFreshEntity(wizard);
             spawnedWizards.add(wizard.getUUID());
         }
@@ -196,7 +201,7 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
             Player player = serverLevel.getPlayerByUUID(uuid);
             if (player == null || !player.isAlive() || player.isDeadOrDying() || player.isRemoved()) return true;
             setContainmentPos(player);
-            player.addEffect(new MobEffectInstance(EBMobEffects.CONTAINMENT.get(), 200, 0, false, false, true));
+            player.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.CONTAINMENT.get()), 200, 0, false, false, true));
             return false;
         });
 
@@ -205,7 +210,7 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
             if (entity == null || !entity.isAlive()) return true;
             if (entity instanceof LivingEntity livingEntity) {
                 setContainmentPos(livingEntity);
-                livingEntity.addEffect(new MobEffectInstance(EBMobEffects.CONTAINMENT.get(), 200, 0, false, false, true));
+                livingEntity.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.CONTAINMENT.get()), 200, 0, false, false, true));
             }
             return false;
         });
@@ -242,7 +247,7 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
 
         playersInContainment.forEach(uuid -> {
             var player = serverLevel.getPlayerByUUID(uuid);
-            if (player != null) player.removeEffect(EBMobEffects.CONTAINMENT.get());
+            if (player != null) player.removeEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.CONTAINMENT.get()));
         });
         playersInContainment.clear();
 
@@ -282,8 +287,8 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         if (linkedPos != null) tag.put("LinkedPos", NbtUtils.writeBlockPos(linkedPos));
         tag.putBoolean("Natural", natural);
         tag.putBoolean("Activated", activated);
@@ -294,9 +299,9 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
-        this.linkedPos = tag.contains("LinkedPos") ? NbtUtils.readBlockPos(tag.getCompound("LinkedPos")) : null;
+    protected void loadAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        this.linkedPos = tag.contains("LinkedPos") ? NbtUtils.readBlockPos(tag, "LinkedPos").orElse(null) : null;
         this.natural = tag.getBoolean("Natural");
         this.activated = tag.getBoolean("Activated");
         this.conquered = tag.getBoolean("Conquered");
@@ -331,9 +336,9 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
+    public @NotNull CompoundTag getUpdateTag(@NotNull HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        saveAdditional(tag, registries);
         return tag;
     }
 

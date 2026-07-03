@@ -1,5 +1,6 @@
 package com.binaris.wizardry.content.effect;
 
+import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.client.ParticleBuilder;
 import com.binaris.wizardry.api.content.effect.MagicMobEffect;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
@@ -12,29 +13,29 @@ import net.minecraft.world.level.Level;
 public class FrostMobEffect extends MagicMobEffect {
     public FrostMobEffect() {
         super(MobEffectCategory.HARMFUL, 0);
-        this.addAttributeModifier(Attributes.MOVEMENT_SPEED, "35dded48-2f19-4541-8510-b29e2dc2cd51", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        this.addAttributeModifier(Attributes.MOVEMENT_SPEED, WizardryMainMod.location("frost_movement"), -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int i) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int i) {
         if (livingEntity.isOnFire()) {
-            if (livingEntity.hasEffect(this)) {
-                livingEntity.removeEffect(this);
-                livingEntity.setSecondsOnFire(0);
+            if (livingEntity.hasEffect(holder())) {
+                livingEntity.removeEffect(holder());
+                livingEntity.clearFire();
             }
         }
 
         livingEntity.setIsInPowderSnow(true);
 
         // need to check the -1, being the infinite duration case
-        if (livingEntity.hasEffect(this) && livingEntity.getEffect(this).getDuration() <= 1 && livingEntity.getEffect(this).getDuration() != -1) {
+        if (livingEntity.hasEffect(holder()) && livingEntity.getEffect(holder()).getDuration() <= 1 && livingEntity.getEffect(holder()).getDuration() != -1) {
             livingEntity.setIsInPowderSnow(false);
         }
-        super.applyEffectTick(livingEntity, i);
+        return super.applyEffectTick(livingEntity, i);
     }
 
     @Override
-    public boolean isDurationEffectTick(int i, int j) {
+    public boolean shouldApplyEffectTickThisTick(int i, int j) {
         return true;
     }
 

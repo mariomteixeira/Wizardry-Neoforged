@@ -28,7 +28,7 @@ public class Containment extends RaySpell {
     @Override
     protected boolean onEntityHit(CastContext ctx, EntityHitResult entityHit, Vec3 origin) {
         if (entityHit.getEntity() instanceof LivingEntity target) {
-            target.addEffect(new MobEffectInstance(EBMobEffects.CONTAINMENT.get(),
+            target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.CONTAINMENT),
                     (int) (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION)),
                     property(DefaultProperties.EFFECT_STRENGTH) + BuffSpell.getStandardBonusAmplifier(ctx.modifiers().get(SpellModifiers.POTENCY))));
         }

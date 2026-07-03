@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 public class FlamingAxeItem extends AxeItem {
 
     public FlamingAxeItem() {
-        super(MagicItemTier.TIER, 8, -3, new Properties().durability(12000).rarity(Rarity.UNCOMMON));
+        super(MagicItemTier.TIER, new Properties().durability(12000).rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(MagicItemTier.TIER, 8, -3)));
     }
 
     @Override
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity entity) {
         if (!MagicDamageSource.isEntityImmune(EBDamageSources.FIRE, target))
-            target.setSecondsOnFire(Spells.FLAMING_AXE.property(DefaultProperties.EFFECT_DURATION));
+            target.igniteForSeconds(Spells.FLAMING_AXE.property(DefaultProperties.EFFECT_DURATION));
         return false;
     }
 

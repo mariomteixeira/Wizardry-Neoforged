@@ -11,7 +11,6 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraft.world.level.storage.loot.Deserializers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +25,7 @@ import java.util.Map;
  * @see SpellProperties
  */
 public class PropertiesDataManager extends SimpleJsonResourceReloadListener {
-    public static final Gson GSON = Deserializers.createFunctionSerializer().create();
+    public static final Gson GSON = new Gson();
     protected static final Logger LOGGER = LogManager.getLogger();
     public static PropertiesDataManager INSTANCE;
 

@@ -17,8 +17,8 @@ public final class EBEnchantments {
 
     // ======= Registry =======
     public static void register(RegisterFunction<Enchantment> function) {
-        ENCHANTMENTS.forEach(((id, enchantment) ->
-                function.register(BuiltInRegistries.ENCHANTMENT, WizardryMainMod.location(id), enchantment.get())));
+        // 1.21: enchantments are datapack-driven (Registries.ENCHANTMENT has no writable code registry).
+        // The mod registers no custom enchantments in code, so this is intentionally a no-op.
     }
 
     // ======= Helpers =======

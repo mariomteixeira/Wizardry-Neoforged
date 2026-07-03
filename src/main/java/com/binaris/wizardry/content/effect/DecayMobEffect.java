@@ -1,5 +1,6 @@
 package com.binaris.wizardry.content.effect;
 
+import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.effect.MagicMobEffect;
 import com.binaris.wizardry.api.content.util.MagicDamageSource;
 import com.binaris.wizardry.content.entity.construct.DecayConstruct;
@@ -19,17 +20,17 @@ import java.util.List;
 public class DecayMobEffect extends MagicMobEffect {
     public DecayMobEffect() {
         super(MobEffectCategory.HARMFUL, 0x3c006c);
-        this.addAttributeModifier(Attributes.MOVEMENT_SPEED, "85602e0b-4801-4a87-94f3-bf617c97014e", -0.2, AttributeModifier.Operation.MULTIPLY_TOTAL);
+        this.addAttributeModifier(Attributes.MOVEMENT_SPEED, WizardryMainMod.location("decay_movement"), -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity livingEntity, int $$1) {
+    public boolean applyEffectTick(@NotNull LivingEntity livingEntity, int $$1) {
         if (livingEntity.tickCount % 8 == 0 && !livingEntity.level().isClientSide && livingEntity.onGround()) {
             List<Entity> entities = livingEntity.level().getEntities(livingEntity, livingEntity.getBoundingBox());
 
             // Don't spawn another decay if there's already one there
             for (Entity entity : entities) {
-                if (entity instanceof DecayConstruct) return;
+                if (entity instanceof DecayConstruct) return true;
             }
 
             // The victim spreading the decay is the 'caster' here, so that it can actually wear off, otherwise it
@@ -42,6 +43,7 @@ public class DecayMobEffect extends MagicMobEffect {
             if (!MagicDamageSource.isEntityImmune(EBDamageSources.WITHER, livingEntity))
                 livingEntity.hurt(livingEntity.damageSources().wither(), 1);
         }
+        return true;
     }
 
     @Override
@@ -50,7 +52,7 @@ public class DecayMobEffect extends MagicMobEffect {
     }
 
     @Override
-    public boolean isDurationEffectTick(int $$0, int $$1) {
+    public boolean shouldApplyEffectTickThisTick(int $$0, int $$1) {
         return true;
     }
 }

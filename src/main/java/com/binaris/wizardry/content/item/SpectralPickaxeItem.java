@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpectralPickaxeItem extends PickaxeItem {
     public SpectralPickaxeItem() {
-        super(Tiers.IRON, 1, -2.8F, new Properties().durability(1200).rarity(Rarity.UNCOMMON));
+        super(Tiers.IRON, new Properties().durability(1200).rarity(Rarity.UNCOMMON).attributes(PickaxeItem.createAttributes(Tiers.IRON, 1, -2.8F)));
     }
 
     @Override

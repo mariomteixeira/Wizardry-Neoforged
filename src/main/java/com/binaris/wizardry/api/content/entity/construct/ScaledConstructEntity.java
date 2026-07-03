@@ -18,14 +18,14 @@ public abstract class ScaledConstructEntity extends MagicConstructEntity {
 
     public ScaledConstructEntity(EntityType<?> type, Level world) {
         super(type, world);
-        this.baseWidth = type.getDimensions().width;
-        this.baseHeight = type.getDimensions().height;
+        this.baseWidth = type.getDimensions().width();
+        this.baseHeight = type.getDimensions().height();
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(SIZE_MULTIPLIER, 1.0f);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(SIZE_MULTIPLIER, 1.0f);
     }
 
     @Override

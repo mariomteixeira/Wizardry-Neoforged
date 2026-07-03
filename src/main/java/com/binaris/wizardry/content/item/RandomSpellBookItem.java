@@ -54,7 +54,7 @@ public class RandomSpellBookItem extends Item {
             return;
         }
 
-        LootTable lootTable = level.getServer().getLootData().getLootTable(lootTableLocation);
+        LootTable lootTable = level.getServer().reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE, lootTableLocation));
 
         LootParams lootParams = new LootParams.Builder((ServerLevel) level)
                 .withParameter(LootContextParams.THIS_ENTITY, player)

@@ -34,7 +34,7 @@ import net.neoforged.neoforge.event.level.ChunkWatchEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.function.Consumer;
@@ -47,7 +47,7 @@ import java.util.function.Consumer;
  */
 public class WizardryForgeEvents {
 
-    @Mod.EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    @EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
     public static class ForgeBusEvents {
         @SubscribeEvent
         public static void onServerAboutToStart(ServerAboutToStartEvent event) {
@@ -150,7 +150,7 @@ public class WizardryForgeEvents {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
     public static class ModBusEvents {
 
         @SubscribeEvent
@@ -165,6 +165,8 @@ public class WizardryForgeEvents {
                 register(event, EBCreativeTabs::register);
             else if (event.getRegistryKey() == Registries.ENTITY_TYPE)
                 register(event, EBEntities::register);
+            else if (event.getRegistryKey() == Registries.ARMOR_MATERIAL)
+                register(event, EBArmorMaterials::register);
             else if (event.getRegistryKey() == Registries.ITEM)
                 register(event, EBItems::register);
             else if (event.getRegistryKey() == Registries.PARTICLE_TYPE) register(event, EBParticles::registerType);
@@ -192,8 +194,10 @@ public class WizardryForgeEvents {
         /**
          * Helps to register custom registries and keeping this system
          */
+        @SuppressWarnings("unchecked")
         private static <T> void registerForge(RegisterEvent event, Consumer<RegisterFunction<T>> consumer) {
-            consumer.accept((registry, id, value) -> event.register(event.getForgeRegistry().getRegistryKey(), id, () -> value));
+            consumer.accept((registry, id, value) ->
+                    event.register((net.minecraft.resources.ResourceKey<? extends net.minecraft.core.Registry<T>>) event.getRegistryKey(), id, () -> value));
         }
 
         private static <T> void register(RegisterEvent event, Consumer<RegisterFunction<T>> consumer) {
@@ -206,16 +210,21 @@ public class WizardryForgeEvents {
         }
 
         @SubscribeEvent
+        public static void registerSpawnPlacements(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {
+            EBEntities.registerSpawns(event);
+        }
+
+        @SubscribeEvent
         public static void registerTests(RegisterGameTestsEvent event) {
         }
 
         @SubscribeEvent
         public static void modifyEntityAttributes(EntityAttributeModificationEvent e) {
-            e.getTypes().forEach(entity -> EBAttributes.getAttributes().forEach(attribute -> e.add(entity, attribute.get())));
+            e.getTypes().forEach(entity -> EBAttributes.getAttributes().forEach(attribute -> e.add(entity, EBAttributes.holder(attribute))));
         }
     }
 
-    @Mod.EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = WizardryMainMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ModBusEventsClient {
         @SubscribeEvent
         public static void registerProviders(RegisterParticleProvidersEvent event) {

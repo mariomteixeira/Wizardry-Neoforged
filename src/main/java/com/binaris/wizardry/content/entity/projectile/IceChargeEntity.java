@@ -12,6 +12,7 @@ import com.binaris.wizardry.setup.registries.client.EBParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -49,7 +50,7 @@ public class IceChargeEntity extends BombEntity {
             MagicDamageSource.causeMagicDamage(this, entity, damage, EBDamageSources.FROST);
 
             if (entity instanceof LivingEntity livingEntity && !level().isClientSide)
-                livingEntity.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+                livingEntity.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.FROST.get()),
                         Spells.ICE_CHARGE.property(DefaultProperties.EFFECT_DURATION),
                         Spells.ICE_CHARGE.property(DefaultProperties.EFFECT_STRENGTH)));
         }
@@ -67,7 +68,7 @@ public class IceChargeEntity extends BombEntity {
 
         for (LivingEntity target : targets) {
             if (target != entity && target != this.getOwner() && !level().isClientSide) {
-                target.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+                target.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.FROST.get()),
                         Spells.ICE_CHARGE.property(DefaultProperties.EFFECT_DURATION),
                         Spells.ICE_CHARGE.property(DefaultProperties.EFFECT_STRENGTH)));
             }

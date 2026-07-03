@@ -16,20 +16,27 @@ import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 public class FlamingWeapon extends Spell {
     @Override
     public boolean cast(PlayerCastContext ctx) {
+        HolderLookup.RegistryLookup<Enchantment> enchants = ctx.world().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+        Holder<Enchantment> fireAspect = enchants.getOrThrow(Enchantments.FIRE_ASPECT);
+        Holder<Enchantment> flame = enchants.getOrThrow(Enchantments.FLAME);
+
         for (ItemStack stack : InventoryUtil.getHotBarAndOffhand(ctx.caster())) {
             // If the item isn't a sword or a bow, or if it already has Fire Aspect or Flaming Arrows, skip it
             if ((!ImbueWeapon.isSword(stack) && !ImbueWeapon.isBow(stack)) ||
-                    EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.FLAMING_ARROWS) ||
-                    EnchantmentHelper.getEnchantments(stack).containsKey(Enchantments.FIRE_ASPECT))
+                    stack.getEnchantments().getLevel(flame) > 0 ||
+                    stack.getEnchantments().getLevel(fireAspect) > 0)
                 continue;
 
             ImbuementEnchantData data = Services.OBJECT_DATA.getImbuementData(stack);
@@ -38,11 +45,11 @@ public class FlamingWeapon extends Spell {
             long duration = (long) (ctx.world().getGameTime() + (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION)));
 
             if (stack.getItem() instanceof SwordItem) {
-                stack.enchant(Enchantments.FIRE_ASPECT, level);
-                data.addImbuement(Enchantments.FIRE_ASPECT, duration);
+                stack.enchant(fireAspect, level);
+                data.addImbuement(fireAspect, duration);
             } else {
-                stack.enchant(Enchantments.FLAMING_ARROWS, level);
-                data.addImbuement(Enchantments.FLAMING_ARROWS, duration);
+                stack.enchant(flame, level);
+                data.addImbuement(flame, duration);
             }
 
             if (ctx.world().isClientSide) {

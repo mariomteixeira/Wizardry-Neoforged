@@ -43,7 +43,7 @@ public abstract class LivingEntityMixin {
         if (!(livingEntity instanceof Player player)) return;
 
         if (ArtifactChannel.isEquipped(player, EBItems.AMULET_ICE_IMMUNITY.get()))
-            if (effect.getEffect() == EBMobEffects.FROST.get()) cir.setReturnValue(false);
+            if (effect.getEffect() == EBMobEffects.holder(EBMobEffects.FROST)) cir.setReturnValue(false);
 
         if (ArtifactChannel.isEquipped(player, EBItems.AMULET_WITHER_IMMUNITY.get()))
             if (effect.getEffect() == MobEffects.WITHER) cir.setReturnValue(false);
@@ -68,8 +68,8 @@ public abstract class LivingEntityMixin {
 
     @Inject(at = @At("HEAD"), method = "jumpFromGround")
     public void EBWIZARDRY$LivingEntityJump(CallbackInfo ci) {
-        if (livingEntity.hasEffect(EBMobEffects.FROST.get())) {
-            if (livingEntity.getEffect(EBMobEffects.FROST.get()).getAmplifier() == 0) {
+        if (livingEntity.hasEffect(EBMobEffects.holder(EBMobEffects.FROST))) {
+            if (livingEntity.getEffect(EBMobEffects.holder(EBMobEffects.FROST)).getAmplifier() == 0) {
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().x, 0.5, livingEntity.getDeltaMovement().z);
             } else {
                 livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().x, 0, livingEntity.getDeltaMovement().y);
@@ -98,7 +98,7 @@ public abstract class LivingEntityMixin {
 
     @Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     public boolean EBWIZARDRY$avoidDamageOnFrost(LivingEntity living, DamageSource entity, float ev) {
-        if (living.hasEffect(EBMobEffects.FROST.get())) {
+        if (living.hasEffect(EBMobEffects.holder(EBMobEffects.FROST))) {
             return false;
         }
         return living.hurt(entity, ev);
@@ -106,9 +106,9 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "onChangedBlock", at = @At("HEAD"))
     public void EBWIZARDRY$frostStep(BlockPos pos, CallbackInfo ci) {
-        if (livingEntity.hasEffect(EBMobEffects.FROST_STEP.get())) {
+        if (livingEntity.hasEffect(EBMobEffects.holder(EBMobEffects.FROST_STEP))) {
             FrostStepEffect.onEntityMoved(livingEntity, livingEntity.level(), pos,
-                    livingEntity.getEffect(EBMobEffects.FROST_STEP.get()).getAmplifier());
+                    livingEntity.getEffect(EBMobEffects.holder(EBMobEffects.FROST_STEP)).getAmplifier());
         }
     }
 }

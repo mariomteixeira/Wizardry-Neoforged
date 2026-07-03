@@ -7,6 +7,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,7 +20,7 @@ public class ObsidianCrustBlock extends Block {
     public static final IntegerProperty CRUSH_LEVEL = IntegerProperty.create("crush_level", 0, 3);
 
     public ObsidianCrustBlock() {
-        super(Block.Properties.copy(Blocks.OBSIDIAN).strength(50.0F, 1200.0F).randomTicks());
+        super(Block.Properties.ofFullCopy(Blocks.OBSIDIAN).strength(50.0F, 1200.0F).randomTicks());
         this.registerDefaultState(this.stateDefinition.any().setValue(CRUSH_LEVEL, 0));
     }
 
@@ -100,7 +101,7 @@ public class ObsidianCrustBlock extends Block {
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull BlockState state) {
+    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
         return ItemStack.EMPTY;
     }
 }

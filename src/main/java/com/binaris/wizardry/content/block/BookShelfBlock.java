@@ -1,5 +1,7 @@
 package com.binaris.wizardry.content.block;
 
+import com.mojang.serialization.MapCodec;
+
 import com.binaris.wizardry.content.blockentity.BookshelfBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,12 +25,17 @@ public class BookShelfBlock extends HorizontalDirectionalBlock implements Entity
     public static final int SLOT_COUNT = 12;
 
     public BookShelfBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).strength(2.0F, 5.0F).sound(SoundType.WOOD));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD).strength(2.0F, 5.0F).sound(SoundType.WOOD));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult blockHitResult) {
+    protected MapCodec<BookShelfBlock> codec() {
+        return simpleCodec(p -> new BookShelfBlock());
+    }
+
+    @Override
+    public @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult blockHitResult) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         BlockEntity blockentity = level.getBlockEntity(pos);

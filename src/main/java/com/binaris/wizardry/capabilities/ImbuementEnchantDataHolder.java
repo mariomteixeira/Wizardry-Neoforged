@@ -2,11 +2,12 @@ package com.binaris.wizardry.capabilities;
 
 import com.binaris.wizardry.api.content.data.ImbuementEnchantData;
 import com.binaris.wizardry.setup.registries.EBAttachments;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +38,13 @@ public class ImbuementEnchantDataHolder implements ImbuementEnchantData {
         stack.set(EBAttachments.IMBUEMENT_ENCHANT_DATA.get(), tag);
     }
 
+    private static ResourceLocation keyOf(Holder<Enchantment> enchant) {
+        return enchant.unwrapKey().map(ResourceKey::location).orElse(null);
+    }
+
     @Override
-    public void addImbuement(Enchantment enchant, long expireTime) {
-        ResourceLocation enchantKey = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
+    public void addImbuement(Holder<Enchantment> enchant, long expireTime) {
+        ResourceLocation enchantKey = keyOf(enchant);
         if (enchantKey == null) return;
         String enchantId = enchantKey.toString();
 
@@ -69,8 +74,8 @@ public class ImbuementEnchantDataHolder implements ImbuementEnchantData {
     }
 
     @Override
-    public void removeImbuement(Enchantment enchant) {
-        ResourceLocation enchantKey = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
+    public void removeImbuement(Holder<Enchantment> enchant) {
+        ResourceLocation enchantKey = keyOf(enchant);
         if (enchantKey == null) return;
         String enchantId = enchantKey.toString();
 
@@ -82,15 +87,15 @@ public class ImbuementEnchantDataHolder implements ImbuementEnchantData {
     }
 
     @Override
-    public boolean isImbuement(Enchantment enchant) {
-        ResourceLocation enchantId = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
+    public boolean isImbuement(Holder<Enchantment> enchant) {
+        ResourceLocation enchantId = keyOf(enchant);
         if (enchantId == null) return false;
         return tag().contains(enchantId.toString());
     }
 
     @Override
-    public long getExpirationTime(Enchantment enchantment) {
-        ResourceLocation enchantId = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+    public long getExpirationTime(Holder<Enchantment> enchantment) {
+        ResourceLocation enchantId = keyOf(enchantment);
         if (enchantId == null) return -1;
         CompoundTag tag = tag();
         if (tag.contains(enchantId.toString()))

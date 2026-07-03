@@ -45,7 +45,7 @@ public class FrostSigilConstruct extends ScaledConstructEntity {
                     MagicDamageSource.causeDirectMagicDamage(this, EBDamageSources.SORCERY), Spells.FROST_SIGIL.property(DefaultProperties.DAMAGE) * damageMultiplier);
 
             if (!MagicDamageSource.isEntityImmune(EBDamageSources.FROST, target))
-                target.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(), Spells.FROST_SIGIL.property(DefaultProperties.EFFECT_DURATION),
+                target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST), Spells.FROST_SIGIL.property(DefaultProperties.EFFECT_DURATION),
                         Spells.FROST_SIGIL.property(DefaultProperties.EFFECT_STRENGTH)));
 
             this.playSound(EBSounds.ENTITY_FROST_SIGIL_TRIGGER.get(), 1.0f, 1.0f);

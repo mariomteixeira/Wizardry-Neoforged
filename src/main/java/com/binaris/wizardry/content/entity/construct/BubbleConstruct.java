@@ -96,9 +96,9 @@ public class BubbleConstruct extends MagicConstructEntity {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(IS_DARK_ORB, false);
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(IS_DARK_ORB, false);
     }
 
     public boolean isDarkOrb() {
@@ -129,7 +129,6 @@ public class BubbleConstruct extends MagicConstructEntity {
         tag.putBoolean("isDarkOrb", isDarkOrb());
     }
 
-    @Override
     public double getPassengersRidingOffset() {
         return 0.1;
     }

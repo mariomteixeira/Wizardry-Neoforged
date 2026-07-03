@@ -37,7 +37,7 @@ public class ArcaneJammer extends RaySpell {
     protected boolean onEntityHit(CastContext ctx, EntityHitResult entityHit, Vec3 origin) {
         if (entityHit.getEntity() instanceof LivingEntity target) {
             if (!ctx.world().isClientSide) {
-                target.addEffect(new MobEffectInstance(EBMobEffects.ARCANE_JAMMER.get(),
+                target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.ARCANE_JAMMER),
                         (int) (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION)),
                         (int) (property(DefaultProperties.EFFECT_STRENGTH) * ctx.modifiers().get(SpellModifiers.POTENCY) - 1)));
             }
@@ -73,13 +73,13 @@ public class ArcaneJammer extends RaySpell {
     }
 
     public static void onSpellCastPreEvent(SpellCastEvent.Pre event){
-        if (event.getCaster() == null || !event.getCaster().hasEffect(EBMobEffects.ARCANE_JAMMER.get())) {
+        if (event.getCaster() == null || !event.getCaster().hasEffect(EBMobEffects.holder(EBMobEffects.ARCANE_JAMMER))) {
             return;
         }
         random.setSeed(event.getLevel().getGameTime() / UPDATE_INTERVAL);
         random.nextInt(2);
 
-        if(random.nextInt(event.getCaster().getEffect(EBMobEffects.ARCANE_JAMMER.get()).getAmplifier() + 2) > 0){
+        if(random.nextInt(event.getCaster().getEffect(EBMobEffects.holder(EBMobEffects.ARCANE_JAMMER)).getAmplifier() + 2) > 0){
             event.setCanceled(true);
 
             event.getLevel().playSound(event.getCaster(), event.getCaster().blockPosition(), EBSounds.MISC_SPELL_FAIL.get(), SoundSource.MASTER, 1.0F, 1.0F);

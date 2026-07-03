@@ -12,6 +12,7 @@ import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.WandUpgrades;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -113,6 +114,16 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity {
     // ===============================
 
     @Override
+    protected @NotNull NonNullList<ItemStack> getItems() {
+        return this.inventory;
+    }
+
+    @Override
+    protected void setItems(@NotNull NonNullList<ItemStack> items) {
+        this.inventory = items;
+    }
+
+    @Override
     public int getContainerSize() {
         return inventory.size();
     }
@@ -157,9 +168,9 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag(@NotNull HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
+        saveAdditional(tag, registries);
         return tag;
     }
 
@@ -203,17 +214,17 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity {
     // NBT
     // ===============================
     @Override
-    public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (inventory == null) this.inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         this.inventory.clear();
-        ContainerHelper.loadAllItems(tag, this.inventory);
+        ContainerHelper.loadAllItems(tag, this.inventory, registries);
     }
 
     @Override
-    public void saveAdditional(@NotNull CompoundTag tag) {
-        super.saveAdditional(tag);
-        ContainerHelper.saveAllItems(tag, this.inventory);
+    protected void saveAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        ContainerHelper.saveAllItems(tag, this.inventory, registries);
     }
 
     // ===============================

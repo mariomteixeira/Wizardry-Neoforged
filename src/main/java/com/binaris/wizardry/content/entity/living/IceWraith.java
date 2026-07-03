@@ -17,17 +17,17 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 public class IceWraith extends Blaze {
 
     public IceWraith(EntityType<? extends Blaze> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 10;
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.WATER);
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.LAVA);
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.DANGER_FIRE);
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.DAMAGE_FIRE);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.WATER);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.LAVA);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.DANGER_FIRE);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.DAMAGE_FIRE);
     }
 
     public IceWraith(Level level) {

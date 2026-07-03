@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -30,8 +31,8 @@ public class WarlockArmorItem extends WizardArmorItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag advanced) {
-        super.appendHoverText(stack, world, tooltip, advanced);
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag advanced) {
+        super.appendHoverText(stack, context, tooltip, advanced);
         tooltip.add(Component.translatable("item.%s.wizard_armor.full_set".formatted(WizardryMainMod.MOD_ID)).withStyle(ChatFormatting.AQUA));
         tooltip.add(Component.translatable("item.%s.warlock_armor.full_set_bonus".formatted(WizardryMainMod.MOD_ID), (int) (WARLOCK_SPEED_BOOST * 100)).withStyle(ChatFormatting.AQUA));
     }

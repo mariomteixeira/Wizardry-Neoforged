@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BanishingAmuletEffect implements IArtifactEffect {
     @Override
     public void onPlayerHurt(Player player, DamageSource source, AtomicDouble amount, AtomicBoolean canceled, ItemStack artifact) {
-        if (player.level().random.nextFloat() < 0.2f && !source.isIndirect() && source.getEntity() instanceof LivingEntity sourceEntity) {
+        if (player.level().random.nextFloat() < 0.2f && !(source.getEntity() != source.getDirectEntity()) && source.getEntity() instanceof LivingEntity sourceEntity) {
             ((Banish) Spells.BANISH).teleport(sourceEntity, player.level(), 8 + player.level().random.nextDouble() * 8);
         }
     }

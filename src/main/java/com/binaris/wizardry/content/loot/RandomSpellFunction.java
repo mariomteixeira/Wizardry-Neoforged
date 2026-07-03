@@ -14,14 +14,10 @@ import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.EBLootFunctions;
 import com.binaris.wizardry.setup.registries.Spells;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,17 +31,31 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class RandomSpellFunction extends LootItemConditionalFunction {
+
+    private static final Codec<Spell> SPELL_CODEC = ResourceLocation.CODEC.xmap(Services.REGISTRY_UTIL::getSpell, Spell::getLocation);
+    private static final Codec<SpellTier> TIER_CODEC = ResourceLocation.CODEC.xmap(Services.REGISTRY_UTIL::getTier, SpellTier::getOrCreateLocation);
+    private static final Codec<Element> ELEMENT_CODEC = ResourceLocation.CODEC.xmap(Services.REGISTRY_UTIL::getElement, Element::getLocation);
+
+    public static final MapCodec<RandomSpellFunction> CODEC = RecordCodecBuilder.mapCodec(inst ->
+            commonFields(inst).and(inst.group(
+                    SPELL_CODEC.listOf().optionalFieldOf("spells").forGetter(f -> Optional.ofNullable(f.spells)),
+                    Codec.BOOL.fieldOf("ignore_weighting").orElse(false).forGetter(f -> f.ignoreWeighting),
+                    Codec.FLOAT.fieldOf("undiscovered_bias").orElse(0F).forGetter(f -> f.undiscoveredBias),
+                    TIER_CODEC.listOf().optionalFieldOf("tiers").forGetter(f -> Optional.ofNullable(f.tiers)),
+                    ELEMENT_CODEC.listOf().optionalFieldOf("elements").forGetter(f -> Optional.ofNullable(f.elements))
+            )).apply(inst, (conditions, spells, ignoreWeighting, undiscoveredBias, tiers, elements) ->
+                    new RandomSpellFunction(conditions, spells.orElse(null), ignoreWeighting, undiscoveredBias, tiers.orElse(null), elements.orElse(null))));
+
     private final @Nullable List<Spell> spells;
     private final @Nullable List<Element> elements;
     private final @Nullable List<SpellTier> tiers;
     private final boolean ignoreWeighting;
     private final float undiscoveredBias;
 
-    protected RandomSpellFunction(LootItemCondition[] conditions, @Nullable List<Spell> spells, boolean ignoreWeighting, float undiscoveredBias, @Nullable List<SpellTier> tiers, @Nullable List<Element> elements) {
+    protected RandomSpellFunction(List<LootItemCondition> conditions, @Nullable List<Spell> spells, boolean ignoreWeighting, float undiscoveredBias, @Nullable List<SpellTier> tiers, @Nullable List<Element> elements) {
         super(conditions);
         this.spells = spells;
         this.ignoreWeighting = ignoreWeighting;
@@ -60,7 +70,7 @@ public class RandomSpellFunction extends LootItemConditionalFunction {
     }
 
     @Override
-    public @NotNull LootItemFunctionType getType() {
+    public @NotNull LootItemFunctionType<RandomSpellFunction> getType() {
         return EBLootFunctions.RANDOM_SPELL;
     }
 
@@ -120,71 +130,5 @@ public class RandomSpellFunction extends LootItemConditionalFunction {
 
         if (possibleSpells.isEmpty()) return Spells.NONE; // don't worry, this is converted to Magic Missile in run();
         return possibleSpells.get(random.nextInt(possibleSpells.size()));
-    }
-
-    public static class Serializer extends LootItemConditionalFunction.Serializer<RandomSpellFunction> {
-        public Serializer() {
-        }
-
-        @Override
-        public void serialize(@NotNull JsonObject object, @NotNull RandomSpellFunction function, @NotNull JsonSerializationContext serializationContext) {
-            if (function.spells != null && !function.spells.isEmpty()) {
-                DataResult<JsonElement> result = ResourceLocation.CODEC.listOf().encodeStart(JsonOps.INSTANCE, function.spells.stream().map(Spell::getLocation).collect(Collectors.toList()));
-                result.result().ifPresent((jsonElement -> object.add("spells", jsonElement)));
-            }
-
-            object.addProperty("ignore_weighting", function.ignoreWeighting);
-            object.addProperty("undiscovered_bias", function.undiscoveredBias);
-
-            if (function.tiers != null && !function.tiers.isEmpty()) {
-                DataResult<JsonElement> result = ResourceLocation.CODEC.listOf().encodeStart(JsonOps.INSTANCE, function.tiers.stream().map(SpellTier::getOrCreateLocation).collect(Collectors.toList()));
-                result.result().ifPresent((jsonElement -> object.add("tiers", jsonElement)));
-            }
-
-            if (function.elements != null && !function.elements.isEmpty()) {
-                DataResult<JsonElement> result = ResourceLocation.CODEC.listOf().encodeStart(JsonOps.INSTANCE, function.elements.stream().map(Element::getLocation).collect(Collectors.toList()));
-                result.result().ifPresent((jsonElement -> object.add("elements", jsonElement)));
-            }
-        }
-
-        @Override
-        public @NotNull RandomSpellFunction deserialize(JsonObject object, @NotNull JsonDeserializationContext deserializationContext, LootItemCondition @NotNull [] conditions) {
-            List<Spell> spells = null;
-            List<SpellTier> tiers = null;
-            List<Element> elements = null;
-
-            if (object.has("spells")) {
-                DataResult<List<ResourceLocation>> result = ResourceLocation.CODEC.listOf().parse(JsonOps.INSTANCE, object.get("spells"));
-                if (result.result().isPresent())
-                    spells = result.result().get().stream().map(Services.REGISTRY_UTIL::getSpell).collect(Collectors.toList());
-            }
-
-            boolean ignoreWeighting = GsonHelper.getAsBoolean(object, "ignore_weighting", false);
-            float undiscoveredBias = GsonHelper.getAsFloat(object, "undiscovered_bias", 0);
-
-            if (object.has("tiers")) {
-                DataResult<List<ResourceLocation>> result = ResourceLocation.CODEC.listOf().parse(JsonOps.INSTANCE, object.get("tiers"));
-                if (result.result().isPresent()) {
-                    tiers = result.result().get().stream().map(Services.REGISTRY_UTIL::getTier).collect(Collectors.toList());
-                    if (tiers.contains(null)) {
-                        EBLogger.warn("One or more invalid spell tiers found when deserializing random_spell loot function from " + object.toString());
-                        tiers.removeIf(Objects::isNull);
-                    }
-                }
-            }
-
-            if (object.has("elements")) {
-                DataResult<List<ResourceLocation>> result = ResourceLocation.CODEC.listOf().parse(JsonOps.INSTANCE, object.get("elements"));
-                if (result.result().isPresent()) {
-                    elements = result.result().get().stream().map(Services.REGISTRY_UTIL::getElement).collect(Collectors.toList());
-                    if (elements.contains(null)) {
-                        EBLogger.warn("One or more invalid elements found when deserializing random_spell loot function from " + object.toString());
-                        elements.removeIf(Objects::isNull);
-                    }
-                }
-            }
-
-            return new RandomSpellFunction(conditions, spells, ignoreWeighting, undiscoveredBias, tiers, elements);
-        }
     }
 }

@@ -9,6 +9,7 @@ import com.binaris.wizardry.setup.registries.*;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -46,7 +47,7 @@ public class IceBall extends MagicProjectileEntity {
             MagicDamageSource.causeMagicDamage(this, entity, damage, EBDamageSources.FROST);
 
             if (entity instanceof LivingEntity livingEntity)
-                livingEntity.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+                livingEntity.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.FROST.get()),
                         Spells.ICE_BALL.property(DefaultProperties.EFFECT_DURATION),
                         Spells.ICE_BALL.property(DefaultProperties.EFFECT_STRENGTH)));
         }

@@ -43,7 +43,7 @@ public class BlizzardConstruct extends ScaledConstructEntity {
                                     : MagicDamageSource.causeDirectMagicDamage(this, EBDamageSources.SORCERY),
                             1 * damageMultiplier);
                 }
-                target.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(), 20));
+                target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST), 20));
             }
 
         } else {

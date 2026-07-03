@@ -1,5 +1,7 @@
 package com.binaris.wizardry.content.block;
 
+import com.mojang.serialization.MapCodec;
+
 import com.binaris.wizardry.content.blockentity.ArcaneWorkbenchBlockEntity;
 import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -31,6 +33,11 @@ public class ArcaneWorkbenchBlock extends BaseEntityBlock {
         super(properties);
     }
 
+    @Override
+    protected MapCodec<ArcaneWorkbenchBlock> codec() {
+        return simpleCodec(ArcaneWorkbenchBlock::new);
+    }
+
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createTicker(Level level, BlockEntityType<T> type, BlockEntityType<ArcaneWorkbenchBlockEntity> entityType) {
         return level.isClientSide ? createTickerHelper(type, entityType, ArcaneWorkbenchBlockEntity::clientTick) : createTickerHelper(type, entityType, ArcaneWorkbenchBlockEntity::serverTick);
@@ -43,7 +50,7 @@ public class ArcaneWorkbenchBlock extends BaseEntityBlock {
 
     @Override
     @SuppressWarnings("deprecation")
-    public @NotNull InteractionResult use(@NotNull BlockState blockState, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+    public @NotNull InteractionResult useWithoutItem(@NotNull BlockState blockState, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         BlockEntity blockentity = level.getBlockEntity(pos);

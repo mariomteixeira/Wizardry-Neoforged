@@ -29,13 +29,13 @@ public class ContainmentEffect extends MagicMobEffect {
         if (!entity.isAlive()) return;
         ContainmentData data = Services.OBJECT_DATA.getContainmentData(entity);
 
-        if (entity.tickCount % 20 == 0 && data.getContainmentPos() != null && !entity.hasEffect(EBMobEffects.CONTAINMENT.get()))
+        if (entity.tickCount % 20 == 0 && data.getContainmentPos() != null && !entity.hasEffect(EBMobEffects.holder(EBMobEffects.CONTAINMENT)))
             data.setContainmentPos(null);
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity target, int amplifier) {
-        if (!target.isAlive()) return;
+    public boolean applyEffectTick(@NotNull LivingEntity target, int amplifier) {
+        if (!target.isAlive()) return false;
         float maxDistance = getContainmentDistance(amplifier);
         ContainmentData data = Services.OBJECT_DATA.getContainmentData(target);
 
@@ -66,13 +66,14 @@ public class ContainmentEffect extends MagicMobEffect {
         }
 
         // need to check the -1, being the infinite duration case
-        if (target.hasEffect(this) && target.getEffect(this).getDuration() <= 1 && target.getEffect(this).getDuration() != -1) {
+        if (target.hasEffect(holder()) && target.getEffect(holder()).getDuration() <= 1 && target.getEffect(holder()).getDuration() != -1) {
             data.setContainmentPos(null);
         }
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return true;
     }
 

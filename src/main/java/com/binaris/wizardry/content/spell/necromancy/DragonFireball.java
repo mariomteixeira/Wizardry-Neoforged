@@ -20,16 +20,13 @@ public class DragonFireball extends Spell {
         Vec3 look = ctx.caster().getLookAngle();
 
         if (!ctx.world().isClientSide) {
+            double acceleration = property(DefaultProperties.ACCELERATION) * ctx.modifiers().get(SpellModifiers.RANGE);
             net.minecraft.world.entity.projectile.DragonFireball fireball =
-                    new net.minecraft.world.entity.projectile.DragonFireball(ctx.world(), ctx.caster(), 1, 1, 1);
+                    new net.minecraft.world.entity.projectile.DragonFireball(ctx.world(), ctx.caster(), look.scale(acceleration));
 
             fireball.setPos(ctx.caster().getX() + look.x, ctx.caster().getY() + look.y + 1.3, ctx.caster().getZ() + look.z);
-
-            double acceleration = property(DefaultProperties.ACCELERATION) * ctx.modifiers().get(SpellModifiers.RANGE);
-
-            fireball.xPower = look.x * acceleration;
-            fireball.yPower = look.y * acceleration;
-            fireball.zPower = look.z * acceleration;
+            fireball.accelerationPower = acceleration;
+            fireball.setDeltaMovement(look.scale(acceleration));
 
             ctx.world().addFreshEntity(fireball);
         }
@@ -44,16 +41,13 @@ public class DragonFireball extends Spell {
         Vec3 look = ctx.caster().getLookAngle();
 
         if (!ctx.world().isClientSide) {
+            double acceleration = property(DefaultProperties.ACCELERATION);
             net.minecraft.world.entity.projectile.DragonFireball fireball =
-                    new net.minecraft.world.entity.projectile.DragonFireball(ctx.world(), ctx.caster(), 1, 1, 1);
+                    new net.minecraft.world.entity.projectile.DragonFireball(ctx.world(), ctx.caster(), look.scale(acceleration));
 
             fireball.setPos(ctx.caster().getX() + look.x, ctx.caster().getY() + look.y + 1.3, ctx.caster().getZ() + look.z);
-
-            double acceleration = property(DefaultProperties.ACCELERATION);
-
-            fireball.xPower = look.x * acceleration;
-            fireball.yPower = look.y * acceleration;
-            fireball.zPower = look.z * acceleration;
+            fireball.accelerationPower = acceleration;
+            fireball.setDeltaMovement(look.scale(acceleration));
 
             ctx.world().addFreshEntity(fireball);
         }

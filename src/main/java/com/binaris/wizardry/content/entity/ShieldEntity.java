@@ -1,6 +1,7 @@
 package com.binaris.wizardry.content.entity;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -48,7 +49,7 @@ public class ShieldEntity extends Entity {
     }
 
     @Override
-    public void lerpTo(double par1, double par3, double par5, float par7, float par8, int par9, boolean p_19902_) {
+    public void lerpTo(double par1, double par3, double par5, float par7, float par8, int par9) {
         this.setPos(par1, par3, par5);
         this.setRot(par7, par8);
     }
@@ -73,7 +74,7 @@ public class ShieldEntity extends Entity {
 //    }
 
     @Override
-    protected void defineSynchedData() {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
     }
 

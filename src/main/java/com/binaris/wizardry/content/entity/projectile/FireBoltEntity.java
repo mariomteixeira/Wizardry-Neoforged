@@ -42,7 +42,7 @@ public class FireBoltEntity extends MagicProjectileEntity {
 
             if (!MagicDamageSource.isEntityImmune(EBDamageSources.FIRE, entity)) {
                 MagicDamageSource.causeMagicDamage(this, entity, damage, EBDamageSources.FIRE);
-                entity.setSecondsOnFire(Spells.FIREBOLT.property(DefaultProperties.EFFECT_DURATION));
+                entity.igniteForSeconds(Spells.FIREBOLT.property(DefaultProperties.EFFECT_DURATION));
             }
         }
 

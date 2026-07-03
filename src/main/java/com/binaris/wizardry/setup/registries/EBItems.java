@@ -334,7 +334,7 @@ public final class EBItems {
     public static final DeferredObject<Item> RING_FIRE_MELEE = ringArtifact("ring_fire_melee", Rarity.UNCOMMON, meleeRing(Elements.FIRE, null, 0, 100));
     public static final DeferredObject<Item> RING_HAMMER = ringArtifact("ring_hammer", Rarity.EPIC, null);
     public static final DeferredObject<Item> RING_ICE_BIOME = ringArtifact("ring_ice_biome", Rarity.UNCOMMON, changeModifiersByBiomeElement(Elements.ICE, Services.PLATFORM::inIceBiomes, SpellModifiers.POTENCY, 1.3f, SpellModifiers.Operation.MULTIPLY));
-    public static final DeferredObject<Item> RING_ICE_MELEE = ringArtifact("ring_ice_melee", Rarity.UNCOMMON, meleeRing(Elements.ICE, EBMobEffects.FROST.get(), 0, 200));
+    public static final DeferredObject<Item> RING_ICE_MELEE = ringArtifact("ring_ice_melee", Rarity.UNCOMMON, meleeRing(Elements.ICE, EBMobEffects.holder(EBMobEffects.FROST), 0, 200));
     public static final DeferredObject<Item> RING_INTERDICTION = ringArtifact("ring_interdiction", Rarity.EPIC, null);
     public static final DeferredObject<Item> RING_LEECHING = ringArtifact("ring_leeching", Rarity.RARE, new LeechingRingEffect());
     public static final DeferredObject<Item> RING_LIGHTNING_MELEE = ringArtifact("ring_lightning_melee", Rarity.UNCOMMON, new LightningMeleeEffect());

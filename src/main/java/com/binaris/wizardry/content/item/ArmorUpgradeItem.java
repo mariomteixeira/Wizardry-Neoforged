@@ -17,7 +17,6 @@ public class ArmorUpgradeItem extends Item {
         super(properties);
     }
 
-    @Override
     public @NotNull Rarity getRarity(@NotNull ItemStack stack) {
         return Rarity.EPIC;
     }
@@ -28,7 +27,7 @@ public class ArmorUpgradeItem extends Item {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag tooltipFlag) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag tooltipFlag) {
         String desc = tooltipFlag.isAdvanced() ? ".desc_extended" : ".desc";
 
         tooltip.add(Component.translatable(getOrCreateDescriptionId() + desc).withStyle(ChatFormatting.GRAY));

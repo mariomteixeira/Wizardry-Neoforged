@@ -15,6 +15,7 @@ import com.binaris.wizardry.content.item.WandItem;
 import com.binaris.wizardry.content.item.armor.WizardArmorType;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -157,11 +158,11 @@ public abstract class AbstractWizard extends PathfinderMob implements ISpellCast
      * @return {@code true} if the wizard should start healing; {@code false} otherwise.
      */
     private boolean shouldStartHealing() {
-        return getHealCooldown() == 0 && getHealth() < getMaxHealth() && getHealth() > 0 && !hasEffect(EBMobEffects.ARCANE_JAMMER.get());
+        return getHealCooldown() == 0 && getHealth() < getMaxHealth() && getHealth() > 0 && !hasEffect(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.ARCANE_JAMMER.get()));
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType mobSpawnType, @Nullable SpawnGroupData spawnData) {
         setTextureIndex(this.random.nextInt(6));
 
         if (this.entityData.get(ELEMENT).isEmpty()) {
@@ -176,7 +177,7 @@ public abstract class AbstractWizard extends PathfinderMob implements ISpellCast
         prepareWandWithSpells(getElement(), maxTier);
 
         this.setHealCooldown(50);
-        return super.finalizeSpawn(level, difficulty, mobSpawnType, spawnData, tag);
+        return super.finalizeSpawn(level, difficulty, mobSpawnType, spawnData);
     }
 
     /**
@@ -243,14 +244,14 @@ public abstract class AbstractWizard extends PathfinderMob implements ISpellCast
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(HEAL_COOLDOWN, 50);
-        this.entityData.define(ELEMENT, "");
-        this.entityData.define(CONTINUOUS_SPELL, Spells.NONE.getLocation().toString());
-        this.entityData.define(SPELL_COUNTER, 0);
-        this.entityData.define(TEXTURE_INDEX, 0);
-        this.entityData.define(SPELL_TARGET_ID, -1);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(HEAL_COOLDOWN, 50);
+        builder.define(ELEMENT, "");
+        builder.define(CONTINUOUS_SPELL, Spells.NONE.getLocation().toString());
+        builder.define(SPELL_COUNTER, 0);
+        builder.define(TEXTURE_INDEX, 0);
+        builder.define(SPELL_TARGET_ID, -1);
     }
 
 

@@ -10,6 +10,7 @@ import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import com.binaris.wizardry.setup.registries.EBRecipeTypes;
 import com.binaris.wizardry.setup.registries.EBSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -122,7 +124,7 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
         ImbuementAltarRecipe recipe = level.getRecipeManager()
                 .getAllRecipesFor(EBRecipeTypes.IMBUEMENT_ALTAR)
                 .stream()
-                .filter(r -> r instanceof ImbuementAltarRecipe)
+                .map(RecipeHolder::value)
                 .filter(r -> r.matches(stack, receptacleItems))
                 .findFirst()
                 .orElse(null);
@@ -149,7 +151,7 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
         ImbuementAltarRecipe recipe = level.getRecipeManager()
                 .getAllRecipesFor(EBRecipeTypes.IMBUEMENT_ALTAR)
                 .stream()
-                .filter(r -> r instanceof ImbuementAltarRecipe)
+                .map(RecipeHolder::value)
                 .filter(r -> r.matches(stack, receptacleItems))
                 .findFirst()
                 .orElse(null);
@@ -198,10 +200,10 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    protected void saveAdditional(@NotNull CompoundTag nbt, @NotNull HolderLookup.Provider registries) {
+        super.saveAdditional(nbt, registries);
         CompoundTag itemTag = new CompoundTag();
-        stack.save(itemTag);
+        if (!stack.isEmpty()) stack.save(registries, itemTag);
         nbt.put("item", itemTag);
         nbt.putInt("imbuementTimer", imbuementTimer);
         if (element != null) nbt.putString("element", Services.REGISTRY_UTIL.getElement(element).toString());
@@ -209,10 +211,10 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(@NotNull CompoundTag nbt) {
-        super.load(nbt);
+    protected void loadAdditional(@NotNull CompoundTag nbt, @NotNull HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
         CompoundTag itemTag = nbt.getCompound("item");
-        this.stack = ItemStack.of(itemTag);
+        this.stack = ItemStack.parseOptional(registries, itemTag);
         this.imbuementTimer = nbt.getInt("imbuementTimer");
         if (nbt.contains("element"))
             this.element = Services.REGISTRY_UTIL.getElement(ResourceLocation.tryParse(nbt.getString("element")));
@@ -220,9 +222,9 @@ public class ImbuementAltarBlockEntity extends BlockEntity {
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag(@NotNull HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
+        saveAdditional(tag, registries);
         return tag;
     }
 

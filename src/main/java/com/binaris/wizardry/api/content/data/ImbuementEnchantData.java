@@ -1,6 +1,7 @@
 package com.binaris.wizardry.api.content.data;
 
 import com.binaris.wizardry.content.spell.fire.FlamingWeapon;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -20,7 +21,7 @@ public interface ImbuementEnchantData {
      * @param enchant    the Enchantment to track as temporary
      * @param expireTime the absolute game time when this enchantment expires
      */
-    void addImbuement(Enchantment enchant, long expireTime);
+    void addImbuement(Holder<Enchantment> enchant, long expireTime);
 
     /**
      * Gets all temporary enchantments and their expiration times.
@@ -35,7 +36,7 @@ public interface ImbuementEnchantData {
      *
      * @param enchant the enchantment to remove
      */
-    void removeImbuement(Enchantment enchant);
+    void removeImbuement(Holder<Enchantment> enchant);
 
     /**
      * Checks if an enchantment is tracked as temporary.
@@ -43,7 +44,7 @@ public interface ImbuementEnchantData {
      * @param enchant the Enchantment to check
      * @return true if the enchantment is temporary
      */
-    boolean isImbuement(Enchantment enchant);
+    boolean isImbuement(Holder<Enchantment> enchant);
 
     /**
      * Gets the expiration time for a specific enchantment.
@@ -51,7 +52,7 @@ public interface ImbuementEnchantData {
      * @param enchantment the enchantment
      * @return the expiration time in game ticks, or -1 if not found
      */
-    long getExpirationTime(Enchantment enchantment);
+    long getExpirationTime(Holder<Enchantment> enchantment);
 
     /**
      * Gets the remaining time for an enchantment in ticks.
@@ -60,7 +61,7 @@ public interface ImbuementEnchantData {
      * @param currentGameTime the current game time
      * @return remaining ticks, or 0 if expired/not found
      */
-    default int getRemainingTime(Enchantment enchantment, long currentGameTime) {
+    default int getRemainingTime(Holder<Enchantment> enchantment, long currentGameTime) {
         long expireTime = getExpirationTime(enchantment);
         if (expireTime <= 0) return 0;
         long remaining = expireTime - currentGameTime;

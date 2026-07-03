@@ -69,7 +69,7 @@ public class EBServerConfig implements ConfigProvider {
     }
 
     private static List<ResourceLocation> convertList(String... locations) {
-        return Arrays.stream(locations).map(ResourceLocation::new).collect(Collectors.toList());
+        return Arrays.stream(locations).map(ResourceLocation::parse).collect(Collectors.toList());
     }
 
     public static boolean isOnList(ConfigOption<List<ResourceLocation>> list, ItemStack stack) {

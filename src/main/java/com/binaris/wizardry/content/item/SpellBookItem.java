@@ -55,8 +55,8 @@ public class SpellBookItem extends Item {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> list, @NotNull TooltipFlag tooltipFlag) {
-        if (level == null) return;
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> list, @NotNull TooltipFlag tooltipFlag) {
+        if (context.level() == null) return;
         Spell spell = RegistryUtils.getSpell(stack);
         if (spell == Spells.NONE) return;
         boolean discovered = ClientUtils.shouldDisplayDiscovered(spell, stack);

@@ -7,21 +7,19 @@ import com.binaris.wizardry.api.content.spell.Element;
 import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
 import com.binaris.wizardry.api.content.util.*;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
+import com.binaris.wizardry.setup.registries.EBArmorMaterials;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +50,7 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
     private final WizardArmorType wizardArmorType;
 
     public WizardArmorItem(WizardArmorType material, Type type, Element element) {
-        super(material, type, new Properties());
+        super(EBArmorMaterials.holder(material), type, new Properties().durability(type.getDurability(material.getDurabilityMultiplier())));
         this.wizardArmorType = material;
         this.element = element;
     }
@@ -112,7 +110,7 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag advanced) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag advanced) {
         if (getElement() != null) {
             tooltip.add(Component.translatable("item.%s.wizard_armor.element_cost_reduction".formatted(WizardryMainMod.MOD_ID),
                     (int) (this.getWizardArmorType().elementalCostReduction * 100), getElement().getDescriptionFormatted().getString()).withStyle(ChatFormatting.DARK_GRAY));
@@ -224,7 +222,7 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
 
     @Override
     public int getManaCapacity(ItemStack stack) {
-        return this.getMaxDamage();
+        return stack.getMaxDamage();
     }
 
     @Override
@@ -243,8 +241,13 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getCustomAttributes(ItemStack stack, EquipmentSlot slot) {
-        if (getMana(stack) != 0) return super.getDefaultAttributeModifiers(slot);
-        return ImmutableMultimap.of();
+    public ItemAttributeModifiers getCustomAttributes(ItemStack stack) {
+        if (getMana(stack) != 0) return super.getDefaultAttributeModifiers(stack);
+        return ItemAttributeModifiers.EMPTY;
+    }
+
+    @Override
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+        return getCustomAttributes(stack);
     }
 }

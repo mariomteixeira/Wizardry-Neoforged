@@ -29,7 +29,7 @@ public class Detonate extends RaySpell {
     protected boolean onBlockHit(CastContext ctx, BlockHitResult blockHit, Vec3 origin) {
         if (ctx.world().isClientSide) {
             ctx.world().addParticle(ParticleTypes.EXPLOSION_EMITTER, blockHit.getBlockPos().getX() + 0.5, blockHit.getBlockPos().getY() + 0.5, blockHit.getBlockPos().getZ() + 0.5, 0, 0, 0);
-            ctx.world().playSound(null, blockHit.getBlockPos(), SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE);
+            ctx.world().playSound(null, blockHit.getBlockPos(), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE);
             return true;
         }
 

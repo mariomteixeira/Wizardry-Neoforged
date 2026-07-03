@@ -52,7 +52,7 @@ public class IceAge extends AreaEffectSpell {
 
     @Override
     protected boolean affectEntity(CastContext ctx, Vec3 origin, LivingEntity target, int targetCount) {
-        target.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+        target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST),
                 (int) (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION)),
                 property(DefaultProperties.EFFECT_STRENGTH)));
 

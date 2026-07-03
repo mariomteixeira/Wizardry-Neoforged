@@ -31,8 +31,8 @@ public class FontOfMana extends AreaEffectSpell {
 
     // Event handler to reduce cooldowns when caster has the buff
     public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
-        if (event.getCaster() != null && event.getCaster().hasEffect(EBMobEffects.FONT_OF_MANA.get())) {
-            MobEffectInstance inst = event.getCaster().getEffect(EBMobEffects.FONT_OF_MANA.get());
+        if (event.getCaster() != null && event.getCaster().hasEffect(EBMobEffects.holder(EBMobEffects.FONT_OF_MANA))) {
+            MobEffectInstance inst = event.getCaster().getEffect(EBMobEffects.holder(EBMobEffects.FONT_OF_MANA));
             if (inst != null) event.getModifiers().divide(SpellModifiers.COOLDOWN, 2 + inst.getAmplifier());
         }
     }
@@ -45,9 +45,9 @@ public class FontOfMana extends AreaEffectSpell {
         int strength = (int) (property(DefaultProperties.EFFECT_STRENGTH) + (ctx.modifiers().get(SpellModifiers.POTENCY) - 1f) * 2f);
 
         // Apply the new Font of Mana mob effect
-        if (EBMobEffects.FONT_OF_MANA.get() != null) {
+        if (EBMobEffects.holder(EBMobEffects.FONT_OF_MANA) != null) {
             if (!ctx.world().isClientSide)
-                target.addEffect(new MobEffectInstance(EBMobEffects.FONT_OF_MANA.get(), duration, strength));
+                target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FONT_OF_MANA), duration, strength));
         }
         return true;
     }

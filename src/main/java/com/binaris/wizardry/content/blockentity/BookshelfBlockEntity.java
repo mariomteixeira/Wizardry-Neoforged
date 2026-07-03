@@ -5,9 +5,9 @@ import com.binaris.wizardry.content.block.BookShelfBlock;
 import com.binaris.wizardry.content.menu.BookshelfMenu;
 import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -80,29 +80,26 @@ public class BookshelfBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     @Override
-    public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (inventory == null) this.inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         if (!this.tryLoadLootTable(tag)) {
-            ContainerHelper.loadAllItems(tag, this.inventory);
+            ContainerHelper.loadAllItems(tag, this.inventory, registries);
         }
-        if (tag.contains("CustomName", Tag.TAG_STRING))
-            this.setCustomName(Component.literal(tag.getString("CustomName")));
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.inventory);
+            ContainerHelper.saveAllItems(tag, this.inventory, registries);
         }
-        if (this.hasCustomName()) tag.putString("CustomName", this.getCustomName().getString());
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag(@NotNull HolderLookup.Provider registries) {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
+        saveAdditional(tag, registries);
         return tag;
     }
 

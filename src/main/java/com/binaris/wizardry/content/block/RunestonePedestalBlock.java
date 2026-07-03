@@ -1,5 +1,7 @@
 package com.binaris.wizardry.content.block;
 
+import com.mojang.serialization.MapCodec;
+
 import com.binaris.wizardry.api.content.spell.Element;
 import com.binaris.wizardry.content.blockentity.RunestonePedestalBlockEntity;
 import com.binaris.wizardry.setup.registries.EBBlockEntities;
@@ -22,8 +24,13 @@ public class RunestonePedestalBlock extends BaseEntityBlock {
     private final Element element;
 
     public RunestonePedestalBlock(Element element) {
-        super(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4));
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4));
         this.element = element;
+    }
+
+    @Override
+    protected MapCodec<RunestonePedestalBlock> codec() {
+        return simpleCodec(p -> new RunestonePedestalBlock(this.element));
     }
 
     @Nullable

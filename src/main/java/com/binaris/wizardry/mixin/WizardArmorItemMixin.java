@@ -6,14 +6,13 @@ import com.binaris.wizardry.client.model.armor.RobeArmorModel;
 import com.binaris.wizardry.client.model.armor.WizardArmorModel;
 import com.binaris.wizardry.content.item.armor.WizardArmorItem;
 import com.binaris.wizardry.content.item.armor.WizardArmorType;
-import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +33,7 @@ public abstract class WizardArmorItemMixin extends ArmorItem {
     @Shadow
     private Element element;
 
-    public WizardArmorItemMixin(ArmorMaterial material, Type type, Properties properties) {
+    public WizardArmorItemMixin(Holder<ArmorMaterial> material, Type type, Properties properties) {
         super(material, type, properties);
     }
 
@@ -94,7 +93,7 @@ public abstract class WizardArmorItemMixin extends ArmorItem {
     }
 
     @Override
-    public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
         String s = wizardArmorItem.getWizardArmorType().getName() + "_armor";
 
         if (WizardryMainMod.IS_THE_SEASON && wizardArmorItem.getWizardArmorType() == WizardArmorType.WIZARD) {
@@ -107,11 +106,6 @@ public abstract class WizardArmorItemMixin extends ArmorItem {
         if (slot == EquipmentSlot.LEGS) {
             string = "ebwizardry:textures/armor/" + s + "_legs.png";
         }
-        return string;
-    }
-
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        return wizardArmorItem.getCustomAttributes(stack, slot);
+        return ResourceLocation.parse(string);
     }
 }

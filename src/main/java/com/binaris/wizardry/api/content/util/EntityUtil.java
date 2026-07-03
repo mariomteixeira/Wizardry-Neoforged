@@ -235,7 +235,7 @@ public final class EntityUtil {
                     return currentSpell == spell;
                 }
 
-                int ticksInUse = caster.getUseItem().getUseDuration() - caster.getUseItemRemainingTicks();
+                int ticksInUse = caster.getUseItem().getUseDuration(caster) - caster.getUseItemRemainingTicks();
 
                 if (ticksInUse >= spell.getChargeUp()) {
                     return currentSpell == spell;

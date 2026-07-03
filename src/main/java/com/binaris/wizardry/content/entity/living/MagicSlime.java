@@ -73,8 +73,8 @@ public class MagicSlime extends Slime {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-        SpawnGroupData data = super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
+    public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, reason, spawnData);
         this.setSize(2, false);
         return data;
     }

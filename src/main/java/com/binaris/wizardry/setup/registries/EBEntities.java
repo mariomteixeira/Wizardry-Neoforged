@@ -7,7 +7,6 @@ import com.binaris.wizardry.content.entity.MeteorEntity;
 import com.binaris.wizardry.content.entity.construct.*;
 import com.binaris.wizardry.content.entity.living.*;
 import com.binaris.wizardry.content.entity.projectile.*;
-import com.binaris.wizardry.core.mixin.invoker.SpawnPlacementsInvoker;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -77,7 +76,6 @@ public final class EBEntities {
     public static void register(RegisterFunction<EntityType<?>> function) {
         ENTITY_TYPES.forEach(((id, entityType) ->
                 function.register(BuiltInRegistries.ENTITY_TYPE, WizardryMainMod.location(id), entityType.get())));
-        EBEntities.registerSpawns();
     }
 
     public static void registerAttributes(BiConsumer<EntityType<? extends LivingEntity>, AttributeSupplier> consumer) {
@@ -92,8 +90,10 @@ public final class EBEntities {
         consumer.accept(ICE_GIANT.get(), IceGiant.createAttributes().build());
     }
 
-    public static void registerSpawns() {
-        SpawnPlacementsInvoker.callRegister(EBEntities.EVIL_WIZARD.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EvilWizard::checkEvilWizardSpawnRules);
+    public static void registerSpawns(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {
+        event.register(EBEntities.EVIL_WIZARD.get(), net.minecraft.world.entity.SpawnPlacementTypes.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, EvilWizard::checkEvilWizardSpawnRules,
+                net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     // ======= Helpers =======

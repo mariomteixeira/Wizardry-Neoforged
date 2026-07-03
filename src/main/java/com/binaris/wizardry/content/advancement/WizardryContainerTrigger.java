@@ -1,107 +1,55 @@
 package com.binaris.wizardry.content.advancement;
 
-import com.binaris.wizardry.WizardryMainMod;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.PlayerAdvancements;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
-public class WizardryContainerTrigger implements CriterionTrigger<WizardryContainerTrigger.TriggerInstance> {
-    private final ResourceLocation ID;
-    private final Map<PlayerAdvancements, Listeners> listeners = Maps.newHashMap();
+/**
+ * Fired when the player crafts/produces an item in one of the mod's containers (arcane workbench, imbuement altar).
+ * The registry id is assigned by {@code CriteriaTriggers.register} (see {@code EBAdvancementTriggers}).
+ */
+public class WizardryContainerTrigger extends SimpleCriterionTrigger<WizardryContainerTrigger.TriggerInstance> {
 
+    @SuppressWarnings("unused")
     public WizardryContainerTrigger(String name) {
-        this.ID = WizardryMainMod.location(name);
     }
 
-    public @NotNull ResourceLocation getId() {
-        return this.ID;
-    }
-
-    public void addPlayerListener(@NotNull PlayerAdvancements advancements, @NotNull Listener<TriggerInstance> listener) {
-        this.listeners.computeIfAbsent(advancements, Listeners::new).add(listener);
-    }
-
-    public void removePlayerListener(@NotNull PlayerAdvancements advancements, @NotNull Listener<TriggerInstance> listener) {
-        Listeners li = this.listeners.get(advancements);
-        if (li == null) return;
-
-        li.remove(listener);
-        if (li.isEmpty()) this.listeners.remove(advancements);
-    }
-
-    public void removePlayerListeners(@NotNull PlayerAdvancements advancements) {
-        this.listeners.remove(advancements);
-    }
-
-    public @NotNull WizardryContainerTrigger.TriggerInstance createInstance(@NotNull JsonObject json, @NotNull DeserializationContext context) {
-        return new TriggerInstance(this.ID, ItemPredicate.fromJson(json.get("item")), json, context);
+    @Override
+    public Codec<TriggerInstance> codec() {
+        return TriggerInstance.CODEC;
     }
 
     public void trigger(ServerPlayer player, ItemStack stack) {
-        Optional.ofNullable(this.listeners.get(player.getAdvancements())).ifPresent(li -> li.trigger(stack));
+        this.trigger(player, instance -> instance.matches(stack));
     }
 
-    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-        private final ItemPredicate item;
-
-        public TriggerInstance(ResourceLocation criterionIn, ItemPredicate item, JsonObject json, DeserializationContext context) {
-            super(criterionIn, EntityPredicate.fromJson(json, "player", context));
-            this.item = item;
-        }
-
-        public TriggerInstance(ResourceLocation criterionIn, ItemPredicate item) {
-            super(criterionIn, ContextAwarePredicate.ANY);
-            this.item = item;
-        }
-
-        @Override
-        public @NotNull JsonObject serializeToJson(@NotNull SerializationContext conditions) {
-            JsonObject jsonobject = super.serializeToJson(conditions);
-            jsonobject.add("item", this.item.serializeToJson());
-            return jsonobject;
-        }
-
-        public boolean test(ItemStack stack) {
-            return this.item.matches(stack);
-        }
+    /** Builds a criterion for datagen matching the given item predicate. */
+    public Criterion<TriggerInstance> forItem(ItemPredicate item) {
+        return this.createCriterion(new TriggerInstance(Optional.empty(), Optional.of(item)));
     }
 
-    static class Listeners {
-        private final PlayerAdvancements playerAdvancements;
-        private final Set<Listener<TriggerInstance>> listeners = Sets.newHashSet();
+    /** Builds a criterion for datagen matching any produced item. */
+    public Criterion<TriggerInstance> instance() {
+        return this.createCriterion(new TriggerInstance(Optional.empty(), Optional.empty()));
+    }
 
-        public Listeners(PlayerAdvancements advancements) {
-            this.playerAdvancements = advancements;
-        }
+    public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<ItemPredicate> item)
+            implements SimpleCriterionTrigger.SimpleInstance {
+        public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                ItemPredicate.CODEC.optionalFieldOf("item").forGetter(TriggerInstance::item)
+        ).apply(inst, TriggerInstance::new));
 
-        public boolean isEmpty() {
-            return this.listeners.isEmpty();
-        }
-
-        public void add(Listener<TriggerInstance> listener) {
-            this.listeners.add(listener);
-        }
-
-        public void remove(Listener<TriggerInstance> listener) {
-            this.listeners.remove(listener);
-        }
-
-        public void trigger(ItemStack stack) {
-            List<Listener<TriggerInstance>> list = this.listeners.stream()
-                    .filter(li -> li.getTriggerInstance().test(stack)).toList();
-            list.forEach(li -> li.run(this.playerAdvancements));
+        public boolean matches(ItemStack stack) {
+            return item.isEmpty() || item.get().test(stack);
         }
     }
 }

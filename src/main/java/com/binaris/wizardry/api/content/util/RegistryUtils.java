@@ -77,7 +77,7 @@ public final class RegistryUtils {
      * @throws IllegalArgumentException if the slot is null or not an armor slot. (this should never happen if used correctly)
      */
     public static Item getArmor(WizardArmorType wizardArmorType, Element element, EquipmentSlot slot) {
-        if (slot == null || slot.getType() != EquipmentSlot.Type.ARMOR)
+        if (slot == null || slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR)
             throw new IllegalArgumentException("Must be a valid armour slot");
         if (element == null) element = Elements.MAGIC;
 

@@ -7,6 +7,7 @@ import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.util.NBTExtras;
 import com.binaris.wizardry.core.networking.s2c.SpellGlyphPacketS2C;
 import com.binaris.wizardry.core.platform.Services;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -48,7 +49,7 @@ public class SpellGlyphData extends SavedData {
      * @return The SpellGlyphData instance for the given world.
      */
     public static SpellGlyphData get(ServerLevel world) {
-        SpellGlyphData instance = world.getDataStorage().get(SpellGlyphData::load, NAME);
+        SpellGlyphData instance = world.getDataStorage().get(new SavedData.Factory<>(SpellGlyphData::new, SpellGlyphData::load), NAME);
         if (instance == null) instance = new SpellGlyphData();
 
         boolean changed = false;
@@ -96,7 +97,7 @@ public class SpellGlyphData extends SavedData {
         return descriptions == null ? "" : descriptions.getOrDefault(spell, "");
     }
 
-    public static SpellGlyphData load(CompoundTag nbt) {
+    public static SpellGlyphData load(CompoundTag nbt, HolderLookup.Provider registries) {
         SpellGlyphData data = new SpellGlyphData();
         data.randomNames = new HashMap<>();
         data.randomDescriptions = new HashMap<>();
@@ -178,7 +179,7 @@ public class SpellGlyphData extends SavedData {
     }
 
     @Override
-    public @NotNull CompoundTag save(@NotNull CompoundTag nbt) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag nbt, @NotNull HolderLookup.Provider registries) {
         ListTag tagList = new ListTag();
 
         for (Spell spell : Services.REGISTRY_UTIL.getSpells()) {

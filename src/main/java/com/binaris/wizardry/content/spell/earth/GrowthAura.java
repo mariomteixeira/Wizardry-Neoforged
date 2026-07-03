@@ -35,14 +35,14 @@ public class GrowthAura extends Spell {
             if (!(state.getBlock() instanceof BonemealableBlock plant) || !(plant.isBonemealSuccess(level, level.random, pos, state)))
                 continue;
 
-            if (!(plant.isValidBonemealTarget(level, pos, state, false))) {
+            if (!(plant.isValidBonemealTarget(level, pos, state))) {
                 continue;
             } else {
                 flag = true;
             }
 
             if (level.random.nextFloat() < 0.35f && ArtifactChannel.isEquipped(ctx.caster(), EBItems.CHARM_GROWTH.get())) {
-                for (int i = 0; i < 5 && plant.isValidBonemealTarget(level, pos, state, false); i++) {
+                for (int i = 0; i < 5 && plant.isValidBonemealTarget(level, pos, state); i++) {
                     plant.performBonemeal((ServerLevel) level, level.random, pos, state);
                     state = level.getBlockState(pos);
                     plant = (BonemealableBlock) state.getBlock();

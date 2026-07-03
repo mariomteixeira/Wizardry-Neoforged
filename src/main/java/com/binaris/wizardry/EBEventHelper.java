@@ -172,9 +172,8 @@ public final class EBEventHelper {
     private static void onPlayerItemPickup(WizardryEventBus bus) {
         bus.register(EBPlayerItemPickupEvent.class, (e) -> {
             if (ArtifactChannel.isEquipped(e.getEntity(), EBItems.CHARM_AUTO_SMELT.get())) {
-                Container dummyInv = new SimpleContainer(1);
-                dummyInv.setItem(0, e.getItemEntity().getItem());
-                Optional<SmeltingRecipe> optionalSmeltingRecipe = e.getEntity().level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, dummyInv, e.getEntity().level());
+                net.minecraft.world.item.crafting.SingleRecipeInput input = new net.minecraft.world.item.crafting.SingleRecipeInput(e.getItemEntity().getItem());
+                Optional<net.minecraft.world.item.crafting.RecipeHolder<SmeltingRecipe>> optionalSmeltingRecipe = e.getEntity().level().getRecipeManager().getRecipeFor(RecipeType.SMELTING, input, e.getEntity().level());
                 if (optionalSmeltingRecipe.isPresent()) ArtifactUtils.findMatchingWandAndCast(e.getEntity(), Spells.POCKET_FURNACE);
             }
         });

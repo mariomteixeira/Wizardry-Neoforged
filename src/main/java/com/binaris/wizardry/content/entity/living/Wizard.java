@@ -17,6 +17,7 @@ import com.binaris.wizardry.core.integrations.ArtifactChannel;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -34,9 +35,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.Merchant;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
+
+import java.util.Optional;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -137,7 +141,9 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.addAdditionalSaveData(nbt);
-        if (this.trades != null) nbt.put("trades", trades.createTag());
+        if (this.trades != null && !this.trades.isEmpty())
+            nbt.put("trades", MerchantOffers.CODEC.encodeStart(
+                    this.registryAccess().createSerializationContext(NbtOps.INSTANCE), this.trades).getOrThrow());
         nbt.putInt("wizardXp", this.wizardXp);
         nbt.putInt("wizardLevel", this.wizardLevel);
     }
@@ -145,7 +151,9 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
-        if (nbt.contains("trades")) this.trades = new MerchantOffers(nbt.getCompound("trades"));
+        if (nbt.contains("trades"))
+            MerchantOffers.CODEC.parse(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), nbt.get("trades"))
+                    .result().ifPresent(o -> this.trades = o);
         this.wizardXp = nbt.getInt("wizardXp");
         this.wizardLevel = nbt.getInt("wizardLevel");
         if (this.wizardLevel == 0) this.wizardLevel = 1;
@@ -439,7 +447,12 @@ public class Wizard extends AbstractWizard implements Npc, Merchant {
 
 
     private MerchantOffer createTrade(ItemStack cost1, ItemStack cost2, ItemStack result, int maxUses, int xp, float priceMultiplier) {
-        return new MerchantOffer(cost1, cost2, result, maxUses, xp, priceMultiplier);
+        ItemCost baseCost = new ItemCost(cost1.getItemHolder(), cost1.getCount(),
+                net.minecraft.core.component.DataComponentPredicate.EMPTY);
+        Optional<ItemCost> secondCost = cost2.isEmpty() ? Optional.empty()
+                : Optional.of(new ItemCost(cost2.getItemHolder(), cost2.getCount(),
+                net.minecraft.core.component.DataComponentPredicate.EMPTY));
+        return new MerchantOffer(baseCost, secondCost, result, maxUses, xp, priceMultiplier);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class FrostWardingAmuletEffect implements IArtifactEffect {
         List<IceBarrierConstruct> barriers = level.getEntitiesOfClass(IceBarrierConstruct.class, player.getBoundingBox().inflate(1.5));
 
         if (!barriers.isEmpty() && barriers.stream().anyMatch(b -> b.getLookAngle().dot(b.position().subtract(player.position())) > 0)) {
-            player.addEffect(new MobEffectInstance(EBMobEffects.WARD.get(), 50, 1));
+            player.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.WARD), 50, 1));
         }
     }
 }

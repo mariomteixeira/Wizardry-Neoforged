@@ -468,30 +468,30 @@ public final class Spells {
                         .build()
         ));
 
-        FIRE_SKIN = spell("fire_skin", () -> new BuffSpell(1, 0.3f, 0, EBMobEffects.FIRESKIN).assignProperties(
+        FIRE_SKIN = spell("fire_skin", () -> new BuffSpell(1, 0.3f, 0, () -> EBMobEffects.holder(EBMobEffects.FIRESKIN)).assignProperties(
                 SpellProperties.builder()
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.FIRE, SpellType.DEFENCE, SpellAction.POINT_UP, 40, 0, 250)
-                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.FIRESKIN.get()), 600)
-                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.FIRESKIN.get()), 0)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.FIRESKIN)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.FIRESKIN)), 0)
                         .add(DefaultProperties.EFFECT_DURATION, 5)
                         .build()
         ));
 
 
-        STATIC_AURA = spell("static_aura", () -> new BuffSpell(0, 0.5f, 0.7f, EBMobEffects.STATIC_AURA).assignProperties(
+        STATIC_AURA = spell("static_aura", () -> new BuffSpell(0, 0.5f, 0.7f, () -> EBMobEffects.holder(EBMobEffects.STATIC_AURA)).assignProperties(
                 SpellProperties.builder()
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.LIGHTNING, SpellType.DEFENCE, SpellAction.POINT_UP, 40, 0, 250)
-                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.STATIC_AURA.get()), 600)
-                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.STATIC_AURA.get()), 0)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.STATIC_AURA)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.STATIC_AURA)), 0)
                         .add(DefaultProperties.DAMAGE, 4F)
                         .build()
         ));
 
-        GREATER_WARD = spell("greater_ward", () -> new BuffSpell(0.75f, 0.6f, 0.8f, EBMobEffects.WARD).assignProperties(
+        GREATER_WARD = spell("greater_ward", () -> new BuffSpell(0.75f, 0.6f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.WARD)).assignProperties(
                 SpellProperties.builder()
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.BUFF, SpellAction.POINT_UP, 20, 10, 65)
-                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.WARD.get()), 600)
-                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.WARD.get()), 1)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.WARD)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.WARD)), 1)
                         .build()
         ));
 
@@ -543,18 +543,18 @@ public final class Spells {
 
         INVOKE_WEATHER = spell("invoke_weather", InvokeWeather::new);
 
-        OAK_FLESH = spell("oakflesh", () -> new BuffSpell(0.6f, 0.5f, 0.4f, EBMobEffects.OAKFLESH).soundValues(0.7f, 1.2f, 0.4f)
+        OAK_FLESH = spell("oakflesh", () -> new BuffSpell(0.6f, 0.5f, 0.4f, () -> EBMobEffects.holder(EBMobEffects.OAKFLESH)).soundValues(0.7f, 1.2f, 0.4f)
                 .assignProperties(SpellProperties.builder()
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.DEFENCE, SpellAction.POINT_UP, 20, 0, 50)
-                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.OAKFLESH.get()), 600)
-                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.OAKFLESH.get()), 0)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.OAKFLESH)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.OAKFLESH)), 0)
                         .build()));
 
-        FROST_STEP = spell("frost_step", () -> new BuffSpell(0.3f, 0.4f, 0.8f, EBMobEffects.FROST_STEP).soundValues(0.7f, 1.2f, 0.4f)
+        FROST_STEP = spell("frost_step", () -> new BuffSpell(0.3f, 0.4f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.FROST_STEP)).soundValues(0.7f, 1.2f, 0.4f)
                 .assignProperties(SpellProperties.builder()
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.ICE, SpellType.UTILITY, SpellAction.POINT_UP, 50, 0, 250)
-                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.FROST_STEP.get()), 600)
-                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.FROST_STEP.get()), 0)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.FROST_STEP)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.FROST_STEP)), 0)
                         .build()));
 
         PERMAFROST = spell("permafrost", Permafrost::new);
@@ -850,11 +850,11 @@ public final class Spells {
 
         TORNADO = spell("tornado", Tornado::new);
 
-        WARD = spell("ward", () -> new BuffSpell( 0.75f, 0.6f, 0.8f, EBMobEffects.WARD).assignProperties(
+        WARD = spell("ward", () -> new BuffSpell( 0.75f, 0.6f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.WARD)).assignProperties(
                 SpellProperties.builder()
                         .assignBaseProperties(SpellTiers.NOVICE, Elements.HEALING, SpellType.BUFF, SpellAction.POINT_UP, 5, 0, 30)
-                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.WARD.get()), 600)
-                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.WARD.get()), 0)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.WARD)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.WARD)), 0)
                         .build()
         ));
 

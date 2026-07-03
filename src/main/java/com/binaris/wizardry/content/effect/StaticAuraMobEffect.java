@@ -21,7 +21,7 @@ public class StaticAuraMobEffect extends MagicMobEffect {
         if (event.isCanceled()) return;
         DamageSource source = event.getSource();
 
-        if (source.getEntity() != null && event.getDamagedEntity().hasEffect(EBMobEffects.STATIC_AURA.get())) {
+        if (source.getEntity() != null && event.getDamagedEntity().hasEffect(EBMobEffects.holder(EBMobEffects.STATIC_AURA))) {
             source.getEntity().hurt(MagicDamageSource.causeDirectMagicDamage(event.getDamagedEntity(), EBDamageSources.SHOCK),
                     event.getAmount() / 2);
             source.getEntity().playSound(EBSounds.SPELL_STATIC_AURA_RETALIATE.get(), 1.0F,

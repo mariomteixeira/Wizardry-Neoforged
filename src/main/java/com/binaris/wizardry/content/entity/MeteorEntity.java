@@ -43,15 +43,10 @@ public class MeteorEntity extends FallingBlockEntity {
     public MeteorEntity(Level world, double x, double y, double z, float blastMultiplier, boolean damageBlocks) {
         this(world, x, y, z, Blocks.MAGMA_BLOCK.defaultBlockState());
         this.setDeltaMovement(this.getDeltaMovement().x, this.getDeltaMovement().y - 0.1D, this.getDeltaMovement().z);
-        this.setSecondsOnFire(200);
+        this.igniteForSeconds(200);
         this.blastMultiplier = blastMultiplier;
         this.damageBlocks = damageBlocks;
         this.noCulling = true;
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return this.getBbHeight() / 2.0F;
     }
 
     @Override

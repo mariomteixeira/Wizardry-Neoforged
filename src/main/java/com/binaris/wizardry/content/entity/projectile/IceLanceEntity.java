@@ -6,6 +6,7 @@ import com.binaris.wizardry.api.content.entity.projectile.MagicArrowEntity;
 import com.binaris.wizardry.content.spell.DefaultProperties;
 import com.binaris.wizardry.setup.registries.*;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -34,7 +35,7 @@ public class IceLanceEntity extends MagicArrowEntity {
     protected void onHitEntity(@NotNull EntityHitResult hitResult) {
         Entity entity = hitResult.getEntity();
         if (entity instanceof LivingEntity livingEntity && !level().isClientSide) {
-            livingEntity.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+            livingEntity.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.FROST.get()),
                     Spells.ICE_LANCE.property(DefaultProperties.EFFECT_DURATION),
                     0));
         }

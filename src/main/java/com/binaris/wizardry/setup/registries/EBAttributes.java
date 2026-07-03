@@ -2,6 +2,7 @@ package com.binaris.wizardry.setup.registries;
 
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.DeferredObject;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
@@ -29,6 +30,14 @@ public final class EBAttributes {
 
     public static Collection<DeferredObject<Attribute>> getAttributes() {
         return ATTRIBUTES.values();
+    }
+
+    /**
+     * Wraps one of the mod's registered attributes as a {@link Holder}, as required by the 1.21 attribute APIs
+     * ({@code LivingEntity.getAttribute}, {@code AttributeMap.hasAttribute}).
+     */
+    public static Holder<Attribute> holder(DeferredObject<Attribute> attribute) {
+        return BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute.get());
     }
 
     static DeferredObject<Attribute> attribute(String name) {

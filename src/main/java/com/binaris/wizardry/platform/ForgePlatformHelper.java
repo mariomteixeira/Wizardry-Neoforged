@@ -17,7 +17,7 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
@@ -58,7 +58,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public boolean inEarthBiomes(Holder<Biome> biome) {
-        return biome.is(Biomes.JUNGLE) || biome.is(Biomes.FOREST) || biome.is(Tags.Biomes.IS_CONIFEROUS);
+        return biome.is(Biomes.JUNGLE) || biome.is(Biomes.FOREST) || biome.is(Tags.Biomes.IS_CONIFEROUS_TREE);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public boolean fireMobBlockBreakEvent(Level level, BlockPos pos, Mob mob) {
-        return !ForgeEventFactory.getMobGriefingEvent(level, mob);
+        return !EventHooks.canEntityGrief(level, mob);
     }
 
     @Override

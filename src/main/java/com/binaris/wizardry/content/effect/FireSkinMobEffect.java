@@ -24,9 +24,9 @@ public class FireSkinMobEffect extends MagicMobEffect {
         Entity attacker = event.getSource().getEntity();
         if (attacker == null) return;
 
-        if (event.getDamagedEntity().hasEffect(EBMobEffects.FIRESKIN.get()) &&
+        if (event.getDamagedEntity().hasEffect(EBMobEffects.holder(EBMobEffects.FIRESKIN)) &&
                 !MagicDamageSource.isEntityImmune(EBDamageSources.FIRE, event.getDamagedEntity())) {
-            attacker.setSecondsOnFire(Spells.FIRE_BREATH.property(DefaultProperties.EFFECT_DURATION) * 20);
+            attacker.igniteForSeconds(Spells.FIRE_BREATH.property(DefaultProperties.EFFECT_DURATION) * 20);
         }
     }
 
@@ -36,12 +36,13 @@ public class FireSkinMobEffect extends MagicMobEffect {
     }
 
     @Override
-    public void applyEffectTick(LivingEntity livingEntity, int i) {
+    public boolean applyEffectTick(LivingEntity livingEntity, int i) {
         livingEntity.clearFire();
+        return true;
     }
 
     @Override
-    public boolean isDurationEffectTick(int i, int j) {
+    public boolean shouldApplyEffectTickThisTick(int i, int j) {
         return true;
     }
 }

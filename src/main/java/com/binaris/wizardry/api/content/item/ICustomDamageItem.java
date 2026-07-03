@@ -14,7 +14,7 @@ public interface ICustomDamageItem {
 
     /** you can use this to set custom max damage based on some events */
     default int getCustomMaxDamage(ItemStack stack) {
-        return this.self().getMaxDamage();
+        return this.self().getMaxDamage(stack);
     }
 
     /** exposing a new way to control when and how damage is set */

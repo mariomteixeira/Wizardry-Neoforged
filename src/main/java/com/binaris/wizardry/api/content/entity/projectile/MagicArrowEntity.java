@@ -22,7 +22,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -46,6 +48,7 @@ public abstract class MagicArrowEntity extends AbstractArrow {
     public static final float FORWARD_OFFSET = 0.1f;
     public static final int SEEKING_TIME = 15;
     public float damageMultiplier = 1.0f;
+    protected int knockback = 0;
     protected int ticksInGround;
     protected int ticksInAir;
 
@@ -64,7 +67,7 @@ public abstract class MagicArrowEntity extends AbstractArrow {
 
         this.absMoveTo(
                 caster.xo + lookVector.x * FORWARD_OFFSET,
-                caster.getY() + caster.getDimensions(caster.getPose()).height - LAUNCH_Y_OFFSET,
+                caster.getY() + caster.getDimensions(caster.getPose()).height() - LAUNCH_Y_OFFSET,
                 caster.zo + lookVector.z * FORWARD_OFFSET
                 , caster.getYRot(), caster.getXRot());
 
@@ -87,11 +90,11 @@ public abstract class MagicArrowEntity extends AbstractArrow {
     public void aim(LivingEntity caster, Entity target, float speed, float aimingError) {
         if (getOwner() == null) this.setOwner(caster);
 
-        this.yo = caster.yo + (double) caster.getDimensions(caster.getPose()).height * 0.85F - LAUNCH_Y_OFFSET;
+        this.yo = caster.yo + (double) caster.getDimensions(caster.getPose()).height() * 0.85F - LAUNCH_Y_OFFSET;
         double dx = target.xo - caster.xo;
         double dy = !this.isNoGravity() ?
-                target.yo + (double) (target.getDimensions(caster.getPose()).height / 3.0f) - this.yo
-                : target.yo + (double) (target.getDimensions(caster.getPose()).height / 2.0f) - this.yo;
+                target.yo + (double) (target.getDimensions(caster.getPose()).height() / 3.0f) - this.yo
+                : target.yo + (double) (target.getDimensions(caster.getPose()).height() / 2.0f) - this.yo;
         double dz = target.zo - caster.zo;
         double horizontalDistance = Mth.sqrt((float) (dx * dx + dz * dz));
 
@@ -131,9 +134,8 @@ public abstract class MagicArrowEntity extends AbstractArrow {
             }
         }
 
-        if (!this.level().isClientSide && getOwner() instanceof LivingEntity arrowOwner) {
-            EnchantmentHelper.doPostHurtEffects(target, arrowOwner);
-            EnchantmentHelper.doPostDamageEffects(arrowOwner, target);
+        if (getOwner() instanceof LivingEntity && this.level() instanceof ServerLevel serverLevel) {
+            EnchantmentHelper.doPostAttackEffects(serverLevel, target, damageSource);
         }
         this.discard();
     }
@@ -234,7 +236,7 @@ public abstract class MagicArrowEntity extends AbstractArrow {
 
         if (hit instanceof EntityHitResult entityHit && getOwner() instanceof LivingEntity owner && entityHit.getEntity() instanceof LivingEntity entity) {
             if (AllyDesignation.isValidTarget(owner, entity)) {
-                Vec3 direction = new Vec3(entity.xo, entity.yo + entity.getDimensions(entity.getPose()).height / 2, entity.zo).subtract(this.position()).normalize().scale(this.getDeltaMovement().length());
+                Vec3 direction = new Vec3(entity.xo, entity.yo + entity.getDimensions(entity.getPose()).height() / 2, entity.zo).subtract(this.position()).normalize().scale(this.getDeltaMovement().length());
                 this.setDeltaMovement(this.getDeltaMovement().add(direction.subtract(this.getDeltaMovement()).scale(2.0 / SEEKING_TIME)));
             }
         }
@@ -249,6 +251,19 @@ public abstract class MagicArrowEntity extends AbstractArrow {
     @Override
     protected boolean tryPickup(@NotNull Player player) {
         return false;
+    }
+
+    @Override
+    protected @NotNull ItemStack getDefaultPickupItem() {
+        return ItemStack.EMPTY;
+    }
+
+    public int getKnockback() {
+        return this.knockback;
+    }
+
+    public void setKnockback(int knockback) {
+        this.knockback = knockback;
     }
 
     @Override

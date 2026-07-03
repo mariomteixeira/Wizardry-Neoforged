@@ -4,7 +4,6 @@ import com.binaris.wizardry.api.content.item.IManaItem;
 import com.binaris.wizardry.content.item.armor.WizardArmorItem;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -17,7 +16,7 @@ public final class WizardArmorTestHandler {
         IManaItem manaItem = (IManaItem) stack.getItem();
         Player player = GST.mockPlayer(helper, PLAYER_POS);
 
-        stack.hurtAndBreak(9999, player, (a) -> {});
+        stack.hurtAndBreak(9999, player, EquipmentSlot.HEAD);
 
         GST.assertFalse(helper, "Armor should never be destroyed regardless of damage applied", stack.isEmpty());
         GST.assertTrue(helper, "after applied a lot of damage, the armor mana should be 0", manaItem.getMana(stack) == 0);
@@ -28,8 +27,8 @@ public final class WizardArmorTestHandler {
     static void armorAttributesWithMana(GameTestHelper helper, WizardArmorItem armorItem) {
         ItemStack stack = armorItem.getDefaultInstance();
         WizardArmorItem item = (WizardArmorItem) stack.getItem();
-        var modifiers = item.getCustomAttributes(stack, EquipmentSlot.FEET);
-        GST.assertFalse(helper, "Armor should provide protection attributes when mana is full", modifiers.get(Attributes.ARMOR).isEmpty());
+        var modifiers = item.getCustomAttributes(stack);
+        GST.assertFalse(helper, "Armor should provide protection attributes when mana is full", modifiers.modifiers().isEmpty());
         helper.succeed();
     }
 
@@ -39,9 +38,9 @@ public final class WizardArmorTestHandler {
         IManaItem manaItem = (IManaItem) stack.getItem();
         manaItem.setMana(stack, 0);
 
-        var modifiers = item.getCustomAttributes(stack, EquipmentSlot.HEAD);
+        var modifiers = item.getCustomAttributes(stack);
 
-        GST.assertTrue(helper, "Armor should NOT provide protection attributes when mana is 0", modifiers.get(Attributes.ARMOR).isEmpty());
+        GST.assertTrue(helper, "Armor should NOT provide protection attributes when mana is 0", modifiers.modifiers().isEmpty());
 
         helper.succeed();
     }

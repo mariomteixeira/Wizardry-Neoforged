@@ -44,7 +44,7 @@ public abstract class MagicProjectileEntity extends ThrowableItemProjectile {
 
         if (hit instanceof EntityHitResult entityHit && getOwner() instanceof LivingEntity owner && entityHit.getEntity() instanceof LivingEntity entity) {
             if (AllyDesignation.isValidTarget(owner, entity)) {
-                Vec3 direction = new Vec3(entity.xo, entity.yo + entity.getDimensions(entity.getPose()).height / 2, entity.zo).subtract(this.position()).normalize().scale(this.getDeltaMovement().length());
+                Vec3 direction = new Vec3(entity.xo, entity.yo + entity.getDimensions(entity.getPose()).height() / 2, entity.zo).subtract(this.position()).normalize().scale(this.getDeltaMovement().length());
                 this.setDeltaMovement(this.getDeltaMovement().add(direction.subtract(this.getDeltaMovement()).scale(2.0 / SEEKING_TIME)));
             }
         }
@@ -86,11 +86,11 @@ public abstract class MagicProjectileEntity extends ThrowableItemProjectile {
     public void aim(LivingEntity caster, Entity target, float speed, float aimingError) {
         this.setOwner(caster);
 
-        this.yo = caster.yo + (double) caster.getDimensions(caster.getPose()).height * 0.85F - LAUNCH_Y_OFFSET;
+        this.yo = caster.yo + (double) caster.getDimensions(caster.getPose()).height() * 0.85F - LAUNCH_Y_OFFSET;
         double dx = target.xo - caster.xo;
         double dy = !this.isNoGravity() ?
-                target.yo + (double) (target.getDimensions(caster.getPose()).height / 3.0f) - this.yo
-                : target.yo + (double) (target.getDimensions(caster.getPose()).height / 2.0f) - this.yo;
+                target.yo + (double) (target.getDimensions(caster.getPose()).height() / 3.0f) - this.yo
+                : target.yo + (double) (target.getDimensions(caster.getPose()).height() / 2.0f) - this.yo;
         double dz = target.zo - caster.zo;
         double horizontalDistance = Mth.sqrt((float) (dx * dx + dz * dz));
 

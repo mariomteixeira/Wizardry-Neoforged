@@ -18,13 +18,11 @@ public class WitherSkullSpell extends Spell {
     @Override
     public boolean cast(PlayerCastContext ctx) {
         Vec3 look = ctx.caster().getLookAngle();
-        WitherSkull witherSkull = new WitherSkull(ctx.world(), ctx.caster(), 1, 1, 1);
-        witherSkull.setPos(ctx.caster().getX() + look.x, ctx.caster().getY() + look.y + 1.3, ctx.caster().getZ() + look.z);
         double acceleration = property(DefaultProperties.SPEED) * ctx.modifiers().get(SpellModifiers.RANGE);
-
-        witherSkull.xPower = look.x * acceleration;
-        witherSkull.yPower = look.y * acceleration;
-        witherSkull.zPower = look.z * acceleration;
+        WitherSkull witherSkull = new WitherSkull(ctx.world(), ctx.caster(), look.scale(acceleration));
+        witherSkull.setPos(ctx.caster().getX() + look.x, ctx.caster().getY() + look.y + 1.3, ctx.caster().getZ() + look.z);
+        witherSkull.accelerationPower = acceleration;
+        witherSkull.setDeltaMovement(look.scale(acceleration));
 
         witherSkull.setOwner(ctx.caster());
         ctx.world().addFreshEntity(witherSkull);
@@ -36,13 +34,11 @@ public class WitherSkullSpell extends Spell {
     @Override
     public boolean cast(EntityCastContext ctx) {
         Vec3 look = ctx.caster().getLookAngle();
-        WitherSkull witherSkull = new WitherSkull(ctx.world(), ctx.caster(), 1, 1, 1);
-        witherSkull.setPos(ctx.caster().getX() + look.x, ctx.caster().getY() + look.y + 1.3, ctx.caster().getZ() + look.z);
         double acceleration = property(DefaultProperties.SPEED);
-
-        witherSkull.xPower = look.x * acceleration;
-        witherSkull.yPower = look.y * acceleration;
-        witherSkull.zPower = look.z * acceleration;
+        WitherSkull witherSkull = new WitherSkull(ctx.world(), ctx.caster(), look.scale(acceleration));
+        witherSkull.setPos(ctx.caster().getX() + look.x, ctx.caster().getY() + look.y + 1.3, ctx.caster().getZ() + look.z);
+        witherSkull.accelerationPower = acceleration;
+        witherSkull.setDeltaMovement(look.scale(acceleration));
 
         witherSkull.setOwner(ctx.caster());
         ctx.world().addFreshEntity(witherSkull);

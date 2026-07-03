@@ -5,10 +5,13 @@ import com.binaris.wizardry.core.config.EBServerConfig;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -18,33 +21,34 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 public final class EBLootTables {
-    private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
-    public static final ResourceLocation DUNGEON_ADDITIONS = register("chests/dungeon_additions");
-    public static final ResourceLocation DISPENSER_ADDITIONS = register("chests/jungle_dispenser_additions");
-    public static final ResourceLocation JUNK_FISHING_ADDITIONS = register("gameplay/fishing/junk_additions");
-    public static final ResourceLocation TREASURE_FISHING_ADDITIONS = register("gameplay/fishing/treasure_additions");
-    public static final ResourceLocation SUBSET_ARCANE_TOMES = register("subsets/arcane_tomes");
-    public static final ResourceLocation SUBSET_ARMOR_UPGRADES = register("subsets/armor_upgrades");
-    public static final ResourceLocation SUBSET_ELEMENTAL_CRYSTALS = register("subsets/elemental_crystals");
-    public static final ResourceLocation SUBSET_EPIC_ARTIFACTS = register("subsets/epic_artifacts");
-    public static final ResourceLocation SUBSET_RARE_ARTIFACTS = register("subsets/rare_artifacts");
-    public static final ResourceLocation SUBSET_UNCOMMON_ARTIFACTS = register("subsets/uncommon_artifacts");
-    public static final ResourceLocation SUBSET_WIZARD_ARMOR = register("subsets/wizard_armor");
-    public static final ResourceLocation SUBSET_WAND_UPGRADES = register("subsets/wand_upgrades");
-    public static final ResourceLocation SHRINE = register("chests/shrine");
+    private static final Set<ResourceKey<LootTable>> LOOT_TABLES = Sets.newHashSet();
+    public static final ResourceKey<LootTable> DUNGEON_ADDITIONS = register("chests/dungeon_additions");
+    public static final ResourceKey<LootTable> DISPENSER_ADDITIONS = register("chests/jungle_dispenser_additions");
+    public static final ResourceKey<LootTable> JUNK_FISHING_ADDITIONS = register("gameplay/fishing/junk_additions");
+    public static final ResourceKey<LootTable> TREASURE_FISHING_ADDITIONS = register("gameplay/fishing/treasure_additions");
+    public static final ResourceKey<LootTable> SUBSET_ARCANE_TOMES = register("subsets/arcane_tomes");
+    public static final ResourceKey<LootTable> SUBSET_ARMOR_UPGRADES = register("subsets/armor_upgrades");
+    public static final ResourceKey<LootTable> SUBSET_ELEMENTAL_CRYSTALS = register("subsets/elemental_crystals");
+    public static final ResourceKey<LootTable> SUBSET_EPIC_ARTIFACTS = register("subsets/epic_artifacts");
+    public static final ResourceKey<LootTable> SUBSET_RARE_ARTIFACTS = register("subsets/rare_artifacts");
+    public static final ResourceKey<LootTable> SUBSET_UNCOMMON_ARTIFACTS = register("subsets/uncommon_artifacts");
+    public static final ResourceKey<LootTable> SUBSET_WIZARD_ARMOR = register("subsets/wizard_armor");
+    public static final ResourceKey<LootTable> SUBSET_WAND_UPGRADES = register("subsets/wand_upgrades");
+    public static final ResourceKey<LootTable> SHRINE = register("chests/shrine");
 
     private static final List<Pair<ResourceLocation, LootPool>> LOOT_INJECTIONS = new ArrayList<>();
 
     private EBLootTables() {
     }
 
-    private static ResourceLocation register(String location) {
+    private static ResourceKey<LootTable> register(String location) {
         return register(WizardryMainMod.location(location));
     }
 
-    private static ResourceLocation register(ResourceLocation location) {
-        if (LOOT_TABLES.add(location)) {
-            return location;
+    private static ResourceKey<LootTable> register(ResourceLocation location) {
+        ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, location);
+        if (LOOT_TABLES.add(key)) {
+            return key;
         }
         throw new IllegalArgumentException(location + " is already a registered built-in loot table");
     }
@@ -66,16 +70,17 @@ public final class EBLootTables {
         LOOT_INJECTIONS.add(Pair.of(ResourceLocation.parse("chests/jungle_temple_dispenser"), createAdditivePool(DISPENSER_ADDITIONS, 1)));
 
         // For each entity, if it's in the modifiableMobs or a hostile mob, add the loot pool
+        ResourceKey<LootTable> mobAdditions = ResourceKey.create(Registries.LOOT_TABLE, WizardryMainMod.location("entities/mob_additions"));
         for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
-            ResourceLocation lootTable = entityType.getDefaultLootTable();
+            ResourceKey<LootTable> lootTable = entityType.getDefaultLootTable();
             ResourceLocation entityName = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
             if (EBServerConfig.INJECT_LOOT_TO_HOSTILE_MOBS.get() && !entityType.getCategory().isFriendly()) {
-                LOOT_INJECTIONS.add(Pair.of(lootTable, createAdditivePool(WizardryMainMod.location("entities/mob_additions"), 1)));
+                LOOT_INJECTIONS.add(Pair.of(lootTable.location(), createAdditivePool(mobAdditions, 1)));
                 continue;
             }
 
             if (EBServerConfig.LOOT_INJECTION_TO_MOBS.get().contains(entityName)) {
-                LOOT_INJECTIONS.add(Pair.of(lootTable, createAdditivePool(WizardryMainMod.location("entities/mob_additions"), 1)));
+                LOOT_INJECTIONS.add(Pair.of(lootTable.location(), createAdditivePool(mobAdditions, 1)));
             }
         }
     }
@@ -85,7 +90,7 @@ public final class EBLootTables {
         LOOT_INJECTIONS.forEach(loot -> injector.accept(loot.getFirst(), loot.getSecond()));
     }
 
-    private static LootPool createAdditivePool(ResourceLocation entry, int weight) {
-        return LootPool.lootPool().add(LootTableReference.lootTableReference(entry).setWeight(weight).setQuality(0)).setRolls(ConstantValue.exactly(1)).setBonusRolls(UniformGenerator.between(0, 1)).build();
+    private static LootPool createAdditivePool(ResourceKey<LootTable> entry, int weight) {
+        return LootPool.lootPool().add(NestedLootTable.lootTableReference(entry).setWeight(weight).setQuality(0)).setRolls(ConstantValue.exactly(1)).setBonusRolls(UniformGenerator.between(0, 1)).build();
     }
 }

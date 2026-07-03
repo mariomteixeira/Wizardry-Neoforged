@@ -12,20 +12,20 @@ import java.util.Map;
 
 public final class EBLootFunctions {
 
-    private static final Map<ResourceLocation, LootItemFunctionType> FUNCTIONS_TO_REGISTER = new LinkedHashMap<>();
+    private static final Map<ResourceLocation, LootItemFunctionType<?>> FUNCTIONS_TO_REGISTER = new LinkedHashMap<>();
 
-    public static final LootItemFunctionType RANDOM_SPELL = register("random_spell", new LootItemFunctionType(new RandomSpellFunction.Serializer()));
-    public static final LootItemFunctionType WIZARD_SPELL = register("wizard_spell", new LootItemFunctionType(new WizardSpellFunction.Serializer()));
+    public static final LootItemFunctionType<RandomSpellFunction> RANDOM_SPELL = register("random_spell", new LootItemFunctionType<>(RandomSpellFunction.CODEC));
+    public static final LootItemFunctionType<WizardSpellFunction> WIZARD_SPELL = register("wizard_spell", new LootItemFunctionType<>(WizardSpellFunction.CODEC));
 
     private EBLootFunctions() {
     }
 
-    private static LootItemFunctionType register(String name, LootItemFunctionType type) {
+    private static <T extends LootItemFunctionType<?>> T register(String name, T type) {
         FUNCTIONS_TO_REGISTER.put(WizardryMainMod.location(name), type);
         return type;
     }
 
-    public static void register(RegisterFunction<LootItemFunctionType> function) {
+    public static void register(RegisterFunction<LootItemFunctionType<?>> function) {
         FUNCTIONS_TO_REGISTER.forEach(((id, loot_function) ->
                 function.register(BuiltInRegistries.LOOT_FUNCTION_TYPE, id, loot_function)));
     }

@@ -15,11 +15,11 @@ public class ConjuredArrowEntity extends AbstractArrow {
     }
 
     public ConjuredArrowEntity(double x, double y, double z, Level level) {
-        super(EBEntities.CONJURED_ARROW.get(), x, y, z, level);
+        super(EBEntities.CONJURED_ARROW.get(), x, y, z, level, ItemStack.EMPTY, null);
     }
 
     public ConjuredArrowEntity(EntityType<? extends AbstractArrow> type, LivingEntity entity, Level level) {
-        super(type, entity, level);
+        super(type, entity, level, ItemStack.EMPTY, null);
     }
 
     @Override
@@ -30,6 +30,11 @@ public class ConjuredArrowEntity extends AbstractArrow {
 
     @Override
     protected @NotNull ItemStack getPickupItem() {
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    protected @NotNull ItemStack getDefaultPickupItem() {
         return ItemStack.EMPTY;
     }
 

@@ -1,5 +1,7 @@
 package com.binaris.wizardry.content.block;
 
+import com.mojang.serialization.MapCodec;
+
 import com.binaris.wizardry.content.blockentity.VanishingCobwebBlockEntity;
 import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -20,6 +22,11 @@ import javax.annotation.Nullable;
 public class VanishingCobwebBlock extends BaseEntityBlock {
     public VanishingCobwebBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<VanishingCobwebBlock> codec() {
+        return simpleCodec(VanishingCobwebBlock::new);
     }
 
     @Nullable

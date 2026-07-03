@@ -33,7 +33,7 @@ public class FlameRay extends RaySpell {
     protected boolean onEntityHit(CastContext ctx, EntityHitResult entityHit, Vec3 origin) {
         if (entityHit.getEntity() instanceof LivingEntity target && ctx.castingTicks() % target.invulnerableDuration == 1
                 && !MagicDamageSource.isEntityImmune(EBDamageSources.FIRE, target)) {
-            target.setSecondsOnFire((int) (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION)));
+            target.igniteForSeconds((int) (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION)));
             DamageSource source = ctx.caster() != null ? MagicDamageSource.causeDirectMagicDamage(ctx.caster(), EBDamageSources.FIRE)
                     : target.damageSources().magic();
             EntityUtil.attackEntityWithoutKnockback(target, source, property(DefaultProperties.DAMAGE) * ctx.modifiers().get(SpellModifiers.POTENCY));

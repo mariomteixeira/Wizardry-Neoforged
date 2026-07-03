@@ -177,7 +177,14 @@ public interface IStoredSpellVar<T> extends ISpellVar<T> {
          * @return a new stored spell variable for BlockPos values
          */
         public static StoredSpellVar<BlockPos, CompoundTag> ofBlockPos(String key, Persistence persistence) {
-            return new StoredSpellVar<>(key, NbtUtils::writeBlockPos, NbtUtils::readBlockPos, persistence);
+            return new StoredSpellVar<>(key,
+                    pos -> {
+                        net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
+                        tag.put("pos", net.minecraft.nbt.NbtUtils.writeBlockPos(pos));
+                        return tag;
+                    },
+                    tag -> net.minecraft.nbt.NbtUtils.readBlockPos(tag, "pos").orElse(BlockPos.ZERO),
+                    persistence);
         }
 
         /**

@@ -31,7 +31,7 @@ public class Reversal extends RaySpell {
         }
 
         List<MobEffectInstance> harmfulEffects = new ArrayList<>(ctx.caster().getActiveEffects().stream()
-                .filter(effect -> effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
+                .filter(effect -> effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
                 .toList());
 
         int bonusEffects = (int) ((ctx.modifiers().get(SpellModifiers.POTENCY) - 1) / EBServerConfig.POTENCY_INCREASE_PER_TIER.get() + 0.5F);

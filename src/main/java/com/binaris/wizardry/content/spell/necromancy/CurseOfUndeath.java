@@ -28,7 +28,7 @@ public class CurseOfUndeath extends RaySpell {
     @Override
     protected boolean onEntityHit(CastContext ctx, EntityHitResult entityHit, Vec3 origin) {
         if (entityHit.getEntity() instanceof LivingEntity target)
-            target.addEffect(new MobEffectInstance(EBMobEffects.CURSE_OF_UNDEATH.get(),
+            target.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.CURSE_OF_UNDEATH),
                     Integer.MAX_VALUE, this.property(DefaultProperties.EFFECT_STRENGTH)
                     + BuffSpell.getStandardBonusAmplifier(ctx.modifiers().get(SpellModifiers.POTENCY))));
 

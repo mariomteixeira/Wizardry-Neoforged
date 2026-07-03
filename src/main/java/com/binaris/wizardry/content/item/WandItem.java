@@ -96,7 +96,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
 
         Spell spell = CastItemDataHelper.getCurrentSpell(stack);
         SpellModifiers modifiers = Services.OBJECT_DATA.getWizardData(player).getSpellModifiers();
-        int useTick = stack.getUseDuration() - timeLeft;
+        int useTick = stack.getUseDuration(user) - timeLeft;
         int charge = CastItemUtils.calcCharge(spell, modifiers);
 
         int castingTick;
@@ -167,7 +167,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
         WizardData wizardData = Services.OBJECT_DATA.getWizardData(player);
         modifiers = wizardData.getSpellModifiers();
 
-        int castingTick = stack.getUseDuration() - timeCharged;
+        int castingTick = stack.getUseDuration(livingEntity) - timeCharged;
         int totalCost = CastItemUtils.calcCastCost(spell, modifiers);
         int accumulatedCost = CastItemUtils.getAccumulatedCastCost(spell, castingTick, totalCost);
 
@@ -491,7 +491,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
 
     @Override
     public int getCustomMaxDamage(ItemStack stack) {
-        return (int) (this.getMaxDamage() * (1.0f + EBServerConfig.STORAGE_INCREASE_PER_LEVEL.get() * CastItemDataHelper.getUpgradeLevel(stack, EBItems.STORAGE_UPGRADE.get())) + 0.5f);
+        return (int) (stack.getMaxDamage() * (1.0f + EBServerConfig.STORAGE_INCREASE_PER_LEVEL.get() * CastItemDataHelper.getUpgradeLevel(stack, EBItems.STORAGE_UPGRADE.get())) + 0.5f);
     }
 
     @Override
@@ -516,7 +516,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack) {
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         return MAX_USE_DURATION;
     }
 

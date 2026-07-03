@@ -37,6 +37,16 @@ public final class SpellModifiers {
     /** Constant string identifier for modifying health of players and mobs, normally used for minions */
     public static final String HEALTH_MODIFIER = "ebwizardry.health_modifier";
 
+    /**
+     * Stable {@link net.minecraft.resources.ResourceLocation} id for the attribute modifier that backs a given spell
+     * modifier. 1.21 {@link net.minecraft.world.entity.ai.attributes.AttributeModifier}s are keyed by a ResourceLocation
+     * (no more UUID+name); the scheme is {@code ebwizardry:<modifier>} (e.g. {@code ebwizardry:potency}).
+     */
+    public static net.minecraft.resources.ResourceLocation id(String modifier) {
+        return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                "ebwizardry", modifier.substring(modifier.lastIndexOf('.') + 1));
+    }
+
     private final Map<String, Float> multiplierMap;
 
     public SpellModifiers() {

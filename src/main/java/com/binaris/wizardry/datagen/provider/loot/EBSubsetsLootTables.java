@@ -5,7 +5,7 @@ import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.EBLootTables;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 
 public final class EBSubsetsLootTables implements LootTableSubProvider {
     @Override
-    public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> biConsumer) {
+    public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
         biConsumer.accept(EBLootTables.SUBSET_ARCANE_TOMES,
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

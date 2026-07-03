@@ -94,14 +94,14 @@ public class QuickArtifactEffect implements IArtifactEffect {
      * @param ticks   The duration of the mob effect.
      * @return An instance of {@link IArtifactEffect} (used to be registered with the {@link com.binaris.wizardry.api.content.item.ArtifactItem}
      */
-    public static IArtifactEffect meleeRing(Element element, @Nullable MobEffect effect, int level, int ticks) {
+    public static IArtifactEffect meleeRing(Element element, @Nullable Holder<MobEffect> effect, int level, int ticks) {
         return new QuickArtifactEffect() {
             @Override
             public void onHurtEntity(Player player, LivingEntity damagedEntity, DamageSource source, AtomicDouble amount, AtomicBoolean canceled, ItemStack artifact) {
-                if (!source.isIndirect() && source.getEntity() instanceof LivingEntity living &&
+                if (!(source.getEntity() != source.getDirectEntity()) && source.getEntity() instanceof LivingEntity living &&
                         living.getMainHandItem().getItem() instanceof WandItem wand && wand.getElement() == element) {
                     if (effect != null) damagedEntity.addEffect(new MobEffectInstance(effect, ticks, level));
-                    else damagedEntity.setSecondsOnFire(ticks / 20);
+                    else damagedEntity.igniteForSeconds(ticks / 20);
                 }
             }
         };

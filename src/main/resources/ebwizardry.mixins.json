@@ -22,14 +22,12 @@
     "ServerPlayerMixin",
     "SlotMixin",
     "accessor.BlazeAccessor",
-    "accessor.CriteriaAccessor",
     "accessor.FallingBlockEntityAccessor",
     "accessor.ItemPropertiesAccessor",
     "accessor.MerchantMenuAccessor",
     "accessor.MobGoalsAccessor",
     "accessor.RCBEAccessor",
-    "accessor.SlotAccessor",
-    "invoker.SpawnPlacementsInvoker"
+    "accessor.SlotAccessor"
   ],
   "client": [
     "ClientLevelMixin",

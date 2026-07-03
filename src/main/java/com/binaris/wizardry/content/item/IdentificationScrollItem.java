@@ -67,13 +67,12 @@ public class IdentificationScrollItem extends Item {
         return true;
     }
 
-    @Override
     public @NotNull Rarity getRarity(@NotNull ItemStack stack) {
         return Rarity.UNCOMMON;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, Item.TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         String desc = flag.isAdvanced() ? ".desc_extended" : ".desc";
         tooltip.add(Component.translatable(getOrCreateDescriptionId() + desc).withStyle(ChatFormatting.GRAY));
     }

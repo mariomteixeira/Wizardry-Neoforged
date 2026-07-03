@@ -7,6 +7,7 @@ import com.binaris.wizardry.api.content.util.MagicDamageSource;
 import com.binaris.wizardry.content.spell.DefaultProperties;
 import com.binaris.wizardry.setup.registries.*;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -34,7 +35,7 @@ public class IceShardEntity extends MagicArrowEntity {
     protected void onHitEntity(@NotNull EntityHitResult hitResult) {
         if (hitResult.getEntity() instanceof LivingEntity livingEntity) {
             if (!MagicDamageSource.isEntityImmune(EBDamageSources.FROST, livingEntity) && !level().isClientSide) {
-                livingEntity.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(),
+                livingEntity.addEffect(new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.wrapAsHolder(EBMobEffects.FROST.get()),
                         Spells.ICE_SHARD.property(DefaultProperties.EFFECT_DURATION),
                         Spells.ICE_SHARD.property(DefaultProperties.EFFECT_STRENGTH), false, false));
             }

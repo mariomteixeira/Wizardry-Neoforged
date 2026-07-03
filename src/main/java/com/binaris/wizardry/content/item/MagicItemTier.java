@@ -1,7 +1,10 @@
 package com.binaris.wizardry.content.item;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 public class MagicItemTier implements Tier {
@@ -23,8 +26,8 @@ public class MagicItemTier implements Tier {
     }
 
     @Override
-    public int getLevel() {
-        return 3;
+    public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
+        return BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
     }
 
     @Override

@@ -41,7 +41,6 @@ public class ArcaneTomeItem extends Item implements ITierValue {
         this.tier = tier;
     }
 
-    @Override
     public @NotNull Rarity getRarity(@NotNull ItemStack stack) {
         SpellTier tier = getTier(stack);
         return switch (tier.getLevel()) {
@@ -53,7 +52,7 @@ public class ArcaneTomeItem extends Item implements ITierValue {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, Item.TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         SpellTier tier = getTier(stack);
         List<SpellTier> tiers = Services.REGISTRY_UTIL.getTiers().stream().toList();
         int index = tiers.indexOf(tier);

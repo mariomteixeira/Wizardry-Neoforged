@@ -246,7 +246,7 @@ public final class BlockUtil {
                 if (y != null) {
                     BlockPos location = new BlockPos(origin.getX() + x, y, origin.getZ() + z);
                     if (lineOfSight) {
-                        HitResult rayTrace = world.clip(new ClipContext(centre, GeometryUtil.getCentre(location), ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, null));
+                        HitResult rayTrace = world.clip(new ClipContext(centre, GeometryUtil.getCentre(location), ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, (net.minecraft.world.entity.Entity) null));
                         if (rayTrace.getType() == HitResult.Type.BLOCK) continue;
                     }
                     possibleLocations.add(location);

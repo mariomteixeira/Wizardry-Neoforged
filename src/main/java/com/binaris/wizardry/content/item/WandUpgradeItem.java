@@ -48,13 +48,12 @@ public class WandUpgradeItem extends Item {
         }
     }
 
-    @Override
     public @NotNull Rarity getRarity(@NotNull ItemStack stack) {
         return Rarity.UNCOMMON;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, List<Component> tooltip, @NotNull TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, List<Component> tooltip, @NotNull TooltipFlag flag) {
         tooltip.add(Component.translatable(getOrCreateDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
     }
 }

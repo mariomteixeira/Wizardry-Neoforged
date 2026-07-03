@@ -9,6 +9,7 @@ import com.binaris.wizardry.setup.registries.EBBlocks;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.EBTags;
 import com.binaris.wizardry.setup.registries.Spells;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -21,18 +22,17 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 public final class EBRecipeProvider extends RecipeProvider {
-    public EBRecipeProvider(PackOutput output) {
-        super(output);
+    public EBRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+        super(output, registries);
     }
 
     @Override
-    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@NotNull RecipeOutput consumer) {
         lectern(EBBlocks.ACACIA_LECTERN.get(), EBBlocks.GILDED_ACACIA_WOOD.get(), consumer);
         lectern(EBBlocks.BIRCH_LECTERN.get(), EBBlocks.GILDED_BIRCH_WOOD.get(), consumer);
         lectern(EBBlocks.OAK_LECTERN.get(), EBBlocks.GILDED_OAK_WOOD.get(), consumer);
@@ -293,23 +293,23 @@ public final class EBRecipeProvider extends RecipeProvider {
     }
 
 
-    private void imbuementArmor(Item baseArmor, Item spectralDust, Item result, ResourceLocation location, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void imbuementArmor(Item baseArmor, Item spectralDust, Item result, ResourceLocation location, @NotNull RecipeOutput consumer) {
         ImbuementAltarRecipeBuilder.imbuement(Ingredient.of(baseArmor), Ingredient.of(spectralDust), result)
                 .save(consumer, location);
     }
 
-    private void imbuementFixRuinedBook(Item spectralDust, ResourceLocation loot, ResourceLocation location, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void imbuementFixRuinedBook(Item spectralDust, ResourceLocation loot, ResourceLocation location, @NotNull RecipeOutput consumer) {
         ImbuementAltarRecipeBuilder.imbuement(Ingredient.of(EBItems.RUINED_SPELL_BOOK.get()), Ingredient.of(spectralDust), EBItems.RANDOM_SPELL_BOOK.get())
                 .withNbt(nbtForRandomSpellBook(loot.toString())).unlockedBy("has_ruined_spell_book", has(EBItems.RUINED_SPELL_BOOK.get()))
                 .save(consumer, location);
     }
 
-    private void imbuementDustToCrystal(Item spectralDust, Item crystal, ResourceLocation location, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void imbuementDustToCrystal(Item spectralDust, Item crystal, ResourceLocation location, @NotNull RecipeOutput consumer) {
         ImbuementAltarRecipeBuilder.imbuement(Ingredient.of(EBItems.MAGIC_CRYSTAL.get()), Ingredient.of(spectralDust),
                 crystal).unlockedBy("has_magic_crystal", has(EBItems.MAGIC_CRYSTAL.get())).save(consumer, location);
     }
 
-    private void wand(Item wand, Item crystal, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void wand(Item wand, Item crystal, @NotNull RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, wand)
                 .define('x', Items.GOLD_NUGGET)
                 .define('y', Items.STICK)
@@ -321,16 +321,16 @@ public final class EBRecipeProvider extends RecipeProvider {
                 .save(consumer);
     }
 
-    private void gildedWood(Block gildenWood, Block planks, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void gildedWood(Block gildenWood, Block planks, @NotNull RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, gildenWood)
                 .define('b', planks)
                 .define('i', Items.GOLD_NUGGET)
                 .pattern("bbb").pattern("ibi").pattern("bbb")
-                .unlockedBy("has_" + ForgeRegistries.BLOCKS.getKey(planks).getPath(), has(planks))
+                .unlockedBy("has_" + BuiltInRegistries.BLOCK.getKey(planks).getPath(), has(planks))
                 .save(consumer);
     }
 
-    private void runestone(Block runestone, Item crystal, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void runestone(Block runestone, Item crystal, @NotNull RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, runestone, 8)
                 .pattern("zzz")
                 .pattern("zyz")
@@ -341,7 +341,7 @@ public final class EBRecipeProvider extends RecipeProvider {
                 .save(consumer);
     }
 
-    private void runestonePedestal(Block runestone, Item crystal, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void runestonePedestal(Block runestone, Item crystal, @NotNull RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, runestone, 2)
                 .pattern("zzz")
                 .pattern("yyy")
@@ -352,7 +352,7 @@ public final class EBRecipeProvider extends RecipeProvider {
                 .save(consumer);
     }
 
-    private void bookshelf(Block bookshelf, Block wood, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void bookshelf(Block bookshelf, Block wood, @NotNull RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, bookshelf)
                 .define('b', wood)
                 .define('i', EBItems.MAGIC_CRYSTAL_GRAND.get())
@@ -360,7 +360,7 @@ public final class EBRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gilded_wood", has(EBTags.GILDED_WOOD_ITEM)).save(consumer);
     }
 
-    private void lectern(Block lectern, Block wood, @NotNull Consumer<FinishedRecipe> consumer) {
+    private void lectern(Block lectern, Block wood, @NotNull RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, lectern)
                 .define('b', wood)
                 .define('i', EBItems.MAGIC_CRYSTAL_GRAND.get())

@@ -16,7 +16,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 
 // Even if this is literally identical to a Blaze, we need a separate class for it specially for handling particles and
 // removing some of its original behaviors.
@@ -24,10 +24,10 @@ public class LightningWraith extends Blaze {
     public LightningWraith(EntityType<? extends Blaze> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 10;
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.WATER);
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.LAVA);
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.DANGER_FIRE);
-        ((MobGoalsAccessor) this).getPathfindingMalus().remove(BlockPathTypes.DAMAGE_FIRE);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.WATER);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.LAVA);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.DANGER_FIRE);
+        ((MobGoalsAccessor) this).getPathfindingMalus().remove(PathType.DAMAGE_FIRE);
     }
 
     public LightningWraith(Level level) {

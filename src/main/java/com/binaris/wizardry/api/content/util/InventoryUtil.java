@@ -23,7 +23,7 @@ public final class InventoryUtil {
 
     static {
         List<EquipmentSlot> slots = new ArrayList<>(Arrays.asList(EquipmentSlot.values()));
-        slots.removeIf(slot -> slot.getType() != EquipmentSlot.Type.ARMOR);
+        slots.removeIf(slot -> slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR);
         ARMOR_SLOTS = slots.toArray(new EquipmentSlot[0]);
     }
 

@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 
 import java.util.EnumSet;
@@ -79,14 +79,14 @@ public class MinionFollowOwnerGoal extends Goal {
 
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.minion.getPathfindingMalus(BlockPathTypes.WATER);
-        this.minion.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.oldWaterCost = this.minion.getPathfindingMalus(PathType.WATER);
+        this.minion.setPathfindingMalus(PathType.WATER, 0.0F);
     }
 
     public void stop() {
         this.owner = null;
         this.navigation.stop();
-        this.minion.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.minion.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     }
 
     public void tick() {
@@ -130,8 +130,8 @@ public class MinionFollowOwnerGoal extends Goal {
     }
 
     private boolean canTeleportTo(BlockPos pos) {
-        BlockPathTypes blockpathtypes = WalkNodeEvaluator.getBlockPathTypeStatic(this.level, pos.mutable());
-        if (blockpathtypes != BlockPathTypes.WALKABLE) {
+        PathType blockpathtypes = WalkNodeEvaluator.getPathTypeStatic(this.minion, pos.mutable());
+        if (blockpathtypes != PathType.WALKABLE) {
             return false;
         } else {
             BlockState blockstate = this.level.getBlockState(pos.below());

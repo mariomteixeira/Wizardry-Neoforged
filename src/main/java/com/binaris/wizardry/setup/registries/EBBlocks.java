@@ -31,19 +31,19 @@ public final class EBBlocks {
     public static final DeferredObject<Block> EARTH_CRYSTAL_BLOCK = crystalBlock("earth", MapColor.COLOR_GREEN);
     public static final DeferredObject<Block> SORCERY_CRYSTAL_BLOCK = crystalBlock("sorcery", MapColor.COLOR_LIGHT_GREEN);
     public static final DeferredObject<Block> HEALING_CRYSTAL_BLOCK = crystalBlock("healing", MapColor.COLOR_YELLOW);
-    public static final DeferredObject<Block> CRYSTAL_ORE = block("crystal_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2, 5).sound(SoundType.STONE), UniformInt.of(4, 8)), true, false, true);
-    public static final DeferredObject<Block> DEEPSLATE_CRYSTAL_ORE = block("deepslate_crystal_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(2, 5).sound(SoundType.STONE), UniformInt.of(4, 8)), true, true, true);
-    public static final DeferredObject<Block> CRYSTAL_FLOWER = block("crystal_flower", () -> new CrystalFlowerBlock(BlockBehaviour.Properties.copy(Blocks.SUNFLOWER).noCollission().lightLevel((state) -> 15)), false, false, true);
+    public static final DeferredObject<Block> CRYSTAL_ORE = block("crystal_ore", () -> new DropExperienceBlock(UniformInt.of(4, 8), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2, 5).sound(SoundType.STONE)), true, false, true);
+    public static final DeferredObject<Block> DEEPSLATE_CRYSTAL_ORE = block("deepslate_crystal_ore", () -> new DropExperienceBlock(UniformInt.of(4, 8), BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2, 5).sound(SoundType.STONE)), true, true, true);
+    public static final DeferredObject<Block> CRYSTAL_FLOWER = block("crystal_flower", () -> new CrystalFlowerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SUNFLOWER).noCollission().lightLevel((state) -> 15)), false, false, true);
     public static final DeferredObject<Block> POTTED_CRYSTAL_FLOWER = block("potted_crystal_flower", () -> new FlowerPotBlock(CRYSTAL_FLOWER.get(), BlockBehaviour.Properties.of().instabreak().noOcclusion().lightLevel((state) -> 15).pushReaction(PushReaction.DESTROY)), false, false, false);
     public static final DeferredObject<Block> PERMAFROST = block("permafrost", PermafrostBlock::new, false, false, false);
-    public static final DeferredObject<Block> VANISHING_COBWEB = block("vanishing_cobweb", () -> new VanishingCobwebBlock(BlockBehaviour.Properties.copy(Blocks.COBWEB)), false, false, false);
-    public static final DeferredObject<Block> ARCANE_WORKBENCH = block("arcane_workbench", () -> new ArcaneWorkbenchBlock(BlockBehaviour.Properties.copy(Blocks.STONE)), false, true, true);
-    public static final DeferredObject<Block> GILDED_OAK_WOOD = block("gilded_oak_wood", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), true, true, true);
-    public static final DeferredObject<Block> GILDED_SPRUCE_WOOD = block("gilded_spruce_wood", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), true, true, true);
-    public static final DeferredObject<Block> GILDED_BIRCH_WOOD = block("gilded_birch_wood", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), true, true, true);
-    public static final DeferredObject<Block> GILDED_JUNGLE_WOOD = block("gilded_jungle_wood", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), true, true, true);
-    public static final DeferredObject<Block> GILDED_ACACIA_WOOD = block("gilded_acacia_wood", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), true, true, true);
-    public static final DeferredObject<Block> GILDED_DARK_OAK_WOOD = block("gilded_dark_oak_wood", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), true, true, true);
+    public static final DeferredObject<Block> VANISHING_COBWEB = block("vanishing_cobweb", () -> new VanishingCobwebBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COBWEB)), false, false, false);
+    public static final DeferredObject<Block> ARCANE_WORKBENCH = block("arcane_workbench", () -> new ArcaneWorkbenchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)), false, true, true);
+    public static final DeferredObject<Block> GILDED_OAK_WOOD = block("gilded_oak_wood", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD)), true, true, true);
+    public static final DeferredObject<Block> GILDED_SPRUCE_WOOD = block("gilded_spruce_wood", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD)), true, true, true);
+    public static final DeferredObject<Block> GILDED_BIRCH_WOOD = block("gilded_birch_wood", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD)), true, true, true);
+    public static final DeferredObject<Block> GILDED_JUNGLE_WOOD = block("gilded_jungle_wood", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD)), true, true, true);
+    public static final DeferredObject<Block> GILDED_ACACIA_WOOD = block("gilded_acacia_wood", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD)), true, true, true);
+    public static final DeferredObject<Block> GILDED_DARK_OAK_WOOD = block("gilded_dark_oak_wood", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_WOOD)), true, true, true);
     public static final DeferredObject<Block> OAK_BOOKSHELF = block("oak_bookshelf", BookShelfBlock::new, false, true, true);
     public static final DeferredObject<Block> SPRUCE_BOOKSHELF = block("spruce_bookshelf", BookShelfBlock::new, false, true, true);
     public static final DeferredObject<Block> BIRCH_BOOKSHELF = block("birch_bookshelf", BookShelfBlock::new, false, true, true);
@@ -56,13 +56,13 @@ public final class EBBlocks {
     public static final DeferredObject<Block> JUNGLE_LECTERN = block("jungle_lectern", MagicLecternBlock::new, false, true, true);
     public static final DeferredObject<Block> ACACIA_LECTERN = block("acacia_lectern", MagicLecternBlock::new, false, true, true);
     public static final DeferredObject<Block> DARK_OAK_LECTERN = block("dark_oak_lectern", MagicLecternBlock::new, false, true, true);
-    public static final DeferredObject<Block> FIRE_RUNESTONE = block("fire_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
-    public static final DeferredObject<Block> ICE_RUNESTONE = block("ice_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
-    public static final DeferredObject<Block> LIGHTNING_RUNESTONE = block("lightning_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
-    public static final DeferredObject<Block> NECROMANCY_RUNESTONE = block("necromancy_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
-    public static final DeferredObject<Block> EARTH_RUNESTONE = block("earth_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
-    public static final DeferredObject<Block> SORCERY_RUNESTONE = block("sorcery_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
-    public static final DeferredObject<Block> HEALING_RUNESTONE = block("healing_runestone", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> FIRE_RUNESTONE = block("fire_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> ICE_RUNESTONE = block("ice_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> LIGHTNING_RUNESTONE = block("lightning_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> NECROMANCY_RUNESTONE = block("necromancy_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> EARTH_RUNESTONE = block("earth_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> SORCERY_RUNESTONE = block("sorcery_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
+    public static final DeferredObject<Block> HEALING_RUNESTONE = block("healing_runestone", () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(4)), false, true, true);
     public static final DeferredObject<Block> FIRE_RUNESTONE_PEDESTAL = block("fire_runestone_pedestal", () -> new RunestonePedestalBlock(Elements.FIRE), false, true, true);
     public static final DeferredObject<Block> ICE_RUNESTONE_PEDESTAL = block("ice_runestone_pedestal", () -> new RunestonePedestalBlock(Elements.ICE), false, true, true);
     public static final DeferredObject<Block> LIGHTNING_RUNESTONE_PEDESTAL = block("lightning_runestone_pedestal", () -> new RunestonePedestalBlock(Elements.LIGHTNING), false, true, true);
@@ -95,9 +95,9 @@ public final class EBBlocks {
      * Helps to create a crystal block internally for te mod, ask for the map color and the rest is just the defaults
      */
     static DeferredObject<Block> crystalBlock(String elementName, MapColor color) {
-        return block("crystal_block_" + elementName, () -> new DropExperienceBlock(BlockBehaviour.Properties.of()
+        return block("crystal_block_" + elementName, () -> new DropExperienceBlock(UniformInt.of(0, 2), BlockBehaviour.Properties.of()
                 .mapColor(color).strength(5, 10)
-                .sound(SoundType.AMETHYST).requiresCorrectToolForDrops(), UniformInt.of(0, 2)));
+                .sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
     }
 
     static DeferredObject<Block> block(String name) {

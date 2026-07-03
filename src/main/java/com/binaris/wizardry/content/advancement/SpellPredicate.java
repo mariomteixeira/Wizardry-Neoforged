@@ -8,16 +8,43 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SpellPredicate {
+
+    /**
+     * Datapack codec used by the advancement triggers. Empty {@code tiers}/{@code elements} lists decode to "all",
+     * mirroring {@link #deserialize}. Registry objects are stored by id via {@link Services#REGISTRY_UTIL}.
+     */
+    public static final Codec<SpellPredicate> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            ResourceLocation.CODEC.optionalFieldOf("spell").forGetter(
+                    p -> Optional.ofNullable(p.spell).map(s -> Services.REGISTRY_UTIL.getSpell(s))),
+            ResourceLocation.CODEC.listOf().optionalFieldOf("tiers", List.of()).forGetter(
+                    p -> p.tiers.stream().map(t -> Services.REGISTRY_UTIL.getTier(t)).filter(Objects::nonNull).toList()),
+            ResourceLocation.CODEC.listOf().optionalFieldOf("elements", List.of()).forGetter(
+                    p -> p.elements.stream().map(e -> Services.REGISTRY_UTIL.getElement(e)).filter(Objects::nonNull).toList())
+    ).apply(inst, SpellPredicate::fromCodec));
+
+    private static SpellPredicate fromCodec(Optional<ResourceLocation> spellId, List<ResourceLocation> tierIds, List<ResourceLocation> elemIds) {
+        Spell spell = spellId.map(id -> Services.REGISTRY_UTIL.getSpell(id)).orElse(null);
+        Set<SpellTier> tiers = tierIds.isEmpty() ? new HashSet<>(Services.REGISTRY_UTIL.getTiers())
+                : tierIds.stream().map(id -> Services.REGISTRY_UTIL.getTier(id)).filter(Objects::nonNull).collect(Collectors.toSet());
+        Set<Element> elements = elemIds.isEmpty() ? new HashSet<>(Services.REGISTRY_UTIL.getElements())
+                : elemIds.stream().map(id -> Services.REGISTRY_UTIL.getElement(id)).filter(Objects::nonNull).collect(Collectors.toSet());
+        return new SpellPredicate(spell, tiers, elements);
+    }
+
     private final Spell spell;
     private final Set<SpellTier> tiers;
     private final Set<Element> elements;

@@ -4,6 +4,7 @@ import com.binaris.wizardry.api.content.item.IElementValue;
 import com.binaris.wizardry.api.content.spell.Element;
 import com.binaris.wizardry.setup.registries.EBBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -49,16 +50,16 @@ public class ReceptacleBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag) {
-        super.saveAdditional(tag);
-        if (!stack.isEmpty()) tag.put("Stack", stack.save(new CompoundTag()));
+    protected void saveAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        if (!stack.isEmpty()) tag.put("Stack", stack.save(registries, new CompoundTag()));
         if (altarPos != null) tag.putLong("AltarPos", altarPos.asLong());
     }
 
     @Override
-    public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
-        if (tag.contains("Stack")) this.stack = ItemStack.of(tag.getCompound("Stack"));
+    protected void loadAdditional(@NotNull CompoundTag tag, @NotNull HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        if (tag.contains("Stack")) this.stack = ItemStack.parseOptional(registries, tag.getCompound("Stack"));
         else this.stack = ItemStack.EMPTY;
         if (tag.contains("AltarPos")) this.altarPos = BlockPos.of(tag.getLong("AltarPos"));
         else this.altarPos = null;

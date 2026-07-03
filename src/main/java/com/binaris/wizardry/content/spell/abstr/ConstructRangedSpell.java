@@ -153,7 +153,7 @@ public class ConstructRangedSpell<T extends MagicConstructEntity> extends Constr
         double range = property(DefaultProperties.RANGE) * ctx.modifiers().get(SpellModifiers.RANGE);
         Vec3 endpoint = ctx.vec3().add(Vec3.atLowerCornerOf(ctx.direction().getNormal()).scale(range));
         HitResult rayTrace = ctx.world().clip(new ClipContext(ctx.vec3(), endpoint,
-                ClipContext.Block.COLLIDER, hitLiquids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, null));
+                ClipContext.Block.COLLIDER, hitLiquids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, (net.minecraft.world.entity.Entity) null));
 
         if (rayTrace instanceof BlockHitResult blockHit) {
             Direction direction = blockHit.getDirection();

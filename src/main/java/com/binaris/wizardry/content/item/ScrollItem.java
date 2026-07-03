@@ -80,7 +80,7 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
         if (!(livingEntity instanceof Player player)) return;
 
         Spell spell = RegistryUtils.getSpell(stack);
-        int castingTick = stack.getUseDuration() - timeLeft - 1;
+        int castingTick = stack.getUseDuration(livingEntity) - timeLeft - 1;
 
         PlayerCastContext ctx = new PlayerCastContext(level, player, player.getUsedItemHand(), castingTick,
                 Services.OBJECT_DATA.getWizardData(player).getSpellModifiers());
@@ -127,7 +127,7 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
             player.getCooldowns().addCooldown(this, spell.getCooldown());
         }
 
-        int castingTick = stack.getUseDuration() - timeCharged;
+        int castingTick = stack.getUseDuration(entity) - timeCharged;
         SpellModifiers modifiers = wizardData.getSpellModifiers();
 
         WizardryEventBus.getInstance().fire(new SpellCastEvent.Finish(SpellCastEvent.Source.SCROLL, spell, entity, modifiers, castingTick));
@@ -135,8 +135,8 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> list, @NotNull TooltipFlag tooltipFlag) {
-        if (level == null) return;
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> list, @NotNull TooltipFlag tooltipFlag) {
+        if (context.level() == null) return;
         Spell spell = RegistryUtils.getSpell(stack);
 
         if (ClientUtils.shouldDisplayDiscovered(spell, stack) && tooltipFlag.isAdvanced()) {
@@ -183,7 +183,7 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack) {
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         return CASTING_TIME;
     }
 

@@ -76,7 +76,7 @@ public class ForfeitRegistry {
     }
 
     public static void register() {
-        create("burn_self", SpellTiers.NOVICE, Elements.FIRE, (w, p) -> p.setSecondsOnFire(5));
+        create("burn_self", SpellTiers.NOVICE, Elements.FIRE, (w, p) -> p.igniteForSeconds(5));
 
         create("firebomb", SpellTiers.APPRENTICE, Elements.FIRE, (w, p) ->
                 summon(w, p.blockPosition(), new FireBombEntity(w), 0, 5, 0));
@@ -103,12 +103,12 @@ public class ForfeitRegistry {
         });
 
         create("freeze_self", SpellTiers.NOVICE, Elements.ICE, (w, p) -> {
-                    if (!w.isClientSide) p.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(), 200));
+                    if (!w.isClientSide) p.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST), 200));
                 }
         );
 
         create("freeze_self_2", SpellTiers.NOVICE, Elements.ICE, (w, p) -> {
-                    if (!w.isClientSide) p.addEffect(new MobEffectInstance(EBMobEffects.FROST.get(), 300, 1));
+                    if (!w.isClientSide) p.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.FROST), 300, 1));
                 }
         );
 
@@ -289,12 +289,12 @@ public class ForfeitRegistry {
         });
 
         create("jam_self", SpellTiers.ADVANCED, Elements.HEALING, (w, p) -> {
-            if (!w.isClientSide) p.addEffect(new MobEffectInstance(EBMobEffects.ARCANE_JAMMER.get(), 300));
+            if (!w.isClientSide) p.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.ARCANE_JAMMER), 300));
         });
 
         create("curse_self", SpellTiers.MASTER, Elements.HEALING, (w, p) -> {
             if (!w.isClientSide)
-                p.addEffect(new MobEffectInstance(EBMobEffects.CURSE_OF_UNDEATH.get(), Integer.MAX_VALUE));
+                p.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.CURSE_OF_UNDEATH), Integer.MAX_VALUE));
         });
 
         //        add(SpellTiers.NOVICE, Elements.EARTH, create("snares", (w, p) -> {
@@ -318,7 +318,7 @@ public class ForfeitRegistry {
 
 
         // TODO
-        //add(Tiers.ADVANCED, Elements.LIGHTNING, create("paralyse_self", (w, p) -> p.addEffect(new MobEffectInstance(EBMobEffects.PARALYSIS.get(), 200))));
+        //add(Tiers.ADVANCED, Elements.LIGHTNING, create("paralyse_self", (w, p) -> p.addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.PARALYSIS), 200))));
     }
 
     public static boolean isCollisionShapeFullBlock(BlockGetter blockGetter, BlockPos pos) {
