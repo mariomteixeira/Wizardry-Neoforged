@@ -75,6 +75,6 @@ public class SpellBookItem extends Item {
 
     public ResourceLocation getGuiTexture(Spell spell) {
         ResourceLocation l = spell.getTier().getOrCreateLocation();
-        return new ResourceLocation(l.getNamespace(), "textures/gui/spell_book_" + l.getPath() + ".png");
+        return ResourceLocation.fromNamespaceAndPath(l.getNamespace(), "textures/gui/spell_book_" + l.getPath() + ".png");
     }
 }

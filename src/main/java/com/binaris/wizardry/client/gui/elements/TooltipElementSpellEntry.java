@@ -69,7 +69,7 @@ public class TooltipElementSpellEntry extends TooltipElementText {
         if (ClientUtils.shouldDisplayDiscovered(spell, null)) {
             return Component.translatable(spell.getDescriptionId().toString()).withStyle(spell.getElement().getColor());
         } else {
-            return Component.literal(SpellGlyphData.getGlyphName(spell, GlyphClientHandler.INSTANCE.getGlyphData())).withStyle(Style.EMPTY.withColor(ChatFormatting.BLUE).withFont(new ResourceLocation("minecraft", "alt")));
+            return Component.literal(SpellGlyphData.getGlyphName(spell, GlyphClientHandler.INSTANCE.getGlyphData())).withStyle(Style.EMPTY.withColor(ChatFormatting.BLUE).withFont(ResourceLocation.fromNamespaceAndPath("minecraft", "alt")));
         }
     }
 

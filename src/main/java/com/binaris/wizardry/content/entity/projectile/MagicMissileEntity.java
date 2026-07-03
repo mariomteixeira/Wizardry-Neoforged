@@ -94,6 +94,6 @@ public class MagicMissileEntity extends MagicArrowEntity {
 
     @Override
     public ResourceLocation getTexture() {
-        return new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/magic_missile.png");
+        return ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/magic_missile.png");
     }
 }

@@ -355,7 +355,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
             }
 
             ItemStack newWand = new ItemStack(RegistryUtils.getWand(nextTier, element));
-            newWand.setTag(wand.getTag());
+            newWand.applyComponents(wand.getComponentsPatch());
             ((IManaItem) newWand.getItem()).setMana(newWand, getMana(wand));
             tomeStack.shrink(1);
             return newWand;
@@ -466,7 +466,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
     @Override
     public void onClearButtonPressed(Player player, Slot centre, Slot crystals, Slot upgrade, Slot[] spellBooks) {
         ItemStack stack = centre.getItem();
-        if (!stack.getOrCreateTag().contains(CastItemDataHelper.SPELL_ARRAY_KEY)) return;
+        if (!stack.has(EBDataComponents.SPELLS.get())) return;
         List<Spell> spells = CastItemDataHelper.getSpells(stack);
         int expectedSlotCount = BASE_SPELL_SLOTS + CastItemDataHelper.getUpgradeLevel(stack, EBItems.ATTUNEMENT_UPGRADE.get());
         if (spells.size() < expectedSlotCount) spells = new ArrayList<>();
@@ -496,7 +496,7 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
 
     @Override
     public void setCustomDamage(ItemStack stack, int damage) {
-        stack.getOrCreateTag().putInt("Damage", Math.max(0, Math.min(damage, stack.getMaxDamage())));
+        stack.setDamageValue(Math.max(0, Math.min(damage, stack.getMaxDamage())));
     }
 
     @Override

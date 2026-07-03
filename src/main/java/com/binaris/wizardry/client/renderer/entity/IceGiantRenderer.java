@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class IceGiantRenderer extends MobRenderer<IceGiant, IceGiantModel> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             WizardryMainMod.MOD_ID, "textures/entity/ice_giant.png");
 
     public IceGiantRenderer(EntityRendererProvider.Context context) {

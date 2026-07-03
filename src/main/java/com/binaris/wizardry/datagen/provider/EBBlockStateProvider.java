@@ -27,7 +27,7 @@ public final class EBBlockStateProvider extends BlockStateProvider {
                 blockTexture(EBBlocks.CRYSTAL_FLOWER.get())).renderType("cutout"));
 
         simpleBlockWithItem(EBBlocks.POTTED_CRYSTAL_FLOWER.get(),
-                models().singleTexture("potted_crystal_flower", new ResourceLocation("flower_pot_cross"), "plant",
+                models().singleTexture("potted_crystal_flower", ResourceLocation.parse("flower_pot_cross"), "plant",
                         blockTexture(EBBlocks.CRYSTAL_FLOWER.get())).renderType("cutout"));
 
         runestone(EBBlocks.FIRE_RUNESTONE.get(), "fire_runestone", "runestone_fire");
@@ -115,7 +115,7 @@ public final class EBBlockStateProvider extends BlockStateProvider {
                 .texture("top", "ebwizardry:block/%s_0".formatted(topBottomTexture))
                 .texture("bottom", "ebwizardry:block/%s_0".formatted(topBottomTexture));
 
-        itemModels().getBuilder(name).parent(this.itemModels().getExistingFile(new ResourceLocation(WizardryMainMod.MOD_ID, "item/runestone_pedestal_item")))
+        itemModels().getBuilder(name).parent(this.itemModels().getExistingFile(ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/runestone_pedestal_item")))
                 .texture("side", "ebwizardry:block/%s".formatted(textureName))
                 .texture("top", "ebwizardry:block/%s_0".formatted(topBottomTexture))
                 .texture("bottom", "ebwizardry:block/%s_0".formatted(topBottomTexture))
@@ -135,7 +135,7 @@ public final class EBBlockStateProvider extends BlockStateProvider {
     private void runestone(Block block, String name, String textureName) {
         for (int i = 1; i <= 4; i++) {
             String modelName = "%s_%d".formatted(name, i);
-            itemModels().getBuilder(name).parent(this.itemModels().getExistingFile(new ResourceLocation(WizardryMainMod.MOD_ID, "item/runestone_item")))
+            itemModels().getBuilder(name).parent(this.itemModels().getExistingFile(ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/runestone_item")))
                     .texture("side", "ebwizardry:block/%s_0".formatted(textureName))
                     .texture("rune", "ebwizardry:block/%s_%d".formatted(textureName, i))
                     .texture("overlay", "ebwizardry:block/%s_%d_overlay".formatted(textureName, i));

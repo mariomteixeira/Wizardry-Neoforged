@@ -29,7 +29,7 @@ import static com.binaris.wizardry.WizardryMainMod.MOD_ID;
 // This render logic is one of the worst I've ever written. So any improvements would be greatly appreciated, specially
 // regarding how to handle the linked entity position better, because I'm sure that part can be improved.
 public class ParticleBuff extends ParticleWizardry {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(MOD_ID, "textures/particle/buff.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(MOD_ID, "textures/particle/buff.png");
     private final boolean mirror;
 
     public ParticleBuff(ClientLevel world, double x, double y, double z, SpriteSet spriteProvider) {

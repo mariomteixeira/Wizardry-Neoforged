@@ -89,7 +89,7 @@ public class Element {
 
     public ResourceLocation getIconId() {
         if (icon == null)
-            icon = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/gui/container/element_icon_" + getOrCreateLocation().getPath() + ".png");
+            icon = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/gui/container/element_icon_" + getOrCreateLocation().getPath() + ".png");
         return icon;
     }
 }

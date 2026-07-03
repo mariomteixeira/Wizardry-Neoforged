@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 public class ParticleGuardianBeam extends ParticleTargeted {
     private static final float THICKNESS = 0.15f;
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft:textures/entity/guardian_beam.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.parse("minecraft:textures/entity/guardian_beam.png");
 
     public ParticleGuardianBeam(ClientLevel world, double x, double y, double z, SpriteSet spriteProvider) {
         super(world, x, y, z, spriteProvider, false);

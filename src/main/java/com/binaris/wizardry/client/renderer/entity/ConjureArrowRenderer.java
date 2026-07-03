@@ -16,7 +16,7 @@ public class ConjureArrowRenderer extends ArrowRenderer<ConjuredArrowEntity> {
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(ConjuredArrowEntity entity) {
-        return new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/conjured_arrow.png");
+        return ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/conjured_arrow.png");
     }
 
     @Override

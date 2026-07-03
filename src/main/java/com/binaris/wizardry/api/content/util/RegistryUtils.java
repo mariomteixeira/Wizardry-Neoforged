@@ -5,6 +5,7 @@ import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.spell.SpellTier;
 import com.binaris.wizardry.content.item.armor.WizardArmorType;
 import com.binaris.wizardry.core.platform.Services;
+import com.binaris.wizardry.setup.registries.EBDataComponents;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
@@ -42,7 +43,7 @@ public final class RegistryUtils {
         String registryName = tier == SpellTiers.NOVICE && element == Elements.MAGIC ? "novice" : tier.getOrCreateLocation().getPath();
         if (element != Elements.MAGIC) registryName = registryName + "_" + element.getLocation().getPath();
         registryName = "wand_" + registryName;
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(element.getLocation().getNamespace(), registryName));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(element.getLocation().getNamespace(), registryName));
     }
 
     public static Item getCrystal(Element element) {
@@ -50,7 +51,7 @@ public final class RegistryUtils {
         if (element != null && element != Elements.MAGIC) {
             registryName += "_" + element.getLocation().getPath();
         }
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(element.getLocation().getNamespace(), registryName));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(element.getLocation().getNamespace(), registryName));
     }
 
     /**
@@ -85,7 +86,7 @@ public final class RegistryUtils {
             registryName = registryName + "_" + element.getLocation().getPath();
 
         // Each mod should be responsible for ensuring their items are registered with the correct names
-        return BuiltInRegistries.ITEM.get(new ResourceLocation(element.getLocation().getNamespace(), registryName));
+        return BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(element.getLocation().getNamespace(), registryName));
     }
 
     /**
@@ -116,7 +117,7 @@ public final class RegistryUtils {
      * @return The ItemStack with the spell set.
      */
     public static ItemStack setSpell(ItemStack stack, Spell spell) {
-        stack.getOrCreateTag().putString(SPELL_KEY, spell.getLocation().toString());
+        stack.set(EBDataComponents.SPELL.get(), spell.getLocation());
         return stack;
     }
 
@@ -140,7 +141,7 @@ public final class RegistryUtils {
      */
     public static ItemStack createArcaneTome(SpellTier tier) {
         ItemStack stack = new ItemStack(EBItems.ARCANE_TOME.get());
-        stack.getOrCreateTag().putString("Tier", tier.getOrCreateLocation().toString());
+        stack.set(EBDataComponents.TIER.get(), tier.getOrCreateLocation());
         return stack;
     }
 
@@ -166,8 +167,10 @@ public final class RegistryUtils {
      * @return The spell from the ItemStack, or {@link Spells#NONE} if the stack has no tag or the spell is not found.
      */
     public static @NotNull Spell getSpell(ItemStack stack) {
-        if (!stack.hasTag()) return Spells.NONE;
-        return getSpellFromNbt(stack.getTag());
+        ResourceLocation location = stack.get(EBDataComponents.SPELL.get());
+        if (location == null) return Spells.NONE;
+        Spell byId = Services.REGISTRY_UTIL.getSpell(location);
+        return byId == null ? Spells.NONE : byId;
     }
 
     /**

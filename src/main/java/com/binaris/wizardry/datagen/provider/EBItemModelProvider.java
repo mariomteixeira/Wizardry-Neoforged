@@ -41,8 +41,8 @@ public final class EBItemModelProvider extends ItemModelProvider {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(item.get());
 
         withExistingParent(id.getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(WizardryMainMod.MOD_ID, "block/" + id.getPath()));
+                ResourceLocation.parse("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "block/" + id.getPath()));
     }
 
     private void spawnEgg(DeferredObject<Item> item) {
@@ -56,15 +56,15 @@ public final class EBItemModelProvider extends ItemModelProvider {
 
     private void simpleItem(String modelName, String textureName) {
         withExistingParent(modelName,
-                new ResourceLocation("item/generated")).texture(
+                ResourceLocation.parse("item/generated")).texture(
                 "layer0",
-                new ResourceLocation(WizardryMainMod.MOD_ID, "item/" + textureName)
+                ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/" + textureName)
         );
     }
 
     private void simpleWand(String name) {
         ItemModelBuilder pointModel = withExistingParent(name + "_casting", "item/handheld")
-                .texture("layer0", new ResourceLocation(WizardryMainMod.MOD_ID, "item/" + name));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/" + name));
 
         pointModel.transforms()
                 .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
@@ -88,9 +88,9 @@ public final class EBItemModelProvider extends ItemModelProvider {
                 .scale(0.68f)
                 .end();
 
-        withExistingParent(name, new ResourceLocation("item/handheld"))
-                .texture("layer0", new ResourceLocation(WizardryMainMod.MOD_ID, "item/" + name))
-                .override().predicate(new ResourceLocation("casting"), 1)
+        withExistingParent(name, ResourceLocation.parse("item/handheld"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/" + name))
+                .override().predicate(ResourceLocation.parse("casting"), 1)
                 .model(pointModel).end();
     }
 

@@ -85,7 +85,7 @@ public class IceShardEntity extends MagicArrowEntity {
 
     @Override
     public ResourceLocation getTexture() {
-        return new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/ice_shard.png");
+        return ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/ice_shard.png");
     }
 
     @Override

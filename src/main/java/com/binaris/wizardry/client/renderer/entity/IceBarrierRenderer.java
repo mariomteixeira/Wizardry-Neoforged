@@ -11,7 +11,7 @@ package com.binaris.wizardry.client.renderer.entity;//package com.electroblob.wi
 //import net.minecraft.resources.ResourceLocation;
 //
 //public class IceBarrierRenderer extends EntityRenderer<EntityIceBarrier> {
-//    private static final ResourceLocation TEXTURE = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/ice_barrier.png");
+//    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/ice_barrier.png");
 //
 //    private ModelIceBarrier model;
 //

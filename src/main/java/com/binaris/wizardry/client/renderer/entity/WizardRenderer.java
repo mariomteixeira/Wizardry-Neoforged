@@ -16,7 +16,7 @@ public class WizardRenderer extends HumanoidMobRenderer<Wizard, HumanoidModel<Wi
     public WizardRenderer(Context context) {
         super(context, new WizardModel<>(context.bakeLayer(WizardModel.LAYER_LOCATION)), 0.5f);
         for (int i = 0; i < 6; i++) {
-            TEXTURES[i] = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/wizard/wizard_" + i + ".png");
+            TEXTURES[i] = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/wizard/wizard_" + i + ".png");
         }
         this.addLayer(new HumanoidArmorLayer<>(this, new WizardModel<>(context.bakeLayer(WizardModel.LAYER_LOCATION)),
                 new WizardModel<>(context.bakeLayer(WizardModel.LAYER_LOCATION)), context.getModelManager()));

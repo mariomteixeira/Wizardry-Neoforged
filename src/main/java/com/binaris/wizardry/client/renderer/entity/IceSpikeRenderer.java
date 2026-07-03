@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class IceSpikeRenderer extends EntityRenderer<IceSpikeConstruct> {
-    private static final ResourceLocation texture = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/ice_spike.png");
+    private static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/ice_spike.png");
 
     public IceSpikeRenderer(EntityRendererProvider.Context $$0) {
         super($$0);

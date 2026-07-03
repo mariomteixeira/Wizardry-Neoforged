@@ -118,7 +118,7 @@ public class ForceArrow extends MagicArrowEntity {
 
     @Override
     public ResourceLocation getTexture() {
-        return new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/force_arrow.png");
+        return ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/force_arrow.png");
     }
 
     @Override

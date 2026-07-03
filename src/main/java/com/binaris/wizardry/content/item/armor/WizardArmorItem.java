@@ -159,7 +159,7 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
             Item newItem = RegistryUtils.getArmor(armourClass, this.getElement(), getEquipmentSlot());
             ItemStack newStack = new ItemStack(newItem);
             ((WizardArmorItem) newItem).setMana(newStack, this.getMana(stack));
-            newStack.setTag(stack.getTag());
+            newStack.applyComponents(stack.getComponentsPatch());
             upgrade.shrink(1);
             return newStack;
         }
@@ -180,7 +180,7 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
 
     @Override
     public void setCustomDamage(ItemStack stack, int damage) {
-        stack.getOrCreateTag().putInt("Damage", Math.max(0, Math.min(damage, stack.getMaxDamage())));
+        stack.setDamageValue(Math.max(0, Math.min(damage, stack.getMaxDamage())));
     }
 
     @Override

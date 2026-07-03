@@ -45,7 +45,7 @@ public class Forfeit {
 
     public Forfeit(ResourceLocation name, Element element, SpellTier spellTier, @Nullable BiConsumer<Level, Player> effect) {
         this.name = name;
-        this.sound = SoundEvent.createVariableRangeEvent(new ResourceLocation(name.getNamespace(), "forfeit." + name.getPath()));
+        this.sound = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(name.getNamespace(), "forfeit." + name.getPath()));
         this.element = element;
         this.spellTier = spellTier;
         this.effect = effect;

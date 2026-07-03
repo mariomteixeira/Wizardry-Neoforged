@@ -45,7 +45,7 @@ public class DartEntity extends MagicArrowEntity {
 
     @Override
     public ResourceLocation getTexture() {
-        return new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/dart.png");
+        return ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/dart.png");
     }
 
     @Override

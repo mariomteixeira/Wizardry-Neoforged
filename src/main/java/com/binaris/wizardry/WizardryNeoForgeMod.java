@@ -6,6 +6,7 @@ import com.binaris.wizardry.content.menu.BookshelfMenu;
 import com.binaris.wizardry.integration.curios.CuriosIntegration;
 import com.binaris.wizardry.registry.EBArgumentTypesForge;
 import com.binaris.wizardry.registry.EBRegistriesForge;
+import com.binaris.wizardry.setup.registries.EBDataComponents;
 import com.binaris.wizardry.setup.registries.WandUpgrades;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -22,6 +23,7 @@ public final class WizardryNeoForgeMod {
         EBRegistriesForge.elements(modBus);
         EBRegistriesForge.spells(modBus);
         EBArgumentTypesForge.register(modBus);
+        EBDataComponents.COMPONENTS.register(modBus);
 
         modBus.addListener(WizardryNeoForgeMod::commonSetup);
         // TODO Task 7: modBus.addListener(EBForgeNetwork::registerPayloads);

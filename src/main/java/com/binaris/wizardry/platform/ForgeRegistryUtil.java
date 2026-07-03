@@ -14,34 +14,34 @@ import java.util.Comparator;
 public class ForgeRegistryUtil implements IRegistryUtil {
     @Override
     public Collection<Element> getElements() {
-        return EBRegistriesForge.ELEMENT.get().getValues().stream().toList();
+        return EBRegistriesForge.ELEMENT.get().stream().toList();
     }
 
     @Override
     public Collection<SpellTier> getTiers() {
-        return EBRegistriesForge.TIER.get().getValues().stream()
+        return EBRegistriesForge.TIER.get().stream()
                 .sorted(Comparator.comparingInt(SpellTier::getLevel))
                 .toList();
     }
 
     @Override
     public Collection<Spell> getSpells() {
-        return EBRegistriesForge.SPELL.get().getValues().stream().toList();
+        return EBRegistriesForge.SPELL.get().stream().toList();
     }
 
     @Override
     public @Nullable Element getElement(ResourceLocation location) {
-        return EBRegistriesForge.ELEMENT.get().getValue(location);
+        return EBRegistriesForge.ELEMENT.get().get(location);
     }
 
     @Override
     public @Nullable SpellTier getTier(ResourceLocation location) {
-        return EBRegistriesForge.TIER.get().getValue(location);
+        return EBRegistriesForge.TIER.get().get(location);
     }
 
     @Override
     public @Nullable Spell getSpell(ResourceLocation location) {
-        return EBRegistriesForge.SPELL.get().getValue(location);
+        return EBRegistriesForge.SPELL.get().get(location);
     }
 
     @Override

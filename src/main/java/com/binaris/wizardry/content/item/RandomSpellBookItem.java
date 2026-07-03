@@ -6,8 +6,9 @@ import com.binaris.wizardry.core.EBLogger;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.Spells;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -32,18 +33,18 @@ public class RandomSpellBookItem extends Item {
 
     public static void create(Level level, Player player, ItemStack original) {
         ItemStack stack;
-        CompoundTag tag = original.getTag();
+        CustomData customData = original.get(DataComponents.CUSTOM_DATA);
         original.shrink(1);
         if (level.isClientSide) return;
 
-        if (tag == null || !tag.contains("LootTable")) {
+        if (customData == null || !customData.contains("LootTable")) {
             stack = RegistryUtils.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), Spells.MAGIC_MISSILE);
             spawn(level, player.blockPosition(), stack);
             EBLogger.error("Attempted to use a RandomSpellBookItem without a LootTable NBT tag.");
             return;
         }
 
-        String lootTableId = tag.getString("LootTable");
+        String lootTableId = customData.copyTag().getString("LootTable");
         ResourceLocation lootTableLocation = ResourceLocation.tryParse(lootTableId);
 
         if (lootTableLocation == null) {

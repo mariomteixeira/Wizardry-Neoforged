@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 // and the way the angle is interpolated is everything from there.
 
 public class ArcaneWorkbenchRender implements BlockEntityRenderer<ArcaneWorkbenchBlockEntity> {
-    private static final ResourceLocation RUNE_TEXTURE = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/arcane_workbench_rune.png");
+    private static final ResourceLocation RUNE_TEXTURE = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/arcane_workbench_rune.png");
     public int time;
 
     public ArcaneWorkbenchRender(BlockEntityRendererProvider.Context context) {

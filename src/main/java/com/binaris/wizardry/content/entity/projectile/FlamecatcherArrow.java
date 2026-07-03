@@ -37,7 +37,7 @@ public class FlamecatcherArrow extends MagicArrowEntity {
 
     @Override
     public ResourceLocation getTexture() {
-        return new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/flamecatcher_arrow.png");
+        return ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/flamecatcher_arrow.png");
     }
 
     @Override

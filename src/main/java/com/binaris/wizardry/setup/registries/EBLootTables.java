@@ -61,9 +61,9 @@ public final class EBLootTables {
                 location -> LOOT_INJECTIONS.add(Pair.of(location, createAdditivePool(DUNGEON_ADDITIONS, 1)))
         );
 
-        LOOT_INJECTIONS.add(Pair.of(new ResourceLocation("chests/gameplay/fishing/junk"), createAdditivePool(JUNK_FISHING_ADDITIONS, 4)));
-        LOOT_INJECTIONS.add(Pair.of(new ResourceLocation("chests/gameplay/fishing/treasure"), createAdditivePool(TREASURE_FISHING_ADDITIONS, 4)));
-        LOOT_INJECTIONS.add(Pair.of(new ResourceLocation("chests/jungle_temple_dispenser"), createAdditivePool(DISPENSER_ADDITIONS, 1)));
+        LOOT_INJECTIONS.add(Pair.of(ResourceLocation.parse("chests/gameplay/fishing/junk"), createAdditivePool(JUNK_FISHING_ADDITIONS, 4)));
+        LOOT_INJECTIONS.add(Pair.of(ResourceLocation.parse("chests/gameplay/fishing/treasure"), createAdditivePool(TREASURE_FISHING_ADDITIONS, 4)));
+        LOOT_INJECTIONS.add(Pair.of(ResourceLocation.parse("chests/jungle_temple_dispenser"), createAdditivePool(DISPENSER_ADDITIONS, 1)));
 
         // For each entity, if it's in the modifiableMobs or a hostile mob, add the loot pool
         for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {

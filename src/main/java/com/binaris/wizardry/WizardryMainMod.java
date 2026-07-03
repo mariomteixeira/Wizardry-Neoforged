@@ -26,10 +26,10 @@ public final class WizardryMainMod {
     }
 
     public static ResourceLocation location(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     public static ResourceLocation location(String namespace, String path) {
-        return new ResourceLocation(namespace, path);
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 }

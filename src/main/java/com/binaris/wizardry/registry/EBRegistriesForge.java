@@ -5,22 +5,28 @@ import com.binaris.wizardry.api.content.spell.Element;
 import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.spell.SpellTier;
 import com.binaris.wizardry.core.registry.EBRegistries;
+import net.minecraft.core.Registry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.IForgeRegistry;
-import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import java.util.function.Supplier;
 
 public final class EBRegistriesForge {
     private static final DeferredRegister<Element> ELEMENTS = DeferredRegister.create(EBRegistries.ELEMENT, WizardryMainMod.MOD_ID);
-    public static final Supplier<IForgeRegistry<Element>> ELEMENT = ELEMENTS.makeRegistry(() -> new RegistryBuilder<Element>().disableSaving().disableOverrides());
+    public static final Supplier<Registry<Element>> ELEMENT = ELEMENTS.getRegistry();
 
     private static final DeferredRegister<Spell> SPELLS = DeferredRegister.create(EBRegistries.SPELL, WizardryMainMod.MOD_ID);
-    public static final Supplier<IForgeRegistry<Spell>> SPELL = SPELLS.makeRegistry(() -> new RegistryBuilder<Spell>().disableSaving().disableOverrides());
+    public static final Supplier<Registry<Spell>> SPELL = SPELLS.getRegistry();
 
     private static final DeferredRegister<SpellTier> TIERS = DeferredRegister.create(EBRegistries.TIER, WizardryMainMod.MOD_ID);
-    public static final Supplier<IForgeRegistry<SpellTier>> TIER = TIERS.makeRegistry(() -> new RegistryBuilder<SpellTier>().disableSaving().disableOverrides());
+    public static final Supplier<Registry<SpellTier>> TIER = TIERS.getRegistry();
+
+    static {
+        // Modded, code-defined registries (not saved to disk). Synced so the client can resolve them.
+        ELEMENTS.makeRegistry(builder -> builder.sync(true));
+        SPELLS.makeRegistry(builder -> builder.sync(true));
+        TIERS.makeRegistry(builder -> builder.sync(true));
+    }
 
     private EBRegistriesForge() {
     }

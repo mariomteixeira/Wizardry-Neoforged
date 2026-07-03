@@ -283,7 +283,7 @@ public abstract class Spell {
     public ResourceLocation getIcon() {
         if (icon == null) {
             ResourceLocation location = getOrCreateLocation();
-            this.icon = new ResourceLocation(location.getNamespace(), "textures/spells/" + location.getPath() + ".png");
+            this.icon = ResourceLocation.fromNamespaceAndPath(location.getNamespace(), "textures/spells/" + location.getPath() + ".png");
         }
         return icon;
     }
@@ -532,7 +532,7 @@ public abstract class Spell {
      *                   <i>Not used in the base method, but included for use by subclasses overriding this method.</i>
      */
     protected void playSound(Level world, double x, double y, double z, int ticksInUse, int duration) {
-        SoundEvent sound = SoundEvent.createVariableRangeEvent(new ResourceLocation(getLocation().getNamespace(), "spell." + getLocation().getPath()));
+        SoundEvent sound = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(getLocation().getNamespace(), "spell." + getLocation().getPath()));
         world.playSound(null, x, y, z, sound, SoundSource.PLAYERS, getVolume(), getPitch() + getPitchVariation() * (world.random.nextFloat() - 0.5f));
     }
 
@@ -590,6 +590,6 @@ public abstract class Spell {
      */
     protected SoundEvent[] getLoopSounds() {
         List<String> names = List.of("start", "loop", "end");
-        return names.stream().map(name -> SoundEvent.createVariableRangeEvent(new ResourceLocation(this.getLocation().getNamespace(), "spell." + this.getLocation().getPath() + "." + name))).toArray(SoundEvent[]::new);
+        return names.stream().map(name -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(this.getLocation().getNamespace(), "spell." + this.getLocation().getPath() + "." + name))).toArray(SoundEvent[]::new);
     }
 }

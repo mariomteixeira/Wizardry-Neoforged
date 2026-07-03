@@ -45,7 +45,7 @@ public enum SpellType {
     }
 
     public ResourceLocation getLocation() {
-        return new ResourceLocation(modid, name);
+        return ResourceLocation.fromNamespaceAndPath(modid, name);
     }
 
     public String getName() {

@@ -73,7 +73,7 @@ public class SpellGlyphData extends SavedData {
     }
 
     public static Component getGlyphNameFormatted(Spell spell, SpellGlyphData data) {
-        return Component.literal(getGlyphName(spell, data)).withStyle(Style.EMPTY.withFont(new ResourceLocation("minecraft", "alt")));
+        return Component.literal(getGlyphName(spell, data)).withStyle(Style.EMPTY.withFont(ResourceLocation.fromNamespaceAndPath("minecraft", "alt")));
     }
 
     public static String getGlyphName(Spell spell, SpellGlyphData data) {

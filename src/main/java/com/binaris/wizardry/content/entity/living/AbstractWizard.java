@@ -144,7 +144,7 @@ public abstract class AbstractWizard extends PathfinderMob implements ISpellCast
             }
             if (this.getHealth() < 10) this.setHealCooldown(150);
             else this.setHealCooldown(400);
-            SoundEvent sound = SoundEvent.createVariableRangeEvent(new ResourceLocation(Spells.HEAL.getLocation().getNamespace(), "spell." + Spells.HEAL.getLocation().getPath()));
+            SoundEvent sound = SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Spells.HEAL.getLocation().getNamespace(), "spell." + Spells.HEAL.getLocation().getPath()));
             level().playSound(null, this.getX(), this.getY(), this.getZ(), sound, SoundSource.PLAYERS, Spells.HEAL.getVolume(), Spells.HEAL.getPitch() + Spells.HEAL.getPitchVariation() * (level().random.nextFloat() - 0.5f));
         }
 

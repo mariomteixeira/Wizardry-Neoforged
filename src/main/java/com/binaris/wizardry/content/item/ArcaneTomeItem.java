@@ -4,6 +4,7 @@ import com.binaris.wizardry.api.content.item.ITierValue;
 import com.binaris.wizardry.api.content.spell.SpellTier;
 import com.binaris.wizardry.api.content.util.RegistryUtils;
 import com.binaris.wizardry.core.platform.Services;
+import com.binaris.wizardry.setup.registries.EBDataComponents;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -78,8 +79,9 @@ public class ArcaneTomeItem extends Item implements ITierValue {
     public SpellTier getTier(ItemStack stack) {
         if (this.tier != null) return tier;
 
-        String tierKey = stack.getOrCreateTag().getString("Tier");
-        SpellTier tier = Services.REGISTRY_UTIL.getTier(ResourceLocation.tryParse(tierKey));
+        ResourceLocation tierKey = stack.get(EBDataComponents.TIER.get());
+        if (tierKey == null) return SpellTiers.NOVICE;
+        SpellTier tier = Services.REGISTRY_UTIL.getTier(tierKey);
         return tier != null ? tier : SpellTiers.NOVICE;
     }
 }

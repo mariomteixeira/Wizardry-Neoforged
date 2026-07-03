@@ -29,7 +29,7 @@ public final class ContainmentFieldRender {
 
     static {
         for (int i = 0; i < TEXTURES.length; i++) {
-            TEXTURES[i] = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/environment/containment_field_" + i + ".png");
+            TEXTURES[i] = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/environment/containment_field_" + i + ".png");
         }
     }
 

@@ -204,7 +204,7 @@ public final class SpellGUIDisplay {
 
         Style format = cooldown > 0 ? Style.EMPTY.withColor(ChatFormatting.GRAY) : Style.EMPTY.withColor(spell.getElement().getColor());
         if (!discovered)
-            format = Style.EMPTY.withColor(ChatFormatting.BLUE).withFont(new ResourceLocation("minecraft", "alt"));
+            format = Style.EMPTY.withColor(ChatFormatting.BLUE).withFont(ResourceLocation.fromNamespaceAndPath("minecraft", "alt"));
 
         if (player.hasEffect(EBMobEffects.ARCANE_JAMMER.get())) format = Style.EMPTY.withObfuscated(true);
 

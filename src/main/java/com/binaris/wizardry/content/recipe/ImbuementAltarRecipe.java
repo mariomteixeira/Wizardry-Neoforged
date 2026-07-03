@@ -6,8 +6,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -46,7 +48,7 @@ public class ImbuementAltarRecipe implements Recipe<Container> {
         if (stackObject.has("nbt")) {
             try {
                 CompoundTag nbt = TagParser.parseTag(GsonHelper.getAsString(stackObject, "nbt"));
-                stack.setTag(nbt);
+                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
             } catch (Exception e) {
                 throw new JsonParseException("Invalid NBT data: " + e.getMessage());
             }

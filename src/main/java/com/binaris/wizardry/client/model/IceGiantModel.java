@@ -19,7 +19,7 @@ import static com.binaris.wizardry.WizardryMainMod.MOD_ID;
 public class IceGiantModel extends EntityModel<IceGiant> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            new ResourceLocation(MOD_ID, "ice_giant"), "main");
+            ResourceLocation.fromNamespaceAndPath(MOD_ID, "ice_giant"), "main");
 
     private final ModelPart head;
     private final ModelPart body;

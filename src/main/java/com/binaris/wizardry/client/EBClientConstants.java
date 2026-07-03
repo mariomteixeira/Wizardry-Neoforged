@@ -8,8 +8,8 @@ public class EBClientConstants {
     public static final int PROGRESSION_BAR_HEIGHT = 3;
 
     public static final ResourceLocation ARCANE_WORKBENCH_CONTAINER_TEXTURE = WizardryMainMod.location("textures/gui/container/arcane_workbench.png");
-    public static final ResourceLocation ARCANE_WORKBENCH_EMPTY_SLOT_CRYSTAL = new ResourceLocation("item/empty_slot_crystal");
-    public static final ResourceLocation ARCANE_WORKBENCH_EMPTY_SLOT_UPGRADE = new ResourceLocation("item/empty_slot_upgrade");
+    public static final ResourceLocation ARCANE_WORKBENCH_EMPTY_SLOT_CRYSTAL = ResourceLocation.parse("item/empty_slot_crystal");
+    public static final ResourceLocation ARCANE_WORKBENCH_EMPTY_SLOT_UPGRADE = ResourceLocation.parse("item/empty_slot_upgrade");
 
     public static final int TOOLTIP_WIDTH = 144;
     public static final int TOOLTIP_BORDER = 6;

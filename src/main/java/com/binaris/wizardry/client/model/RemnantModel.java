@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class RemnantModel extends EntityModel<Remnant> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(WizardryMainMod.MOD_ID, "remnant"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "remnant"), "main");
     private final ModelPart cube;
 
     public RemnantModel(ModelPart root) {

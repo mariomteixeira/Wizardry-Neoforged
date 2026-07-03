@@ -20,7 +20,7 @@ public class DecayRenderer extends EntityRenderer<DecayConstruct> {
     public DecayRenderer(Context context) {
         super(context);
         for (int i = 0; i < 10; i++) {
-            TEXTURES[i] = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/decay/decay_" + i + ".png");
+            TEXTURES[i] = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/decay/decay_" + i + ".png");
         }
     }
 

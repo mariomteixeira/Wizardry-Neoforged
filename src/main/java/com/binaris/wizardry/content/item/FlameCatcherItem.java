@@ -4,6 +4,7 @@ import com.binaris.wizardry.api.content.data.ConjureData;
 import com.binaris.wizardry.content.entity.projectile.FlamecatcherArrow;
 import com.binaris.wizardry.content.spell.fire.Flamecatcher;
 import com.binaris.wizardry.core.platform.Services;
+import com.binaris.wizardry.setup.registries.EBDataComponents;
 import com.binaris.wizardry.setup.registries.EBSounds;
 import com.binaris.wizardry.setup.registries.Spells;
 import net.minecraft.sounds.SoundSource;
@@ -41,17 +42,16 @@ public class FlameCatcherItem extends BowItem {
         ConjureData data = Services.OBJECT_DATA.getConjureData(stack);
         if (data != null && data.isSummoned()) {
             int count = Spells.FLAMECATCHER.property(Flamecatcher.SHOT_COUNT);
-            if (!stack.hasTag()) stack.getOrCreateTag();
-            if (!stack.getTag().contains("ShotsLeft")) stack.getTag().putInt("ShotsLeft", count);
+            if (!stack.has(EBDataComponents.SHOTS_LEFT.get())) stack.set(EBDataComponents.SHOTS_LEFT.get(), count);
 
-            int shotsLeft = stack.getOrCreateTag().getInt("ShotsLeft");
+            int shotsLeft = stack.getOrDefault(EBDataComponents.SHOTS_LEFT.get(), 0);
 
             if (shotsLeft <= 0) {
                 data.setSummoned(false);
                 stack.shrink(1);
                 return; // Don't continue processing an expired item
             }
-            stack.getOrCreateTag().putInt("ShotsLeft", shotsLeft - 1);
+            stack.set(EBDataComponents.SHOTS_LEFT.get(), shotsLeft - 1);
         }
 
         // Arrow!!

@@ -18,7 +18,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public class BubbleRenderer extends EntityRenderer<BubbleConstruct> {
-    private static final ResourceLocation BUBBLE_TEXTURE = new ResourceLocation("textures/particle/bubble.png");
+    private static final ResourceLocation BUBBLE_TEXTURE = ResourceLocation.parse("textures/particle/bubble.png");
     private static final ResourceLocation ENTRAPMENT_TEXTURE = WizardryMainMod.location("textures/entity/entrapment.png");
     private static final float BUBBLE_SIZE_MULTIPLIER = 1.1f;
 

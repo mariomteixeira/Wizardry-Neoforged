@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 
 public class RemnantRenderer extends EntityRenderer<Remnant> {
-    private static final ResourceLocation TEX = new ResourceLocation(WizardryMainMod.MOD_ID, "textures/entity/remnant.png");
+    private static final ResourceLocation TEX = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/remnant.png");
     private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEX);
 
     private final RemnantModel model;
