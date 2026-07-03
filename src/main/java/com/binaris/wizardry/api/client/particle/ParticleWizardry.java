@@ -311,10 +311,10 @@ public abstract class ParticleWizardry extends TextureSheetParticle {
             }
         }
 
-        buffer.vertex((double) f5 + avec3[0].x, (double) f6 + avec3[0].y, (double) f7 + avec3[0].z).uv(f1, f3).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j, k).endVertex();
-        buffer.vertex((double) f5 + avec3[1].x, (double) f6 + avec3[1].y, (double) f7 + avec3[1].z).uv(f1, f2).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j, k).endVertex();
-        buffer.vertex((double) f5 + avec3[2].x, (double) f6 + avec3[2].y, (double) f7 + avec3[2].z).uv(f, f2).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j, k).endVertex();
-        buffer.vertex((double) f5 + avec3[3].x, (double) f6 + avec3[3].y, (double) f7 + avec3[3].z).uv(f, f3).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(j, k).endVertex();
+        buffer.addVertex((float) (f5 + avec3[0].x), (float) (f6 + avec3[0].y), (float) (f7 + avec3[0].z)).setUv(f1, f3).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setUv2(j, k);
+        buffer.addVertex((float) (f5 + avec3[1].x), (float) (f6 + avec3[1].y), (float) (f7 + avec3[1].z)).setUv(f1, f2).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setUv2(j, k);
+        buffer.addVertex((float) (f5 + avec3[2].x), (float) (f6 + avec3[2].y), (float) (f7 + avec3[2].z)).setUv(f, f2).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setUv2(j, k);
+        buffer.addVertex((float) (f5 + avec3[3].x), (float) (f6 + avec3[3].y), (float) (f7 + avec3[3].z)).setUv(f, f3).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setUv2(j, k);
     }
 
 

@@ -26,17 +26,17 @@ public class ZombieSpawnerRenderer extends EntityRenderer<ZombieSpawnerConstruct
     }
 
     private static void drawFace(PoseStack stack, BufferBuilder buffer, Vec3 topLeft, Vec3 topRight, Vec3 bottomLeft, Vec3 bottomRight) {
-        buffer.vertex(stack.last().pose(), (float) topLeft.x, (float) topLeft.y, (float) topLeft.z).uv((float) 0, (float) 0).endVertex();
-        buffer.vertex(stack.last().pose(), (float) topRight.x, (float) topRight.y, (float) topRight.z).uv((float) 1, (float) 0).endVertex();
-        buffer.vertex(stack.last().pose(), (float) bottomRight.x, (float) bottomRight.y, (float) bottomRight.z).uv((float) 1, (float) 1).endVertex();
-        buffer.vertex(stack.last().pose(), (float) bottomLeft.x, (float) bottomLeft.y, (float) bottomLeft.z).uv((float) 0, (float) 1).endVertex();
+        buffer.addVertex(stack.last().pose(), (float) topLeft.x, (float) topLeft.y, (float) topLeft.z).setUv((float) 0, (float) 0);
+        buffer.addVertex(stack.last().pose(), (float) topRight.x, (float) topRight.y, (float) topRight.z).setUv((float) 1, (float) 0);
+        buffer.addVertex(stack.last().pose(), (float) bottomRight.x, (float) bottomRight.y, (float) bottomRight.z).setUv((float) 1, (float) 1);
+        buffer.addVertex(stack.last().pose(), (float) bottomLeft.x, (float) bottomLeft.y, (float) bottomLeft.z).setUv((float) 0, (float) 1);
     }
 
     private static void drawFaceColour(PoseStack stack, BufferBuilder buffer, Vec3 topLeft, Vec3 topRight, Vec3 bottomLeft, Vec3 bottomRight) {
-        buffer.vertex(stack.last().pose(), (float) topLeft.x, (float) topLeft.y, (float) topLeft.z).color((float) 0, (float) 0, (float) 0, (float) 1).endVertex();
-        buffer.vertex(stack.last().pose(), (float) topRight.x, (float) topRight.y, (float) topRight.z).color((float) 0, (float) 0, (float) 0, (float) 1).endVertex();
-        buffer.vertex(stack.last().pose(), (float) bottomRight.x, (float) bottomRight.y, (float) bottomRight.z).color((float) 0, (float) 0, (float) 0, (float) 1).endVertex();
-        buffer.vertex(stack.last().pose(), (float) bottomLeft.x, (float) bottomLeft.y, (float) bottomLeft.z).color((float) 0, (float) 0, (float) 0, (float) 1).endVertex();
+        buffer.addVertex(stack.last().pose(), (float) topLeft.x, (float) topLeft.y, (float) topLeft.z).setColor((float) 0, (float) 0, (float) 0, (float) 1);
+        buffer.addVertex(stack.last().pose(), (float) topRight.x, (float) topRight.y, (float) topRight.z).setColor((float) 0, (float) 0, (float) 0, (float) 1);
+        buffer.addVertex(stack.last().pose(), (float) bottomRight.x, (float) bottomRight.y, (float) bottomRight.z).setColor((float) 0, (float) 0, (float) 0, (float) 1);
+        buffer.addVertex(stack.last().pose(), (float) bottomLeft.x, (float) bottomLeft.y, (float) bottomLeft.z).setColor((float) 0, (float) 0, (float) 0, (float) 1);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ZombieSpawnerRenderer extends EntityRenderer<ZombieSpawnerConstruct
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
+        BufferBuilder buffer;
 
         poseStack.pushPose();
 
@@ -65,17 +65,17 @@ public class ZombieSpawnerRenderer extends EntityRenderer<ZombieSpawnerConstruct
         Vec3[] vertices = GeometryUtil.getVertices(entity.getBoundingBox().move(entity.position().scale(-1)));
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         drawFace(poseStack, buffer, vertices[0], vertices[1], vertices[3], vertices[2]);
         drawFace(poseStack, buffer, vertices[1], vertices[0], vertices[2], vertices[3]);
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         poseStack.popPose();
 
         RenderSystem.colorMask(false, false, false, false);
 
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 
         drawFaceColour(poseStack, buffer, HIDDEN_BOX[6], HIDDEN_BOX[7], HIDDEN_BOX[2], HIDDEN_BOX[3]);
         drawFaceColour(poseStack, buffer, HIDDEN_BOX[5], HIDDEN_BOX[6], HIDDEN_BOX[1], HIDDEN_BOX[2]);
@@ -83,7 +83,7 @@ public class ZombieSpawnerRenderer extends EntityRenderer<ZombieSpawnerConstruct
         drawFaceColour(poseStack, buffer, HIDDEN_BOX[7], HIDDEN_BOX[4], HIDDEN_BOX[3], HIDDEN_BOX[0]);
         drawFaceColour(poseStack, buffer, HIDDEN_BOX[5], HIDDEN_BOX[4], HIDDEN_BOX[6], HIDDEN_BOX[7]);
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         RenderSystem.disableBlend();
         RenderSystem.colorMask(true, true, true, true);

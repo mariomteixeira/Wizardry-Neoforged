@@ -232,13 +232,13 @@ public class IceGiantModel extends EntityModel<IceGiant> {
 
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight,
-                               int packedOverlay, float red, float green, float blue, float alpha) {
-        this.head.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.body.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.rightArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        this.leftArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+                               int packedOverlay, int color) {
+        this.head.render(poseStack, buffer, packedLight, packedOverlay, color);
+        this.body.render(poseStack, buffer, packedLight, packedOverlay, color);
+        this.leftLeg.render(poseStack, buffer, packedLight, packedOverlay, color);
+        this.rightLeg.render(poseStack, buffer, packedLight, packedOverlay, color);
+        this.rightArm.render(poseStack, buffer, packedLight, packedOverlay, color);
+        this.leftArm.render(poseStack, buffer, packedLight, packedOverlay, color);
     }
 
     /**

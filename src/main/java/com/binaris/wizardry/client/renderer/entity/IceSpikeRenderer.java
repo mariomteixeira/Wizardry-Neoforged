@@ -29,38 +29,38 @@ public class IceSpikeRenderer extends EntityRenderer<IceSpikeConstruct> {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        BufferBuilder buffer;
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, texture);
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), 0, 0, 0.5f).uv(1, 1).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0, 1, 0.5f).uv(1, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0, 1, -0.5f).uv(0, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0, 0, -0.5f).uv(0, 1).endVertex();
-        BufferUploader.drawWithShader(buffer.end());
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, 0.5f).setUv(1, 1);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, 0.5f).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, -0.5f).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, -0.5f).setUv(0, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), 0.5f, 0, 0).uv(1, 1).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0.5f, 1, 0).uv(1, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -0.5f, 1, 0).uv(0, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -0.5f, 0, 0).uv(0, 1).endVertex();
-        BufferUploader.drawWithShader(buffer.end());
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 0, 0).setUv(1, 1);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 1, 0).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 1, 0).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 0, 0).setUv(0, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), 0, 0, -0.5f).uv(0, 1).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0, 1, -0.5f).uv(0, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0, 1, 0.5f).uv(1, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0, 0, 0.5f).uv(1, 1).endVertex();
-        BufferUploader.drawWithShader(buffer.end());
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, -0.5f).setUv(0, 1);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, -0.5f).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, 0.5f).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, 0.5f).setUv(1, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), -0.5f, 0, 0).uv(0, 1).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -0.5f, 1, 0).uv(0, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0.5f, 1, 0).uv(1, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0.5f, 0, 0).uv(1, 1).endVertex();
-        BufferUploader.drawWithShader(buffer.end());
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 0, 0).setUv(0, 1);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 1, 0).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 1, 0).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 0, 0).setUv(1, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         p_114488_.popPose();
     }

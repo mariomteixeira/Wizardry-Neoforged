@@ -36,7 +36,6 @@ public class ParticleGuardianBeam extends ParticleTargeted {
         RenderSystem.setShaderTexture(0, TEXTURE);
 
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
 
         stack.pushPose();
 
@@ -45,22 +44,22 @@ public class ParticleGuardianBeam extends ParticleTargeted {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.setShaderTexture(0, TEXTURE);
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         float t = THICKNESS * scale;
         float v1 = 2 * (age + tickDelta) / lifetime;
         float v2 = v1 + length * 2;
 
-        buffer.vertex(stack.last().pose(), -t, 0, 0).uv(0, v1).color(rCol, gCol, bCol, 1).endVertex();
-        buffer.vertex(stack.last().pose(), t, 0, 0).uv(0.5f, v1).color(rCol, gCol, bCol, 1).endVertex();
-        buffer.vertex(stack.last().pose(), t, 0, length).uv(0.5f, v2).color(rCol, gCol, bCol, 1).endVertex();
-        buffer.vertex(stack.last().pose(), -t, 0, length).uv(0, v2).color(rCol, gCol, bCol, 1).endVertex();
+        buffer.addVertex(stack.last().pose(),-t, 0, 0).setUv(0, v1).setColor(rCol, gCol, bCol, 1);
+        buffer.addVertex(stack.last().pose(),t, 0, 0).setUv(0.5f, v1).setColor(rCol, gCol, bCol, 1);
+        buffer.addVertex(stack.last().pose(),t, 0, length).setUv(0.5f, v2).setColor(rCol, gCol, bCol, 1);
+        buffer.addVertex(stack.last().pose(),-t, 0, length).setUv(0, v2).setColor(rCol, gCol, bCol, 1);
 
-        buffer.vertex(stack.last().pose(), 0, -t, 0).uv(0, v1).color(rCol, gCol, bCol, 1).endVertex();
-        buffer.vertex(stack.last().pose(), 0, t, 0).uv(0.5f, v1).color(rCol, gCol, bCol, 1).endVertex();
-        buffer.vertex(stack.last().pose(), 0, t, length).uv(0.5f, v2).color(rCol, gCol, bCol, 1).endVertex();
-        buffer.vertex(stack.last().pose(), 0, -t, length).uv(0, v2).color(rCol, gCol, bCol, 1).endVertex();
+        buffer.addVertex(stack.last().pose(),0, -t, 0).setUv(0, v1).setColor(rCol, gCol, bCol, 1);
+        buffer.addVertex(stack.last().pose(),0, t, 0).setUv(0.5f, v1).setColor(rCol, gCol, bCol, 1);
+        buffer.addVertex(stack.last().pose(),0, t, length).setUv(0.5f, v2).setColor(rCol, gCol, bCol, 1);
+        buffer.addVertex(stack.last().pose(),0, -t, length).setUv(0, v2).setColor(rCol, gCol, bCol, 1);
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         stack.popPose();
     }

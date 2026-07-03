@@ -97,9 +97,8 @@ public class ParticleLightning extends ParticleTargeted {
     }
 
     private void drawSegment(PoseStack stack, Tesselator tesselator, int layer, float x1, float y1, float z1, float x2, float y2, float z2, float thickness) {
-        BufferBuilder buffer = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        buffer.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
 
         switch (layer) {
             case 0:
@@ -115,23 +114,23 @@ public class ParticleLightning extends ParticleTargeted {
                 break;
         }
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     private void drawShearedBox(PoseStack stack, BufferBuilder buffer, float x1, float y1, float z1, float x2, float y2, float z2, float width, float r, float g, float b, float a) {
-        buffer.vertex(stack.last().pose(), x1 - width, y1 - width, z1).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), x2 - width, y2 - width, z2).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), x1 - width, y1 + width, z1).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), x2 - width, y2 + width, z2).color(r, g, b, a).endVertex();
+        buffer.addVertex(stack.last().pose(),x1 - width, y1 - width, z1).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(),x2 - width, y2 - width, z2).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(),x1 - width, y1 + width, z1).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(),x2 - width, y2 + width, z2).setColor(r, g, b, a);
 
-        buffer.vertex(stack.last().pose(), x1 + width, y1 + width, z1).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), x2 + width, y2 + width, z2).color(r, g, b, a).endVertex();
+        buffer.addVertex(stack.last().pose(),x1 + width, y1 + width, z1).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(),x2 + width, y2 + width, z2).setColor(r, g, b, a);
 
-        buffer.vertex(stack.last().pose(), x1 + width, y1 - width, z1).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), x2 + width, y2 - width, z2).color(r, g, b, a).endVertex();
+        buffer.addVertex(stack.last().pose(),x1 + width, y1 - width, z1).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(),x2 + width, y2 - width, z2).setColor(r, g, b, a);
 
-        buffer.vertex(stack.last().pose(), x1 - width, y1 - width, z1).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), x2 - width, y2 - width, z2).color(r, g, b, a).endVertex();
+        buffer.addVertex(stack.last().pose(),x1 - width, y1 - width, z1).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(),x2 - width, y2 - width, z2).setColor(r, g, b, a);
     }
 
     public static class LightningProvider implements ParticleProvider<SimpleParticleType> {

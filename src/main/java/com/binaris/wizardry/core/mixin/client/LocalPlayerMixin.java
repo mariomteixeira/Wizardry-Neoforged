@@ -22,7 +22,7 @@ public abstract class LocalPlayerMixin {
 
     @Inject(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onInput(Lnet/minecraft/client/player/Input;)V"))
     public void ebwizardry$localAIStep(CallbackInfo ci) {
-        if (player.hasEffect(EBMobEffects.PARALYSIS.get())) {
+        if (player.hasEffect(EBMobEffects.holder(EBMobEffects.PARALYSIS))) {
             input.forwardImpulse = 0;
             input.leftImpulse = 0;
             input.jumping = false;

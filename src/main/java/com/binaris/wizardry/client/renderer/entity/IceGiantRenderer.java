@@ -33,8 +33,8 @@ public class IceGiantRenderer extends MobRenderer<IceGiant, IceGiantModel> {
 
     @Override
     protected void setupRotations(@NotNull IceGiant entity, @NotNull PoseStack poseStack, float ageInTicks,
-                                  float rotationYaw, float partialTicks) {
-        super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+                                  float rotationYaw, float partialTicks, float scale) {
+        super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
         if (!((double) entity.walkAnimation.speed() < 0.01)) {
             float f = 13.0F;
             float f1 = entity.walkAnimation.position(partialTicks) + 6.0F;

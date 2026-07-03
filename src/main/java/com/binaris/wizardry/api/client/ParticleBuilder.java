@@ -213,7 +213,7 @@ public final class ParticleBuilder {
     public static void spawnHealParticles(Level world, LivingEntity entity) {
         for (int i = 0; i < 10; i++) {
             double x = entity.getX() + world.random.nextDouble() * 2 - 1;
-            double y = entity.getY() + entity.getDimensions(entity.getPose()).height * 0.85F - 0.5 + world.random.nextDouble();
+            double y = entity.getY() + entity.getDimensions(entity.getPose()).height() * 0.85F - 0.5 + world.random.nextDouble();
             double z = entity.getZ() + world.random.nextDouble() * 2 - 1;
             ParticleBuilder.create(EBParticles.SPARKLE).pos(x, y, z).velocity(0, 0.1, 0).color(1, 1, 0.3f).spawn(world);
         }

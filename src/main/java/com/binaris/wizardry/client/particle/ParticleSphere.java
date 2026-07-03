@@ -25,12 +25,12 @@ public class ParticleSphere extends ParticleWizardry {
         this.alpha = 0.8f;
     }
 
-    private static void drawSphere(PoseStack stack, BufferBuilder buffer, float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a) {
-        buffer.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
+    private static void drawSphere(PoseStack stack, Tesselator tesselator, float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a) {
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
 
         boolean goingUp = inside;
 
-        buffer.vertex(stack.last().pose(), 0, goingUp ? -radius : radius, 0).color(r, g, b, a).endVertex();
+        buffer.addVertex(stack.last().pose(),0, goingUp ? -radius : radius, 0).setColor(r, g, b, a);
 
         for (float longitude = -(float) Math.PI; longitude <= (float) Math.PI; longitude += longStep) {
             for (float theta = (float) Math.PI / 2 - latStep; theta >= -(float) Math.PI / 2 + latStep; theta -= latStep) {
@@ -41,20 +41,20 @@ public class ParticleSphere extends ParticleWizardry {
                 float vx = hRadius * Mth.sin(longitude);
                 float vz = hRadius * Mth.cos(longitude);
 
-                buffer.vertex(stack.last().pose(), vx, vy, vz).color(r, g, b, a).endVertex();
+                buffer.addVertex(stack.last().pose(),vx, vy, vz).setColor(r, g, b, a);
 
                 vx = hRadius * Mth.sin(longitude + longStep);
                 vz = hRadius * Mth.cos(longitude + longStep);
 
-                buffer.vertex(stack.last().pose(), vx, vy, vz).color(r, g, b, a).endVertex();
+                buffer.addVertex(stack.last().pose(),vx, vy, vz).setColor(r, g, b, a);
             }
 
-            buffer.vertex(stack.last().pose(), 0, goingUp ? radius : -radius, 0).color(r, g, b, a).endVertex();
+            buffer.addVertex(stack.last().pose(),0, goingUp ? radius : -radius, 0).setColor(r, g, b, a);
 
             goingUp = !goingUp;
         }
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
     }
 
     @Override
@@ -89,9 +89,8 @@ public class ParticleSphere extends ParticleWizardry {
         float alpha = this.alpha * (1 - (this.age + tickDelta - 1) / this.lifetime);
 
         Tesselator tess = Tesselator.getInstance();
-        BufferBuilder buffer = tess.getBuilder();
-        drawSphere(stack, buffer, sphereRadius, latStep, longStep, true, rCol, gCol, bCol, alpha);
-        drawSphere(stack, buffer, sphereRadius, latStep, longStep, false, rCol, gCol, bCol, alpha);
+        drawSphere(stack, tess, sphereRadius, latStep, longStep, true, rCol, gCol, bCol, alpha);
+        drawSphere(stack, tess, sphereRadius, latStep, longStep, false, rCol, gCol, bCol, alpha);
 
         RenderSystem.disableCull();
         RenderSystem.disableBlend();

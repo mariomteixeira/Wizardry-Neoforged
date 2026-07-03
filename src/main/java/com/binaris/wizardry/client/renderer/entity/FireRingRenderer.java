@@ -44,14 +44,13 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
         p_114488_.scale(entity.getBbWidth() * s, entity.getBbWidth() * s, entity.getBbWidth() * s);
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), 0.0F - f7, 0.0F - f8, 0.01f).uv(0, 1).endVertex();
-        buffer.vertex(p_114488_.last().pose(), f6 - f7, 0.0F - f8, 0.01f).uv(1, 1).endVertex();
-        buffer.vertex(p_114488_.last().pose(), f6 - f7, 1.0F - f8, 0.01f).uv(1, 0).endVertex();
-        buffer.vertex(p_114488_.last().pose(), 0.0F - f7, 1.0F - f8, 0.01f).uv(0, 0).endVertex();
+        BufferBuilder buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0.0F - f7, 0.0F - f8, 0.01f).setUv(0, 1);
+        buffer.addVertex(p_114488_.last().pose(), f6 - f7, 0.0F - f8, 0.01f).setUv(1, 1);
+        buffer.addVertex(p_114488_.last().pose(), f6 - f7, 1.0F - f8, 0.01f).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0.0F - f7, 1.0F - f8, 0.01f).setUv(0, 0);
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         RenderSystem.disableBlend();
         p_114488_.popPose();
@@ -77,7 +76,7 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
                 p_114488_.mulPose(Axis.YP.rotationDegrees((360f / (float) sides) * k));
                 p_114488_.translate(0, 0, -2.3f * s1);
 
-                buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+                buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
                 while (f4 > 0.0F) {
                     RenderSystem._setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
@@ -92,10 +91,10 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
                         f71 = f11;
                     }
 
-                    buffer.vertex(p_114488_.last().pose(), (f2 - f3), (0.0F - f5), f61).uv(f9, f10).endVertex();
-                    buffer.vertex(p_114488_.last().pose(), (-f2 - f3), (0.0F - f5), f61).uv(f71, f10).endVertex();
-                    buffer.vertex(p_114488_.last().pose(), (-f2 - f3), (height - f5), f61).uv(f71, f81).endVertex();
-                    buffer.vertex(p_114488_.last().pose(), (f2 - f3), (height - f5), f61).uv(f9, f81).endVertex();
+                    buffer.addVertex(p_114488_.last().pose(), (f2 - f3), (0.0F - f5), f61).setUv(f9, f10);
+                    buffer.addVertex(p_114488_.last().pose(), (-f2 - f3), (0.0F - f5), f61).setUv(f71, f10);
+                    buffer.addVertex(p_114488_.last().pose(), (-f2 - f3), (height - f5), f61).setUv(f71, f81);
+                    buffer.addVertex(p_114488_.last().pose(), (f2 - f3), (height - f5), f61).setUv(f9, f81);
                     f4 -= 0.45F;
                     f5 -= 0.45F;
                     f2 *= 0.9F;
@@ -103,7 +102,7 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
                     ++i;
                 }
 
-                BufferUploader.drawWithShader(buffer.end());
+                BufferUploader.drawWithShader(buffer.buildOrThrow());
 
                 p_114488_.popPose();
             }
@@ -122,7 +121,7 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
                 p_114488_.mulPose(Axis.YP.rotationDegrees((360f / (float) sides) * k));
                 p_114488_.translate(0, 0, 2.3f * s1);
 
-                buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+                buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
                 while (f4 > 0.0F) {
                     RenderSystem._setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
@@ -137,10 +136,10 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
                         f71 = f11;
                     }
 
-                    buffer.vertex(p_114488_.last().pose(), (f2 - f3), (0.0F - f5), f61).uv(f9, f10).endVertex();
-                    buffer.vertex(p_114488_.last().pose(), (-f2 - f3), (0.0F - f5), f61).uv(f71, f10).endVertex();
-                    buffer.vertex(p_114488_.last().pose(), (-f2 - f3), (height - f5), f61).uv(f71, f81).endVertex();
-                    buffer.vertex(p_114488_.last().pose(), (f2 - f3), (height - f5), f61).uv(f9, f81).endVertex();
+                    buffer.addVertex(p_114488_.last().pose(), (f2 - f3), (0.0F - f5), f61).setUv(f9, f10);
+                    buffer.addVertex(p_114488_.last().pose(), (-f2 - f3), (0.0F - f5), f61).setUv(f71, f10);
+                    buffer.addVertex(p_114488_.last().pose(), (-f2 - f3), (height - f5), f61).setUv(f71, f81);
+                    buffer.addVertex(p_114488_.last().pose(), (f2 - f3), (height - f5), f61).setUv(f9, f81);
                     f4 -= 0.45F;
                     f5 -= 0.45F;
                     f2 *= 0.9F;
@@ -148,7 +147,7 @@ public class FireRingRenderer extends EntityRenderer<FireRingConstruct> {
                     ++i;
                 }
 
-                BufferUploader.drawWithShader(buffer.end());
+                BufferUploader.drawWithShader(buffer.buildOrThrow());
 
                 p_114488_.popPose();
             }

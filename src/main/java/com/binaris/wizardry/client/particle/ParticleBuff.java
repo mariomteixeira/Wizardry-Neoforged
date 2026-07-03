@@ -97,9 +97,8 @@ public class ParticleBuff extends ParticleWizardry {
         float dx = mirror ? -scale : scale;
 
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
 
-        buffer.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_TEX_COLOR);
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_TEX_COLOR);
 
         vertex(buffer, x - dx, y - yScale, z - scale, 0 + textureOffset, g);
         vertex(buffer, x - dx, y + yScale, z - scale, 0 + textureOffset, f);
@@ -112,7 +111,7 @@ public class ParticleBuff extends ParticleWizardry {
         vertex(buffer, x - dx, y - yScale, z - scale, 1.0f + textureOffset, g);
         vertex(buffer, x - dx, y + yScale, z - scale, 1.0f + textureOffset, f);
 
-        tesselator.end();
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         RenderSystem.depthMask(true);
         RenderSystem.enableCull();
@@ -121,10 +120,9 @@ public class ParticleBuff extends ParticleWizardry {
     }
 
     private void vertex(BufferBuilder buffer, float x, float y, float z, float u, float v) {
-        buffer.vertex(x, y, z)
-                .uv(u, v)
-                .color(rCol, gCol, bCol, alpha)
-                .endVertex();
+        buffer.addVertex(x, y, z)
+                .setUv(u, v)
+                .setColor(rCol, gCol, bCol, alpha);
     }
 
     @Override

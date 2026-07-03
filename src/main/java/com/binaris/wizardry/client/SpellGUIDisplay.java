@@ -151,7 +151,7 @@ public final class SpellGUIDisplay {
                 progress = maxCooldown == 0 ? 1 : (maxCooldown - (float) cooldown + partialTicks) / maxCooldown;
             }
 
-            skin.drawBackground(stack, x, y, flipX, flipY, icon, progress, player.isCreative(), player.hasEffect(EBMobEffects.ARCANE_JAMMER.get()));
+            skin.drawBackground(stack, x, y, flipX, flipY, icon, progress, player.isCreative(), player.hasEffect(EBMobEffects.holder(EBMobEffects.ARCANE_JAMMER)));
         }
 
         stack.popPose();
@@ -162,7 +162,7 @@ public final class SpellGUIDisplay {
         stack.pushPose();
 
         if (!EBClientConfig.SHOW_CHARGE_METER.get()) return;
-        if (mc.options.renderDebug) return;
+        if (mc.getDebugOverlay().showDebugScreen()) return;
         if (mc.options.getCameraType() != CameraType.FIRST_PERSON) return;
         if (wand != player.getUseItem()) return;
 
@@ -206,7 +206,7 @@ public final class SpellGUIDisplay {
         if (!discovered)
             format = Style.EMPTY.withColor(ChatFormatting.BLUE).withFont(ResourceLocation.fromNamespaceAndPath("minecraft", "alt"));
 
-        if (player.hasEffect(EBMobEffects.ARCANE_JAMMER.get())) format = Style.EMPTY.withObfuscated(true);
+        if (player.hasEffect(EBMobEffects.holder(EBMobEffects.ARCANE_JAMMER))) format = Style.EMPTY.withObfuscated(true);
 
         Component name = discovered ? Component.translatable(spell.getDescriptionId()) :
                 Component.literal(SpellGlyphData.getGlyphName(spell, GlyphClientHandler.INSTANCE.getGlyphData()));

@@ -70,7 +70,7 @@ public final class ArcaneLockRender {
         int textureIndex = (player.tickCount % (TEXTURES.length * 2)) / 2;
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        BufferBuilder buffer;
 
         poseStack.pushPose();
         RenderSystem.enableBlend();
@@ -82,7 +82,7 @@ public final class ArcaneLockRender {
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
         poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-        buffer.begin(VertexFormat.Mode.QUADS, POSITION_TEX);
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, POSITION_TEX);
 
         Matrix4f matrix = poseStack.last().pose();
 
@@ -96,7 +96,7 @@ public final class ArcaneLockRender {
             drawFace(buffer, matrix, vertices[5], vertices[4], vertices[6], vertices[7]);
         }
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         RenderSystem.enableCull();
         RenderSystem.depthMask(true);
@@ -136,18 +136,14 @@ public final class ArcaneLockRender {
     }
 
     private static void drawFace(BufferBuilder buffer, Matrix4f matrix, Vec3 topLeft, Vec3 topRight, Vec3 bottomLeft, Vec3 bottomRight) {
-        buffer.vertex(matrix, (float) topLeft.x, (float) topLeft.y, (float) topLeft.z)
-                .uv((float) 0, (float) 0)
-                .endVertex();
-        buffer.vertex(matrix, (float) topRight.x, (float) topRight.y, (float) topRight.z)
-                .uv((float) 1, (float) 0)
-                .endVertex();
-        buffer.vertex(matrix, (float) bottomRight.x, (float) bottomRight.y, (float) bottomRight.z)
-                .uv((float) 1, (float) 1)
-                .endVertex();
-        buffer.vertex(matrix, (float) bottomLeft.x, (float) bottomLeft.y, (float) bottomLeft.z)
-                .uv((float) 0, (float) 1)
-                .endVertex();
+        buffer.addVertex(matrix, (float) topLeft.x, (float) topLeft.y, (float) topLeft.z)
+                .setUv((float) 0, (float) 0);
+        buffer.addVertex(matrix, (float) topRight.x, (float) topRight.y, (float) topRight.z)
+                .setUv((float) 1, (float) 0);
+        buffer.addVertex(matrix, (float) bottomRight.x, (float) bottomRight.y, (float) bottomRight.z)
+                .setUv((float) 1, (float) 1);
+        buffer.addVertex(matrix, (float) bottomLeft.x, (float) bottomLeft.y, (float) bottomLeft.z)
+                .setUv((float) 0, (float) 1);
     }
 
     public static void onJoin(EBEntityJoinLevelEvent event) {

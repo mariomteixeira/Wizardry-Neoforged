@@ -111,10 +111,10 @@ public class ImbuementAltarRenderer implements BlockEntityRenderer<ImbuementAlta
             int alpha1 = (int) (255 * fade);
             int alpha2 = (int) (200 * fade);
 
-            buffer.vertex(matrix, 0, 0, 0).color(r1, g1, b1, alpha1).endVertex();
-            buffer.vertex(matrix, 0, 0, 0).color(r1, g1, b1, alpha1).endVertex();
-            buffer.vertex(matrix, (float) x1, 0, (float) z1).color(r2, g2, b2, alpha2).endVertex();
-            buffer.vertex(matrix, (float) x2, 0, (float) z2).color(r2, g2, b2, alpha2).endVertex();
+            buffer.addVertex(matrix, 0, 0, 0).setColor(r1, g1, b1, alpha1);
+            buffer.addVertex(matrix, 0, 0, 0).setColor(r1, g1, b1, alpha1);
+            buffer.addVertex(matrix, (float) x1, 0, (float) z1).setColor(r2, g2, b2, alpha2);
+            buffer.addVertex(matrix, (float) x2, 0, (float) z2).setColor(r2, g2, b2, alpha2);
 
             poseStack.popPose();
         }

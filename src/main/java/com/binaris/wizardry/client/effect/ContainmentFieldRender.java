@@ -41,7 +41,7 @@ public final class ContainmentFieldRender {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player == null || !player.isAlive()) return;
 
-        MobEffectInstance effect = player.getEffect(EBMobEffects.CONTAINMENT.get());
+        MobEffectInstance effect = player.getEffect(EBMobEffects.holder(EBMobEffects.CONTAINMENT));
         if (effect == null) return;
 
         ContainmentData data = Services.OBJECT_DATA.getContainmentData(player);
@@ -69,7 +69,7 @@ public final class ContainmentFieldRender {
         float distance = (player.tickCount + partialTicks) * ANIMATION_SPEED;
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        BufferBuilder buffer;
 
         Vec3 playerEyes = player.getEyePosition(partialTicks);
         Vec3 relative = centre.subtract(playerEyes);
@@ -85,7 +85,7 @@ public final class ContainmentFieldRender {
 
         float alpha = Math.min(1, effect.getDuration() / 40f);
 
-        buffer.begin(VertexFormat.Mode.QUADS, POSITION_TEX_COLOR);
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, POSITION_TEX_COLOR);
 
         Matrix4f matrix = poseStack.last().pose();
 
@@ -215,7 +215,7 @@ public final class ContainmentFieldRender {
         drawVertex(buffer, matrix, x2, y2, z2, 2 * r, 2 * r, distance, alpha);
         drawVertex(buffer, matrix, x2, y2, 0, -(float) z1, 2 * r, distance, alpha);
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         RenderSystem.enableCull();
         RenderSystem.depthMask(true);
@@ -229,9 +229,8 @@ public final class ContainmentFieldRender {
         float distSq = (float) (x * x + y * y + z * z);
         float fade = Mth.clamp(1 - distSq / FADE_DISTANCE_SQUARED, 0, 1);
 
-        buffer.vertex(matrix, (float) x, (float) y, (float) z)
-                .uv(u + offset, v + offset)
-                .color(1f, 1f, 1f, fade * alpha)
-                .endVertex();
+        buffer.addVertex(matrix, (float) x, (float) y, (float) z)
+                .setUv(u + offset, v + offset)
+                .setColor(1f, 1f, 1f, fade * alpha);
     }
 }

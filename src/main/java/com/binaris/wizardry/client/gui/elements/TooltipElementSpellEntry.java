@@ -55,7 +55,7 @@ public class TooltipElementSpellEntry extends TooltipElementText {
         boolean discovered = ClientUtils.shouldDisplayDiscovered(spell, stack);
         int color = discovered ? spell.getElement().getColor().getColor() : ChatFormatting.BLUE.getColor();
 
-        return shouldFlash(stack) ? DrawingUtils.makeTranslucent(color, getAlpha(Minecraft.getInstance().getFrameTime()))
+        return shouldFlash(stack) ? DrawingUtils.makeTranslucent(color, getAlpha(Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false)))
                 : color;
     }
 

@@ -4,9 +4,7 @@ import com.binaris.wizardry.api.content.spell.SpellAction;
 import com.binaris.wizardry.setup.registries.EBBlocks;
 import com.binaris.wizardry.setup.registries.client.EBBlockEntityRenderers;
 import com.binaris.wizardry.setup.registries.client.EBItemProperties;
-import com.binaris.wizardry.setup.registries.client.EBMenuScreens;
 import com.binaris.wizardry.setup.registries.client.EBRenderers;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -28,10 +26,7 @@ public class WizardryForgeClient {
         );
         EBItemProperties.register();
 
-        EBMenuScreens.init();
-        EBMenuScreens.register((menuType, screenFactory) ->
-                MenuScreens.register(menuType, screenFactory::create)
-        );
+        // Menu screens are registered on the mod bus via RegisterMenuScreensEvent (see ForgeModClientEvents)
 
         EBBlockEntityRenderers.init();
         EBBlockEntityRenderers.register(BlockEntityRenderers::register

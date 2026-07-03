@@ -41,7 +41,7 @@ public class RemnantModel extends EntityModel<Remnant> {
     }
 
     @Override
-    public void renderToBuffer(@NotNull PoseStack pStack, @NotNull VertexConsumer pBuffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack pStack, @NotNull VertexConsumer pBuffer, int packedLight, int packedOverlay, int color) {
         cube.render(pStack, pBuffer, packedLight, packedOverlay);
     }
 }

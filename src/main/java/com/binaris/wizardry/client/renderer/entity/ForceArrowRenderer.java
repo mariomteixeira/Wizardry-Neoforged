@@ -36,7 +36,7 @@ public class ForceArrowRenderer extends EntityRenderer<ForceArrow> {
         p_114488_.mulPose(Axis.YP.rotationDegrees(180));
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
+        BufferBuilder buffer;
         float pixel = 1.0f / 32.0f;
         float u1 = 0.0f;
         float u2 = pixel * 14;
@@ -63,50 +63,50 @@ public class ForceArrowRenderer extends EntityRenderer<ForceArrow> {
         p_114488_.scale(scale, scale, scale);
         p_114488_.translate(-4.0F, 0.0F, 0.0F);
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), -5, 3.5F, -3.5F).uv(u5, v5).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -5, 3.5F, 3.5F).uv(u6, v5).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -5, -3.5F, 3.5F).uv(u6, v6).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -5, -3.5F, -3.5F).uv(u5, v6).endVertex();
-        BufferUploader.drawWithShader(buffer.end());
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), -5, 3.5F, -3.5F).setUv(u5, v5);
+        buffer.addVertex(p_114488_.last().pose(), -5, 3.5F, 3.5F).setUv(u6, v5);
+        buffer.addVertex(p_114488_.last().pose(), -5, -3.5F, 3.5F).setUv(u6, v6);
+        buffer.addVertex(p_114488_.last().pose(), -5, -3.5F, -3.5F).setUv(u5, v6);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(p_114488_.last().pose(), -5, -3.5F, -3.5F).uv(u5, v6).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -5, -3.5F, 3.5F).uv(u6, v6).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -5, 3.5F, 3.5F).uv(u6, v5).endVertex();
-        buffer.vertex(p_114488_.last().pose(), -5, 3.5F, -3.5F).uv(u5, v5).endVertex();
-        BufferUploader.drawWithShader(buffer.end());
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), -5, -3.5F, -3.5F).setUv(u5, v6);
+        buffer.addVertex(p_114488_.last().pose(), -5, -3.5F, 3.5F).setUv(u6, v6);
+        buffer.addVertex(p_114488_.last().pose(), -5, 3.5F, 3.5F).setUv(u6, v5);
+        buffer.addVertex(p_114488_.last().pose(), -5, 3.5F, -3.5F).setUv(u5, v5);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         for (int i = 0; i < 5; i++) {
             RenderSystem.setShaderColor(1, 1, 1, 1 - i * 0.2f);
             float j = i + (arrow.tickCount % 3) / 3;
             float width = (float) (2.0d + (Math.sqrt(j * 2) - 0.6) * 2);
 
-            buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, -width, -width).uv(u3, v3).endVertex();
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, -width, width).uv(u4, v3).endVertex();
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, width, width).uv(u4, v4).endVertex();
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, width, -width).uv(u3, v4).endVertex();
-            BufferUploader.drawWithShader(buffer.end());
+            buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, -width, -width).setUv(u3, v3);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, -width, width).setUv(u4, v3);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, width, width).setUv(u4, v4);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, width, -width).setUv(u3, v4);
+            BufferUploader.drawWithShader(buffer.buildOrThrow());
 
-            buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, width, -width).uv(u3, v3).endVertex();
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, width, width).uv(u4, v3).endVertex();
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, -width, width).uv(u4, v4).endVertex();
-            buffer.vertex(p_114488_.last().pose(), -10 + j * 4, -width, -width).uv(u3, v4).endVertex();
-            BufferUploader.drawWithShader(buffer.end());
+            buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, width, -width).setUv(u3, v3);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, width, width).setUv(u4, v3);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, -width, width).setUv(u4, v4);
+            buffer.addVertex(p_114488_.last().pose(), -10 + j * 4, -width, -width).setUv(u3, v4);
+            BufferUploader.drawWithShader(buffer.buildOrThrow());
         }
 
         RenderSystem.setShaderColor(1, 1, 1, 1);
 
         for (int i = 0; i < 4; ++i) {
             p_114488_.mulPose(Axis.XP.rotationDegrees(90.0F));
-            buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-            buffer.vertex(-10.0D, -4.0D, 0.0F).uv(u1, v1).endVertex();
-            buffer.vertex(10.0D, -4.0D, 0.0F).uv(u2, v1).endVertex();
-            buffer.vertex(10.0D, 4.0D, 0.0F).uv(u2, v2).endVertex();
-            buffer.vertex(-10.0D, 4.0D, 0.0F).uv(u1, v2).endVertex();
-            BufferUploader.drawWithShader(buffer.end());
+            buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            buffer.addVertex(-10.0F, -4.0F, 0.0F).setUv(u1, v1);
+            buffer.addVertex(10.0F, -4.0F, 0.0F).setUv(u2, v1);
+            buffer.addVertex(10.0F, 4.0F, 0.0F).setUv(u2, v2);
+            buffer.addVertex(-10.0F, 4.0F, 0.0F).setUv(u1, v2);
+            BufferUploader.drawWithShader(buffer.buildOrThrow());
         }
 
         RenderSystem.disableBlend();

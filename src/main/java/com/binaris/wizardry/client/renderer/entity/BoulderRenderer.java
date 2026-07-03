@@ -38,7 +38,7 @@ public class BoulderRenderer extends EntityRenderer<BoulderConstruct> {
 
         poseStack.translate(0, 0.875, 0);
 
-        this.model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucentCull(TEXTURE)), packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+        this.model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityTranslucentCull(TEXTURE)), packedLight, OverlayTexture.NO_OVERLAY, -1);
 
         poseStack.popPose();
     }

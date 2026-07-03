@@ -43,7 +43,7 @@ public class MagicProjectileRenderer<T extends MagicProjectileEntity> extends En
         poseStack.scale(f2, f2, f2);
 
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
+        BufferBuilder buffer;
 
         float f3 = 0.0f;
         float f4 = 1.0f;
@@ -57,12 +57,12 @@ public class MagicProjectileRenderer<T extends MagicProjectileEntity> extends En
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(poseStack.last().pose(), (0.0F - f8), (0.0F - f9), 0.0F).uv(f3, f6).endVertex();
-        buffer.vertex(poseStack.last().pose(), (f7 - f8), (0.0F - f9), 0.0F).uv(f4, f6).endVertex();
-        buffer.vertex(poseStack.last().pose(), (f7 - f8), (1.0F - f9), 0.0F).uv(f4, f5).endVertex();
-        buffer.vertex(poseStack.last().pose(), (0.0F - f8), (1.0F - f9), 0.0F).uv(f3, f5).endVertex();
-        tesselator.end();
+        buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(poseStack.last().pose(), (0.0F - f8), (0.0F - f9), 0.0F).setUv(f3, f6);
+        buffer.addVertex(poseStack.last().pose(), (f7 - f8), (0.0F - f9), 0.0F).setUv(f4, f6);
+        buffer.addVertex(poseStack.last().pose(), (f7 - f8), (1.0F - f9), 0.0F).setUv(f4, f5);
+        buffer.addVertex(poseStack.last().pose(), (0.0F - f8), (1.0F - f9), 0.0F).setUv(f3, f5);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         if (blend) {
             RenderSystem.disableBlend();

@@ -60,16 +60,15 @@ public class SigilRenderer extends EntityRenderer<MagicConstructEntity> {
         poseStack.scale(s, s, s);
 
         Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder buffer = tessellator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        BufferBuilder buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 
-        buffer.vertex(poseStack.last().pose(), 0.0F - f7, 0.0F - f8, 0.01f).uv(0, 1).endVertex();
-        buffer.vertex(poseStack.last().pose(), f6 - f7, 0.0F - f8, 0.01f).uv(1, 1).endVertex();
-        buffer.vertex(poseStack.last().pose(), f6 - f7, 1.0F - f8, 0.01f).uv(1, 0).endVertex();
-        buffer.vertex(poseStack.last().pose(), 0.0F - f7, 1.0F - f8, 0.01f).uv(0, 0).endVertex();
+        buffer.addVertex(poseStack.last().pose(), 0.0F - f7, 0.0F - f8, 0.01f).setUv(0, 1);
+        buffer.addVertex(poseStack.last().pose(), f6 - f7, 0.0F - f8, 0.01f).setUv(1, 1);
+        buffer.addVertex(poseStack.last().pose(), f6 - f7, 1.0F - f8, 0.01f).setUv(1, 0);
+        buffer.addVertex(poseStack.last().pose(), 0.0F - f7, 1.0F - f8, 0.01f).setUv(0, 0);
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         RenderSystem.disableBlend();
         poseStack.popPose();

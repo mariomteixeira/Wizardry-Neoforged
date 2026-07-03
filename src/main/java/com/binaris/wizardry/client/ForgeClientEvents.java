@@ -8,9 +8,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 
-@Mod.EventBusSubscriber(modid = WizardryMainMod.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = WizardryMainMod.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME)
 public class ForgeClientEvents {
 
     @SubscribeEvent
@@ -19,8 +19,9 @@ public class ForgeClientEvents {
             return;
         }
 
-        ContainmentFieldRender.render(event.getCamera(), event.getPoseStack(), event.getPartialTick());
-        ArcaneLockRender.render(event.getCamera(), event.getPoseStack(), event.getPartialTick());
+        float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(false);
+        ContainmentFieldRender.render(event.getCamera(), event.getPoseStack(), partialTick);
+        ArcaneLockRender.render(event.getCamera(), event.getPoseStack(), partialTick);
     }
 
     @SubscribeEvent

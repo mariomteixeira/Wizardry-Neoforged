@@ -55,7 +55,7 @@ public class WizardArmorModel<T extends LivingEntity> extends HumanoidModel<T> {
     }
 
     @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
         if (this.crouching) {
             this.robe.z = 4;
         } else {
@@ -73,14 +73,14 @@ public class WizardArmorModel<T extends LivingEntity> extends HumanoidModel<T> {
         right_shoe.copyFrom(rightLeg);
         left_shoe.copyFrom(leftLeg);
 
-        armorBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        hat.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        right_shoe.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        left_shoe.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        robe.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        armorBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        hat.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        right_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        left_arm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        right_shoe.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        left_shoe.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        robe.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        rightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        leftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 }

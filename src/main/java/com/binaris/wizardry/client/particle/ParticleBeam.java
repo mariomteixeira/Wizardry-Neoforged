@@ -53,10 +53,9 @@ public class ParticleBeam extends ParticleTargeted {
 
     private void drawSegment(PoseStack stack, Tesselator tesselator, int layer, float v, float thickness) {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        BufferBuilder buffer = tesselator.getBuilder();
         RenderSystem.disableCull();
         RenderSystem.enableDepthTest();
-        buffer.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
+        BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
 
         switch (layer) {
             case 0:
@@ -72,22 +71,22 @@ public class ParticleBeam extends ParticleTargeted {
                 break;
         }
 
-        BufferUploader.drawWithShader(buffer.end());
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
         RenderSystem.enableCull();
         RenderSystem.disableDepthTest();
     }
 
     private void drawShearedBox(PoseStack stack, BufferBuilder buffer, float length, float width, float r, float g, float b, float a) {
-        buffer.vertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, (float) 0.0).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, length).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 + width, (float) 0.0).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 + width, length).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 + width, (float) 0.0).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 + width, length).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 - width, (float) 0.0).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 - width, length).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, (float) 0.0).color(r, g, b, a).endVertex();
-        buffer.vertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, length).color(r, g, b, a).endVertex();
+        buffer.addVertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, (float) 0.0).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, length).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 + width, (float) 0.0).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 + width, length).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 + width, (float) 0.0).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 + width, length).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 - width, (float) 0.0).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 + width, (float) 0.0 - width, length).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, (float) 0.0).setColor(r, g, b, a);
+        buffer.addVertex(stack.last().pose(), (float) 0.0 - width, (float) 0.0 - width, length).setColor(r, g, b, a);
     }
 
     public static class BeamProvider implements ParticleProvider<SimpleParticleType> {

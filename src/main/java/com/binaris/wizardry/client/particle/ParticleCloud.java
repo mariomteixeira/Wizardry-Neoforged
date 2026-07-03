@@ -24,20 +24,14 @@ import org.jetbrains.annotations.Nullable;
 public class ParticleCloud extends ParticleWizardry {
     ParticleRenderType renderType = new ParticleRenderType() {
         @Override
-        public void begin(@NotNull BufferBuilder bufferBuilder, @NotNull TextureManager textureManager) {
+        public BufferBuilder begin(@NotNull Tesselator tesselator, @NotNull TextureManager textureManager) {
             RenderSystem.depthMask(false);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             textureManager.getTexture(TextureAtlas.LOCATION_PARTICLES).setFilter(false, false);
             RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
 
-            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
-        }
-
-
-        @Override
-        public void end(Tesselator tesselator) {
-            tesselator.end();
+            return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
         }
 
         @Override
