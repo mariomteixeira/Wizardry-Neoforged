@@ -17,6 +17,7 @@ import com.binaris.wizardry.core.config.EBServerConfig;
 import com.binaris.wizardry.core.event.WizardryEventBus;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.*;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -491,12 +492,17 @@ public class WandItem extends Item implements ICastItem, IManaItem, IWorkbenchIt
 
     @Override
     public int getCustomMaxDamage(ItemStack stack) {
-        return (int) (stack.getMaxDamage() * (1.0f + EBServerConfig.STORAGE_INCREASE_PER_LEVEL.get() * CastItemDataHelper.getUpgradeLevel(stack, EBItems.STORAGE_UPGRADE.get())) + 0.5f);
+        // Read the base MAX_DAMAGE component directly: ItemStack#getMaxDamage is overridden by
+        // WizardItemStackMixin to call back into this method, so calling it here would recurse infinitely.
+        int base = stack.getOrDefault(DataComponents.MAX_DAMAGE, 0);
+        return (int) (base * (1.0f + EBServerConfig.STORAGE_INCREASE_PER_LEVEL.get() * CastItemDataHelper.getUpgradeLevel(stack, EBItems.STORAGE_UPGRADE.get())) + 0.5f);
     }
 
     @Override
     public void setCustomDamage(ItemStack stack, int damage) {
-        stack.setDamageValue(Math.max(0, Math.min(damage, stack.getMaxDamage())));
+        // Write the DAMAGE component directly rather than ItemStack#setDamageValue, which the mixin
+        // reroutes back into this method (infinite recursion).
+        stack.set(DataComponents.DAMAGE, Math.max(0, Math.min(damage, getCustomMaxDamage(stack))));
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
 import com.binaris.wizardry.api.content.util.*;
 import com.binaris.wizardry.setup.registries.EBArmorMaterials;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -188,7 +189,9 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
 
     @Override
     public void setCustomDamage(ItemStack stack, int damage) {
-        stack.setDamageValue(Math.max(0, Math.min(damage, stack.getMaxDamage())));
+        // Write the DAMAGE component directly rather than ItemStack#setDamageValue, which
+        // WizardItemStackMixin reroutes back into this method (infinite recursion).
+        stack.set(DataComponents.DAMAGE, Math.max(0, Math.min(damage, getCustomMaxDamage(stack))));
     }
 
     @Override
