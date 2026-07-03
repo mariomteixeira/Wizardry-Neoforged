@@ -7,7 +7,6 @@
     "AttributeModifierMixin",
     "BlazeMixin",
     "ClipContextMixin",
-    "CommandsMixin",
     "ConjureMixin",
     "EnchantmentHelperMixin",
     "ExplosionMixin",

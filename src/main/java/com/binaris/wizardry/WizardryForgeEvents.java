@@ -4,6 +4,7 @@ import com.binaris.wizardry.api.content.event.*;
 import com.binaris.wizardry.setup.registries.RegisterFunction;
 import com.binaris.wizardry.capabilities.*;
 import com.binaris.wizardry.core.PropertiesForgeDataManager;
+import com.binaris.wizardry.core.config.EBCommonConfig;
 import com.binaris.wizardry.core.event.WizardryEventBus;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.core.registry.EBRegistries;
@@ -24,6 +25,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
@@ -83,6 +85,14 @@ public class WizardryForgeEvents {
         @SubscribeEvent
         public static void registerReloadListeners(AddReloadListenerEvent event) {
             event.addListener(new PropertiesForgeDataManager());
+        }
+
+        @SubscribeEvent
+        public static void registerCommands(RegisterCommandsEvent event) {
+            EBCommands.COMMANDS_TO_REGISTER.forEach(c -> c.accept(event.getDispatcher(), event.getBuildContext()));
+            if (Services.PLATFORM.isDevelopmentEnvironment() || EBCommonConfig.ENABLE_DEBUG_COMMANDS.get()) {
+                EBCommands.DEBUG_COMMANDS.forEach(c -> c.accept(event.getDispatcher(), event.getBuildContext()));
+            }
         }
 
         @SubscribeEvent

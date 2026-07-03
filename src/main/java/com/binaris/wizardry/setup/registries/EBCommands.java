@@ -2,7 +2,6 @@ package com.binaris.wizardry.setup.registries;
 
 import com.binaris.wizardry.content.command.*;
 import com.binaris.wizardry.content.command.debug.*;
-import com.binaris.wizardry.core.mixin.CommandsMixin;
 import com.google.common.collect.ImmutableList;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandBuildContext;
@@ -12,10 +11,8 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 /**
- * Check {@link CommandsMixin CommandsMixin} to see the registry
- * <br>
- * We only need to use {@link EBCommands#COMMANDS_TO_REGISTER} :p
- *
+ * Command definitions consumed by the {@code RegisterCommandsEvent} handler in
+ * {@link com.binaris.wizardry.WizardryForgeEvents.ForgeBusEvents}.
  */
 public final class EBCommands {
     // TODO CastCommand::register
