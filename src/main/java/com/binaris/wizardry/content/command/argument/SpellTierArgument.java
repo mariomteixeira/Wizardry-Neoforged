@@ -25,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 public class SpellTierArgument implements ArgumentType<SpellTier> {
     private static final Collection<String> EXAMPLES = Arrays.asList("ebwizardry:apprentice", "ebwizardry:advanced");
     private static final DynamicCommandExceptionType ERROR_NOT_FOUND = new DynamicCommandExceptionType(
-            id -> Component.translatable("argument.ebwizardry.spelltier.notfound", id)
+            id -> Component.translatable("argument.ebwizardry.spelltier.notfound", String.valueOf(id))
     );
 
     public SpellTierArgument() {
