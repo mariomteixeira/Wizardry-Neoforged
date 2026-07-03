@@ -1,0 +1,24 @@
+{
+  "type": "ebwizardry:imbuement_altar",
+  "center": {
+    "item": "ebwizardry:battlemage_helmet"
+  },
+  "receptacles": [
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ebwizardry:battlemage_helmet_healing"
+  }
+}

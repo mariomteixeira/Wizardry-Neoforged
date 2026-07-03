@@ -12,6 +12,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,8 +29,8 @@ public abstract class ItemStackMixin {
     ItemStack stack = (ItemStack) (Object) this;
 
     @Inject(method = "getTooltipLines", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z",
-            ordinal = 15, shift = At.Shift.AFTER))
-    public void EBWIZARDRY$getTooltipLinesMana(Player player, TooltipFlag isAdvanced, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
+            ordinal = 2, shift = At.Shift.AFTER))
+    public void EBWIZARDRY$getTooltipLinesMana(Item.TooltipContext tooltipContext, Player player, TooltipFlag isAdvanced, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
         if (stack.getItem() instanceof IManaItem) {
             list.remove(list.size() - 1); // Removing "Durability %s/%s"
             list.add(Component.translatable("item.ebwizardry.wand.damage_desc", stack.getMaxDamage() - stack.getDamageValue(), stack.getMaxDamage()).withStyle(ChatFormatting.BLUE));
@@ -37,7 +38,7 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
-    public void EBWIZARDRY$getTooltipLinesEvent(Player player, TooltipFlag isAdvanced, CallbackInfoReturnable<List<Component>> cir){
+    public void EBWIZARDRY$getTooltipLinesEvent(Item.TooltipContext tooltipContext, Player player, TooltipFlag isAdvanced, CallbackInfoReturnable<List<Component>> cir){
         if (NotImplementedItems.notImplemented(stack.getItem())) {
             cir.getReturnValue().add(Component.literal("Not Implemented").withStyle(ChatFormatting.RED));
         }

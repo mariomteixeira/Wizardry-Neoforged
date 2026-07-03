@@ -1,0 +1,39 @@
+{
+  "parent": "ebwizardry:defeat_evil_wizard",
+  "criteria": {
+    "shrine": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "ebwizardry:shrine"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.visit_shrine.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:earth_runestone"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.visit_shrine"
+    }
+  },
+  "requirements": [
+    [
+      "shrine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,26 @@
+{
+  "parent": "ebwizardry:discover_spell",
+  "criteria": {
+    "criterion": {
+      "trigger": "ebwizardry:spell_failure"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.spell_failure.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:pumpkin"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.spell_failure"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

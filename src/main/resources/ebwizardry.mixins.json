@@ -25,7 +25,6 @@
     "accessor.ItemPropertiesAccessor",
     "accessor.MerchantMenuAccessor",
     "accessor.MobGoalsAccessor",
-    "accessor.RCBEAccessor",
     "accessor.SlotAccessor"
   ],
   "client": [

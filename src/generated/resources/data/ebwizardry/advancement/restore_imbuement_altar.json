@@ -1,0 +1,26 @@
+{
+  "parent": "ebwizardry:find_library_ruins",
+  "criteria": {
+    "criterion": {
+      "trigger": "ebwizardry:imbuement_altar"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.restore_imbuement_altar.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:imbuement_altar"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.restore_imbuement_altar"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

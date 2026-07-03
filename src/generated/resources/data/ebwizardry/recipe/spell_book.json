@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "ebwizardry:magic_crystal"
+    },
+    "y": {
+      "item": "minecraft:book"
+    }
+  },
+  "pattern": [
+    " x ",
+    "xyx",
+    " x "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ebwizardry:spell_book"
+  }
+}

@@ -10,6 +10,7 @@ import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.EBMobEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -105,9 +106,9 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "onChangedBlock", at = @At("HEAD"))
-    public void EBWIZARDRY$frostStep(BlockPos pos, CallbackInfo ci) {
+    public void EBWIZARDRY$frostStep(ServerLevel level, BlockPos pos, CallbackInfo ci) {
         if (livingEntity.hasEffect(EBMobEffects.holder(EBMobEffects.FROST_STEP))) {
-            FrostStepEffect.onEntityMoved(livingEntity, livingEntity.level(), pos,
+            FrostStepEffect.onEntityMoved(livingEntity, level, pos,
                     livingEntity.getEffect(EBMobEffects.holder(EBMobEffects.FROST_STEP)).getAmplifier());
         }
     }

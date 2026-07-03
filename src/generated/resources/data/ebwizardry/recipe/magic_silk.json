@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "minecraft:string"
+    },
+    "y": {
+      "tag": "ebwizardry:magic_crystal"
+    }
+  },
+  "pattern": [
+    " x ",
+    "xyx",
+    " x "
+  ],
+  "result": {
+    "count": 2,
+    "id": "ebwizardry:magic_silk"
+  }
+}

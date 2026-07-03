@@ -1,0 +1,26 @@
+{
+  "parent": "ebwizardry:apprentice",
+  "criteria": {
+    "criterion": {
+      "trigger": "ebwizardry:special_upgrade"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.special_upgrade.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:condenser_upgrade"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.special_upgrade"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

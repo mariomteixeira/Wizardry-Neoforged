@@ -25,10 +25,14 @@ import java.util.function.Supplier;
  * {@link com.binaris.wizardry.setup.registries.EBArmorMaterials}.
  */
 public enum WizardArmorType {
+    // upgradeItem is deliberately a lazy Supplier (not a direct EBItems field reference): touching an EBItems
+    // static field here would force EBItems to class-init mid-construction of this enum, and EBItems in turn
+    // references WizardArmorType constants (e.g. WizardArmorType.SAGE) to build armor items - a circular
+    // <clinit> dependency that NPEs because the enum constant field isn't assigned until its constructor returns.
     WIZARD("wizard", () -> null, 15, 0.1F, 0, SoundEvents.ARMOR_EQUIP_DIAMOND, new int[]{2, 4, 5, 2}, 15, "hat", "robe", "leggings", "boots"),
-    SAGE("sage", EBItems.RESPLENDENT_THREAD, 15, 0.2f, 0, wrap(EBSounds.ITEM_ARMOUR_EQUIP_SAGE.get()), new int[]{2, 5, 6, 3}, 15, "hat", "robe", "leggings", "boots"),
-    BATTLEMAGE("battlemage", EBItems.CRYSTAL_SILVER_PLATING, 15, 0.05f, 0.05f, wrap(EBSounds.ITEM_ARMOUR_EQUIP_BATTLEMAGE.get()), new int[]{3, 6, 8, 3}, 15, "helmet", "chestplate", "leggings", "boots"),
-    WARLOCK("warlock", EBItems.ETHEREAL_CRYSTAL_WEAVE, 20, 0.1f, 0.1f, wrap(EBSounds.ITEM_ARMOUR_EQUIP_WARLOCK.get()), new int[]{2, 4, 5, 2}, 15, "hood", "robe", "leggings", "boots");
+    SAGE("sage", () -> EBItems.RESPLENDENT_THREAD.get(), 15, 0.2f, 0, wrap(EBSounds.ITEM_ARMOUR_EQUIP_SAGE.get()), new int[]{2, 5, 6, 3}, 15, "hat", "robe", "leggings", "boots"),
+    BATTLEMAGE("battlemage", () -> EBItems.CRYSTAL_SILVER_PLATING.get(), 15, 0.05f, 0.05f, wrap(EBSounds.ITEM_ARMOUR_EQUIP_BATTLEMAGE.get()), new int[]{3, 6, 8, 3}, 15, "helmet", "chestplate", "leggings", "boots"),
+    WARLOCK("warlock", () -> EBItems.ETHEREAL_CRYSTAL_WEAVE.get(), 20, 0.1f, 0.1f, wrap(EBSounds.ITEM_ARMOUR_EQUIP_WARLOCK.get()), new int[]{2, 4, 5, 2}, 15, "hood", "robe", "leggings", "boots");
 
     final int[] protectionValues;
     final int durabilityMultiplier;
@@ -71,7 +75,10 @@ public enum WizardArmorType {
     // --------------------------------- Armor material metadata accessors --------------------------------- //
 
     public int getDefenseForType(ArmorItem.Type type) {
-        return protectionValues[type.ordinal()];
+        // protectionValues only covers the 4 wizard-armor slots (helmet/chestplate/leggings/boots); 1.21 added
+        // ArmorItem.Type.BODY (wolf/horse armor), which wizard armor sets don't define a piece for.
+        int ordinal = type.ordinal();
+        return ordinal < protectionValues.length ? protectionValues[ordinal] : 0;
     }
 
     public int[] getProtectionValues() {

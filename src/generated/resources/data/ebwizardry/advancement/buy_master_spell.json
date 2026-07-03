@@ -1,0 +1,27 @@
+{
+  "parent": "ebwizardry:wizard_trade",
+  "criteria": {
+    "buy_master_spell": {
+      "trigger": "ebwizardry:buy_master_spell"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.buy_master_spell.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:astral_diamond"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.buy_master_spell"
+    }
+  },
+  "requirements": [
+    [
+      "buy_master_spell"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

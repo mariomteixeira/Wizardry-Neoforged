@@ -1,0 +1,29 @@
+{
+  "type": "ebwizardry:imbuement_altar",
+  "center": {
+    "item": "ebwizardry:ruined_spell_book"
+  },
+  "receptacles": [
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_healing"
+    }
+  ],
+  "result": {
+    "components": {
+      "minecraft:custom_data": {
+        "LootTable": "ebwizardry:gameplay/imbuement/ruined_spell_book_healing"
+      }
+    },
+    "count": 1,
+    "id": "ebwizardry:random_spell_book"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "parent": "ebwizardry:arcane_initiate",
+  "criteria": {
+    "criteria": {
+      "conditions": {
+        "source": "casting",
+        "spell": {
+          "elements": [
+            "ebwizardry:lightning",
+            "ebwizardry:fire",
+            "ebwizardry:healing",
+            "ebwizardry:ice",
+            "ebwizardry:magic",
+            "ebwizardry:sorcery",
+            "ebwizardry:necromancy",
+            "ebwizardry:earth"
+          ],
+          "tiers": [
+            "ebwizardry:apprentice",
+            "ebwizardry:master",
+            "ebwizardry:novice",
+            "ebwizardry:advanced"
+          ]
+        }
+      },
+      "trigger": "ebwizardry:discover_spell"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.discover_spell.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:paper"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.discover_spell"
+    }
+  },
+  "requirements": [
+    [
+      "criteria"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

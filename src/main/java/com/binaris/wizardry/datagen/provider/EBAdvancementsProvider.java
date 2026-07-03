@@ -9,8 +9,11 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderOwner;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -47,7 +50,21 @@ public class EBAdvancementsProvider implements AdvancementProvider.AdvancementGe
     }
 
     private static LocationPredicate.Builder inStructure(HolderLookup.Provider registries, ResourceKey<Structure> key) {
-        return LocationPredicate.Builder.inStructure(registries.lookupOrThrow(Registries.STRUCTURE).getOrThrow(key));
+        // This mod's structures are plain JSON (no RegistrySetBuilder bootstrap), so the datagen-time registries
+        // snapshot - built from VanillaRegistries.createLookup(), see DatagenModLoader#begin - only ever contains
+        // vanilla entries; our own structure keys are never actually present in it. registries.lookupOrThrow(...)
+        // returns a read-only wrapper whose identity does NOT match the owner used by the codec at encode time
+        // (RegistrySetBuilder#buildProviderWithContext resolves that owner separately, via a per-registry
+        // "universal owner" object only reachable through RegistryOps#owner). So pull the SAME owner the codec
+        // will use straight from registries.createSerializationContext(...), and build a standalone holder with
+        // it - that way the predicate still encodes to the correct resource location instead of throwing
+        // "Missing element"/"not valid in current registry set" during generation.
+        HolderOwner<Structure> owner = registries.createSerializationContext(JsonOps.INSTANCE).owner(Registries.STRUCTURE)
+                .orElseThrow(() -> new IllegalStateException("No registry ops owner for " + Registries.STRUCTURE));
+        Holder<Structure> holder = registries.lookupOrThrow(Registries.STRUCTURE).get(key)
+                .<Holder<Structure>>map(h -> h)
+                .orElseGet(() -> Holder.Reference.createStandAlone(owner, key));
+        return LocationPredicate.Builder.inStructure(holder);
     }
 
     @Override

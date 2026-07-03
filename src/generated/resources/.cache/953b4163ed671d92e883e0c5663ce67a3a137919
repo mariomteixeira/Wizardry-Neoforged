@@ -1,12 +1,12 @@
-// 1.20.1	2026-03-31T09:56:47.031172328	Tags for minecraft:item mod id ebwizardry
-b3c794cc2ff5977589f3cc0e4eb6d5c318553b6f data/accessories/tags/items/charm.json
-4d7295d9563a9726be37d291b741e0b91cebbfa9 data/accessories/tags/items/necklace.json
-08816f782037602f02231f8b1fbc76b1bb1c8848 data/accessories/tags/items/ring.json
-b3c794cc2ff5977589f3cc0e4eb6d5c318553b6f data/curios/tags/items/charm.json
-4d7295d9563a9726be37d291b741e0b91cebbfa9 data/curios/tags/items/necklace.json
-08816f782037602f02231f8b1fbc76b1bb1c8848 data/curios/tags/items/ring.json
-026654df8432db60dca779913e84fd4599e6f648 data/ebwizardry/tags/items/gilded_wood.json
-065a2aee5d675eb3f1ace700e49c1a56274442f3 data/ebwizardry/tags/items/magic_crystal.json
-4d7295d9563a9726be37d291b741e0b91cebbfa9 data/trinkets/tags/items/chest/necklace.json
-b3c794cc2ff5977589f3cc0e4eb6d5c318553b6f data/trinkets/tags/items/hand/glove.json
-08816f782037602f02231f8b1fbc76b1bb1c8848 data/trinkets/tags/items/hand/ring.json
+// 1.21.1	2026-07-03T20:07:17.4635906	Tags for minecraft:item mod id ebwizardry
+b3c794cc2ff5977589f3cc0e4eb6d5c318553b6f data/accessories/tags/item/charm.json
+4d7295d9563a9726be37d291b741e0b91cebbfa9 data/accessories/tags/item/necklace.json
+08816f782037602f02231f8b1fbc76b1bb1c8848 data/accessories/tags/item/ring.json
+b3c794cc2ff5977589f3cc0e4eb6d5c318553b6f data/curios/tags/item/charm.json
+4d7295d9563a9726be37d291b741e0b91cebbfa9 data/curios/tags/item/necklace.json
+08816f782037602f02231f8b1fbc76b1bb1c8848 data/curios/tags/item/ring.json
+026654df8432db60dca779913e84fd4599e6f648 data/ebwizardry/tags/item/gilded_wood.json
+065a2aee5d675eb3f1ace700e49c1a56274442f3 data/ebwizardry/tags/item/magic_crystal.json
+4d7295d9563a9726be37d291b741e0b91cebbfa9 data/trinkets/tags/item/chest/necklace.json
+b3c794cc2ff5977589f3cc0e4eb6d5c318553b6f data/trinkets/tags/item/hand/glove.json
+08816f782037602f02231f8b1fbc76b1bb1c8848 data/trinkets/tags/item/hand/ring.json

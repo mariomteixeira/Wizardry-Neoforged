@@ -1,13 +1,12 @@
 package com.binaris.wizardry.mixin;
 
 import com.binaris.wizardry.api.content.item.ICustomDamageItem;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -29,9 +28,12 @@ public abstract class WizardItemStackMixin {
         ci.cancel();
     }
 
-    @Inject(method = "hurt", at = @At("TAIL"), cancellable = true)
-    public void EBWIZARDRY$itemHurtBreak(int amount, RandomSource random, ServerPlayer user, CallbackInfoReturnable<Boolean> cir) {
-        if (!(stack.getItem() instanceof ICustomDamageItem customDamageItem)) return;
-        cir.setReturnValue((stack.getDamageValue() >= stack.getMaxDamage()) && customDamageItem.canBreak(stack));
+    // hurtAndBreak() shrinks the stack itself once damage reaches max; redirect that shrink so custom-damage
+    // items (e.g. wands) can stay at 0 durability instead of being destroyed, mirroring ICustomDamageItem#canBreak.
+    @Redirect(method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Consumer;)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"))
+    private void EBWIZARDRY$itemHurtBreak(ItemStack self, int amount) {
+        if (self.getItem() instanceof ICustomDamageItem customDamageItem && !customDamageItem.canBreak(self)) return;
+        self.shrink(amount);
     }
 }

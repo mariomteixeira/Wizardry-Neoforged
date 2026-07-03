@@ -1,0 +1,31 @@
+{
+  "parent": "ebwizardry:restore_imbuement_altar",
+  "criteria": {
+    "criterion": {
+      "conditions": {
+        "item": {
+          "items": "ebwizardry:spell_book"
+        }
+      },
+      "trigger": "ebwizardry:imbuement_altar"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.restore_ruined_book.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:ruined_spell_book"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.restore_ruined_book"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

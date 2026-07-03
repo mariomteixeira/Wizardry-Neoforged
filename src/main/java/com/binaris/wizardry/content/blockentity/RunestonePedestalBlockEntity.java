@@ -8,7 +8,6 @@ import com.binaris.wizardry.api.content.util.BlockUtil;
 import com.binaris.wizardry.content.block.RunestonePedestalBlock;
 import com.binaris.wizardry.content.entity.living.EvilWizard;
 import com.binaris.wizardry.core.config.EBServerConfig;
-import com.binaris.wizardry.core.mixin.accessor.RCBEAccessor;
 import com.binaris.wizardry.core.platform.Services;
 import com.binaris.wizardry.setup.registries.*;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
@@ -144,7 +143,7 @@ public class RunestonePedestalBlockEntity extends BlockEntity {
     private void tryLinkContainer(BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos.above());
 
-        if (!(blockEntity instanceof RandomizableContainerBlockEntity container) || ((RCBEAccessor) container).getLootTable() == null) {
+        if (!(blockEntity instanceof RandomizableContainerBlockEntity container) || container.getLootTable() == null) {
             EBLogger.warn("Runestone Pedestal at {} is marked as natural but has no valid container block entity above it, check the structure and try to have a container block above it", pos);
             setNatural(false);
             return;

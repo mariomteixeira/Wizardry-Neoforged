@@ -1,0 +1,35 @@
+{
+  "parent": "ebwizardry:spell_failure",
+  "criteria": {
+    "criterion": {
+      "conditions": {
+        "source": "casting",
+        "spell": {
+          "tiers": [
+            "ebwizardry:master"
+          ]
+        }
+      },
+      "trigger": "ebwizardry:discover_spell"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.discover_master_spell.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:blaze_powder"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.discover_master_spell"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

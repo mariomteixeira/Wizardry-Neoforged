@@ -1,0 +1,24 @@
+{
+  "type": "ebwizardry:imbuement_altar",
+  "center": {
+    "item": "ebwizardry:battlemage_helmet"
+  },
+  "receptacles": [
+    {
+      "item": "ebwizardry:spectral_dust_ice"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_ice"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_ice"
+    },
+    {
+      "item": "ebwizardry:spectral_dust_ice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ebwizardry:battlemage_helmet_ice"
+  }
+}

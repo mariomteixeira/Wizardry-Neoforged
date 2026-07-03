@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-17T10:33:24.982223702	Spell Data Provider: ebwizardry
+// 1.21.1	2026-07-03T20:07:17.4696597	Spell Data Provider: ebwizardry
 59709226fef8219dd2c5cd41cb6bb719de55c656 data/ebwizardry/spells/agility.json
 12e12c73b30c50363edbf0bbe8132934b20111d1 data/ebwizardry/spells/arc.json
 9fee9a6638261052b8101e8197dbef3e9aac6521 data/ebwizardry/spells/arcane_jammer.json
@@ -20,8 +20,8 @@ e966e28a981b29ef76ac99c89473df4a13368f6d data/ebwizardry/spells/cure_effects.jso
 9811f2a544a1863c96ae324d8d0d5ed67e63da71 data/ebwizardry/spells/curse_of_enfeeblement.json
 aa0e35a91777491e280fdfe4074ed269f884a2ca data/ebwizardry/spells/curse_of_soulbinding.json
 3156385ac3991ddbe26521bb1dad7d90e2409e23 data/ebwizardry/spells/curse_of_undeath.json
-e9dc7ebf43017ff8fcb3478abb5d8a8a992f84a6 data/ebwizardry/spells/dark_vision.json
 4a3b1c7c8133cc6d8d768a44f496e4212e6dd88a data/ebwizardry/spells/darkness_orb.json
+e9dc7ebf43017ff8fcb3478abb5d8a8a992f84a6 data/ebwizardry/spells/dark_vision.json
 aaa547b3455748429fa32c78a70702f46e3369f9 data/ebwizardry/spells/dart.json
 33b3149ab48326e23c4daa320507a0179be59c88 data/ebwizardry/spells/decay.json
 68139027c7a31e94ed0f199a5ffae4c819a372ed data/ebwizardry/spells/detonate.json
@@ -30,16 +30,16 @@ c9ad010a41015bf27d0581f14b0ee13a9bdb6e7c data/ebwizardry/spells/dragon_fireball.
 387fffe130d94d5cfcae4a66e8e3b43c8b4c7458 data/ebwizardry/spells/entrapment.json
 bac21b784e9f58e2f8e4675e35e8218f75a7c860 data/ebwizardry/spells/evade.json
 61fa964e5d68f8c65797f13ac87e517b10dbe2ca data/ebwizardry/spells/fangs.json
-9bd26f71530f336c3734b8e0cff020ae41be22ed data/ebwizardry/spells/fire_breath.json
-31968c10236a6b44c70ed216d9a9b0f3309d1bde data/ebwizardry/spells/fire_resistance.json
-4227ff65ec096d225701b25fb229f43fbfd1c1b2 data/ebwizardry/spells/fire_sigil.json
-dcb545721019968703d8f4437948f0cd2bd53cc8 data/ebwizardry/spells/fire_skin.json
 a2165b103e62eea79342a29c3413d15025fd2f52 data/ebwizardry/spells/fireball.json
 c3d8c5322d16501e74bb9c19f3bea48d3195abfc data/ebwizardry/spells/firebolt.json
 28ec04eb5db96f98f6d8ddf008bde3628bdbff76 data/ebwizardry/spells/firebomb.json
 503d9a007e8fd927f4e43d507773cd3bf1786d93 data/ebwizardry/spells/firestorm.json
-19ebda9d5d88f91050c3e0b828a6d9b87c65f604 data/ebwizardry/spells/flame_ray.json
+9bd26f71530f336c3734b8e0cff020ae41be22ed data/ebwizardry/spells/fire_breath.json
+31968c10236a6b44c70ed216d9a9b0f3309d1bde data/ebwizardry/spells/fire_resistance.json
+4227ff65ec096d225701b25fb229f43fbfd1c1b2 data/ebwizardry/spells/fire_sigil.json
+dcb545721019968703d8f4437948f0cd2bd53cc8 data/ebwizardry/spells/fire_skin.json
 ce4f215b45eda18b02ee9109d2328d1d61b6b92e data/ebwizardry/spells/flamecatcher.json
+19ebda9d5d88f91050c3e0b828a6d9b87c65f604 data/ebwizardry/spells/flame_ray.json
 0841ecefd05480a63e80770aea61bc7c492c0a32 data/ebwizardry/spells/flaming_axe.json
 ae6c50c35bf5886522821c16693c877a23a441e7 data/ebwizardry/spells/flaming_weapon.json
 a255f93b22d5b1abaadf9d7dc8e8a6c4c81b4441 data/ebwizardry/spells/flight.json
@@ -59,15 +59,15 @@ d60779173abcfc7bdaa6cb56efb9b2d5ccd126df data/ebwizardry/spells/frost_sigil.json
 ff9965b81c05c23362a9924e25beb7263d76cf54 data/ebwizardry/spells/growth_aura.json
 fbe08224470238abea82b2f6e8eed1cb867cd499 data/ebwizardry/spells/hailstorm.json
 7f7ead767efb56d5e90438f32184f06e8dded021 data/ebwizardry/spells/heal.json
-505f2a436ea1d1c2cba77d555e6b1d5956938051 data/ebwizardry/spells/heal_ally.json
 cafcff6cb8e6e5a59ec8ee9514dbab658dc100f2 data/ebwizardry/spells/healing_aura.json
+505f2a436ea1d1c2cba77d555e6b1d5956938051 data/ebwizardry/spells/heal_ally.json
 e4ba074352bc91317e4d2cb2d261212794a986b6 data/ebwizardry/spells/homing_spark.json
+f99ac38fbbb9a7a5190b7e8f1ca620e5331691e0 data/ebwizardry/spells/iceball.json
 b54be727da701facac8c8147eb7a08fdf86fd7c0 data/ebwizardry/spells/ice_age.json
 0da801527f9b688a37bdf9b5333dc2b84554963b data/ebwizardry/spells/ice_charge.json
 1e0408a7cb68a9f4411c65f2fa4d81a3d0eba903 data/ebwizardry/spells/ice_lance.json
 5752627f3113531cedfcd784a48f67db646e537c data/ebwizardry/spells/ice_shard.json
 f92feccf9a8e2c9bd158732745665e14f76e88d2 data/ebwizardry/spells/ice_spikes.json
-f99ac38fbbb9a7a5190b7e8f1ca620e5331691e0 data/ebwizardry/spells/iceball.json
 0cd417ec1e46e0d5c743e8f8f7cce72aa7038e3d data/ebwizardry/spells/ignite.json
 ef355be8967f2ec42348ebe49b469e1af669f390 data/ebwizardry/spells/invigorating_presence.json
 c260d83506d5f14994b78c7bdb28cb33d64c1eb3 data/ebwizardry/spells/invisibility.json

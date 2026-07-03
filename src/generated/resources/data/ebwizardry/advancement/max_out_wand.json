@@ -1,0 +1,27 @@
+{
+  "parent": "ebwizardry:master",
+  "criteria": {
+    "criterion": {
+      "trigger": "ebwizardry:max_out_wand"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.max_out_wand.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:arcane_tome_apprentice"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.max_out_wand"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

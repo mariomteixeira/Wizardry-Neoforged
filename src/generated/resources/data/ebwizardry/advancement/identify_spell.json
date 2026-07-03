@@ -1,0 +1,47 @@
+{
+  "parent": "ebwizardry:discover_spell",
+  "criteria": {
+    "criterion": {
+      "conditions": {
+        "source": "identification_scroll",
+        "spell": {
+          "elements": [
+            "ebwizardry:lightning",
+            "ebwizardry:fire",
+            "ebwizardry:healing",
+            "ebwizardry:ice",
+            "ebwizardry:magic",
+            "ebwizardry:sorcery",
+            "ebwizardry:necromancy",
+            "ebwizardry:earth"
+          ],
+          "tiers": [
+            "ebwizardry:apprentice",
+            "ebwizardry:master",
+            "ebwizardry:novice",
+            "ebwizardry:advanced"
+          ]
+        }
+      },
+      "trigger": "ebwizardry:discover_spell"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.identify_spell.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:identification_scroll"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.identify_spell"
+    }
+  },
+  "requirements": [
+    [
+      "criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

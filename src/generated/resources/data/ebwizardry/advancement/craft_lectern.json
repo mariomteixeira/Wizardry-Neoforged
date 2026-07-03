@@ -1,0 +1,98 @@
+{
+  "parent": "ebwizardry:find_library_ruins",
+  "criteria": {
+    "acacia": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ebwizardry:acacia_lectern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "birch": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ebwizardry:birch_lectern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "dark_oak": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ebwizardry:dark_oak_lectern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "jungle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ebwizardry:jungle_lectern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "oak": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ebwizardry:oak_lectern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "spruce": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ebwizardry:spruce_lectern"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ebwizardry.craft_lectern.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ebwizardry:spruce_lectern"
+    },
+    "title": {
+      "translate": "advancement.ebwizardry.craft_lectern"
+    }
+  },
+  "requirements": [
+    [
+      "oak"
+    ],
+    [
+      "spruce"
+    ],
+    [
+      "birch"
+    ],
+    [
+      "jungle"
+    ],
+    [
+      "acacia"
+    ],
+    [
+      "dark_oak"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

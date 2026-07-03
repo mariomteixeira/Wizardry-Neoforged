@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "minecraft:gold_nugget"
+    },
+    "y": {
+      "item": "minecraft:stick"
+    },
+    "z": {
+      "item": "ebwizardry:magic_crystal"
+    }
+  },
+  "pattern": [
+    "  z",
+    " y ",
+    "x  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ebwizardry:wand_novice"
+  }
+}

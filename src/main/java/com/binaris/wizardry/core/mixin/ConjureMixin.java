@@ -6,18 +6,21 @@ import com.binaris.wizardry.core.platform.Services;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * We need to modify the way that the items load the durability bar, with this we check for the ConjureData
@@ -46,9 +49,9 @@ public class ConjureMixin {
     }
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
-    public void EBWIZARDRY$conjureGetTooltipLines(Player player, TooltipFlag isAdvanced, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
+    public void EBWIZARDRY$conjureGetTooltipLines(Item.TooltipContext tooltipContext, Player player, TooltipFlag isAdvanced, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
         ConjureData data = Services.OBJECT_DATA.getConjureData(stack);
-        if (data == null || !data.isSummoned()) return;
+        if (data == null || !data.isSummoned() || player == null) return;
 
         long currentGameTime = player.level().getGameTime();
         int remaining = data.getRemainingLifetime(currentGameTime);
@@ -59,11 +62,11 @@ public class ConjureMixin {
 
     // This is the important one - prevents damage being set on conjured items, avoiding items to continue using the
     // durability tags and making inconsistent behaviour with the conjure system.
-    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-    public void EBWIZARDRY$preventDurabilityLoss(int amount, RandomSource random, ServerPlayer user, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Consumer;)V", at = @At("HEAD"), cancellable = true)
+    public void EBWIZARDRY$preventDurabilityLoss(int amount, ServerLevel level, LivingEntity entity, Consumer<Item> onBreak, CallbackInfo ci) {
         ConjureData data = Services.OBJECT_DATA.getConjureData(stack);
         if (data != null && data.isSummoned()) {
-            cir.setReturnValue(false);
+            ci.cancel();
         }
     }
 

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "ebwizardry:gilded_spruce_wood"
+    },
+    "i": {
+      "item": "ebwizardry:magic_crystal_grand"
+    }
+  },
+  "pattern": [
+    "bbb",
+    " i ",
+    "bbb"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ebwizardry:spruce_bookshelf"
+  }
+}
