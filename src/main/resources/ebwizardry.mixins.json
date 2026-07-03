@@ -8,7 +8,6 @@
     "BlazeMixin",
     "ClipContextMixin",
     "ConjureMixin",
-    "EnchantmentHelperMixin",
     "ExplosionMixin",
     "ItemEntityMixin",
     "ItemStackMixin",
