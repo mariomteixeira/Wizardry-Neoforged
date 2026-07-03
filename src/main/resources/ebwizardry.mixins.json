@@ -2,8 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.binaris.wizardry.core.mixin",
-  "refmap": "${mod_id}.refmap.json",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AttributeModifierMixin",
     "BlazeMixin",
