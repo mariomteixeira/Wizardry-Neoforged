@@ -1,56 +1,53 @@
 package com.binaris.wizardry.core.networking.s2c;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.core.networking.ClientMessageHandler;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfigSyncS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("config_sync");
-    private final String name;
-    private final Map<String, JsonElement> configData;
+public record ConfigSyncS2C(String name, Map<String, JsonElement> configData) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ConfigSyncS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("config_sync"));
 
-    public ConfigSyncS2C(String name, Map<String, JsonElement> configData) {
-        this.name = name;
-        this.configData = configData;
+    public static final StreamCodec<FriendlyByteBuf, ConfigSyncS2C> STREAM_CODEC =
+            StreamCodec.of(ConfigSyncS2C::write, ConfigSyncS2C::read);
+
+    private static void write(FriendlyByteBuf buf, ConfigSyncS2C packet) {
+        buf.writeUtf(packet.name);
+        buf.writeInt(packet.configData.size());
+        for (Map.Entry<String, JsonElement> entry : packet.configData.entrySet()) {
+            buf.writeUtf(entry.getKey());
+            buf.writeUtf(entry.getValue().toString());
+        }
     }
 
-    public ConfigSyncS2C(FriendlyByteBuf buf) {
-        this.name = buf.readUtf();
+    private static ConfigSyncS2C read(FriendlyByteBuf buf) {
+        String name = buf.readUtf();
         int size = buf.readInt();
-        this.configData = new HashMap<>();
+        Map<String, JsonElement> configData = new HashMap<>();
         for (int i = 0; i < size; i++) {
             String key = buf.readUtf();
             String jsonString = buf.readUtf();
             JsonElement element = JsonParser.parseString(jsonString);
             configData.put(key, element);
         }
+        return new ConfigSyncS2C(name, configData);
     }
 
     @Override
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(name);
-        buf.writeInt(configData.size());
-        for (Map.Entry<String, JsonElement> entry : configData.entrySet()) {
-            buf.writeUtf(entry.getKey());
-            buf.writeUtf(entry.getValue().toString());
-        }
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void handleClient() {
-        ClientMessageHandler.configSync(this);
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
+    public static void handle(final ConfigSyncS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleConfigSync(packet));
     }
 
     public String getName() {

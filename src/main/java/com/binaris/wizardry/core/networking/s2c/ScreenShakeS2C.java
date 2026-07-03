@@ -1,47 +1,29 @@
 package com.binaris.wizardry.core.networking.s2c;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.client.ScreenShakeHandler;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ScreenShakeS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("screen_shake");
-    float intensity;
-    int duration;
+public record ScreenShakeS2C(float intensity, int duration) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ScreenShakeS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("screen_shake"));
 
-    public ScreenShakeS2C(float intensity, int duration) {
-        this.intensity = intensity;
-        this.duration = duration;
-    }
-
-    public ScreenShakeS2C(FriendlyByteBuf pBuf) {
-        this.intensity = pBuf.readFloat();
-        this.duration = pBuf.readInt();
-    }
+    public static final StreamCodec<FriendlyByteBuf, ScreenShakeS2C> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.FLOAT, ScreenShakeS2C::intensity,
+                    ByteBufCodecs.INT, ScreenShakeS2C::duration,
+                    ScreenShakeS2C::new);
 
     @Override
-    public void encode(FriendlyByteBuf pBuf) {
-        pBuf.writeFloat(intensity);
-        pBuf.writeInt(duration);
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void handleClient() {
-        ScreenShakeHandler.triggerScreenShake(intensity, duration);
-    }
-
-    public float getIntensity() {
-        return intensity;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
+    public static void handle(final ScreenShakeS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleScreenShake(packet));
     }
 }

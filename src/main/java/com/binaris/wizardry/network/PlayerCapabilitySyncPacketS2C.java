@@ -1,41 +1,33 @@
 package com.binaris.wizardry.network;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class PlayerCapabilitySyncPacketS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("player_capability_sync");
+public record PlayerCapabilitySyncPacketS2C(CapabilityType capabilityType,
+                                             CompoundTag data) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<PlayerCapabilitySyncPacketS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("player_capability_sync"));
 
-    private final CapabilityType type;
-    private final CompoundTag data;
-
-    public PlayerCapabilitySyncPacketS2C(CapabilityType type, CompoundTag data) {
-        this.type = type;
-        this.data = data;
-    }
-
-    public PlayerCapabilitySyncPacketS2C(FriendlyByteBuf buf) {
-        this.type = buf.readEnum(CapabilityType.class);
-        this.data = buf.readNbt();
-    }
-
-    @Override
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeEnum(type);
-        buf.writeNbt(data);
-    }
+    // CapabilityType is written/read via its ordinal as a VarInt, matching FriendlyByteBuf#writeEnum/#readEnum.
+    public static final StreamCodec<FriendlyByteBuf, PlayerCapabilitySyncPacketS2C> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.VAR_INT, packet -> packet.capabilityType().ordinal(),
+                    ByteBufCodecs.COMPOUND_TAG, PlayerCapabilitySyncPacketS2C::data,
+                    (ordinal, data) -> new PlayerCapabilitySyncPacketS2C(CapabilityType.values()[ordinal], data));
 
     @Override
-    public void handleClient() {
-        ClientMessageHandlerForge.playerCapabilitySync(this);
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return ID;
+    public static void handle(final PlayerCapabilitySyncPacketS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handlePlayerCapabilitySync(packet));
     }
 
     public CompoundTag getData() {
@@ -43,7 +35,7 @@ public class PlayerCapabilitySyncPacketS2C implements Message {
     }
 
     public CapabilityType getType() {
-        return type;
+        return capabilityType;
     }
 
     public enum CapabilityType {

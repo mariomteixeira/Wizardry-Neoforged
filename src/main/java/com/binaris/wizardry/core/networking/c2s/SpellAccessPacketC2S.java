@@ -2,52 +2,42 @@ package com.binaris.wizardry.core.networking.c2s;
 
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.item.ICastItem;
-import com.binaris.wizardry.core.networking.abst.Message;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class SpellAccessPacketC2S implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("spell_quick_access");
-    private final int index;
+public record SpellAccessPacketC2S(int index) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<SpellAccessPacketC2S> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("spell_quick_access"));
 
-    public SpellAccessPacketC2S(int index) {
-        this.index = index;
-    }
-
-    public SpellAccessPacketC2S(FriendlyByteBuf buf) {
-        this.index = buf.readInt();
-    }
+    public static final StreamCodec<FriendlyByteBuf, SpellAccessPacketC2S> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.INT, SpellAccessPacketC2S::index,
+                    SpellAccessPacketC2S::new);
 
     @Override
-    public void encode(FriendlyByteBuf pBuf) {
-        pBuf.writeInt(index);
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void handleServer(MinecraftServer server, ServerPlayer player) {
-        if (player == null) return;
+    public static void handle(final SpellAccessPacketC2S packet, final IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ServerPlayer player = (ServerPlayer) context.player();
 
-        ItemStack wand = player.getMainHandItem();
+            ItemStack wand = player.getMainHandItem();
 
-        if (!(wand.getItem() instanceof ICastItem)) {
-            wand = player.getOffhandItem();
-        }
+            if (!(wand.getItem() instanceof ICastItem)) {
+                wand = player.getOffhandItem();
+            }
 
-        if (wand.getItem() instanceof ICastItem) {
-            ((ICastItem) wand.getItem()).selectSpell(wand, index);
-            player.stopUsingItem();
-        }
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
-
-    public int getIndex() {
-        return index;
+            if (wand.getItem() instanceof ICastItem castItem) {
+                castItem.selectSpell(wand, packet.index());
+                player.stopUsingItem();
+            }
+        });
     }
 }

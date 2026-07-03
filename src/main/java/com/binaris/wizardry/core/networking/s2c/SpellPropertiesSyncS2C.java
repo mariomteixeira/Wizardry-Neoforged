@@ -2,54 +2,55 @@ package com.binaris.wizardry.core.networking.s2c;
 
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
-import com.binaris.wizardry.core.networking.ClientMessageHandler;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpellPropertiesSyncS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("spell_properties_sync");
-    public final Map<ResourceLocation, SpellProperties> propertiesMap;
+public record SpellPropertiesSyncS2C(
+        Map<ResourceLocation, SpellProperties> propertiesMap) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<SpellPropertiesSyncS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("spell_properties_sync"));
 
-    public SpellPropertiesSyncS2C(Map<ResourceLocation, SpellProperties> spellPropertiesMap) {
-        this.propertiesMap = spellPropertiesMap;
-    }
+    public static final StreamCodec<FriendlyByteBuf, SpellPropertiesSyncS2C> STREAM_CODEC =
+            StreamCodec.of(SpellPropertiesSyncS2C::write, SpellPropertiesSyncS2C::read);
 
-    public SpellPropertiesSyncS2C(FriendlyByteBuf buf) {
-        int size = buf.readInt();
-        this.propertiesMap = new HashMap<>();
-        for (int i = 0; i < size; i++) {
-            ResourceLocation spellId = buf.readResourceLocation();
-            SpellProperties props = SpellProperties.fromNbt(buf.readNbt());
-            propertiesMap.put(spellId, props);
-        }
-    }
-
-    @Override
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(propertiesMap.size());
-        for (Map.Entry<ResourceLocation, SpellProperties> entry : propertiesMap.entrySet()) {
+    private static void write(FriendlyByteBuf buf, SpellPropertiesSyncS2C packet) {
+        buf.writeInt(packet.propertiesMap.size());
+        for (Map.Entry<ResourceLocation, SpellProperties> entry : packet.propertiesMap.entrySet()) {
             buf.writeResourceLocation(entry.getKey());
             CompoundTag nbt = entry.getValue().toNbt();
             buf.writeNbt(nbt);
         }
     }
 
+    private static SpellPropertiesSyncS2C read(FriendlyByteBuf buf) {
+        int size = buf.readInt();
+        Map<ResourceLocation, SpellProperties> propertiesMap = new HashMap<>();
+        for (int i = 0; i < size; i++) {
+            ResourceLocation spellId = buf.readResourceLocation();
+            SpellProperties props = SpellProperties.fromNbt(buf.readNbt());
+            propertiesMap.put(spellId, props);
+        }
+        return new SpellPropertiesSyncS2C(propertiesMap);
+    }
+
     @Override
-    public void handleClient() {
-        ClientMessageHandler.spellPropertiesSync(this);
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+
+    public static void handle(final SpellPropertiesSyncS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleSpellPropertiesSync(packet));
     }
 
     public Map<ResourceLocation, SpellProperties> getPropertiesMap() {
         return propertiesMap;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
     }
 }

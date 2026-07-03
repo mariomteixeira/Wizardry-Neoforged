@@ -4,6 +4,7 @@ import com.binaris.wizardry.client.NotImplementedItems;
 import com.binaris.wizardry.client.WizardryForgeClient;
 import com.binaris.wizardry.content.menu.BookshelfMenu;
 import com.binaris.wizardry.integration.curios.CuriosIntegration;
+import com.binaris.wizardry.network.EBForgeNetwork;
 import com.binaris.wizardry.registry.EBArgumentTypesForge;
 import com.binaris.wizardry.registry.EBRegistriesForge;
 import com.binaris.wizardry.setup.registries.EBDataComponents;
@@ -26,7 +27,7 @@ public final class WizardryNeoForgeMod {
         EBDataComponents.COMPONENTS.register(modBus);
 
         modBus.addListener(WizardryNeoForgeMod::commonSetup);
-        // TODO Task 7: modBus.addListener(EBForgeNetwork::registerPayloads);
+        modBus.addListener(EBForgeNetwork::registerPayloads);
         if (FMLEnvironment.dist.isClient()) {
             modBus.addListener(WizardryForgeClient::clientSetup);
         }

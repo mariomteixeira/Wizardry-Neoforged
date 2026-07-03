@@ -1,74 +1,69 @@
 package com.binaris.wizardry.core.networking.c2s;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.core.EBLogger;
 import com.binaris.wizardry.api.content.item.ICastItem;
 import com.binaris.wizardry.content.menu.ArcaneWorkbenchMenu;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.core.EBLogger;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ControlInputPacketC2S implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("control_input");
-    private final ControlType controlType;
+public record ControlInputPacketC2S(ControlType controlType) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ControlInputPacketC2S> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("control_input"));
 
-    public ControlInputPacketC2S(ControlType type) {
-        this.controlType = type;
-    }
-
-    public ControlInputPacketC2S(FriendlyByteBuf buf) {
-        this.controlType = ControlType.values()[buf.readInt()];
-    }
+    public static final StreamCodec<FriendlyByteBuf, ControlInputPacketC2S> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.INT, packet -> packet.controlType().ordinal(),
+                    ordinal -> new ControlInputPacketC2S(ControlType.values()[ordinal]));
 
     @Override
-    public void encode(FriendlyByteBuf pBuf) {
-        pBuf.writeInt(controlType.ordinal());
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
+    public static void handle(final ControlInputPacketC2S packet, final IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ServerPlayer player = (ServerPlayer) context.player();
 
-    @Override
-    public void handleServer(MinecraftServer server, ServerPlayer player) {
-        if (player == null) return;
-        ItemStack wand = player.getMainHandItem();
+            ItemStack wand = player.getMainHandItem();
 
-        if (!(wand.getItem() instanceof ICastItem)) {
-            wand = player.getOffhandItem();
-        }
+            if (!(wand.getItem() instanceof ICastItem)) {
+                wand = player.getOffhandItem();
+            }
 
-        switch (controlType) {
-            case NEXT_SPELL_KEY:
-                if (wand.getItem() instanceof ICastItem castItem) {
-                    castItem.selectNextSpell(wand);
-                    player.stopUsingItem();
-                }
-                break;
-            case PREVIOUS_SPELL_KEY:
-                if (wand.getItem() instanceof ICastItem castItem) {
-                    castItem.selectPreviousSpell(wand);
-                    player.stopUsingItem();
-                }
-                break;
-            case APPLY_BUTTON:
-                if (!(player.containerMenu instanceof ArcaneWorkbenchMenu menu)) {
-                    EBLogger.warn("Received a ControlInputPacketC2S, but the player that sent it was not currently using an arcane workbench. This should not happen!");
-                } else {
-                    menu.onApplyButtonPressed(player);
-                }
-                break;
-            case CLEAR_BUTTON:
-                if (!(player.containerMenu instanceof ArcaneWorkbenchMenu menu)) {
-                    EBLogger.warn("Received a ControlInputPacketC2S, but the player that sent it was not currently using an arcane workbench. This should not happen!");
-                } else {
-                    menu.onClearButtonPressed(player);
-                }
-        }
+            switch (packet.controlType()) {
+                case NEXT_SPELL_KEY:
+                    if (wand.getItem() instanceof ICastItem castItem) {
+                        castItem.selectNextSpell(wand);
+                        player.stopUsingItem();
+                    }
+                    break;
+                case PREVIOUS_SPELL_KEY:
+                    if (wand.getItem() instanceof ICastItem castItem) {
+                        castItem.selectPreviousSpell(wand);
+                        player.stopUsingItem();
+                    }
+                    break;
+                case APPLY_BUTTON:
+                    if (!(player.containerMenu instanceof ArcaneWorkbenchMenu menu)) {
+                        EBLogger.warn("Received a ControlInputPacketC2S, but the player that sent it was not currently using an arcane workbench. This should not happen!");
+                    } else {
+                        menu.onApplyButtonPressed(player);
+                    }
+                    break;
+                case CLEAR_BUTTON:
+                    if (!(player.containerMenu instanceof ArcaneWorkbenchMenu menu)) {
+                        EBLogger.warn("Received a ControlInputPacketC2S, but the player that sent it was not currently using an arcane workbench. This should not happen!");
+                    } else {
+                        menu.onClearButtonPressed(player);
+                    }
+            }
+        });
     }
 
     public enum ControlType {

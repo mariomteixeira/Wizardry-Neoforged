@@ -3,51 +3,40 @@ package com.binaris.wizardry.core.networking.s2c;
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
-import com.binaris.wizardry.core.networking.ClientMessageHandler;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import com.binaris.wizardry.core.platform.Services;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class SpellCastS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("spell_cast");
+public record SpellCastS2C(int casterID, InteractionHand hand, Spell spell,
+                            SpellModifiers modifiers) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<SpellCastS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("spell_cast"));
 
-    int casterID;
-    InteractionHand hand;
-    Spell spell;
-    SpellModifiers modifiers;
-
-    public SpellCastS2C(int casterID, InteractionHand hand, Spell spell, SpellModifiers modifiers) {
-        this.casterID = casterID;
-        this.hand = hand;
-        this.spell = spell;
-        this.modifiers = modifiers;
-    }
-
-    public SpellCastS2C(FriendlyByteBuf pBuf) {
-        this.casterID = pBuf.readInt();
-        this.hand = pBuf.readBoolean() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-        this.spell = Services.REGISTRY_UTIL.getSpell(pBuf.readResourceLocation());
-        this.modifiers = SpellModifiers.fromTag(pBuf.readNbt());
-    }
+    public static final StreamCodec<FriendlyByteBuf, SpellCastS2C> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.INT, SpellCastS2C::casterID,
+                    ByteBufCodecs.BOOL, packet -> packet.hand() == InteractionHand.MAIN_HAND,
+                    ResourceLocation.STREAM_CODEC, packet -> packet.spell().getLocation(),
+                    ByteBufCodecs.COMPOUND_TAG, packet -> packet.modifiers().toTag(),
+                    (casterID, mainHand, spellId, modifiersTag) -> new SpellCastS2C(
+                            casterID,
+                            mainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND,
+                            Services.REGISTRY_UTIL.getSpell(spellId),
+                            SpellModifiers.fromTag(modifiersTag)));
 
     @Override
-    public ResourceLocation getId() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void encode(FriendlyByteBuf pBuf) {
-        pBuf.writeInt(casterID);
-        pBuf.writeBoolean(hand == InteractionHand.MAIN_HAND);
-        pBuf.writeResourceLocation(spell.getLocation());
-        pBuf.writeNbt(modifiers.toTag());
-    }
-
-    @Override
-    public void handleClient() {
-        ClientMessageHandler.spellCast(this);
+    public static void handle(final SpellCastS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleSpellCast(packet));
     }
 
     public int getCasterID() {

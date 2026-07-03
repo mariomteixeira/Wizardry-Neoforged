@@ -2,40 +2,30 @@ package com.binaris.wizardry.core.networking.s2c;
 
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.client.ParticleBuilder;
-import com.binaris.wizardry.core.networking.ClientMessageHandler;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ParticleBuilderS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("particle_builder");
-    private final ParticleBuilder.ParticleData data;
+public record ParticleBuilderS2C(ParticleBuilder.ParticleData data) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ParticleBuilderS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("particle_builder"));
 
-    public ParticleBuilderS2C(ParticleBuilder.ParticleData data) {
-        this.data = data;
-    }
-
-    public ParticleBuilderS2C(FriendlyByteBuf buf) {
-        this.data = ParticleBuilder.ParticleData.read(buf);
-    }
-
+    public static final StreamCodec<FriendlyByteBuf, ParticleBuilderS2C> STREAM_CODEC = StreamCodec.of(
+            (buf, packet) -> packet.data.write(buf),
+            buf -> new ParticleBuilderS2C(ParticleBuilder.ParticleData.read(buf)));
 
     public ParticleBuilder.ParticleData getData() {
         return data;
     }
 
     @Override
-    public ResourceLocation getId() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void encode(FriendlyByteBuf pBuf) {
-        data.write(pBuf);
-    }
-
-    @Override
-    public void handleClient() {
-        ClientMessageHandler.particleBuilder(this);
+    public static void handle(final ParticleBuilderS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleParticleBuilder(packet));
     }
 }

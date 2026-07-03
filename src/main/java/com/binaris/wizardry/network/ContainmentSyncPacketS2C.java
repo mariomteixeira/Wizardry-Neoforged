@@ -1,40 +1,31 @@
 package com.binaris.wizardry.network;
 
 import com.binaris.wizardry.WizardryMainMod;
-import com.binaris.wizardry.core.networking.abst.Message;
+import com.binaris.wizardry.client.ClientPacketHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ContainmentSyncPacketS2C implements Message {
-    public static final ResourceLocation ID = WizardryMainMod.location("containment_sync");
-    private final int entityId;
-    private final CompoundTag data;
+public record ContainmentSyncPacketS2C(int entityId, CompoundTag data) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ContainmentSyncPacketS2C> TYPE =
+            new CustomPacketPayload.Type<>(WizardryMainMod.location("containment_sync"));
 
-    public ContainmentSyncPacketS2C(int entityId, CompoundTag data) {
-        this.entityId = entityId;
-        this.data = data;
-    }
-
-    public ContainmentSyncPacketS2C(FriendlyByteBuf buf) {
-        this.entityId = buf.readInt();
-        this.data = buf.readNbt();
-    }
+    public static final StreamCodec<FriendlyByteBuf, ContainmentSyncPacketS2C> STREAM_CODEC =
+            StreamCodec.composite(
+                    ByteBufCodecs.INT, ContainmentSyncPacketS2C::entityId,
+                    ByteBufCodecs.COMPOUND_TAG, ContainmentSyncPacketS2C::data,
+                    ContainmentSyncPacketS2C::new);
 
     @Override
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(entityId);
-        buf.writeNbt(data);
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void handleClient() {
-        ClientMessageHandlerForge.containmentSync(this);
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return ID;
+    public static void handle(final ContainmentSyncPacketS2C packet, final IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleContainmentSync(packet));
     }
 
     public CompoundTag getData() {
@@ -45,4 +36,3 @@ public class ContainmentSyncPacketS2C implements Message {
         return entityId;
     }
 }
-
