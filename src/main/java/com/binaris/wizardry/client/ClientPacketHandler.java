@@ -1,8 +1,8 @@
 package com.binaris.wizardry.client;
 
 import com.binaris.wizardry.core.networking.abst.Message;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 /**
  * Handles messages received on the client side, we may only call client-side methods from here because we don't want to

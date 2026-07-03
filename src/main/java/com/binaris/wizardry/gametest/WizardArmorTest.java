@@ -4,8 +4,8 @@ import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.core.gametest.EBTestCentral;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraftforge.gametest.GameTestHolder;
-import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
 @PrefixGameTestTemplate(false)

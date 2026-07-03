@@ -4,38 +4,33 @@ import com.binaris.wizardry.client.NotImplementedItems;
 import com.binaris.wizardry.client.WizardryForgeClient;
 import com.binaris.wizardry.content.menu.BookshelfMenu;
 import com.binaris.wizardry.integration.curios.CuriosIntegration;
-import com.binaris.wizardry.network.EBForgeNetwork;
 import com.binaris.wizardry.registry.EBArgumentTypesForge;
 import com.binaris.wizardry.registry.EBRegistriesForge;
 import com.binaris.wizardry.setup.registries.WandUpgrades;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 @Mod(WizardryMainMod.MOD_ID)
-public final class WizardryForgeMod {
-    public WizardryForgeMod() {
+public final class WizardryNeoForgeMod {
+    public WizardryNeoForgeMod(IEventBus modBus, ModContainer container) {
         WizardryMainMod.init();
-
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         EBRegistriesForge.tiers(modBus);
         EBRegistriesForge.elements(modBus);
         EBRegistriesForge.spells(modBus);
         EBArgumentTypesForge.register(modBus);
 
-        modBus.addListener(WizardryForgeMod::commonSetup);
+        modBus.addListener(WizardryNeoForgeMod::commonSetup);
+        // TODO Task 7: modBus.addListener(EBForgeNetwork::registerPayloads);
         if (FMLEnvironment.dist.isClient()) {
             modBus.addListener(WizardryForgeClient::clientSetup);
         }
     }
 
     public static void commonSetup(final FMLCommonSetupEvent event) {
-        EBForgeNetwork.registerMessages();
         BookshelfMenu.initBookItems();
         WandUpgrades.initUpgrades();
         NotImplementedItems.init();

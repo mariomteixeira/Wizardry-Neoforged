@@ -15,13 +15,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
 
@@ -75,7 +75,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     public boolean firePlayerBlockBreakEvent(Level level, BlockPos pos, Player player) {
         BlockState state = level.getBlockState(pos);
         BlockEvent.BreakEvent testEvent = new BlockEvent.BreakEvent(level, pos, state, player);
-        MinecraftForge.EVENT_BUS.post(testEvent);
+        NeoForge.EVENT_BUS.post(testEvent);
 
         return testEvent.isCanceled();
     }

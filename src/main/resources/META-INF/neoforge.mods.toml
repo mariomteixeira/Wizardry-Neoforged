@@ -1,0 +1,32 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/Binaris00/ElectroblobsWizardryRedux/issues"
+
+[[mods]]
+modId = "ebwizardry"
+version = "${file.jarVersion}"
+displayName = "Electroblob's Wizardry Redux"
+authors = "Binaris"
+credits = "Min01, Electroblob, WinDanesz, NinjaFrito, 19, e todos os contribuidores"
+description = '''Explore and discover an intuitive and big magic system. Unofficial NeoForge 1.21.1 port.'''
+
+[[dependencies.ebwizardry]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ebwizardry]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config = "ebwizardry.mixins.json"
+
+[[mixins]]
+config = "ebwizardry.forge.mixins.json"
