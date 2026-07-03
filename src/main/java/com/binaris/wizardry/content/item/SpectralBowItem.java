@@ -56,9 +56,9 @@ public class SpectralBowItem extends BowItem {
             int j = EnchantmentHelper.getItemEnchantmentLevel(enchants.getOrThrow(Enchantments.POWER), stack);
             if (j > 0) arrow.setBaseDamage(arrow.getBaseDamage() + (double) j * 0.5D + 0.5D);
 
+            int k = EnchantmentHelper.getItemEnchantmentLevel(enchants.getOrThrow(Enchantments.PUNCH), stack);
+            if (k > 0) arrow.setKnockback(k);
 
-            // 1.21: AbstractArrow no longer exposes setKnockback; Punch knockback is applied automatically
-            // from the firing weapon's enchantments via EnchantmentHelper.modifyKnockback on hit.
             if (EnchantmentHelper.getItemEnchantmentLevel(enchants.getOrThrow(Enchantments.FLAME), stack) > 0)
                 arrow.igniteForSeconds(100);
 

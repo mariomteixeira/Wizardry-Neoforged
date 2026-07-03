@@ -37,18 +37,8 @@ public class ArcaneTomeItem extends Item implements ITierValue {
     }
 
     public ArcaneTomeItem(@Nullable SpellTier tier) {
-        this();
+        super(new Properties().stacksTo(1).rarity(tier != null ? RegistryUtils.arcaneTomeRarity(tier) : Rarity.COMMON));
         this.tier = tier;
-    }
-
-    public @NotNull Rarity getRarity(@NotNull ItemStack stack) {
-        SpellTier tier = getTier(stack);
-        return switch (tier.getLevel()) {
-            case 1 -> Rarity.UNCOMMON;
-            case 2 -> Rarity.RARE;
-            case 3 -> Rarity.EPIC;
-            default -> Rarity.COMMON;
-        };
     }
 
     @Override

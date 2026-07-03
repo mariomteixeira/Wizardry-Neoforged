@@ -10,6 +10,7 @@ import com.binaris.wizardry.setup.registries.EBItems;
 import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import com.binaris.wizardry.setup.registries.Spells;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -142,7 +144,22 @@ public final class RegistryUtils {
     public static ItemStack createArcaneTome(SpellTier tier) {
         ItemStack stack = new ItemStack(EBItems.ARCANE_TOME.get());
         stack.set(EBDataComponents.TIER.get(), tier.getOrCreateLocation());
+        stack.set(DataComponents.RARITY, arcaneTomeRarity(tier));
         return stack;
+    }
+
+    /**
+     * Maps a spell tier to the rarity of its corresponding arcane tome (used both for the dynamic-tier arcane
+     * tome created by {@link #createArcaneTome(SpellTier)} and, statically, for the Apprentice/Advanced/Master
+     * arcane tome items registered in {@code EBItems}).
+     */
+    public static Rarity arcaneTomeRarity(SpellTier tier) {
+        return switch (tier.getLevel()) {
+            case 1 -> Rarity.UNCOMMON;
+            case 2 -> Rarity.RARE;
+            case 3 -> Rarity.EPIC;
+            default -> Rarity.COMMON;
+        };
     }
 
     /**

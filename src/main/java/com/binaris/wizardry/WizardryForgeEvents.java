@@ -189,6 +189,8 @@ public class WizardryForgeEvents {
                 registerForge(event, SpellTiers::registerNull);
             else if (event.getRegistryKey() == EBRegistries.SPELL)
                 registerForge(event, Spells::registerNull);
+            else if (event.getRegistryKey() == Registries.TRIGGER_TYPE)
+                register(event, EBAdvancementTriggers::register);
         }
 
         /**

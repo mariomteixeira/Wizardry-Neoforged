@@ -70,7 +70,7 @@ public final class EBItems {
     public static final DeferredObject<Item> CRYSTAL_SILVER_PLATING = armorUpgrade("crystal_silver_plating");
     public static final DeferredObject<Item> ETHEREAL_CRYSTAL_WEAVE = armorUpgrade("ethereal_crystal_weave");
     public static final DeferredObject<Item> RESPLENDENT_THREAD = armorUpgrade("resplendent_thread");
-    public static final DeferredObject<Item> IDENTIFICATION_SCROLL = item("identification_scroll", () -> new IdentificationScrollItem(new Item.Properties().stacksTo(16)), true, true);
+    public static final DeferredObject<Item> IDENTIFICATION_SCROLL = item("identification_scroll", () -> new IdentificationScrollItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)), true, true);
     public static final DeferredObject<Item> MAGIC_SILK = item("magic_silk");
     public static final DeferredObject<Item> PURIFYING_ELIXIR = item("purifying_elixir", PurifyingElixirItem::new, true, true);
     //Flasks
@@ -410,14 +410,14 @@ public final class EBItems {
      * Add armor upgrades with a default model and inside the item creative tab
      */
     static DeferredObject<Item> armorUpgrade(String name) {
-        return item(name, () -> new ArmorUpgradeItem(new Item.Properties().stacksTo(1)), true, true);
+        return item(name, () -> new ArmorUpgradeItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)), true, true);
     }
 
     /**
      * Add wand upgrades with a default model and inside the item creative tab
      */
     static DeferredObject<Item> wandUpgrade(String name) {
-        return item(name, () -> new WandUpgradeItem(new Item.Properties().stacksTo(16)), true, true);
+        return item(name, () -> new WandUpgradeItem(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)), true, true);
     }
 
     /**

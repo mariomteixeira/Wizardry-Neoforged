@@ -31,23 +31,40 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 public class RandomSpellFunction extends LootItemConditionalFunction {
 
-    private static final Codec<Spell> SPELL_CODEC = ResourceLocation.CODEC.xmap(Services.REGISTRY_UTIL::getSpell, Spell::getLocation);
-    private static final Codec<SpellTier> TIER_CODEC = ResourceLocation.CODEC.xmap(Services.REGISTRY_UTIL::getTier, SpellTier::getOrCreateLocation);
-    private static final Codec<Element> ELEMENT_CODEC = ResourceLocation.CODEC.xmap(Services.REGISTRY_UTIL::getElement, Element::getLocation);
+    private static final Codec<List<Spell>> SPELL_LIST_CODEC = idListCodec(Services.REGISTRY_UTIL::getSpell, Spell::getLocation, "spell");
+    private static final Codec<List<SpellTier>> TIER_LIST_CODEC = idListCodec(Services.REGISTRY_UTIL::getTier, SpellTier::getOrCreateLocation, "tier");
+    private static final Codec<List<Element>> ELEMENT_LIST_CODEC = idListCodec(Services.REGISTRY_UTIL::getElement, Element::getLocation, "element");
 
     public static final MapCodec<RandomSpellFunction> CODEC = RecordCodecBuilder.mapCodec(inst ->
             commonFields(inst).and(inst.group(
-                    SPELL_CODEC.listOf().optionalFieldOf("spells").forGetter(f -> Optional.ofNullable(f.spells)),
+                    SPELL_LIST_CODEC.optionalFieldOf("spells").forGetter(f -> Optional.ofNullable(f.spells)),
                     Codec.BOOL.fieldOf("ignore_weighting").orElse(false).forGetter(f -> f.ignoreWeighting),
                     Codec.FLOAT.fieldOf("undiscovered_bias").orElse(0F).forGetter(f -> f.undiscoveredBias),
-                    TIER_CODEC.listOf().optionalFieldOf("tiers").forGetter(f -> Optional.ofNullable(f.tiers)),
-                    ELEMENT_CODEC.listOf().optionalFieldOf("elements").forGetter(f -> Optional.ofNullable(f.elements))
+                    TIER_LIST_CODEC.optionalFieldOf("tiers").forGetter(f -> Optional.ofNullable(f.tiers)),
+                    ELEMENT_LIST_CODEC.optionalFieldOf("elements").forGetter(f -> Optional.ofNullable(f.elements))
             )).apply(inst, (conditions, spells, ignoreWeighting, undiscoveredBias, tiers, elements) ->
                     new RandomSpellFunction(conditions, spells.orElse(null), ignoreWeighting, undiscoveredBias, tiers.orElse(null), elements.orElse(null))));
+
+    /**
+     * Builds a codec for a list of registry ids that silently drops (with a warning) any id that doesn't resolve to
+     * a value, instead of letting the {@code null} through into the list (which would NPE downstream when the
+     * loot function rolls a spell).
+     */
+    private static <T> Codec<List<T>> idListCodec(Function<ResourceLocation, T> lookup, Function<T, ResourceLocation> toId, String kind) {
+        return ResourceLocation.CODEC.listOf().xmap(
+                ids -> ids.stream().map(id -> {
+                    T value = lookup.apply(id);
+                    if (value == null) EBLogger.warn("Unknown {} id '{}' in a random_spell loot function, ignoring it.", kind, id);
+                    return value;
+                }).filter(Objects::nonNull).toList(),
+                values -> values.stream().map(toId).toList());
+    }
 
     private final @Nullable List<Spell> spells;
     private final @Nullable List<Element> elements;

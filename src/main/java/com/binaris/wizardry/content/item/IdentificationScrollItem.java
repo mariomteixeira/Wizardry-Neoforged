@@ -17,7 +17,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -65,10 +64,6 @@ public class IdentificationScrollItem extends Item {
     @Override
     public boolean isFoil(@NotNull ItemStack stack) {
         return true;
-    }
-
-    public @NotNull Rarity getRarity(@NotNull ItemStack stack) {
-        return Rarity.UNCOMMON;
     }
 
     @Override

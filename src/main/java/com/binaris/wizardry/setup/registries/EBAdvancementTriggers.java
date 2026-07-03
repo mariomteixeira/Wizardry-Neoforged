@@ -5,8 +5,8 @@ import com.binaris.wizardry.content.advancement.SpellCastTrigger;
 import com.binaris.wizardry.content.advancement.SpellDiscoveryTrigger;
 import com.binaris.wizardry.content.advancement.WizardryAdvancementTrigger;
 import com.binaris.wizardry.content.advancement.WizardryContainerTrigger;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public final class EBAdvancementTriggers {
     public static final WizardryAdvancementTrigger MAX_OUT_WAND = new WizardryAdvancementTrigger("max_out_wand");
@@ -25,22 +25,28 @@ public final class EBAdvancementTriggers {
     private EBAdvancementTriggers() {
     }
 
-    public static void register() {
-        register("discover_spell", DISCOVER_SPELL);
-        register("max_out_wand", MAX_OUT_WAND);
-        register("special_upgrade", SPECIAL_UPGRADE);
-        register("anger_wizard", ANGER_WIZARD);
-        register("buy_master_spell", BUY_MASTER_SPELL);
-        register("spell_failure", SPELL_FAILURE);
-        register("wizard_trade", WIZARD_TRADE);
-        register("wand_levelup", WAND_LEVELUP);
-        register("restore_imbuement_altar", RESTORE_IMBUEMENT_ALTAR);
-        register("cast_spell", CAST_SPELL);
-        register("arcane_workbench", ARCANE_WORKBENCH);
-        register("imbuement_altar", IMBUEMENT_ALTAR);
+    /**
+     * Registered via the {@code Registries.TRIGGER_TYPE} branch of
+     * {@code WizardryForgeEvents.ModBusEvents#registerContent} rather than eagerly at mod construction time:
+     * {@code BuiltInRegistries.TRIGGER_TYPES} is frozen by the time the mod constructor runs in 1.21, so calling
+     * {@code CriteriaTriggers.register} there throws "Registry is already frozen".
+     */
+    public static void register(RegisterFunction<CriterionTrigger<?>> function) {
+        register(function, "discover_spell", DISCOVER_SPELL);
+        register(function, "max_out_wand", MAX_OUT_WAND);
+        register(function, "special_upgrade", SPECIAL_UPGRADE);
+        register(function, "anger_wizard", ANGER_WIZARD);
+        register(function, "buy_master_spell", BUY_MASTER_SPELL);
+        register(function, "spell_failure", SPELL_FAILURE);
+        register(function, "wizard_trade", WIZARD_TRADE);
+        register(function, "wand_levelup", WAND_LEVELUP);
+        register(function, "restore_imbuement_altar", RESTORE_IMBUEMENT_ALTAR);
+        register(function, "cast_spell", CAST_SPELL);
+        register(function, "arcane_workbench", ARCANE_WORKBENCH);
+        register(function, "imbuement_altar", IMBUEMENT_ALTAR);
     }
 
-    private static <T extends CriterionTrigger<?>> void register(String name, T trigger) {
-        CriteriaTriggers.register(WizardryMainMod.location(name).toString(), trigger);
+    private static void register(RegisterFunction<CriterionTrigger<?>> function, String name, CriterionTrigger<?> trigger) {
+        function.register(BuiltInRegistries.TRIGGER_TYPES, WizardryMainMod.location(name), trigger);
     }
 }

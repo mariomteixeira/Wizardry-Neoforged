@@ -50,13 +50,23 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
     private final WizardArmorType wizardArmorType;
 
     public WizardArmorItem(WizardArmorType material, Type type, Element element) {
-        super(EBArmorMaterials.holder(material), type, new Properties().durability(type.getDurability(material.getDurabilityMultiplier())));
+        super(EBArmorMaterials.holder(material), type, new Properties().durability(baseDurability(type) * material.getDurabilityMultiplier()));
         this.wizardArmorType = material;
         this.element = element;
     }
 
     public WizardArmorItem(Type type, Element element) {
         this(WizardArmorType.WIZARD, type, element);
+    }
+
+    private static int baseDurability(Type type) {
+        return switch (type) {
+            case HELMET -> 13;
+            case CHESTPLATE -> 15;
+            case LEGGINGS -> 16;
+            case BOOTS -> 11;
+            default -> type.getDurability(1);
+        };
     }
 
     /**

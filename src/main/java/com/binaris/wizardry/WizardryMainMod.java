@@ -5,7 +5,6 @@ import com.binaris.wizardry.content.ForfeitRegistry;
 import com.binaris.wizardry.core.config.EBCommonConfig;
 import com.binaris.wizardry.core.config.ConfigManager;
 import com.binaris.wizardry.core.config.EBServerConfig;
-import com.binaris.wizardry.setup.registries.EBAdvancementTriggers;
 import com.binaris.wizardry.setup.registries.EBArgumentTypeRegistry;
 import net.minecraft.resources.ResourceLocation;
 
@@ -19,7 +18,6 @@ public final class WizardryMainMod {
         ConfigManager.register(EBServerConfig.INSTANCE);
         EBEventHelper.register();
         ForfeitRegistry.register();
-        EBAdvancementTriggers.register();
         EBArgumentTypeRegistry.init();
 
         EBLogger.info("Electroblob's Wizardry Started");
