@@ -1,4 +1,64 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT' apply(false)
-    id 'net.neoforged.moddev.legacyforge' version '2.0.77' apply(false)
+    id 'idea'
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.141'
 }
+
+version = project.version
+group = project.group
+base { archivesName = 'electroblobs-wizardry-redux-neoforge' }
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+    withSourcesJar()
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        minecraftVersion = project.parchment_minecraft
+        mappingsVersion = project.parchment_version
+    }
+
+    runs {
+        client { client() }
+        server { server() }
+        data {
+            data()
+            programArguments.addAll('--mod', project.mod_id, '--all',
+                '--output', file('src/generated/resources').absolutePath,
+                '--existing', file('src/main/resources').absolutePath)
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+    }
+
+    mods {
+        "${project.mod_id}" { sourceSet sourceSets.main }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources'; exclude '.cache'; exclude 'docs/**' }
+
+repositories {
+    mavenCentral()
+    maven { name = 'Illusive Soulworks'; url = 'https://maven.theillusivec4.top/' }
+    maven { name = 'Shedaniel'; url = 'https://maven.shedaniel.me/' }
+    maven { name = 'BlameJared'; url = 'https://maven.blamejared.com/' }
+}
+
+dependencies {
+    compileOnly 'org.jetbrains:annotations:23.0.0'
+    implementation "net.steppschuh.markdowngenerator:markdowngenerator:1.3.1.1"
+
+    // Integrações — religadas no marco 7; manter compileOnly para compilar as classes de integração
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}:api"
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${project.jei_version}"
+}
+
+test { useJUnitPlatform() }
