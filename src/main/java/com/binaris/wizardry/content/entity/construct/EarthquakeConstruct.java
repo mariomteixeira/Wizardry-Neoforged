@@ -65,6 +65,9 @@ public class EarthquakeConstruct extends MagicConstructEntity {
 
                     FallingBlockEntity fallingblock = FallingBlockEntity.fall(level(), pos, level().getBlockState(pos));
                     fallingblock.setDeltaMovement(0, 0.3, 0);
+                    // fall() already spawned the entity with zero velocity; without this the hop never
+                    // reaches clients and the wave reads as a static flash
+                    fallingblock.hurtMarked = true;
                 }
             }
         }
