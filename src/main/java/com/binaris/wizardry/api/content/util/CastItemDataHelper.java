@@ -53,16 +53,16 @@ public final class CastItemDataHelper {
      * the list is padded with {@link Spells#NONE} to reach the maximum size.
      *
      * @param stack The ItemStack.
-     * @return A list of spells on the item, padded with {@link Spells#NONE} if necessary. If the item has no spell data,
-     * an empty list is returned.
+     * @return A list of spells on the item, padded with {@link Spells#NONE} up to the item's spell slot count even when
+     * the stack has no spell data yet, so slot-indexed callers (e.g. workbench binding) always see every slot.
      */
     public static List<Spell> getSpells(ItemStack stack) {
         ArrayList<Spell> spells = new ArrayList<>();
         List<ResourceLocation> stored = stack.get(EBDataComponents.SPELLS.get());
-        if (stored == null) return spells;
-
-        for (ResourceLocation location : stored) {
-            spells.add(Services.REGISTRY_UTIL.getSpell(location));
+        if (stored != null) {
+            for (ResourceLocation location : stored) {
+                spells.add(Services.REGISTRY_UTIL.getSpell(location));
+            }
         }
 
         int maxSlots = stack.getItem() instanceof IWorkbenchItem workbenchItem ? workbenchItem.getSpellSlotCount(stack) : 5;
