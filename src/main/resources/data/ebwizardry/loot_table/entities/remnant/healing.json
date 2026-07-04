@@ -22,10 +22,11 @@
                 "max": 1,
                 "min": 0
               },
-              "function": "minecraft:looting_enchant"
+              "function": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting"
             }
           ],
-          "name": "ebwizardry:spectral_dust_fire"
+          "name": "ebwizardry:spectral_dust_healing"
         }
       ],
       "rolls": 1

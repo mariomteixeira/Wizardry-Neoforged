@@ -15,13 +15,13 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/arcane_tomes",
-          "weight": 2
+          "weight": 2,
+          "value": "ebwizardry:subsets/arcane_tomes"
         },
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/wand_upgrades",
-          "weight": 1
+          "weight": 1,
+          "value": "ebwizardry:subsets/wand_upgrades"
         },
         {
           "type": "minecraft:item",

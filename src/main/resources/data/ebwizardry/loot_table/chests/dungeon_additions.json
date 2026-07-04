@@ -3,39 +3,34 @@
     {
       "name": "wizardry",
       "rolls": {
-        "min": 3,
-        "max": 7
+        "min": 1,
+        "max": 3
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/elemental_crystals",
-          "weight": 3
+          "weight": 6,
+          "value": "ebwizardry:subsets/elemental_crystals"
         },
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/wizard_armor",
-          "weight": 6
+          "weight": 10,
+          "value": "ebwizardry:subsets/wizard_armor"
         },
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/arcane_tomes",
-          "weight": 5
+          "weight": 8,
+          "value": "ebwizardry:subsets/arcane_tomes"
         },
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/wand_upgrades",
-          "weight": 2
-        },
-        {
-          "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/armor_upgrades",
-          "weight": 2
+          "weight": 4,
+          "value": "ebwizardry:subsets/wand_upgrades"
         },
         {
           "type": "minecraft:item",
           "name": "ebwizardry:magic_crystal",
-          "weight": 5,
+          "weight": 10,
           "functions": [
             {
               "function": "set_count",
@@ -49,7 +44,7 @@
         {
           "type": "minecraft:item",
           "name": "ebwizardry:spell_book",
-          "weight": 20,
+          "weight": 40,
           "functions": [
             {
               "function": "ebwizardry:random_spell",
@@ -60,7 +55,7 @@
         {
           "type": "minecraft:item",
           "name": "ebwizardry:scroll",
-          "weight": 7,
+          "weight": 14,
           "functions": [
             {
               "function": "ebwizardry:random_spell",
@@ -78,7 +73,42 @@
         {
           "type": "minecraft:item",
           "name": "ebwizardry:identification_scroll",
-          "weight": 3
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:firebomb",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:poison_bomb",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:smoke_bomb",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:spark_bomb",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:astral_diamond",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:purifying_elixir",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:magic_crystal_grand",
+          "weight": 2
         }
       ]
     }

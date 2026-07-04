@@ -1,39 +1,55 @@
 {
   "pools": [
     {
+      "name": "artifact",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 5,
+          "value": "ebwizardry:subsets/uncommon_artifacts"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 3,
+          "value": "ebwizardry:subsets/rare_artifacts"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 1,
+          "value": "ebwizardry:subsets/epic_artifacts"
+        }
+      ]
+    },
+    {
       "name": "high_value",
       "rolls": {
         "min": 1,
-        "max": 1
+        "max": 2
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/arcane_tomes",
-          "weight": 4
+          "weight": 8,
+          "value": "ebwizardry:subsets/arcane_tomes"
         },
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/wand_upgrades",
-          "weight": 2
+          "weight": 4,
+          "value": "ebwizardry:subsets/wand_upgrades"
         },
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/armor_upgrades",
-          "weight": 1
+          "weight": 2,
+          "value": "ebwizardry:subsets/armor_upgrades"
         },
         {
           "type": "minecraft:item",
           "name": "ebwizardry:spell_book",
-          "weight": 20,
+          "weight": 40,
           "functions": [
             {
               "function": "ebwizardry:random_spell",
-              "tiers": [
-                "ebwizardry:novice",
-                "ebwizardry:apprentice",
-                "ebwizardry:advanced"
-              ],
               "undiscovered_bias": 0.3
             }
           ]
@@ -41,15 +57,10 @@
         {
           "type": "minecraft:item",
           "name": "ebwizardry:scroll",
-          "weight": 7,
+          "weight": 14,
           "functions": [
             {
               "function": "ebwizardry:random_spell",
-              "tiers": [
-                "ebwizardry:novice",
-                "ebwizardry:apprentice",
-                "ebwizardry:advanced"
-              ],
               "undiscovered_bias": 0.3
             },
             {
@@ -64,18 +75,18 @@
         {
           "type": "minecraft:item",
           "name": "ebwizardry:identification_scroll",
-          "weight": 3
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:gold_nugget",
-          "weight": 5,
+          "name": "minecraft:gold_ingot",
+          "weight": 6,
           "functions": [
             {
               "function": "set_count",
               "count": {
                 "min": 1,
-                "max": 4
+                "max": 6
               }
             }
           ]
@@ -83,26 +94,45 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:emerald",
+          "weight": 2,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 1,
+                "max": 3
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:astral_diamond",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ebwizardry:purifying_elixir",
           "weight": 1
         },
         {
           "type": "minecraft:item",
           "name": "ebwizardry:magic_crystal_grand",
-          "weight": 1
+          "weight": 2
         }
       ]
     },
     {
       "name": "low_value",
       "rolls": {
-        "min": 3,
-        "max": 5
+        "min": 2,
+        "max": 4
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "ebwizardry:subsets/elemental_crystals",
-          "weight": 1
+          "weight": 1,
+          "value": "ebwizardry:subsets/elemental_crystals"
         },
         {
           "type": "minecraft:item",
@@ -113,30 +143,10 @@
               "function": "set_count",
               "count": {
                 "min": 1,
-                "max": 4
+                "max": 12
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "ebwizardry:firebomb",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:item",
-          "name": "ebwizardry:poison_bomb",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:item",
-          "name": "ebwizardry:smoke_bomb",
-          "weight": 4
-        },
-        {
-          "type": "minecraft:item",
-          "name": "ebwizardry:spark_bomb",
-          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -182,7 +192,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "ebwizardry:magic_crystal_grand",
+          "name": "ebwizardry:magic_crystal_shard",
           "weight": 2,
           "functions": [
             {
