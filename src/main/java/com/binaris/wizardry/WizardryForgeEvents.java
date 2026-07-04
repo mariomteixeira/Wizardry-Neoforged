@@ -96,6 +96,12 @@ public class WizardryForgeEvents {
             }
         }
 
+        // Spectral blocks cannot be built on
+        @SubscribeEvent
+        public static void onBlockEntityPlace(net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent event) {
+            com.binaris.wizardry.content.block.SpectralBlock.onBlockPlace(event);
+        }
+
         // Lightning bolt spell: replaces vanilla strike damage with attributed shock damage
         @SubscribeEvent
         public static void onEntityStruckByLightning(net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent event) {
