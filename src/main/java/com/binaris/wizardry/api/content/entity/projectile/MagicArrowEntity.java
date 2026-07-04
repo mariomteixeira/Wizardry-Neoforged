@@ -255,7 +255,9 @@ public abstract class MagicArrowEntity extends AbstractArrow {
 
     @Override
     protected @NotNull ItemStack getDefaultPickupItem() {
-        return ItemStack.EMPTY;
+        // Never EMPTY: AbstractArrow saves this stack unconditionally and ItemStack.save throws on empty
+        // stacks, killing entity persistence. Pickup itself stays impossible (tryPickup is false).
+        return new ItemStack(net.minecraft.world.item.Items.ARROW);
     }
 
     public int getKnockback() {

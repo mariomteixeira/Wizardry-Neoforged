@@ -59,7 +59,9 @@ public class ConjuredArrowEntity extends AbstractArrow {
 
     @Override
     protected @NotNull ItemStack getDefaultPickupItem() {
-        return ItemStack.EMPTY;
+        // Never EMPTY: AbstractArrow saves this stack unconditionally and ItemStack.save throws on empty
+        // stacks, killing entity persistence. Pickup remains blocked via getPickupItem/pickup mode.
+        return new ItemStack(net.minecraft.world.item.Items.ARROW);
     }
 
     @Override
