@@ -21,10 +21,15 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /** NOT a scaled construct — the ring size is controlled by time (1.12.2 EntityEarthquake). */
 public class EarthquakeConstruct extends MagicConstructEntity {
+
+    /** Vertical window (up and down from the construct) searched for each column's surface block. */
+    private static final int SURFACE_SEARCH_RANGE = 16;
 
     public EarthquakeConstruct(EntityType<?> type, Level level) {
         super(type, level);
@@ -42,27 +47,42 @@ public class EarthquakeConstruct extends MagicConstructEntity {
 
         if (!level().isClientSide && getCaster() != null && EntityUtil.canDamageBlocks(getCaster(), level())) {
 
+            // Each column only hops once per tick: with per-column surface detection, duplicate angles
+            // landing on the same x/z would otherwise dig successively deeper blocks
+            Set<Long> hoppedColumns = new HashSet<>();
+
             // The further the earthquake spreads, the finer the angle increments
             for (float angle = 0; angle < 2 * Math.PI; angle += Math.PI / (lifetime * 1.5)) {
 
                 int x = this.getX() < 0 ? (int) (this.getX() + ((this.tickCount * speed) + 1.5) * Mth.sin(angle) - 1)
                         : (int) (this.getX() + ((this.tickCount * speed) + 1.5) * Mth.sin(angle));
-                int y = (int) (this.getY() - 0.5);
                 int z = this.getZ() < 0 ? (int) (this.getZ() + ((this.tickCount * speed) + 1.5) * Mth.cos(angle) - 1)
                         : (int) (this.getZ() + ((this.tickCount * speed) + 1.5) * Mth.cos(angle));
 
-                BlockPos pos = new BlockPos(x, y, z);
+                if (!hoppedColumns.add(BlockPos.asLong(x, 0, z))) continue;
+
+                // The wave follows the terrain: hop the topmost solid block of each column, wherever
+                // that surface is, instead of assuming every column shares the construct's own Y
+                BlockPos pos = null;
+                int baseY = (int) (this.getY() - 0.5);
+
+                for (int dy = SURFACE_SEARCH_RANGE; dy >= -SURFACE_SEARCH_RANGE; dy--) {
+                    BlockPos candidate = new BlockPos(x, baseY + dy, z);
+                    // The block above must not be solid, since that causes the falling block to vanish
+                    if (level().getBlockState(candidate).isRedstoneConductor(level(), candidate)
+                            && !level().getBlockState(candidate.above()).isRedstoneConductor(level(), candidate.above())) {
+                        pos = candidate;
+                        break;
+                    }
+                }
+
+                if (pos == null) continue;
 
                 boolean canBreak = getCaster() instanceof ServerPlayer player
                         ? BlockUtil.canBreak(player, level(), pos, true)
                         : !(getCaster() instanceof net.minecraft.world.entity.Mob mob) || BlockUtil.canBreak(mob, level(), pos);
 
-                if (!BlockUtil.isBlockUnbreakable(level(), pos) && !level().isEmptyBlock(pos)
-                        && level().getBlockState(pos).isRedstoneConductor(level(), pos)
-                        // The block above must not be solid, since that causes the falling block to vanish
-                        && !level().getBlockState(pos.above()).isRedstoneConductor(level(), pos.above())
-                        && canBreak) {
-
+                if (!BlockUtil.isBlockUnbreakable(level(), pos) && canBreak) {
                     FallingBlockEntity fallingblock = FallingBlockEntity.fall(level(), pos, level().getBlockState(pos));
                     fallingblock.setDeltaMovement(0, 0.3, 0);
                     // fall() already spawned the entity with zero velocity; without this the hop never
