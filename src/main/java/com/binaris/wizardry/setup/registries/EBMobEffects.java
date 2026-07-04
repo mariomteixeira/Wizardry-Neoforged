@@ -23,6 +23,8 @@ public final class EBMobEffects {
     public static final DeferredObject<MobEffect> WARD = mobEffect("ward", WardMobEffect::new);
     public static final DeferredObject<MobEffect> FIRESKIN = mobEffect("fireskin", FireSkinMobEffect::new);
     public static final DeferredObject<MobEffect> OAKFLESH = mobEffect("oakflesh", OakFleshMobEffect::new);
+    public static final DeferredObject<MobEffect> IRONFLESH = mobEffect("ironflesh", IronfleshMobEffect::new);
+    public static final DeferredObject<MobEffect> DIAMONDFLESH = mobEffect("diamondflesh", DiamondfleshMobEffect::new);
     public static final DeferredObject<MobEffect> CURSE_OF_ENFEEBLEMENT = mobEffect("curse_of_enfeeblement", EnfeeblementCurse::new);
     public static final DeferredObject<MobEffect> CURSE_OF_UNDEATH = mobEffect("curse_of_undeath", UndeathCurse::new);
     public static final DeferredObject<MobEffect> DECAY = mobEffect("decay", DecayMobEffect::new);

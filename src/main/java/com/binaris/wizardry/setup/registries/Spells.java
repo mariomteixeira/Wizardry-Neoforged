@@ -157,6 +157,8 @@ public final class Spells {
     // imbue weapon
     public static final Spell INVIGORATING_PRESENCE;
     public static final Spell OAK_FLESH;
+    public static final Spell IRONFLESH;
+    public static final Spell DIAMONDFLESH;
     // greater fireball
     public static final Spell FLAMING_WEAPON;
     public static final Spell ICE_LANCE;
@@ -548,6 +550,20 @@ public final class Spells {
                         .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.DEFENCE, SpellAction.POINT_UP, 20, 0, 50)
                         .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.OAKFLESH)), 600)
                         .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.OAKFLESH)), 0)
+                        .build()));
+
+        IRONFLESH = spell("ironflesh", () -> new BuffSpell(0.4f, 0.5f, 0.6f, () -> EBMobEffects.holder(EBMobEffects.IRONFLESH)).soundValues(0.7f, 1.2f, 0.4f)
+                .assignProperties(SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.DEFENCE, SpellAction.POINT_UP, 30, 15, 100)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.IRONFLESH)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.IRONFLESH)), 0)
+                        .build()));
+
+        DIAMONDFLESH = spell("diamondflesh", () -> new BuffSpell(0.1f, 0.7f, 1f, () -> EBMobEffects.holder(EBMobEffects.DIAMONDFLESH)).soundValues(0.7f, 1.2f, 0.4f)
+                .assignProperties(SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.MASTER, Elements.HEALING, SpellType.DEFENCE, SpellAction.POINT_UP, 100, 25, 300)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.DIAMONDFLESH)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.DIAMONDFLESH)), 0)
                         .build()));
 
         FROST_STEP = spell("frost_step", () -> new BuffSpell(0.3f, 0.4f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.FROST_STEP)).soundValues(0.7f, 1.2f, 0.4f)
