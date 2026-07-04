@@ -186,7 +186,7 @@ public final class Spells {
     // grapple
     // divination
     public static final Spell EMPOWERING_PRESENCE;
-    // disintegration
+    public static final Spell DISINTEGRATION;
     public static final Spell COMBUSTION_RUNE;
     public static final Spell FROST_STEP;
     public static final Spell PARALYSIS;
@@ -593,6 +593,8 @@ public final class Spells {
         SHOCKWAVE = spell("shockwave", Shockwave::new);
 
         GUARDIAN_BEAM = spell("guardian_beam", GuardianBeam::new);
+
+        DISINTEGRATION = spell("disintegration", Disintegration::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
