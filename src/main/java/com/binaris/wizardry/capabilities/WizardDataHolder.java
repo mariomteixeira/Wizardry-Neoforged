@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -213,21 +212,5 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
             long seed = tag.getLong("randomSeed");
             this.random = new Random(seed);
         }
-    }
-
-    public void copyFrom(@NotNull WizardDataHolder holder) {
-        this.allies.clear();
-        this.allies.addAll(holder.allies);
-
-        this.allyNames.clear();
-        this.allyNames.addAll(holder.allyNames);
-
-        this.itemModifiers = holder.itemModifiers;
-        this.maxTierReached = holder.maxTierReached;
-
-        this.recentSpells.clear();
-        this.recentSpells.addAll(holder.recentSpells);
-
-        this.random = holder.random;
     }
 }

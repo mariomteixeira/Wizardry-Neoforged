@@ -184,8 +184,6 @@ public class WizardryForgeEvents {
                 register(event, EBSounds::register);
             else if (event.getRegistryKey() == Registries.LOOT_FUNCTION_TYPE)
                 register(event, EBLootFunctions::register);
-            else if (event.getRegistryKey() == Registries.ENCHANTMENT)
-                register(event, EBEnchantments::register);
             else if (event.getRegistryKey() == Registries.MENU)
                 register(event, EBMenus::register);
             else if (event.getRegistryKey() == Registries.ATTRIBUTE)

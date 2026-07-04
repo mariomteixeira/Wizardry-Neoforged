@@ -18,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -116,13 +115,5 @@ public class SpellManagerDataHolder implements INBTSerializable<CompoundTag>, Sp
         } catch (ClassCastException e) {
             EBLogger.error("Wizard data NBT tag was not of expected type!", e);
         }
-    }
-
-    public void copyFrom(@NotNull SpellManagerDataHolder old) {
-        this.spellsDiscovered.clear();
-        this.spellsDiscovered.addAll(old.spellsDiscovered);
-
-        this.spellData.clear();
-        this.spellData.putAll(old.spellData);
     }
 }

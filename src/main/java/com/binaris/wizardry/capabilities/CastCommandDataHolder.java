@@ -19,7 +19,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import org.jetbrains.annotations.NotNull;
 
 public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, CastCommandData {
     private final Player provider;
@@ -115,12 +114,5 @@ public class CastCommandDataHolder implements INBTSerializable<CompoundTag>, Cas
         } else {
             this.castCommandModifiers = new SpellModifiers();
         }
-    }
-
-    public void copyFrom(@NotNull CastCommandDataHolder old) {
-        this.castCommandSpell = old.castCommandSpell;
-        this.castCommandTick = old.castCommandTick;
-        this.castCommandModifiers = old.castCommandModifiers;
-        this.castCommandDuration = old.castCommandDuration;
     }
 }
