@@ -35,6 +35,7 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<MagicFireballEntity>> MAGIC_FIREBALL = entity(MagicFireballEntity::new, "magic_fireball", MobCategory.MISC, 0.5f, 0.5f, MagicType.PROJECTILE);
     public static final DeferredObject<EntityType<EmberEntity>> EMBER = entity(EmberEntity::new, "ember", MobCategory.MISC, 0.1f, 0.1f, MagicType.PROJECTILE);
     public static final DeferredObject<EntityType<MagicFireballEntity>> LARGE_MAGIC_FIREBALL = entity(LargeMagicFireballEntity::new, "large_magic_fireball", MobCategory.MISC, 1f, 1f, MagicType.PROJECTILE);
+    public static final DeferredObject<EntityType<LightningDiscEntity>> LIGHTNING_DISC = entity(LightningDiscEntity::new, "lightning_disc", MobCategory.MISC, 2f, 0.5f, MagicType.PROJECTILE);
     public static final DeferredObject<EntityType<MagicMissileEntity>> MAGIC_MISSILE = entity(MagicMissileEntity::new, "magic_missile", MobCategory.MISC, 0.5f, 0.5f, MagicType.PROJECTILE);
     public static final DeferredObject<EntityType<PoisonBombEntity>> POISON_BOMB = entity(PoisonBombEntity::new, "poison_bomb", MobCategory.MISC, 0.25f, 0.25f, MagicType.PROJECTILE);
     public static final DeferredObject<EntityType<SmokeBombEntity>> SMOKE_BOMB = entity(SmokeBombEntity::new, "smoke_bomb", MobCategory.MISC, 0.25f, 0.25f, MagicType.PROJECTILE);

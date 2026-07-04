@@ -98,7 +98,7 @@ public final class Spells {
     public static final Spell LIGHTNING_BOLT;
     public static final Spell SUMMON_LIGHTNING_WRAITH;
     public static final Spell STATIC_AURA;
-    // lightning disc
+    public static final Spell LIGHTNING_DISC;
     // mind control
     public static final Spell SUMMON_WITHER_SKELETON;
     public static final Spell ENTRAPMENT;
@@ -599,6 +599,14 @@ public final class Spells {
         LIGHTNING_WEB = spell("lightning_web", LightningWeb::new);
 
         EARTHQUAKE = spell("earthquake", Earthquake::new);
+
+        LIGHTNING_DISC = spell("lightning_disc", () -> new ProjectileSpell<>(LightningDiscEntity::new).assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.LIGHTNING, SpellType.PROJECTILE, SpellAction.POINT, 25, 5, 60)
+                        .add(DefaultProperties.RANGE, 30f)
+                        .add(DefaultProperties.DAMAGE, 12f)
+                        .add(DefaultProperties.SEEKING_STRENGTH, 5)
+                        .build()));
 
         GREATER_FIREBALL = spell("greater_fireball", () -> new ProjectileSpell<>(LargeMagicFireballEntity::new).assignProperties(
                 SpellProperties.builder()
