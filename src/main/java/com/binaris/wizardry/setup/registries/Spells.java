@@ -185,7 +185,7 @@ public final class Spells {
     public static final Spell REVERSAL;
     // grapple
     // divination
-    // empowering presence
+    public static final Spell EMPOWERING_PRESENCE;
     // disintegration
     public static final Spell COMBUSTION_RUNE;
     public static final Spell FROST_STEP;
@@ -559,6 +559,8 @@ public final class Spells {
                         .build()));
 
         TRANSIENCE = spell("transience", Transience::new);
+
+        EMPOWERING_PRESENCE = spell("empowering_presence", EmpoweringPresence::new);
 
         IRONFLESH = spell("ironflesh", () -> new BuffSpell(0.4f, 0.5f, 0.6f, () -> EBMobEffects.holder(EBMobEffects.IRONFLESH)).soundValues(0.7f, 1.2f, 0.4f)
                 .assignProperties(SpellProperties.builder()

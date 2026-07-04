@@ -143,6 +143,7 @@ public final class EBEventHelper {
         bus.register(SpellCastEvent.Pre.class, ArtifactItem::onSpellPreCast);
         bus.register(SpellCastEvent.Pre.class, EBEventHelper::castContextCheck);
         bus.register(SpellCastEvent.Pre.class, FontOfMana::onSpellCastPreEvent);
+        bus.register(SpellCastEvent.Pre.class, com.binaris.wizardry.content.spell.healing.EmpoweringPresence::onSpellCastPreEvent);
         bus.register(SpellCastEvent.Pre.class, ArcaneJammer::onSpellCastPreEvent);
         bus.register(SpellCastEvent.Pre.class, WizardryAttributeModifier::onPreCast);
     }
