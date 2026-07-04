@@ -175,7 +175,7 @@ public final class Spells {
     // summon storm elemental
     // earthquake
     public static final Spell FONT_OF_MANA;
-    // mine
+    public static final Spell MINE;
     // conjure block
     public static final Spell MUFFLE;
     public static final Spell WARD;
@@ -577,6 +577,8 @@ public final class Spells {
         LIGHTNING_BOLT = spell("lightning_bolt", LightningBoltSpell::new);
 
         CELESTIAL_SMITE = spell("celestial_smite", CelestialSmite::new);
+
+        MINE = spell("mine", Mine::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
