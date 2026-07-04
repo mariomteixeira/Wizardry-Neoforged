@@ -49,11 +49,12 @@ public abstract class SpellInfoScreen extends Screen {
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         int left = this.width / 2 - xSize / 2;
         int top = this.height / 2 - this.ySize / 2;
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+        // super.render applies the 1.21 background blur post-effect to everything already in the framebuffer,
+        // so it must run exactly once and BEFORE the book is drawn — anything drawn earlier gets blurred with
+        // the world (and calling it twice re-blurs the book itself)
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.drawBackgroundLayer(left, top, mouseX, mouseY);
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
         this.drawForegroundLayer(guiGraphics, left, top, mouseX, mouseY);
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     protected void drawBackgroundLayer(int left, int top, int mouseX, int mouseY) {
