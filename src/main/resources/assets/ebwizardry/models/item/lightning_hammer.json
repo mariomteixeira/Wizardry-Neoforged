@@ -2,7 +2,7 @@
   "credit": "Made with Blockbench",
   "textures": {
     "0": "ebwizardry:item/lightning_hammer",
-    "particle": "ebwizardry:entity/lightning_hammer"
+    "particle": "ebwizardry:item/lightning_hammer"
   },
   "elements": [
     {
