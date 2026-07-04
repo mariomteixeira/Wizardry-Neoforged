@@ -158,7 +158,7 @@ public final class Spells {
     public static final Spell OAK_FLESH;
     public static final Spell IRONFLESH;
     public static final Spell DIAMONDFLESH;
-    // greater fireball
+    public static final Spell GREATER_FIREBALL;
     public static final Spell FLAMING_WEAPON;
     public static final Spell ICE_LANCE;
     // freezing weapon
@@ -599,6 +599,14 @@ public final class Spells {
         LIGHTNING_WEB = spell("lightning_web", LightningWeb::new);
 
         EARTHQUAKE = spell("earthquake", Earthquake::new);
+
+        GREATER_FIREBALL = spell("greater_fireball", () -> new ProjectileSpell<>(LargeMagicFireballEntity::new).assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.FIRE, SpellType.PROJECTILE, SpellAction.POINT, 20, 5, 30)
+                        .add(DefaultProperties.RANGE, 20f)
+                        .add(DefaultProperties.DAMAGE, 6f)
+                        .add(LargeMagicFireballEntity.EXPLOSION_POWER, 1f)
+                        .build()));
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
