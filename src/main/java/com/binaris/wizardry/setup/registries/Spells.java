@@ -210,7 +210,7 @@ public final class Spells {
     // frost barrier
     public static final Spell BLINDING_FLASH;
     public static final Spell ENRAGE;
-    // mark sacrifice
+    public static final Spell MARK_SACRIFICE;
     public static final Spell PERMAFROST;
     // storm cloud
     // withering totem
@@ -561,6 +561,8 @@ public final class Spells {
         TRANSIENCE = spell("transience", Transience::new);
 
         EMPOWERING_PRESENCE = spell("empowering_presence", EmpoweringPresence::new);
+
+        MARK_SACRIFICE = spell("mark_sacrifice", MarkSacrifice::new);
 
         IRONFLESH = spell("ironflesh", () -> new BuffSpell(0.4f, 0.5f, 0.6f, () -> EBMobEffects.holder(EBMobEffects.IRONFLESH)).soundValues(0.7f, 1.2f, 0.4f)
                 .assignProperties(SpellProperties.builder()
