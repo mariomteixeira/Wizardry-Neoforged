@@ -96,6 +96,15 @@ public class WizardryForgeEvents {
             }
         }
 
+        // Thorns damage players that punch them (1.12.2 parity)
+        @SubscribeEvent
+        public static void onLeftClickThorns(PlayerInteractEvent.LeftClickBlock event) {
+            if (!event.getLevel().isClientSide && event.getLevel().getBlockState(event.getPos()).is(EBBlocks.THORNS.get())) {
+                com.binaris.wizardry.content.block.ThornsBlock.applyThornDamage(event.getLevel(), event.getPos(),
+                        event.getLevel().getBlockState(event.getPos()), event.getEntity());
+            }
+        }
+
         // Spectral blocks cannot be built on
         @SubscribeEvent
         public static void onBlockEntityPlace(net.neoforged.neoforge.event.level.BlockEvent.EntityPlaceEvent event) {

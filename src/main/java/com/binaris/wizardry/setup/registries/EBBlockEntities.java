@@ -42,6 +42,10 @@ public final class EBBlockEntities {
             "snare", () -> BlockEntityType.Builder.of(SnareBlockEntity::new, EBBlocks.SNARE.get()).build(null)
     );
 
+    public static final DeferredObject<BlockEntityType<ThornsBlockEntity>> THORNS = blockEntity(
+            "thorns", () -> BlockEntityType.Builder.of(ThornsBlockEntity::new, EBBlocks.THORNS.get()).build(null)
+    );
+
 
 
     public static final DeferredObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH = blockEntity(

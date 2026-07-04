@@ -203,7 +203,7 @@ public final class Spells {
     public static final Spell REMOVE_CURSE;
     // possession
     public static final Spell CURSE_OF_ENFEEBLEMENT;
-    // forest_of_thorns
+    public static final Spell FOREST_OF_THORNS;
     public static final Spell SPEED_TIME;
     public static final Spell SLOW_TIME;
     // resurrection
@@ -587,6 +587,8 @@ public final class Spells {
         LIGHT = spell("light", Light::new);
 
         SNARE = spell("snare", Snare::new);
+
+        FOREST_OF_THORNS = spell("forest_of_thorns", ForestOfThorns::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {

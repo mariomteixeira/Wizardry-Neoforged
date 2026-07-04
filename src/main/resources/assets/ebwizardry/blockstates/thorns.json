@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "half=lower,age=0": {
+      "model": "ebwizardry:block/thorns_lower_0"
+    },
+    "half=lower,age=1": {
+      "model": "ebwizardry:block/thorns_lower_1"
+    },
+    "half=lower,age=2": {
+      "model": "ebwizardry:block/thorns_lower_2"
+    },
+    "half=lower,age=3": {
+      "model": "ebwizardry:block/thorns_lower_3"
+    },
+    "half=lower,age=4": {
+      "model": "ebwizardry:block/thorns_lower_4"
+    },
+    "half=lower,age=5": {
+      "model": "ebwizardry:block/thorns_lower_5"
+    },
+    "half=lower,age=6": {
+      "model": "ebwizardry:block/thorns_lower_6"
+    },
+    "half=lower,age=7": {
+      "model": "ebwizardry:block/thorns_lower_7"
+    },
+    "half=upper,age=0": {
+      "model": "ebwizardry:block/thorns_upper_0"
+    },
+    "half=upper,age=1": {
+      "model": "ebwizardry:block/thorns_upper_1"
+    },
+    "half=upper,age=2": {
+      "model": "ebwizardry:block/thorns_upper_2"
+    },
+    "half=upper,age=3": {
+      "model": "ebwizardry:block/thorns_upper_3"
+    },
+    "half=upper,age=4": {
+      "model": "ebwizardry:block/thorns_upper_4"
+    },
+    "half=upper,age=5": {
+      "model": "ebwizardry:block/thorns_upper_5"
+    },
+    "half=upper,age=6": {
+      "model": "ebwizardry:block/thorns_upper_6"
+    },
+    "half=upper,age=7": {
+      "model": "ebwizardry:block/thorns_upper_7"
+    }
+  }
+}

@@ -76,6 +76,7 @@ public final class EBBlocks {
     public static final DeferredObject<Block> SPECTRAL_BLOCK = block("spectral_block", SpectralBlock::new, false, false, false);
     public static final DeferredObject<Block> MAGIC_LIGHT = block("magic_light", MagicLightBlock::new, false, false, false);
     public static final DeferredObject<Block> SNARE = block("snare", SnareBlock::new, false, false, false);
+    public static final DeferredObject<Block> THORNS = block("thorns", ThornsBlock::new, false, false, false);
     public static final DeferredObject<Block> IMBUEMENT_ALTAR = block("imbuement_altar", ImbuementAltarBlock::new, false, true, true);
 
     private EBBlocks() {
