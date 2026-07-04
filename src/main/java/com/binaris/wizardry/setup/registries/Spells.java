@@ -221,7 +221,7 @@ public final class Spells {
     public static final Spell FLAMECATCHER;
     public static final Spell ZOMBIE_APOCALYPSE;
     public static final Spell BOULDER;
-    // celestial smite
+    public static final Spell CELESTIAL_SMITE;
 
     // TEST SPELLS (SENSIBLES)
     public static final Spell OJOSPOCOS;
@@ -575,6 +575,8 @@ public final class Spells {
         CHAIN_LIGHTNING = spell("chain_lightning", ChainLightning::new);
 
         LIGHTNING_BOLT = spell("lightning_bolt", LightningBoltSpell::new);
+
+        CELESTIAL_SMITE = spell("celestial_smite", CelestialSmite::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
