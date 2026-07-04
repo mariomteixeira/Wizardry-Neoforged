@@ -34,6 +34,10 @@ public final class EBBlockEntities {
             "vanishing_cobweb", () -> BlockEntityType.Builder.of(VanishingCobwebBlockEntity::new, EBBlocks.VANISHING_COBWEB.get()).build(null)
     );
 
+    public static final DeferredObject<BlockEntityType<MagicLightBlockEntity>> MAGIC_LIGHT = blockEntity(
+            "magic_light", () -> BlockEntityType.Builder.of(MagicLightBlockEntity::new, EBBlocks.MAGIC_LIGHT.get()).build(null)
+    );
+
 
 
     public static final DeferredObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH = blockEntity(

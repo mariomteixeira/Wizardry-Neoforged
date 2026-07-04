@@ -1,0 +1,6 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "ebwizardry:block/spectral_block"
+  }
+}
