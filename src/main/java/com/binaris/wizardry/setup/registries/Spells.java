@@ -95,7 +95,7 @@ public final class Spells {
     public static final Spell FROST_AXE;
     public static final Spell INVOKE_WEATHER;
     public static final Spell CHAIN_LIGHTNING;
-    // lightning bolt
+    public static final Spell LIGHTNING_BOLT;
     public static final Spell SUMMON_LIGHTNING_WRAITH;
     public static final Spell STATIC_AURA;
     // lightning disc
@@ -573,6 +573,8 @@ public final class Spells {
         PARALYSIS = spell("paralysis", Paralysis::new);
 
         CHAIN_LIGHTNING = spell("chain_lightning", ChainLightning::new);
+
+        LIGHTNING_BOLT = spell("lightning_bolt", LightningBoltSpell::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {

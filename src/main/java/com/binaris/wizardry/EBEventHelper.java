@@ -81,6 +81,7 @@ public final class EBEventHelper {
         bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.healing.MarkSacrifice::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.necromancy.MindTrick::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.lightning.Paralysis::onLivingHurt);
+        bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.lightning.LightningBoltSpell::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, FireSkinMobEffect::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, CurseOfSoulbinding::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, WardMobEffect::onLivingHurt);

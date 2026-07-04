@@ -96,6 +96,12 @@ public class WizardryForgeEvents {
             }
         }
 
+        // Lightning bolt spell: replaces vanilla strike damage with attributed shock damage
+        @SubscribeEvent
+        public static void onEntityStruckByLightning(net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent event) {
+            com.binaris.wizardry.content.spell.lightning.LightningBoltSpell.onEntityStruckByLightning(event);
+        }
+
         // Mind trick / fear: affected mobs cannot acquire attack targets
         @SubscribeEvent
         public static void onLivingChangeTargetMindTrick(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
