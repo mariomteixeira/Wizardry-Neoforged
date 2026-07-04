@@ -215,7 +215,7 @@ public final class Spells {
     // storm cloud
     // withering totem
     public static final Spell FANGS;
-    // guardian beam
+    public static final Spell GUARDIAN_BEAM;
     // radiant totem
     public static final Spell FIRESTORM;
     public static final Spell FLAMECATCHER;
@@ -591,6 +591,8 @@ public final class Spells {
         FOREST_OF_THORNS = spell("forest_of_thorns", ForestOfThorns::new);
 
         SHOCKWAVE = spell("shockwave", Shockwave::new);
+
+        GUARDIAN_BEAM = spell("guardian_beam", GuardianBeam::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
