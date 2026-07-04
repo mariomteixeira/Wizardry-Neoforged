@@ -20,13 +20,13 @@
     "SlotMixin",
     "accessor.BlazeAccessor",
     "accessor.FallingBlockEntityAccessor",
-    "accessor.ItemPropertiesAccessor",
     "accessor.MerchantMenuAccessor",
     "accessor.MobGoalsAccessor",
     "accessor.SlotAccessor"
   ],
   "client": [
     "ClientLevelMixin",
+    "accessor.ItemPropertiesAccessor",
     "HumanoidModelMixin",
     "MinecraftMixin",
     "client.ConjureBarMixin",

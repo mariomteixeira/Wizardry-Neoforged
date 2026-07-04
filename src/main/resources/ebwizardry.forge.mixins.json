@@ -4,8 +4,6 @@
   "package": "com.binaris.wizardry.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "SpectralArmorItemMixin",
-    "WizardArmorItemMixin",
     "WizardItemStackMixin"
   ],
   "client": [

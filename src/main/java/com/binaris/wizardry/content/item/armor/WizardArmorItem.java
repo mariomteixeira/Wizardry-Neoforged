@@ -11,12 +11,14 @@ import com.binaris.wizardry.setup.registries.EBArmorMaterials;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -251,6 +253,23 @@ public class WizardArmorItem extends ArmorItem implements IManaItem, ICustomDama
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
         return false;
+    }
+
+    @Override
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        String s = getWizardArmorType().getName() + "_armor";
+
+        if (WizardryMainMod.IS_THE_SEASON && getWizardArmorType() == WizardArmorType.WIZARD) {
+            s = s + "_festive";
+        } else {
+            if (this.element != null) s = s + "_" + this.element.getName();
+        }
+
+        String string = "ebwizardry:textures/armor/" + s + ".png";
+        if (slot == EquipmentSlot.LEGS) {
+            string = "ebwizardry:textures/armor/" + s + "_legs.png";
+        }
+        return ResourceLocation.parse(string);
     }
 
     @Override
