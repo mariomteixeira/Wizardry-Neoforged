@@ -38,6 +38,10 @@ public final class EBBlockEntities {
             "magic_light", () -> BlockEntityType.Builder.of(MagicLightBlockEntity::new, EBBlocks.MAGIC_LIGHT.get()).build(null)
     );
 
+    public static final DeferredObject<BlockEntityType<SnareBlockEntity>> SNARE = blockEntity(
+            "snare", () -> BlockEntityType.Builder.of(SnareBlockEntity::new, EBBlocks.SNARE.get()).build(null)
+    );
+
 
 
     public static final DeferredObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH = blockEntity(

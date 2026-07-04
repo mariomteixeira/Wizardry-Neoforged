@@ -41,7 +41,7 @@ public final class Spells {
     public static final Spell ARC;
     public static final Spell THUNDERBOLT;
     public static final Spell SUMMON_ZOMBIE;
-    // snare
+    public static final Spell SNARE;
     public static final Spell DART;
     public static final Spell LIGHT;
     public static final Spell TELEKINESIS;
@@ -585,6 +585,8 @@ public final class Spells {
         SPECTRAL_PATHWAY = spell("spectral_pathway", SpectralPathway::new);
 
         LIGHT = spell("light", Light::new);
+
+        SNARE = spell("snare", Snare::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
