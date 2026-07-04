@@ -159,8 +159,6 @@ public final class SpellGUIDisplay {
 
     public static void renderChargeMeter(PoseStack stack, Player player, ItemStack wand, int width, int height, float partialTicks) {
         if (player.isSpectator()) return;
-        stack.pushPose();
-
         if (!EBClientConfig.SHOW_CHARGE_METER.get()) return;
         if (mc.getDebugOverlay().showDebugScreen()) return;
         if (mc.options.getCameraType() != CameraType.FIRST_PERSON) return;
@@ -181,6 +179,8 @@ public final class SpellGUIDisplay {
         float charge = (player.getTicksUsingItem() + partialTicks) / chargeup;
         if (charge > 1) return;
 
+        // pushPose only after every early return above, so aborted frames can't leak pose depth
+        stack.pushPose();
         RenderSystem.setShaderTexture(0, CHARGE_METER);
 
         // -1 to make it more centered...
