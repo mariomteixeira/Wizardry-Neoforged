@@ -90,7 +90,7 @@ public final class Spells {
     public static final Spell FLAMING_AXE;
     public static final Spell BLIZZARD;
     // summon ice wraith
-    // ice_shroud
+    public static final Spell ICE_SHROUD;
     public static final Spell ICE_CHARGE;
     public static final Spell FROST_AXE;
     public static final Spell INVOKE_WEATHER;
@@ -571,6 +571,15 @@ public final class Spells {
                         .assignBaseProperties(SpellTiers.MASTER, Elements.HEALING, SpellType.DEFENCE, SpellAction.POINT_UP, 100, 25, 300)
                         .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.DIAMONDFLESH)), 600)
                         .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.DIAMONDFLESH)), 0)
+                        .build()));
+
+        ICE_SHROUD = spell("ice_shroud", () -> new BuffSpell(0.3f, 0.5f, 1f, () -> EBMobEffects.holder(EBMobEffects.ICE_SHROUD)).soundValues(1f, 1.6f, 0.4f)
+                .assignProperties(SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.ICE, SpellType.DEFENCE, SpellAction.POINT_UP, 40, 0, 250)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.ICE_SHROUD)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.ICE_SHROUD)), 0)
+                        .add(DefaultProperties.EFFECT_DURATION, 100)
+                        .add(DefaultProperties.EFFECT_STRENGTH, 0)
                         .build()));
 
         FROST_STEP = spell("frost_step", () -> new BuffSpell(0.3f, 0.4f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.FROST_STEP)).soundValues(0.7f, 1.2f, 0.4f)

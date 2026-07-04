@@ -26,6 +26,7 @@ public final class EBMobEffects {
     public static final DeferredObject<MobEffect> OAKFLESH = mobEffect("oakflesh", OakFleshMobEffect::new);
     public static final DeferredObject<MobEffect> IRONFLESH = mobEffect("ironflesh", IronfleshMobEffect::new);
     public static final DeferredObject<MobEffect> DIAMONDFLESH = mobEffect("diamondflesh", DiamondfleshMobEffect::new);
+    public static final DeferredObject<MobEffect> ICE_SHROUD = mobEffect("ice_shroud", IceShroudMobEffect::new);
     public static final DeferredObject<MobEffect> MUFFLE = mobEffect("muffle", () -> new MagicMobEffect(MobEffectCategory.BENEFICIAL, 0x4464d9) {
         @Override
         public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {

@@ -10,6 +10,7 @@ import com.binaris.wizardry.content.WizardryAttributeModifier;
 import com.binaris.wizardry.content.data.SpellGlyphData;
 import com.binaris.wizardry.content.effect.ContainmentEffect;
 import com.binaris.wizardry.content.effect.FireSkinMobEffect;
+import com.binaris.wizardry.content.effect.IceShroudMobEffect;
 import com.binaris.wizardry.content.effect.StaticAuraMobEffect;
 import com.binaris.wizardry.content.effect.WardMobEffect;
 import com.binaris.wizardry.content.entity.construct.BubbleConstruct;
@@ -75,6 +76,7 @@ public final class EBEventHelper {
     private static void onLivingHurtEvent(WizardryEventBus bus) {
         bus.register(EBLivingHurtEvent.class, Charge::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, StaticAuraMobEffect::onLivingHurt);
+        bus.register(EBLivingHurtEvent.class, IceShroudMobEffect::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, FireSkinMobEffect::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, CurseOfSoulbinding::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, WardMobEffect::onLivingHurt);
