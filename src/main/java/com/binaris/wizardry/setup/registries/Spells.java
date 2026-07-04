@@ -108,7 +108,7 @@ public final class Spells {
     public static final Spell DECAY;
     public static final Spell WATER_BREATHING;
     public static final Spell TORNADO;
-    // glide
+    public static final Spell GLIDE;
     // summon spirit horse
     public static final Spell SPIDER_SWARM;
     public static final Spell SLIME;
@@ -184,7 +184,7 @@ public final class Spells {
     public static final Spell CHARGE;
     public static final Spell REVERSAL;
     // grapple
-    // divination
+    public static final Spell DIVINATION;
     public static final Spell EMPOWERING_PRESENCE;
     public static final Spell DISINTEGRATION;
     public static final Spell COMBUSTION_RUNE;
@@ -609,6 +609,10 @@ public final class Spells {
                         .build()));
 
         BLINK = spell("blink", Blink::new);
+
+        GLIDE = spell("glide", Glide::new);
+
+        DIVINATION = spell("divination", Divination::new);
 
         IMBUE_WEAPON = spell("imbue_weapon", ImbueWeapon::new);
 
