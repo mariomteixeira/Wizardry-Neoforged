@@ -57,7 +57,7 @@ public final class Spells {
     public static final Spell ICE_SHARD;
     // ice_statue
     public static final Spell FROST_SIGIL;
-    //lightning_ray
+    public static final Spell LIGHTNING_RAY;
     public static final Spell SPARK_BOMB;
     public static final Spell HOMING_SPARK;
     public static final Spell LIGHTNING_SIGIL;
@@ -567,6 +567,8 @@ public final class Spells {
         MIND_TRICK = spell("mind_trick", MindTrick::new);
 
         INTIMIDATE = spell("intimidate", Intimidate::new);
+
+        LIGHTNING_RAY = spell("lightning_ray", LightningRay::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
