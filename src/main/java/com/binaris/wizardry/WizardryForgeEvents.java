@@ -56,13 +56,35 @@ public class WizardryForgeEvents {
             WizardryEventBus.getInstance().fire(new EBServerLoad(event.getServer()));
         }
 
-        // Transience: transient players cannot interact with the world in any way (1.12.2 parity)
+        // Transience: transient players cannot interact with the world in any way (1.12.2 parity).
+        // NeoForge rejects listeners on the abstract PlayerInteractEvent, so each cancellable subclass gets one.
+        private static boolean cancelIfTransient(PlayerInteractEvent event) {
+            return event.getEntity().hasEffect(EBMobEffects.holder(EBMobEffects.TRANSIENCE));
+        }
+
         @SubscribeEvent
-        public static void onPlayerInteract(PlayerInteractEvent event) {
-            if (event instanceof net.neoforged.bus.api.ICancellableEvent cancellable
-                    && event.getEntity().hasEffect(EBMobEffects.holder(EBMobEffects.TRANSIENCE))) {
-                cancellable.setCanceled(true);
-            }
+        public static void onTransientRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+            if (cancelIfTransient(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onTransientRightClickItem(PlayerInteractEvent.RightClickItem event) {
+            if (cancelIfTransient(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onTransientLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+            if (cancelIfTransient(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onTransientEntityInteract(PlayerInteractEvent.EntityInteract event) {
+            if (cancelIfTransient(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onTransientEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+            if (cancelIfTransient(event)) event.setCanceled(true);
         }
 
         // Muffle: silences every sound emitted at the wearer (1.12.2 WizardryEventHandler parity)
