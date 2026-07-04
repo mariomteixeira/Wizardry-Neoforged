@@ -116,7 +116,7 @@ public final class Spells {
     public static final Spell LEVITATION;
     public static final Spell FORCE_ORB;
     // transportation
-    // spectral pathway
+    public static final Spell SPECTRAL_PATHWAY;
     public static final Spell PHASE_STEP;
     public static final Spell VANISHING_BOX;
     public static final Spell GREATER_HEAL;
@@ -581,6 +581,8 @@ public final class Spells {
         MINE = spell("mine", Mine::new);
 
         CONJURE_BLOCK = spell("conjure_block", ConjureBlock::new);
+
+        SPECTRAL_PATHWAY = spell("spectral_pathway", SpectralPathway::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
