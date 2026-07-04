@@ -122,8 +122,7 @@ public final class Spells {
     public static final Spell GREATER_HEAL;
     public static final Spell HEALING_AURA;
     // force field
-    // iron flesh
-    // transience
+    public static final Spell TRANSIENCE;
     public static final Spell METEOR;
     public static final Spell FIRE_BREATH;
     // summon phoenix
@@ -558,6 +557,8 @@ public final class Spells {
                         .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.OAKFLESH)), 600)
                         .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.OAKFLESH)), 0)
                         .build()));
+
+        TRANSIENCE = spell("transience", Transience::new);
 
         IRONFLESH = spell("ironflesh", () -> new BuffSpell(0.4f, 0.5f, 0.6f, () -> EBMobEffects.holder(EBMobEffects.IRONFLESH)).soundValues(0.7f, 1.2f, 0.4f)
                 .assignProperties(SpellProperties.builder()

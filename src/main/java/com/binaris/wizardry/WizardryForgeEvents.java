@@ -56,6 +56,15 @@ public class WizardryForgeEvents {
             WizardryEventBus.getInstance().fire(new EBServerLoad(event.getServer()));
         }
 
+        // Transience: transient players cannot interact with the world in any way (1.12.2 parity)
+        @SubscribeEvent
+        public static void onPlayerInteract(PlayerInteractEvent event) {
+            if (event instanceof net.neoforged.bus.api.ICancellableEvent cancellable
+                    && event.getEntity().hasEffect(EBMobEffects.holder(EBMobEffects.TRANSIENCE))) {
+                cancellable.setCanceled(true);
+            }
+        }
+
         // Muffle: silences every sound emitted at the wearer (1.12.2 WizardryEventHandler parity)
         @SubscribeEvent
         public static void onPlayLevelSound(net.neoforged.neoforge.event.PlayLevelSoundEvent.AtEntity event) {
