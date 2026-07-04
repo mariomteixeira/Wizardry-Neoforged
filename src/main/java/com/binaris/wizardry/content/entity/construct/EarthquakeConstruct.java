@@ -31,6 +31,13 @@ public class EarthquakeConstruct extends MagicConstructEntity {
     /** Vertical window (up and down from the construct) searched for each column's surface block. */
     private static final int SURFACE_SEARCH_RANGE = 16;
 
+    /**
+     * Columns that already hopped, for the whole lifetime of the quake. Re-selecting a column on a later tick
+     * (while the ring edge still overlaps it) would find the block BELOW the still-airborne falling block and
+     * launch it too, excavating the terrain column by column.
+     */
+    private final Set<Long> hoppedColumns = new HashSet<>();
+
     public EarthquakeConstruct(EntityType<?> type, Level level) {
         super(type, level);
     }
@@ -46,10 +53,6 @@ public class EarthquakeConstruct extends MagicConstructEntity {
         double speed = Spells.EARTHQUAKE.property(Earthquake.SPREAD_SPEED);
 
         if (!level().isClientSide && getCaster() != null && EntityUtil.canDamageBlocks(getCaster(), level())) {
-
-            // Each column only hops once per tick: with per-column surface detection, duplicate angles
-            // landing on the same x/z would otherwise dig successively deeper blocks
-            Set<Long> hoppedColumns = new HashSet<>();
 
             // The further the earthquake spreads, the finer the angle increments
             for (float angle = 0; angle < 2 * Math.PI; angle += Math.PI / (lifetime * 1.5)) {
