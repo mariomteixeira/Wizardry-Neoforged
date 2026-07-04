@@ -147,7 +147,7 @@ public final class Spells {
     public static final Spell MIND_TRICK;
     public static final Spell LEAP;
     public static final Spell POCKET_FURNACE;
-    // intimidate
+    public static final Spell INTIMIDATE;
     public static final Spell BANISH;
     // sixth sense
     public static final Spell DARK_VISION;
@@ -565,6 +565,8 @@ public final class Spells {
         MARK_SACRIFICE = spell("mark_sacrifice", MarkSacrifice::new);
 
         MIND_TRICK = spell("mind_trick", MindTrick::new);
+
+        INTIMIDATE = spell("intimidate", Intimidate::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {

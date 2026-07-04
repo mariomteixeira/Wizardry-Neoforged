@@ -92,6 +92,7 @@ public final class EBEventHelper {
     private static void onLivingTickEvent(WizardryEventBus bus) {
         bus.register(EBLivingTick.class, MagicMobEffect::onLivingTick);
         bus.register(EBLivingTick.class, com.binaris.wizardry.content.effect.SlowTimeMobEffect::onLivingTick);
+        bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.necromancy.Intimidate::onLivingTick);
         bus.register(EBLivingTick.class, ArtifactItem::onTick);
         bus.register(EBLivingTick.class, DataEvents::onMinionTick);
         bus.register(EBLivingTick.class, DataEvents::onPlayerTick);
