@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -30,19 +31,25 @@ public class ParticleGuardianBeam extends ParticleTargeted {
     }
 
     @Override
-    protected void draw(PoseStack stack, Tesselator tessellator, float length, float tickDelta) {
+    public @NotNull ParticleRenderType getRenderType() {
+        // Immediate-mode drawing must never happen inside a sheet batch (it corrupts the shared Tesselator)
+        return ParticleRenderType.CUSTOM;
+    }
+
+    @Override
+    protected void draw(PoseStack stack, Tesselator tesselator, float length, float tickDelta) {
         float scale = this.quadSize;
 
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableCull();
+        RenderSystem.enableDepthTest();
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, TEXTURE);
-
-        Tesselator tesselator = Tesselator.getInstance();
 
         stack.pushPose();
 
         stack.mulPose(Axis.ZP.rotationDegrees(Minecraft.getInstance().player.tickCount + tickDelta));
-
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.setShaderTexture(0, TEXTURE);
 
         BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
         float t = THICKNESS * scale;
@@ -62,6 +69,10 @@ public class ParticleGuardianBeam extends ParticleTargeted {
         BufferUploader.drawWithShader(buffer.buildOrThrow());
 
         stack.popPose();
+
+        RenderSystem.enableCull();
+        RenderSystem.disableDepthTest();
+        RenderSystem.disableBlend();
     }
 
     @Deprecated
