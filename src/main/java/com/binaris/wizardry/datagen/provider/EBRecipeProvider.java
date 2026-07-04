@@ -84,6 +84,15 @@ public final class EBRecipeProvider extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, EBItems.WIZARD_LEGGINGS.get()).define('X', EBItems.MAGIC_SILK.get()).pattern("XXX").pattern("X X").pattern("X X").unlockedBy("has_magic_silk", has(EBItems.MAGIC_SILK.get())).save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, EBItems.WIZARD_BOOTS.get()).define('X', EBItems.MAGIC_SILK.get()).pattern("X X").pattern("X X").unlockedBy("has_magic_silk", has(EBItems.MAGIC_SILK.get())).save(consumer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EBBlocks.TRANSPORTATION_STONE.get(), 2)
+                .define('x', net.neoforged.neoforge.common.Tags.Items.STONES)
+                .define('y', EBTags.MAGIC_CRYSTAL_ITEM)
+                .pattern(" x ")
+                .pattern("xyx")
+                .pattern(" x ")
+                .unlockedBy("has_magic_crystal", has(EBTags.MAGIC_CRYSTAL_ITEM))
+                .save(consumer);
+
         nineBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, EBItems.MAGIC_CRYSTAL.get(),
                 RecipeCategory.BUILDING_BLOCKS, EBBlocks.MAGIC_CRYSTAL_BLOCK.get(), "magic_crystal_from_magic_crystal_block", "magic_crystal");
         nineBlockStorageRecipesRecipesWithCustomUnpacking(consumer, RecipeCategory.MISC, EBItems.MAGIC_CRYSTAL_FIRE.get(),

@@ -1,0 +1,27 @@
+{
+  "type": "attack",
+  "base_properties": {
+    "damage": 8.0,
+    "effect_duration": 10,
+    "ember_count": 12,
+    "ember_lifetime": 300,
+    "range": 10.0
+  },
+  "chargeup": 0,
+  "cooldown": 40,
+  "cost": 35,
+  "element": "ebwizardry:fire",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point",
+  "tier": "ebwizardry:advanced"
+}

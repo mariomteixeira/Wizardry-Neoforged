@@ -1,0 +1,25 @@
+{
+  "type": "construct",
+  "base_properties": {
+    "damage": 1.0,
+    "duration": 600,
+    "effect_radius": 3
+  },
+  "chargeup": 20,
+  "cooldown": 250,
+  "cost": 100,
+  "element": "ebwizardry:earth",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:summon",
+  "tier": "ebwizardry:master"
+}

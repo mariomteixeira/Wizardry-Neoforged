@@ -1,0 +1,23 @@
+{
+  "type": "utility",
+  "base_properties": {
+    "teleport_countdown": 75
+  },
+  "chargeup": 20,
+  "cooldown": 100,
+  "cost": 100,
+  "element": "ebwizardry:sorcery",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point_up",
+  "tier": "ebwizardry:advanced"
+}

@@ -1,0 +1,27 @@
+{
+  "type": "alteration",
+  "base_properties": {
+    "critical_health": 4.0,
+    "damage": 4.0,
+    "effect_duration": 100,
+    "player_effect_duration_multiplier": 0.5,
+    "range": 10.0
+  },
+  "chargeup": 10,
+  "cooldown": 60,
+  "cost": 20,
+  "element": "ebwizardry:lightning",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point",
+  "tier": "ebwizardry:advanced"
+}

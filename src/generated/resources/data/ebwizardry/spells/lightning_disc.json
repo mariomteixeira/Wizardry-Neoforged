@@ -1,0 +1,25 @@
+{
+  "type": "projectile",
+  "base_properties": {
+    "damage": 12.0,
+    "range": 30.0,
+    "seeking_strength": 5
+  },
+  "chargeup": 5,
+  "cooldown": 60,
+  "cost": 25,
+  "element": "ebwizardry:lightning",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point",
+  "tier": "ebwizardry:advanced"
+}

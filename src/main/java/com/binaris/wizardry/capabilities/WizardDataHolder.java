@@ -163,6 +163,11 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
             tag.putLong("clairvoyancePos", clairvoyancePos.asLong());
             tag.putString("clairvoyanceDimension", clairvoyanceDimension == null ? "" : clairvoyanceDimension);
         }
+
+        if (transportationPos != null) {
+            tag.putLong("transportationPos", transportationPos.asLong());
+            tag.putString("transportationDimension", transportationDimension == null ? "" : transportationDimension);
+        }
         return tag;
     }
 
@@ -186,6 +191,38 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
     @org.jetbrains.annotations.Nullable
     public String getClairvoyanceDimension() {
         return clairvoyanceDimension;
+    }
+
+    // ======= Transportation saved stone circle + countdown =======
+
+    @Nullable
+    private net.minecraft.core.BlockPos transportationPos;
+    @Nullable
+    private String transportationDimension;
+    /** Countdown transient (Persistence.NEVER no 1.12.2). */
+    private int transportationCountdown;
+
+    public void setTransportationLocation(net.minecraft.core.BlockPos pos, String dimension) {
+        this.transportationPos = pos;
+        this.transportationDimension = dimension;
+    }
+
+    @Nullable
+    public net.minecraft.core.BlockPos getTransportationPos() {
+        return transportationPos;
+    }
+
+    @Nullable
+    public String getTransportationDimension() {
+        return transportationDimension;
+    }
+
+    public void setTransportationCountdown(int countdown) {
+        this.transportationCountdown = countdown;
+    }
+
+    public int getTransportationCountdown() {
+        return transportationCountdown;
     }
 
     // ======= Grapple hook target (transient: per-side instance state, never serialized) =======
@@ -257,6 +294,11 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
         if (tag.contains("clairvoyancePos")) {
             this.clairvoyancePos = net.minecraft.core.BlockPos.of(tag.getLong("clairvoyancePos"));
             this.clairvoyanceDimension = tag.getString("clairvoyanceDimension");
+        }
+
+        if (tag.contains("transportationPos")) {
+            this.transportationPos = net.minecraft.core.BlockPos.of(tag.getLong("transportationPos"));
+            this.transportationDimension = tag.getString("transportationDimension");
         }
     }
 }

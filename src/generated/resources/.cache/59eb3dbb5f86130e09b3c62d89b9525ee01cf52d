@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T16:14:50.411464	Loot Tables
+// 1.21.1	2026-07-04T20:31:19.7416504	Loot Tables
 3770f93b9b53f0fd4b09297525301407e419141c data/ebwizardry/loot_table/blocks/acacia_bookshelf.json
 88143e64aad1aa93d3e22696c4f728e9442b9b1b data/ebwizardry/loot_table/blocks/acacia_lectern.json
 bf581132b9cc6376faa77b60bdaade7f6a19df65 data/ebwizardry/loot_table/blocks/arcane_workbench.json
@@ -48,6 +48,7 @@ cee74f23f765fa567bf22382c6350259452cfee6 data/ebwizardry/loot_table/blocks/potte
 a11de89dba2209090c985ab3ee12eae4fb0a5a7e data/ebwizardry/loot_table/blocks/sorcery_runestone_pedestal.json
 7813fe299a5f4a8197078eea3831c8a1fe9a4998 data/ebwizardry/loot_table/blocks/spruce_bookshelf.json
 abed7b8e39204b84319a7edb30e856cbb76d4191 data/ebwizardry/loot_table/blocks/spruce_lectern.json
+4b5facc8e0d81f57610ddf0d74b53e8b222de139 data/ebwizardry/loot_table/blocks/transportation_stone.json
 2f0f82a58c90a1aa840bf8a97d8dceda3f05d502 data/ebwizardry/loot_table/blocks/vanishing_cobweb.json
 75c4be7daf243e91a48593d4ca96042ec0231061 data/ebwizardry/loot_table/blocks/wall_receptacle.json
 c553cacac798317992003f52ade391bd9177e545 data/ebwizardry/loot_table/subsets/arcane_tomes.json

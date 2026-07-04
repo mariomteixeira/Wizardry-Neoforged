@@ -115,7 +115,7 @@ public final class Spells {
     public static final Spell INVISIBILITY;
     public static final Spell LEVITATION;
     public static final Spell FORCE_ORB;
-    // transportation
+    public static final Spell TRANSPORTATION;
     public static final Spell SPECTRAL_PATHWAY;
     public static final Spell PHASE_STEP;
     public static final Spell VANISHING_BOX;
@@ -617,6 +617,8 @@ public final class Spells {
         DIVINATION = spell("divination", Divination::new);
 
         CLAIRVOYANCE = spell("clairvoyance", Clairvoyance::new);
+
+        TRANSPORTATION = spell("transportation", Transportation::new);
 
         IMBUE_WEAPON = spell("imbue_weapon", ImbueWeapon::new);
 

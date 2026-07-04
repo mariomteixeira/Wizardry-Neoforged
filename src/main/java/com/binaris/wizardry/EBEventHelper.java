@@ -100,6 +100,7 @@ public final class EBEventHelper {
         bus.register(EBLivingTick.class, DataEvents::onMinionTick);
         bus.register(EBLivingTick.class, DataEvents::onPlayerTick);
         bus.register(EBLivingTick.class, ContainmentEffect::onLivingUpdateEvent);
+        bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.sorcery.Transportation::onLivingTick);
     }
 
     private static void onSpellDiscovery(WizardryEventBus bus) {

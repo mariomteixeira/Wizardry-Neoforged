@@ -1,0 +1,25 @@
+{
+  "type": "utility",
+  "base_properties": {
+    "acceleration": 0.1,
+    "fall_speed": 0.1,
+    "speed": 0.4
+  },
+  "chargeup": 0,
+  "cooldown": 0,
+  "cost": 5,
+  "element": "ebwizardry:earth",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point_down",
+  "tier": "ebwizardry:advanced"
+}

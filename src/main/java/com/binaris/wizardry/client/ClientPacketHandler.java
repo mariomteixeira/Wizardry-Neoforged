@@ -61,6 +61,52 @@ public final class ClientPacketHandler {
                 .time((int) (duration * packet.durationMultiplier())).color(1f, 1f, 1f).spawn(world);
     }
 
+    /** Arrival effects of the transportation spell: dismount, travel sound and particle rings (1.12.2 ClientProxy). */
+    public static void handleTransportation(com.binaris.wizardry.core.networking.s2c.TransportationS2C packet) {
+        var world = net.minecraft.client.Minecraft.getInstance().level;
+        if (world == null) return;
+
+        var pos = packet.destination();
+
+        if (packet.dismountEntityId() != -1) {
+            var entity = world.getEntity(packet.dismountEntityId());
+            if (entity != null) entity.stopRiding();
+        }
+
+        // Played on receipt rather than on send so it is heard in first person (1.12.2 fix)
+        var travelSound = net.minecraft.sounds.SoundEvent.createVariableRangeEvent(
+                com.binaris.wizardry.WizardryMainMod.location("spell.transportation.travel"));
+        world.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), travelSound,
+                net.minecraft.sounds.SoundSource.PLAYERS, 1, 1, false);
+
+        for (int i = 0; i < 20; i++) {
+            double radius = 1;
+            float angle = world.random.nextFloat() * (float) Math.PI * 2;
+            double x = pos.getX() + 0.5 + radius * net.minecraft.util.Mth.cos(angle);
+            double y = pos.getY() + world.random.nextDouble() * 2;
+            double z = pos.getZ() + 0.5 + radius * net.minecraft.util.Mth.sin(angle);
+            com.binaris.wizardry.api.client.ParticleBuilder.create(com.binaris.wizardry.setup.registries.client.EBParticles.SPARKLE)
+                    .pos(x, y, z).velocity(0, 0.02, 0).color(0.6f, 1f, 0.6f)
+                    .time(80 + world.random.nextInt(10)).spawn(world);
+        }
+        for (int i = 0; i < 20; i++) {
+            double radius = 1;
+            float angle = world.random.nextFloat() * (float) Math.PI * 2;
+            double x = pos.getX() + 0.5 + radius * net.minecraft.util.Mth.cos(angle);
+            double y = pos.getY() + world.random.nextDouble() * 2;
+            double z = pos.getZ() + 0.5 + radius * net.minecraft.util.Mth.sin(angle);
+            world.addParticle(net.minecraft.core.particles.ParticleTypes.HAPPY_VILLAGER, x, y, z, 0, 0.02, 0);
+        }
+        for (int i = 0; i < 20; i++) {
+            double radius = 1;
+            float angle = world.random.nextFloat() * (float) Math.PI * 2;
+            double x = pos.getX() + 0.5 + radius * net.minecraft.util.Mth.cos(angle);
+            double y = pos.getY() + world.random.nextDouble() * 2;
+            double z = pos.getZ() + 0.5 + radius * net.minecraft.util.Mth.sin(angle);
+            world.addParticle(net.minecraft.core.particles.ParticleTypes.ENCHANT, x, y, z, 0, 0.02, 0);
+        }
+    }
+
     public static void handleTestParticle(TestParticlePacketS2C packet) {
         ClientMessageHandler.testParticle(packet);
     }
