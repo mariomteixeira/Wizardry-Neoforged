@@ -1,5 +1,5 @@
-// 1.21.1	2026-07-03T20:07:17.4605867	Spell Documentation: ebwizardry
-1d50810377674211a4aff00d60fafeeb3f615dab docs/spells.md
+// 1.21.1	2026-07-04T16:14:50.4064424	Spell Documentation: ebwizardry
+24bcc71329468d3b87ae59a3659ce87bcd7f0fe4 docs/spells.md
 b5ed5dfb6422a93452ce6148862262c78c017981 docs/spells/ebwizardry/agility.md
 ab2bb9f5beba5ca49328cf74e07a5089fcc63917 docs/spells/ebwizardry/arc.md
 3ec2137b79d6a69b340e3d8ca5998f51e13753ba docs/spells/ebwizardry/arcane_jammer.md
@@ -26,7 +26,9 @@ cab2f0f8156535feac48cd3feec89128a65f6de4 docs/spells/ebwizardry/darkness_orb.md
 6fe0cb923fb7aa7479363115c726116ff237df3b docs/spells/ebwizardry/dart.md
 002027c29a14ac25563c5c74e74c4daf49f3ca8f docs/spells/ebwizardry/decay.md
 081ff21afc874bb27af9be7b6e771cdeaf8faed0 docs/spells/ebwizardry/detonate.md
+e3deb951aa36689bee77bec21b1aaa9cd2a1d1bd docs/spells/ebwizardry/diamondflesh.md
 1b3fb99f64f7a4572ad65e34bd16572615ba7a4a docs/spells/ebwizardry/dragon_fireball.md
+8d08145deaf6fe2adea1fe1fec83c1e1595873c1 docs/spells/ebwizardry/empowering_presence.md
 2c9b32876208d27470d9e3bab28243403cac574f docs/spells/ebwizardry/enrage.md
 8b1e7edbe5c285bc3dfe4cc0e3e9a650be233559 docs/spells/ebwizardry/entrapment.md
 02bb81f483138a77a20a3e376dfdd4a204dcd905 docs/spells/ebwizardry/evade.md
@@ -68,18 +70,22 @@ f7ebae33a2ed8447f5360df9115b797414b980c2 docs/spells/ebwizardry/homing_spark.md
 6f221c21250d1c5d83661913cb1983c03d14489e docs/spells/ebwizardry/ice_charge.md
 92e0235e784287972da47a6d88eaef950dd7610c docs/spells/ebwizardry/ice_lance.md
 b427db3569c54e36f549f60d6631ec3ee2b7c042 docs/spells/ebwizardry/ice_shard.md
+c79e5e6e8eb24af59e6f498c3d179c6e86ef7a3b docs/spells/ebwizardry/ice_shroud.md
 1ed8daab4335c8c888340d7f52332b5c8c8b99f6 docs/spells/ebwizardry/ice_spikes.md
 39fa9a6c6a10ec2ee375841f13004570f931650b docs/spells/ebwizardry/ignite.md
 95db75a384c9c70e285f4e382f401b2f154d2901 docs/spells/ebwizardry/invigorating_presence.md
 0c15ad8156db0e8dd7668a2f9d9149dac20d90f0 docs/spells/ebwizardry/invisibility.md
 8f89ee0f47902aaedab101293d9d9adc70360679 docs/spells/ebwizardry/invoke_weather.md
+b0fcd81c642abcfcb956632b329afdf6b7b6fef3 docs/spells/ebwizardry/ironflesh.md
 f2a86e6abef205024bd29b3fa35dda0e7c254c39 docs/spells/ebwizardry/leap.md
 633507ab3d2d9242eb05e15db764d112f0403e6e docs/spells/ebwizardry/levitation.md
 08f8b3198069a788ae95ce97b2a2778781b848e2 docs/spells/ebwizardry/life_drain.md
 a978c1ede4408dfd95827fa60d61c02202adc728 docs/spells/ebwizardry/lightning_arrow.md
 97abd205522208c25ee2ef6494c405e447595a41 docs/spells/ebwizardry/lightning_sigil.md
 3399062ce0e268eca2eecd874cf65ce3022a21cc docs/spells/ebwizardry/magic_missile.md
+3c4bae85bb13257bdea0bc115f1fe1fdcfcf414b docs/spells/ebwizardry/mark_sacrifice.md
 70c3e45cceb52d98d797b8da63acc47e69d49ef6 docs/spells/ebwizardry/meteor.md
+c09aa3c5b28495a3914fac0713ce492f5c13ae6b docs/spells/ebwizardry/muffle.md
 bf60029af40f369f333859cb3b646192820299e2 docs/spells/ebwizardry/oakflesh.md
 e08b7cf27cc04e474284ecd821e7e15f566c886c docs/spells/ebwizardry/permafrost.md
 680d31a89f9fb063d8e7c31e6c6e6454054f99c7 docs/spells/ebwizardry/phase_step.md
@@ -96,6 +102,7 @@ d049eedf2db33637d02361ef7ce2b55fac8bf939 docs/spells/ebwizardry/reversal.md
 d11551e5dd0ef1bf57df1684bf019645d732a58b docs/spells/ebwizardry/satiety.md
 3eddd70b5f0a6729aa07566b83a284cdeb653a33 docs/spells/ebwizardry/shulker_bullet.md
 62ffee35c1261b84d720e5560a29b2be60de8b1e docs/spells/ebwizardry/slime.md
+63e627f24531a1fc17c9b1a03da04ab8499ce3c8 docs/spells/ebwizardry/slow_time.md
 f5de4b19b03e662b7c88484a897ee682bb0bc672 docs/spells/ebwizardry/smoke_bomb.md
 5d6f81a5c7b1ca6d4b65efeddc4bd8e4a0d4b910 docs/spells/ebwizardry/spark_bomb.md
 d5460f3dc9a3d4589bd0c570c9afda5e1bc2182b docs/spells/ebwizardry/speed_time.md
@@ -111,6 +118,7 @@ f50068c878b5ef506e78a0838ad452618aa18301 docs/spells/ebwizardry/summon_wither_sk
 1d5ec66c0c4fededd56a873c1abfecabc67574d0 docs/spells/ebwizardry/telekinesis.md
 ab7165228ce52bb3ecd7fd6ab2cc7f6c47ca718e docs/spells/ebwizardry/thunderbolt.md
 7fa223cb29ccd620a5d146ed9e58e719c7e81b92 docs/spells/ebwizardry/tornado.md
+daf014e3ad9652d57c2dfe7c66e33d980308b9c3 docs/spells/ebwizardry/transience.md
 dad1ae48daeade2911d8ef0d65116b320d10d015 docs/spells/ebwizardry/vanishing_box.md
 81688829c8fc5c999735b071e8ab139436ddde64 docs/spells/ebwizardry/vex_swarm.md
 fbde34cd455b3e8dbeab13512a7f008b5742da2b docs/spells/ebwizardry/ward.md

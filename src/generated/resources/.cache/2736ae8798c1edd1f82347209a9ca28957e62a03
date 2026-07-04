@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-03T20:07:17.4696597	Spell Data Provider: ebwizardry
+// 1.21.1	2026-07-04T16:14:50.4139875	Spell Data Provider: ebwizardry
 59709226fef8219dd2c5cd41cb6bb719de55c656 data/ebwizardry/spells/agility.json
 12e12c73b30c50363edbf0bbe8132934b20111d1 data/ebwizardry/spells/arc.json
 9fee9a6638261052b8101e8197dbef3e9aac6521 data/ebwizardry/spells/arcane_jammer.json
@@ -25,7 +25,9 @@ e9dc7ebf43017ff8fcb3478abb5d8a8a992f84a6 data/ebwizardry/spells/dark_vision.json
 aaa547b3455748429fa32c78a70702f46e3369f9 data/ebwizardry/spells/dart.json
 33b3149ab48326e23c4daa320507a0179be59c88 data/ebwizardry/spells/decay.json
 68139027c7a31e94ed0f199a5ffae4c819a372ed data/ebwizardry/spells/detonate.json
+742afd4639c0e17c7da17d08c94f4b8310b5f479 data/ebwizardry/spells/diamondflesh.json
 c9ad010a41015bf27d0581f14b0ee13a9bdb6e7c data/ebwizardry/spells/dragon_fireball.json
+90ec21e536312fffe8e48bd4bd88e89960ca60af data/ebwizardry/spells/empowering_presence.json
 72ab0cb5277d6b604e4e21d713280e9b7d259e5f data/ebwizardry/spells/enrage.json
 387fffe130d94d5cfcae4a66e8e3b43c8b4c7458 data/ebwizardry/spells/entrapment.json
 bac21b784e9f58e2f8e4675e35e8218f75a7c860 data/ebwizardry/spells/evade.json
@@ -67,18 +69,22 @@ b54be727da701facac8c8147eb7a08fdf86fd7c0 data/ebwizardry/spells/ice_age.json
 0da801527f9b688a37bdf9b5333dc2b84554963b data/ebwizardry/spells/ice_charge.json
 1e0408a7cb68a9f4411c65f2fa4d81a3d0eba903 data/ebwizardry/spells/ice_lance.json
 5752627f3113531cedfcd784a48f67db646e537c data/ebwizardry/spells/ice_shard.json
+4ca99d26e903b904ee1175af2e915a0f37911609 data/ebwizardry/spells/ice_shroud.json
 f92feccf9a8e2c9bd158732745665e14f76e88d2 data/ebwizardry/spells/ice_spikes.json
 0cd417ec1e46e0d5c743e8f8f7cce72aa7038e3d data/ebwizardry/spells/ignite.json
 ef355be8967f2ec42348ebe49b469e1af669f390 data/ebwizardry/spells/invigorating_presence.json
 c260d83506d5f14994b78c7bdb28cb33d64c1eb3 data/ebwizardry/spells/invisibility.json
 81eb45873593323a2476aad0f3c21ea73631d379 data/ebwizardry/spells/invoke_weather.json
+c0f8ee871997e995e8deb84896d5efa70f1b170d data/ebwizardry/spells/ironflesh.json
 d585de831b1b8f0a0fc5b32ef33aab55e6f9844b data/ebwizardry/spells/leap.json
 61cedb2f9b4f0f8fc536d1caef664bb5d61c591e data/ebwizardry/spells/levitation.json
 be49b1c47810e0f69141dae93a0fb6c7fe271325 data/ebwizardry/spells/life_drain.json
 bc67ad9a998334b455df2db39022dc256b12aa65 data/ebwizardry/spells/lightning_arrow.json
 3adeec9f790b85043f5c9edf7a999e5254390367 data/ebwizardry/spells/lightning_sigil.json
 8834ad95d56e247d9640ccb081e1ad3ec7748897 data/ebwizardry/spells/magic_missile.json
+ad1d0860f6167d23386fce5711e939de412aa3ee data/ebwizardry/spells/mark_sacrifice.json
 b60b5e60540d3d43e038eb409ca16e10b0980196 data/ebwizardry/spells/meteor.json
+10ef8dc93402104a735da9fd972e25922507e789 data/ebwizardry/spells/muffle.json
 34c973549cc170d396f33518fb558bfa9799020d data/ebwizardry/spells/none.json
 5fbd8ded49c16c96be8b7c13cd4f65309dcf8d32 data/ebwizardry/spells/oakflesh.json
 1851903e4c177bc5be16844af26a105945e0611e data/ebwizardry/spells/permafrost.json
@@ -96,6 +102,7 @@ d612024c4efa4b9242d97b60b492bda4f79b6306 data/ebwizardry/spells/reversal.json
 f662d6da129710323fbac51d5760dfc65f2a8635 data/ebwizardry/spells/satiety.json
 569de7630cabe5ef69d685249abd74eed6481525 data/ebwizardry/spells/shulker_bullet.json
 4dfa9284ae5464f06e8ebb0a84c05ef67e1198f6 data/ebwizardry/spells/slime.json
+eda5670bc8c6af77760506bec0e2eeab2446575d data/ebwizardry/spells/slow_time.json
 d126beffd96ef8d80eda831cae2df4a49738bee0 data/ebwizardry/spells/smoke_bomb.json
 f5c8e83c22c5c6a7498ee9dd49d46aaa1483c287 data/ebwizardry/spells/spark_bomb.json
 8e70e1d1bf2bf09d27f5affed4764d0f2d0c43e6 data/ebwizardry/spells/speed_time.json
@@ -111,6 +118,7 @@ c32882214361ba8f6158042b76c4d7fc4a3d7f0f data/ebwizardry/spells/summon_blaze.jso
 fcdbb45772f348f6e37db3b8e848db3808b863e5 data/ebwizardry/spells/telekinesis.json
 cc40fb3baed6dac638336137ce8472cdc09be6b5 data/ebwizardry/spells/thunderbolt.json
 d18ab5c50641a1ad14e840179ad6f8cca7c6b0d8 data/ebwizardry/spells/tornado.json
+893ece65bf0dbd136cc3e7fd2bfa87907a08b1dc data/ebwizardry/spells/transience.json
 98a4c74d028cc3de0424d5900fbefb020b2dd72e data/ebwizardry/spells/vanishing_box.json
 3b2a67b9d730f8aafd17e88b9d5f5960f8342919 data/ebwizardry/spells/vex_swarm.json
 c2ca078f39518505ee920e6b9e973b186ef2bb8b data/ebwizardry/spells/ward.json

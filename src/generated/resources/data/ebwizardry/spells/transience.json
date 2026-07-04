@@ -1,0 +1,23 @@
+{
+  "type": "buff",
+  "base_properties": {
+    "effect_duration": 400
+  },
+  "chargeup": 15,
+  "cooldown": 100,
+  "cost": 50,
+  "element": "ebwizardry:healing",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point_up",
+  "tier": "ebwizardry:advanced"
+}

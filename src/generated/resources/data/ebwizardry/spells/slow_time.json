@@ -1,0 +1,25 @@
+{
+  "type": "alteration",
+  "base_properties": {
+    "effect.ebwizardry.slow_time_duration": 300,
+    "effect.ebwizardry.slow_time_strength": 0,
+    "effect_radius": 8
+  },
+  "chargeup": 15,
+  "cooldown": 200,
+  "cost": 100,
+  "element": "ebwizardry:sorcery",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point_up",
+  "tier": "ebwizardry:master"
+}

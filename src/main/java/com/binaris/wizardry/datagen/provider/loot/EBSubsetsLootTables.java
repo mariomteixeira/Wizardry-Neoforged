@@ -64,6 +64,8 @@ public final class EBSubsetsLootTables implements LootTableSubProvider {
                                 .add(LootItem.lootTableItem(EBItems.RING_METEOR.get()).setWeight(1))
                                 .add(LootItem.lootTableItem(EBItems.CHARM_LAVA_WALKING.get()).setWeight(1))
                                 .add(LootItem.lootTableItem(EBItems.CHARM_EXPERIENCE_TOME.get()).setWeight(1))
+                                // charm_black_hole/charm_silk_touch ficam fora até black_hole (lote 7) e silk touch existirem
+                                .add(LootItem.lootTableItem(EBItems.CHARM_STOP_TIME.get()).setWeight(1))
                         ));
 
         biConsumer.accept(EBLootTables.SUBSET_RARE_ARTIFACTS,

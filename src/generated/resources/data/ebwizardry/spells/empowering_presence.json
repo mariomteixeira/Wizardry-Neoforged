@@ -1,0 +1,26 @@
+{
+  "type": "buff",
+  "base_properties": {
+    "effect_duration": 900,
+    "effect_radius": 5,
+    "effect_strength": 0,
+    "potency_per_level": 0.15
+  },
+  "chargeup": 20,
+  "cooldown": 60,
+  "cost": 30,
+  "element": "ebwizardry:healing",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point_up",
+  "tier": "ebwizardry:apprentice"
+}

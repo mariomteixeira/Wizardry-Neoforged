@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-03T20:07:17.4635906	Loot Tables
+// 1.21.1	2026-07-04T16:14:50.411464	Loot Tables
 3770f93b9b53f0fd4b09297525301407e419141c data/ebwizardry/loot_table/blocks/acacia_bookshelf.json
 88143e64aad1aa93d3e22696c4f728e9442b9b1b data/ebwizardry/loot_table/blocks/acacia_lectern.json
 bf581132b9cc6376faa77b60bdaade7f6a19df65 data/ebwizardry/loot_table/blocks/arcane_workbench.json
@@ -53,7 +53,7 @@ abed7b8e39204b84319a7edb30e856cbb76d4191 data/ebwizardry/loot_table/blocks/spruc
 c553cacac798317992003f52ade391bd9177e545 data/ebwizardry/loot_table/subsets/arcane_tomes.json
 5121c2d75ee99e7cf2654c0fe04b6e18024e31d8 data/ebwizardry/loot_table/subsets/armor_upgrades.json
 b303daec93dbb66697df23fbd8e7869bb4b9f95e data/ebwizardry/loot_table/subsets/elemental_crystals.json
-c05ebd06077a859545013424326b0b76e63864b6 data/ebwizardry/loot_table/subsets/epic_artifacts.json
+d421fe4c7cbbed7f55cd96aada9b79c07ff37325 data/ebwizardry/loot_table/subsets/epic_artifacts.json
 119f5e1fcf12720b3338ebbe83edf5bd60d90fe6 data/ebwizardry/loot_table/subsets/rare_artifacts.json
 41fcaa82ca6c07dd5042f39aea8acc8c54d55cd7 data/ebwizardry/loot_table/subsets/uncommon_artifacts.json
 4d5bd547700ea2123e78df7cae55571ded1d1b88 data/ebwizardry/loot_table/subsets/wand_upgrades.json
