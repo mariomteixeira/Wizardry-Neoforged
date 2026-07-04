@@ -138,7 +138,7 @@ public final class Spells {
     public static final Spell FLIGHT;
     public static final Spell SILVERFISH_SWARM;
     // black hole
-    // shockwave
+    public static final Spell SHOCKWAVE;
     // summon iron golem
     public static final Spell ARROW_RAIN;
     // diamond flesh
@@ -589,6 +589,8 @@ public final class Spells {
         SNARE = spell("snare", Snare::new);
 
         FOREST_OF_THORNS = spell("forest_of_thorns", ForestOfThorns::new);
+
+        SHOCKWAVE = spell("shockwave", Shockwave::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
