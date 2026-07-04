@@ -1,65 +1,80 @@
 package com.binaris.wizardry.content.spell.sorcery;
 
 import com.binaris.wizardry.api.content.spell.Spell;
+import com.binaris.wizardry.api.content.spell.SpellAction;
+import com.binaris.wizardry.api.content.spell.SpellType;
 import com.binaris.wizardry.api.content.spell.internal.PlayerCastContext;
+import com.binaris.wizardry.api.content.spell.internal.SpellModifiers;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
+import com.binaris.wizardry.api.content.util.EntityUtil;
+import com.binaris.wizardry.api.content.util.GeometryUtil;
+import com.binaris.wizardry.api.content.util.RayTracer;
+import com.binaris.wizardry.content.spell.DefaultProperties;
+import com.binaris.wizardry.core.integrations.ArtifactChannel;
+import com.binaris.wizardry.setup.registries.EBItems;
+import com.binaris.wizardry.setup.registries.Elements;
+import com.binaris.wizardry.setup.registries.SpellTiers;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-// TODO BLINK EFFECT
 public class Blink extends Spell {
-//    @Override
-//    protected void perform(Caster caster) {
-//        if(!(caster instanceof Player player)) return;
-//        // TODO Bin: This could teleport the mount by a charm
-//        boolean teleportMount = false;
-//        boolean hitLiquids = teleportMount && player.getVehicle() instanceof Boat; // Boats teleport to the surface
-//
-//        double range = 25;
-//        HitResult rayTrace = RayTracer.standardBlockRayTrace(player.level(),
-//                player, range, hitLiquids, !hitLiquids, false);
-//
-//        if(player.level().isClientSide){
-//            for(int i = 0; i < 10; i++){
-//                double dx = player.xo;
-//                double dy = player.yo + 2 * player.level().random.nextFloat();
-//                double dz = player.zo;
-//                // For portal particles, velocity is not velocity but the offset where they start, then drift to
-//                // the actual position given.
-//                player.level().addParticle(ParticleTypes.PORTAL, dx, dy, dz, player.level().random.nextDouble() - 0.5,
-//                        player.level().random.nextDouble() - 0.5, player.level().random.nextDouble() - 0.5);
-//            }
-//
-//            // TODO Bin: Missing better blind effect
-//            //Wizardry.proxy.playBlinkEffect(caster);
-//        }
-//
-//        if(rayTrace != null && rayTrace instanceof BlockHitResult blockHitResult){
-//
-//            BlockPos pos = blockHitResult.getBlockPos().relative(blockHitResult.getDirection());
-//
-//            // TODO Bin: Add better blind effect
 
-    /// /            Vec3 vec = EntityUtil.findSpaceForTeleport(toTeleport, GeometryUtils.getFaceCentre(pos, EnumFacing.DOWN), teleportMount);
-    /// /
-    /// /            if(vec != null){
-    /// /                // Plays before and after so it is heard from both positions
-    /// /                this.playSound(world, caster, ticksInUse, -1, modifiers);
-    /// /
-    /// /                if(!teleportMount && caster.isRiding()) caster.dismountRidingEntity();
-    /// /                if(!world.isRemote) toTeleport.setPositionAndUpdate(vec.x, vec.y, vec.z);
-    /// /
-    /// /                this.playSound(world, caster, ticksInUse, -1, modifiers);
-    /// /                return true;
-    /// /            }
-//        }
-//    }
     @Override
     public boolean cast(PlayerCastContext ctx) {
+        var caster = ctx.caster();
+
+        boolean teleportMount = caster.isPassenger() && ArtifactChannel.isEquipped(caster, EBItems.CHARM_MOUNT_TELEPORTING.get());
+        boolean hitLiquids = teleportMount && caster.getVehicle() instanceof Boat; // Boats teleport to the surface
+
+        double range = property(DefaultProperties.RANGE) * ctx.modifiers().get(SpellModifiers.RANGE);
+
+        HitResult rayTrace = RayTracer.standardBlockRayTrace(ctx.world(), caster, range, hitLiquids, !hitLiquids, false);
+
+        if (ctx.world().isClientSide) {
+            for (int i = 0; i < 10; i++) {
+                double dy = caster.getY() + 2 * ctx.world().random.nextFloat();
+                // For portal particles, velocity is the offset where they start, drifting to the given position
+                ctx.world().addParticle(ParticleTypes.PORTAL, caster.getX(), dy, caster.getZ(),
+                        ctx.world().random.nextDouble() - 0.5,
+                        ctx.world().random.nextDouble() - 0.5,
+                        ctx.world().random.nextDouble() - 0.5);
+            }
+            // TODO overlay de blink do 1.12.2 (proxy.playBlinkEffect) — sem loader de shader/overlay ainda (marco 6)
+        }
+
+        if (rayTrace instanceof BlockHitResult blockHit && rayTrace.getType() == HitResult.Type.BLOCK) {
+            BlockPos pos = blockHit.getBlockPos().relative(blockHit.getDirection());
+            Entity toTeleport = teleportMount ? caster.getVehicle() : caster;
+            if (toTeleport == null) return false;
+
+            Vec3 vec = EntityUtil.findSpaceForTeleport(toTeleport, GeometryUtil.getFaceCentre(pos, Direction.DOWN), teleportMount);
+
+            if (vec != null) {
+                // Plays before and after so it is heard from both positions
+                this.playSound(ctx.world(), caster, ctx.castingTicks(), -1);
+
+                if (!teleportMount && caster.isPassenger()) caster.stopRiding();
+                if (!ctx.world().isClientSide) toTeleport.teleportTo(vec.x, vec.y, vec.z);
+
+                this.playSound(ctx.world(), caster, ctx.castingTicks(), -1);
+                return true;
+            }
+        }
         return false;
     }
 
     @Override
     protected @NotNull SpellProperties properties() {
-        return SpellProperties.empty();
+        return SpellProperties.builder()
+                .assignBaseProperties(SpellTiers.APPRENTICE, Elements.SORCERY, SpellType.UTILITY, SpellAction.POINT, 15, 0, 25)
+                .add(DefaultProperties.RANGE, 25f)
+                .build();
     }
 }

@@ -72,7 +72,7 @@ public final class Spells {
     public static final Spell WHIRLWIND;
     public static final Spell POISON_BOMB;
     //summon spirit wolf
-    // blink
+    public static final Spell BLINK;
     public static final Spell AGILITY;
     public static final Spell CONJURE_SWORD;
     public static final Spell CONJURE_PICKAXE;
@@ -153,7 +153,7 @@ public final class Spells {
     public static final Spell DARK_VISION;
     // clairvoyance
     public static final Spell POCKET_WORKBENCH;
-    // imbue weapon
+    public static final Spell IMBUE_WEAPON;
     public static final Spell INVIGORATING_PRESENCE;
     public static final Spell OAK_FLESH;
     public static final Spell IRONFLESH;
@@ -161,7 +161,7 @@ public final class Spells {
     public static final Spell GREATER_FIREBALL;
     public static final Spell FLAMING_WEAPON;
     public static final Spell ICE_LANCE;
-    // freezing weapon
+    public static final Spell FREEZING_WEAPON;
     public static final Spell ICE_SPIKES;
     public static final Spell LIGHTNING_PULSE;
     public static final Spell CURSE_OF_SOULBINDING;
@@ -607,6 +607,12 @@ public final class Spells {
                         .add(DefaultProperties.DAMAGE, 12f)
                         .add(DefaultProperties.SEEKING_STRENGTH, 5)
                         .build()));
+
+        BLINK = spell("blink", Blink::new);
+
+        IMBUE_WEAPON = spell("imbue_weapon", ImbueWeapon::new);
+
+        FREEZING_WEAPON = spell("freezing_weapon", com.binaris.wizardry.content.spell.ice.FreezingWeapon::new);
 
         GREATER_FIREBALL = spell("greater_fireball", () -> new ProjectileSpell<>(LargeMagicFireballEntity::new).assignProperties(
                 SpellProperties.builder()
