@@ -1,11 +1,18 @@
 package com.binaris.wizardry.api.content.spell;
 
 import com.binaris.wizardry.WizardryMainMod;
+import com.binaris.wizardry.api.content.util.GeometryUtil;
+import com.binaris.wizardry.setup.registries.EBAttachments;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -96,7 +103,36 @@ public class SpellAction {
             }
         };
 
-        GRAPPLE = new SpellAction(WizardryMainMod.location("grapple"));
+        GRAPPLE = new SpellAction(WizardryMainMod.location("grapple")) {
+            @Override
+            public void renderArms(LivingEntity entity, HumanoidModel<?> model, InteractionHand hand) {
+                if (!(entity instanceof Player player)) return;
+
+                HitResult hit = player.getData(EBAttachments.WIZARD_DATA).getGrappleTarget();
+                if (hit == null || hit.getType() == HitResult.Type.MISS) return;
+
+                Vec3 target = hit.getLocation();
+                if (hit instanceof EntityHitResult entityHit && entityHit.getEntity() instanceof LivingEntity living) {
+                    // The entity will have moved since the original hit position was recorded
+                    target = GeometryUtil.getCentre(living);
+                }
+
+                Vec3 direction = target.subtract(player.getEyePosition(1));
+
+                float pitch = (float) Mth.atan2(Math.sqrt(direction.x * direction.x + direction.z * direction.z), direction.y);
+                float x = pitch - (float) Math.PI * 0.9f;
+                float y = (float) -Math.toRadians(player.yBodyRot) - (float) Mth.atan2(direction.x, direction.z);
+                y += hand == InteractionHand.MAIN_HAND ? -0.25f : 0.25f;
+
+                if (hand == InteractionHand.MAIN_HAND) {
+                    if (Math.abs(pitch) < 0.2f) y = model.rightArm.yRot;
+                    model.rightArm.setRotation(x, y, 0);
+                } else {
+                    if (Math.abs(pitch) < 0.2f) y = model.leftArm.yRot;
+                    model.leftArm.setRotation(x, y, 0);
+                }
+            }
+        };
 
         NONE = new SpellAction(WizardryMainMod.location("none"));
     }

@@ -188,6 +188,20 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
         return clairvoyanceDimension;
     }
 
+    // ======= Grapple hook target (transient: per-side instance state, never serialized) =======
+
+    @Nullable
+    private net.minecraft.world.phys.HitResult grappleTarget;
+
+    public void setGrappleTarget(@Nullable net.minecraft.world.phys.HitResult hit) {
+        this.grappleTarget = hit;
+    }
+
+    @Nullable
+    public net.minecraft.world.phys.HitResult getGrappleTarget() {
+        return grappleTarget;
+    }
+
     @Override
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
         ResourceLocation tierLocation = ResourceLocation.tryParse(tag.getString("maxTier"));

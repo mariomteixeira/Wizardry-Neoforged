@@ -23,6 +23,7 @@ public final class EBParticles {
     public static final DeferredObject<SimpleParticleType> DARK_MAGIC = particle("dark_magic");
     public static final DeferredObject<SimpleParticleType> SNOW = particle("snow");
     public static final DeferredObject<SimpleParticleType> LEAF = particle("leaf");
+    public static final DeferredObject<SimpleParticleType> VINE = particle("vine");
     public static final DeferredObject<SimpleParticleType> ICE = particle("ice");
     public static final DeferredObject<SimpleParticleType> CLOUD = particle("cloud");
     public static final DeferredObject<SimpleParticleType> MAGIC_BUBBLE = particle("magic_bubble");

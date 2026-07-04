@@ -28,6 +28,7 @@ public final class EBParticleProviders {
         registerParticle(EBParticles.DARK_MAGIC, ParticleDarkMagic.DarkMagicProvider::createParticle, ParticleDarkMagic.DarkMagicProvider::new);
         registerParticle(EBParticles.SNOW, ParticleSnow.SnowProvider::createParticle, ParticleSnow.SnowProvider::new);
         registerParticle(EBParticles.LEAF, ParticleLeaf.LeafProvider::createParticle, ParticleLeaf.LeafProvider::new);
+        registerParticle(EBParticles.VINE, ParticleVine.VineProvider::createParticle, ParticleVine.VineProvider::new);
         registerParticle(EBParticles.ICE, ParticleIce.IceProvider::createParticle, ParticleIce.IceProvider::new);
         registerParticle(EBParticles.CLOUD, ParticleCloud.CloudProvider::createParticle, ParticleCloud.CloudProvider::new);
         registerParticle(EBParticles.MAGIC_BUBBLE, ParticleMagicBubble.MagicBubbleProvider::createParticle, ParticleMagicBubble.MagicBubbleProvider::new);

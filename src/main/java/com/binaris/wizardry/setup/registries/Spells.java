@@ -183,7 +183,7 @@ public final class Spells {
     public static final Spell ICE_BALL;
     public static final Spell CHARGE;
     public static final Spell REVERSAL;
-    // grapple
+    public static final Spell GRAPPLE;
     public static final Spell DIVINATION;
     public static final Spell EMPOWERING_PRESENCE;
     public static final Spell DISINTEGRATION;
@@ -611,6 +611,8 @@ public final class Spells {
         BLINK = spell("blink", Blink::new);
 
         GLIDE = spell("glide", Glide::new);
+
+        GRAPPLE = spell("grapple", Grapple::new);
 
         DIVINATION = spell("divination", Divination::new);
 

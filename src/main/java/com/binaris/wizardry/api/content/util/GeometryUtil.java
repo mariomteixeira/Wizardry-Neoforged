@@ -2,6 +2,7 @@ package com.binaris.wizardry.api.content.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -17,6 +18,10 @@ public final class GeometryUtil {
 
     public static Vec3 getCentre(BlockPos pos) {
         return new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0.5, 0.5, 0.5);
+    }
+
+    public static Vec3 getCentre(Entity entity) {
+        return new Vec3(entity.getX(), entity.getY() + entity.getBbHeight() / 2, entity.getZ());
     }
 
     public static Vec3 horizontalise(Vec3 vec) {

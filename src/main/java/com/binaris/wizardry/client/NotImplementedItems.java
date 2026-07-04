@@ -8,7 +8,6 @@ import java.util.List;
 public final class NotImplementedItems {
     static List<Item> ITEMS = List.of(
             EBItems.AMULET_AUTO_SHIELD.get(),
-            EBItems.CHARM_ABSEILING.get(),
             EBItems.CHARM_BLACK_HOLE.get(),
             EBItems.CHARM_LIGHT.get(),
             EBItems.CHARM_SILK_TOUCH.get(),
