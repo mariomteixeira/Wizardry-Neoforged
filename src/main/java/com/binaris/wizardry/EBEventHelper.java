@@ -80,6 +80,7 @@ public final class EBEventHelper {
         bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.healing.Transience::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.healing.MarkSacrifice::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.necromancy.MindTrick::onLivingHurt);
+        bus.register(EBLivingHurtEvent.class, com.binaris.wizardry.content.spell.lightning.Paralysis::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, FireSkinMobEffect::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, CurseOfSoulbinding::onLivingHurt);
         bus.register(EBLivingHurtEvent.class, WardMobEffect::onLivingHurt);
@@ -93,6 +94,7 @@ public final class EBEventHelper {
         bus.register(EBLivingTick.class, MagicMobEffect::onLivingTick);
         bus.register(EBLivingTick.class, com.binaris.wizardry.content.effect.SlowTimeMobEffect::onLivingTick);
         bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.necromancy.Intimidate::onLivingTick);
+        bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.lightning.Paralysis::onLivingTick);
         bus.register(EBLivingTick.class, ArtifactItem::onTick);
         bus.register(EBLivingTick.class, DataEvents::onMinionTick);
         bus.register(EBLivingTick.class, DataEvents::onPlayerTick);

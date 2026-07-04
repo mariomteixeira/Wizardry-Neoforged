@@ -189,7 +189,7 @@ public final class Spells {
     // disintegration
     public static final Spell COMBUSTION_RUNE;
     public static final Spell FROST_STEP;
-    // paralysis
+    public static final Spell PARALYSIS;
     public static final Spell SHULKER_BULLET;
     public static final Spell CURSE_OF_UNDEATH;
     public static final Spell DRAGON_FIREBALL;
@@ -569,6 +569,8 @@ public final class Spells {
         INTIMIDATE = spell("intimidate", Intimidate::new);
 
         LIGHTNING_RAY = spell("lightning_ray", LightningRay::new);
+
+        PARALYSIS = spell("paralysis", Paralysis::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
