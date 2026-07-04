@@ -171,7 +171,7 @@ public final class Spells {
     public static final Spell ARCANE_JAMMER;
     public static final Spell GROUP_HEAL;
     public static final Spell HAILSTORM;
-    // lightning web
+    public static final Spell LIGHTNING_WEB;
     // summon storm elemental
     // earthquake
     public static final Spell FONT_OF_MANA;
@@ -595,6 +595,8 @@ public final class Spells {
         GUARDIAN_BEAM = spell("guardian_beam", GuardianBeam::new);
 
         DISINTEGRATION = spell("disintegration", Disintegration::new);
+
+        LIGHTNING_WEB = spell("lightning_web", LightningWeb::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
