@@ -28,6 +28,16 @@ public final class EBMobEffects {
     public static final DeferredObject<MobEffect> DIAMONDFLESH = mobEffect("diamondflesh", DiamondfleshMobEffect::new);
     public static final DeferredObject<MobEffect> ICE_SHROUD = mobEffect("ice_shroud", IceShroudMobEffect::new);
     public static final DeferredObject<MobEffect> SLOW_TIME = mobEffect("slow_time", SlowTimeMobEffect::new);
+    public static final DeferredObject<MobEffect> MIND_TRICK = mobEffect("mind_trick", () -> new MagicMobEffect(MobEffectCategory.HARMFUL, 0x601683) {
+        @Override
+        public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {
+        }
+    });
+    public static final DeferredObject<MobEffect> FEAR = mobEffect("fear", () -> new MagicMobEffect(MobEffectCategory.HARMFUL, 0xbd0100) {
+        @Override
+        public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {
+        }
+    });
     public static final DeferredObject<MobEffect> MARK_OF_SACRIFICE = mobEffect("mark_of_sacrifice", () -> new MagicMobEffect(MobEffectCategory.HARMFUL, 0xe90e48) {
         @Override
         public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {

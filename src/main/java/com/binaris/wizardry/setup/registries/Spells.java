@@ -144,7 +144,7 @@ public final class Spells {
     // diamond flesh
     public static final Spell FONT_OF_VITALITY;
     public static final Spell SMOKE_BOMB;
-    // mind trick
+    public static final Spell MIND_TRICK;
     public static final Spell LEAP;
     public static final Spell POCKET_FURNACE;
     // intimidate
@@ -563,6 +563,8 @@ public final class Spells {
         EMPOWERING_PRESENCE = spell("empowering_presence", EmpoweringPresence::new);
 
         MARK_SACRIFICE = spell("mark_sacrifice", MarkSacrifice::new);
+
+        MIND_TRICK = spell("mind_trick", MindTrick::new);
 
         // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
         SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {

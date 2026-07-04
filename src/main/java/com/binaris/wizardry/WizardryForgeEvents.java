@@ -96,6 +96,12 @@ public class WizardryForgeEvents {
             }
         }
 
+        // Mind trick / fear: affected mobs cannot acquire attack targets
+        @SubscribeEvent
+        public static void onLivingChangeTargetMindTrick(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
+            com.binaris.wizardry.content.spell.necromancy.MindTrick.onLivingChangeTarget(event);
+        }
+
         // Muffle: mobs only spot a muffled target inside their 144-degree frontal arc
         @SubscribeEvent
         public static void onLivingChangeTarget(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
