@@ -110,9 +110,11 @@ public class Mine extends RaySpell {
                         }
                     }
                 }
-            } else if (ctx.caster() != null && BlockUtil.canPlaceBlock(ctx.caster(), ctx.world(), pos1)) {
-                // NPCs can dig the block under the target's feet
-                flag = ctx.world().destroyBlock(pos1, true) || flag;
+            } else if (ctx.caster() != null) {
+                // NPCs can dig the block under the target's feet (1.12.2 canBreakBlock; mobs respect grief events)
+                boolean allowed = !(ctx.caster() instanceof net.minecraft.world.entity.Mob mob)
+                        || BlockUtil.canBreak(mob, ctx.world(), pos1);
+                if (allowed) flag = ctx.world().destroyBlock(pos1, true) || flag;
             }
         }
         return flag;

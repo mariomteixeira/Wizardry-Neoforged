@@ -269,7 +269,9 @@ public final class BlockUtil {
      * @return True if the block is unbreakable, false otherwise
      */
     public static boolean isBlockUnbreakable(Level world, BlockPos pos) {
-        return !world.isEmptyBlock(new BlockPos(pos)) && world.getBlockState(pos).isSolid();
+        // 1.12.2 semantics: unbreakable means hardness -1 (bedrock, barriers). The previous check
+        // (!empty && isSolid) flagged every normal solid block as unbreakable, silently killing mine.
+        return !world.isEmptyBlock(pos) && world.getBlockState(pos).getDestroySpeed(world, pos) < 0;
     }
 
     /**
