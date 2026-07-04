@@ -205,7 +205,7 @@ public final class Spells {
     public static final Spell CURSE_OF_ENFEEBLEMENT;
     // forest_of_thorns
     public static final Spell SPEED_TIME;
-    // slow time
+    public static final Spell SLOW_TIME;
     // resurrection
     // frost barrier
     public static final Spell BLINDING_FLASH;
@@ -563,6 +563,25 @@ public final class Spells {
         EMPOWERING_PRESENCE = spell("empowering_presence", EmpoweringPresence::new);
 
         MARK_SACRIFICE = spell("mark_sacrifice", MarkSacrifice::new);
+
+        // Not castable by NPCs/dispensers, matching 1.12.2 SlowTime; post-shader deferred (no shader loader yet)
+        SLOW_TIME = spell("slow_time", () -> new BuffSpell(0.2f, 0.8f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.SLOW_TIME)) {
+            @Override
+            public boolean canCastByEntity() {
+                return false;
+            }
+
+            @Override
+            public boolean canCastByLocation() {
+                return false;
+            }
+        }.soundValues(0.6f, 1.5f, 0)
+                .assignProperties(SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.MASTER, Elements.SORCERY, SpellType.ALTERATION, SpellAction.POINT_UP, 100, 15, 200)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.SLOW_TIME)), 300)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.SLOW_TIME)), 0)
+                        .add(DefaultProperties.EFFECT_RADIUS, 8)
+                        .build()));
 
         IRONFLESH = spell("ironflesh", () -> new BuffSpell(0.4f, 0.5f, 0.6f, () -> EBMobEffects.holder(EBMobEffects.IRONFLESH)).soundValues(0.7f, 1.2f, 0.4f)
                 .assignProperties(SpellProperties.builder()
