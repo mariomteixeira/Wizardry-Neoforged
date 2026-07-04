@@ -158,7 +158,34 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
 
         long seed = random.nextLong();
         tag.putLong("randomSeed", seed);
+
+        if (clairvoyancePos != null) {
+            tag.putLong("clairvoyancePos", clairvoyancePos.asLong());
+            tag.putString("clairvoyanceDimension", clairvoyanceDimension == null ? "" : clairvoyanceDimension);
+        }
         return tag;
+    }
+
+    // ======= Clairvoyance saved location =======
+
+    @org.jetbrains.annotations.Nullable
+    private net.minecraft.core.BlockPos clairvoyancePos;
+    @org.jetbrains.annotations.Nullable
+    private String clairvoyanceDimension;
+
+    public void setClairvoyanceLocation(net.minecraft.core.BlockPos pos, String dimension) {
+        this.clairvoyancePos = pos;
+        this.clairvoyanceDimension = dimension;
+    }
+
+    @org.jetbrains.annotations.Nullable
+    public net.minecraft.core.BlockPos getClairvoyancePos() {
+        return clairvoyancePos;
+    }
+
+    @org.jetbrains.annotations.Nullable
+    public String getClairvoyanceDimension() {
+        return clairvoyanceDimension;
     }
 
     @Override
@@ -211,6 +238,11 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
         if (tag.contains("randomSeed")) {
             long seed = tag.getLong("randomSeed");
             this.random = new Random(seed);
+        }
+
+        if (tag.contains("clairvoyancePos")) {
+            this.clairvoyancePos = net.minecraft.core.BlockPos.of(tag.getLong("clairvoyancePos"));
+            this.clairvoyanceDimension = tag.getString("clairvoyanceDimension");
         }
     }
 }

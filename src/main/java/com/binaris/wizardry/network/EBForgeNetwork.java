@@ -19,6 +19,7 @@ public final class EBForgeNetwork {
         PayloadRegistrar registrar = event.registrar("1"); // versao do protocolo
 
         registrar.playToClient(ScreenShakeS2C.TYPE, ScreenShakeS2C.STREAM_CODEC, ScreenShakeS2C::handle);
+        registrar.playToClient(com.binaris.wizardry.core.networking.s2c.ClairvoyanceS2C.TYPE, com.binaris.wizardry.core.networking.s2c.ClairvoyanceS2C.STREAM_CODEC, com.binaris.wizardry.core.networking.s2c.ClairvoyanceS2C::handle);
         registrar.playToClient(TestParticlePacketS2C.TYPE, TestParticlePacketS2C.STREAM_CODEC, TestParticlePacketS2C::handle);
         registrar.playToServer(ControlInputPacketC2S.TYPE, ControlInputPacketC2S.STREAM_CODEC, ControlInputPacketC2S::handle);
         registrar.playToServer(BlockUsePacketC2S.TYPE, BlockUsePacketC2S.STREAM_CODEC, BlockUsePacketC2S::handle);

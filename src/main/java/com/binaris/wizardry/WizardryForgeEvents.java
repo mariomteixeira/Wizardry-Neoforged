@@ -96,6 +96,12 @@ public class WizardryForgeEvents {
             }
         }
 
+        // Clairvoyance: sneak-right-click with the spell selected remembers the location
+        @SubscribeEvent
+        public static void onRightClickBlockClairvoyance(PlayerInteractEvent.RightClickBlock event) {
+            com.binaris.wizardry.content.spell.sorcery.Clairvoyance.onRightClickBlock(event);
+        }
+
         // Thorns damage players that punch them (1.12.2 parity)
         @SubscribeEvent
         public static void onLeftClickThorns(PlayerInteractEvent.LeftClickBlock event) {

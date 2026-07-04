@@ -33,6 +33,34 @@ public final class ClientPacketHandler {
         ScreenShakeHandler.triggerScreenShake(packet.intensity(), packet.duration());
     }
 
+    /** Spawns the clairvoyance guiding trail along the received path (1.12.2 Clairvoyance#spawnPathPaticles). */
+    public static void handleClairvoyance(com.binaris.wizardry.core.networking.s2c.ClairvoyanceS2C packet) {
+        var world = net.minecraft.client.Minecraft.getInstance().level;
+        if (world == null || packet.points().isEmpty()) return;
+
+        float duration = com.binaris.wizardry.setup.registries.Spells.CLAIRVOYANCE
+                .property(com.binaris.wizardry.content.spell.DefaultProperties.DURATION);
+        var points = packet.points();
+        int interval = com.binaris.wizardry.content.spell.sorcery.Clairvoyance.PARTICLE_MOVEMENT_INTERVAL;
+
+        for (int i = 0; i < points.size() - 1; i += 2) {
+            var point = points.get(i);
+            var nextPoint = points.size() - i <= 2 ? points.get(points.size() - 1) : points.get(Math.min(i + 2, points.size() - 1));
+
+            com.binaris.wizardry.api.client.ParticleBuilder.create(com.binaris.wizardry.setup.registries.client.EBParticles.PATH)
+                    .pos(point.getX() + 0.5, point.getY() + 0.5, point.getZ() + 0.5)
+                    .velocity((nextPoint.getX() - point.getX()) / (float) interval,
+                            (nextPoint.getY() - point.getY()) / (float) interval,
+                            (nextPoint.getZ() - point.getZ()) / (float) interval)
+                    .time((int) (duration * packet.durationMultiplier())).color(0f, 1f, 0.3f).spawn(world);
+        }
+
+        var end = points.get(points.size() - 1);
+        com.binaris.wizardry.api.client.ParticleBuilder.create(com.binaris.wizardry.setup.registries.client.EBParticles.PATH)
+                .pos(end.getX() + 0.5, end.getY() + 0.5, end.getZ() + 0.5)
+                .time((int) (duration * packet.durationMultiplier())).color(1f, 1f, 1f).spawn(world);
+    }
+
     public static void handleTestParticle(TestParticlePacketS2C packet) {
         ClientMessageHandler.testParticle(packet);
     }

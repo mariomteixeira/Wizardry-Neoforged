@@ -151,7 +151,7 @@ public final class Spells {
     public static final Spell BANISH;
     // sixth sense
     public static final Spell DARK_VISION;
-    // clairvoyance
+    public static final Spell CLAIRVOYANCE;
     public static final Spell POCKET_WORKBENCH;
     public static final Spell IMBUE_WEAPON;
     public static final Spell INVIGORATING_PRESENCE;
@@ -613,6 +613,8 @@ public final class Spells {
         GLIDE = spell("glide", Glide::new);
 
         DIVINATION = spell("divination", Divination::new);
+
+        CLAIRVOYANCE = spell("clairvoyance", Clairvoyance::new);
 
         IMBUE_WEAPON = spell("imbue_weapon", ImbueWeapon::new);
 
