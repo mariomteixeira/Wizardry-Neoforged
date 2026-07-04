@@ -46,6 +46,7 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<ArrowRainConstruct>> ARROW_RAIN = entity(ArrowRainConstruct::new, "arrow_rain", MobCategory.MISC, 3, 3, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<ForceOrbEntity>> FORCE_ORB = entity(ForceOrbEntity::new, "force_orb", MobCategory.MISC, 0.25f, 0.25f, MagicType.PROJECTILE);
     public static final DeferredObject<EntityType<BlizzardConstruct>> BLIZZARD = entity(BlizzardConstruct::new, "blizzard", MobCategory.MISC, 3, 3, MagicType.CONSTRUCT);
+    public static final DeferredObject<EntityType<EarthquakeConstruct>> EARTHQUAKE = entity(EarthquakeConstruct::new, "earthquake", MobCategory.MISC, 1, 1, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<FireSigilConstruct>> FIRE_SIGIL = entity(FireSigilConstruct::new, "fire_sigil", MobCategory.MISC, 0.2f, 0.2f, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<FrostSigilConstruct>> FROST_SIGIL = entity(FrostSigilConstruct::new, "frost_sigil", MobCategory.MISC, 0.2f, 0.2f, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<LightningSigilConstruct>> LIGHTNING_SIGIL = entity(LightningSigilConstruct::new, "lightning_sigil", MobCategory.MISC, 0.2f, 0.2f, MagicType.CONSTRUCT);

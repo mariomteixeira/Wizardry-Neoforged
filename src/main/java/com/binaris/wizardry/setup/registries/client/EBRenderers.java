@@ -61,6 +61,7 @@ public final class EBRenderers {
         registerEntityRender(EBEntities.CONJURED_ARROW, ConjureArrowRenderer::new);
         registerEntityRender(EBEntities.FLAME_CATCHER_ARROW, MagicArrowRenderer<FlamecatcherArrow>::new);
         registerEntityRender(EBEntities.BLIZZARD, BlankRenderer::new);
+        registerEntityRender(EBEntities.EARTHQUAKE, BlankRenderer::new);
         registerEntityRender(EBEntities.ICE_SPICKES, IceSpikeRenderer::new);
         registerEntityRender(EBEntities.TORNADO, BlankRenderer::new);
         registerEntityRender(EBEntities.BUBBLE, BubbleRenderer::new);
