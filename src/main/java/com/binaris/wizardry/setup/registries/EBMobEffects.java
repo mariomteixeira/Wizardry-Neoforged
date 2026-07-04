@@ -3,6 +3,7 @@ package com.binaris.wizardry.setup.registries;
 import com.binaris.wizardry.WizardryMainMod;
 import com.binaris.wizardry.api.content.DeferredObject;
 import com.binaris.wizardry.api.content.effect.CurseMobEffect;
+import com.binaris.wizardry.api.content.effect.MagicMobEffect;
 import com.binaris.wizardry.content.effect.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,6 +26,11 @@ public final class EBMobEffects {
     public static final DeferredObject<MobEffect> OAKFLESH = mobEffect("oakflesh", OakFleshMobEffect::new);
     public static final DeferredObject<MobEffect> IRONFLESH = mobEffect("ironflesh", IronfleshMobEffect::new);
     public static final DeferredObject<MobEffect> DIAMONDFLESH = mobEffect("diamondflesh", DiamondfleshMobEffect::new);
+    public static final DeferredObject<MobEffect> MUFFLE = mobEffect("muffle", () -> new MagicMobEffect(MobEffectCategory.BENEFICIAL, 0x4464d9) {
+        @Override
+        public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {
+        }
+    });
     public static final DeferredObject<MobEffect> CURSE_OF_ENFEEBLEMENT = mobEffect("curse_of_enfeeblement", EnfeeblementCurse::new);
     public static final DeferredObject<MobEffect> CURSE_OF_UNDEATH = mobEffect("curse_of_undeath", UndeathCurse::new);
     public static final DeferredObject<MobEffect> DECAY = mobEffect("decay", DecayMobEffect::new);

@@ -178,7 +178,7 @@ public final class Spells {
     public static final Spell FONT_OF_MANA;
     // mine
     // conjure block
-    // muffle
+    public static final Spell MUFFLE;
     public static final Spell WARD;
     public static final Spell EVADE;
     public static final Spell ICE_BALL;
@@ -442,6 +442,13 @@ public final class Spells {
         ));
 
         FONT_OF_MANA = spell("font_of_mana", FontOfMana::new);
+
+        MUFFLE = spell("muffle", () -> new BuffSpell(0.3f, 0.4f, 0.8f, () -> EBMobEffects.holder(EBMobEffects.MUFFLE)).soundValues(0.7f, 1.2f, 0.4f)
+                .assignProperties(SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.NOVICE, Elements.SORCERY, SpellType.BUFF, SpellAction.POINT_UP, 5, 0, 25)
+                        .add(BuffSpell.getEffectDurationProperty(EBMobEffects.holder(EBMobEffects.MUFFLE)), 600)
+                        .add(BuffSpell.getEffectStrengthProperty(EBMobEffects.holder(EBMobEffects.MUFFLE)), 0)
+                        .build()));
 
         INVISIBILITY = spell("invisibility", () -> new BuffSpell(0, 0.5f, 0.5f, () -> MobEffects.INVISIBILITY).assignProperties(
                 SpellProperties.builder()

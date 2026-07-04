@@ -56,6 +56,28 @@ public class WizardryForgeEvents {
             WizardryEventBus.getInstance().fire(new EBServerLoad(event.getServer()));
         }
 
+        // Muffle: silences every sound emitted at the wearer (1.12.2 WizardryEventHandler parity)
+        @SubscribeEvent
+        public static void onPlayLevelSound(net.neoforged.neoforge.event.PlayLevelSoundEvent.AtEntity event) {
+            if (event.getEntity() instanceof net.minecraft.world.entity.LivingEntity living
+                    && living.hasEffect(EBMobEffects.holder(EBMobEffects.MUFFLE))) {
+                event.setCanceled(true);
+            }
+        }
+
+        // Muffle: mobs only spot a muffled target inside their 144-degree frontal arc
+        @SubscribeEvent
+        public static void onLivingChangeTarget(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
+            net.minecraft.world.entity.LivingEntity target = event.getNewAboutToBeSetTarget();
+            if (target == null || !target.hasEffect(EBMobEffects.holder(EBMobEffects.MUFFLE))) return;
+
+            net.minecraft.world.phys.Vec3 vec = target.getEyePosition().subtract(event.getEntity().getEyePosition());
+            double angle = Math.acos(vec.dot(event.getEntity().getLookAngle()) / vec.length());
+            if (angle > 0.4 * Math.PI) {
+                event.setCanceled(true);
+            }
+        }
+
         @SubscribeEvent
         public static void onWorldLoadEvent(final LevelEvent.Load event) {
             if (event.getLevel().isClientSide()) return;
