@@ -182,6 +182,22 @@ public class WizardryForgeEvents {
             com.binaris.wizardry.content.spell.necromancy.MindTrick.onLivingChangeTarget(event);
         }
 
+        // Mind control: redirects the victim's targets to the controller's enemies
+        @SubscribeEvent
+        public static void onLivingChangeTargetMindControl(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
+            com.binaris.wizardry.content.spell.necromancy.MindControl.onLivingChangeTarget(event);
+        }
+
+        @SubscribeEvent
+        public static void onMobEffectExpiredMindControl(net.neoforged.neoforge.event.entity.living.MobEffectEvent.Expired event) {
+            com.binaris.wizardry.content.spell.necromancy.MindControl.onEffectEnd(event);
+        }
+
+        @SubscribeEvent
+        public static void onMobEffectRemoveMindControl(net.neoforged.neoforge.event.entity.living.MobEffectEvent.Remove event) {
+            com.binaris.wizardry.content.spell.necromancy.MindControl.onEffectEnd(event);
+        }
+
         // Muffle: mobs only spot a muffled target inside their 144-degree frontal arc
         @SubscribeEvent
         public static void onLivingChangeTarget(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {

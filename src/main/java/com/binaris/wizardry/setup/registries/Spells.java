@@ -102,7 +102,7 @@ public final class Spells {
     public static final Spell SUMMON_LIGHTNING_WRAITH;
     public static final Spell STATIC_AURA;
     public static final Spell LIGHTNING_DISC;
-    // mind control
+    public static final Spell MIND_CONTROL;
     public static final Spell SUMMON_WITHER_SKELETON;
     public static final Spell ENTRAPMENT;
     public static final Spell WITHER_SKULL;
@@ -1105,6 +1105,8 @@ public final class Spells {
         SIXTH_SENSE = spell("sixth_sense", () -> new SixthSense().soundValues(1, 1.1f, 0.2f));
 
         THUNDERSTORM = spell("thunderstorm", () -> new com.binaris.wizardry.content.spell.lightning.Thunderstorm().soundValues(1, 1.7f, 0.2f));
+
+        MIND_CONTROL = spell("mind_control", com.binaris.wizardry.content.spell.necromancy.MindControl::new);
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override
