@@ -170,7 +170,7 @@ public final class Spells {
     public static final Spell LIGHTNING_PULSE;
     public static final Spell CURSE_OF_SOULBINDING;
     public static final Spell COBWEBS;
-    // decoy
+    public static final Spell DECOY;
     public static final Spell CONJURE_ARMOR;
     public static final Spell ARCANE_JAMMER;
     public static final Spell GROUP_HEAL;
@@ -998,6 +998,8 @@ public final class Spells {
                 ));
 
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
+
+        DECOY = spell("decoy", () -> new Decoy().soundValues(1, 0.9f, 0.2f));
 
         SHIELD = spell("shield", com.binaris.wizardry.content.spell.healing.Shield::new);
 

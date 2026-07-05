@@ -168,6 +168,7 @@ public final class EBRenderers {
         registerEntityRender(EBEntities.ICE_BARRIER, IceBarrierRenderer::new);
         registerEntityRender(EBEntities.SHIELD, ShieldRenderer::new);
         registerEntityRender(EBEntities.FORCEFIELD, ForcefieldRenderer::new);
+        registerEntityRender(EBEntities.DECOY, DecoyRenderer::new);
         registerEntityRender(EBEntities.ZOMBIE_SPAWNER, ZombieSpawnerRenderer::new);
 
     }

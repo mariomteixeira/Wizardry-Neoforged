@@ -76,6 +76,7 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<com.binaris.wizardry.content.entity.ShieldEntity>> SHIELD = entity("shield",
             EntityType.Builder.<com.binaris.wizardry.content.entity.ShieldEntity>of(com.binaris.wizardry.content.entity.ShieldEntity::new, MobCategory.MISC)
                     .sized(1.2F, 1.4F).clientTrackingRange(MagicType.LIVING.range).updateInterval(MagicType.LIVING.interval));
+    public static final DeferredObject<EntityType<DecoyEntity>> DECOY = entity(DecoyEntity::new, "decoy", MobCategory.CREATURE, 0.6F, 1.8F, MagicType.LIVING);
     public static final DeferredObject<EntityType<SpiritWolf>> SPIRIT_WOLF = entity(SpiritWolf::new, "spirit_wolf", MobCategory.CREATURE, 0.6F, 0.85F, MagicType.LIVING);
     public static final DeferredObject<EntityType<SpiritHorse>> SPIRIT_HORSE = entity(SpiritHorse::new, "spirit_horse", MobCategory.CREATURE, 1.3965F, 1.6F, MagicType.LIVING);
     public static final DeferredObject<EntityType<MagicSlime>> MAGIC_SLIME = entity(MagicSlime::new, "magic_slime", MobCategory.CREATURE, 2.04F, 2.04F, MagicType.LIVING);
@@ -104,6 +105,7 @@ public final class EBEntities {
         consumer.accept(ICE_GIANT.get(), IceGiant.createAttributes().build());
         consumer.accept(SPECTRAL_GOLEM.get(), IronGolem.createAttributes().build());
         consumer.accept(PHOENIX.get(), Phoenix.createAttributes().build());
+        consumer.accept(DECOY.get(), DecoyEntity.createAttributes().build());
         consumer.accept(SPIRIT_WOLF.get(), net.minecraft.world.entity.animal.Wolf.createAttributes().build());
         consumer.accept(SPIRIT_HORSE.get(), net.minecraft.world.entity.animal.horse.AbstractHorse.createBaseHorseAttributes().build());
     }
