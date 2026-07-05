@@ -79,6 +79,9 @@ public final class EBBlocks {
     public static final DeferredObject<Block> THORNS = block("thorns", ThornsBlock::new, false, false, false);
     public static final DeferredObject<Block> IMBUEMENT_ALTAR = block("imbuement_altar", ImbuementAltarBlock::new, false, true, true);
     public static final DeferredObject<Block> TRANSPORTATION_STONE = block("transportation_stone", TransportationStoneBlock::new, false, true, true);
+    public static final DeferredObject<Block> PETRIFIED_STONE = block("petrified_stone", () -> new StatueBlock(false), false, false, false);
+    public static final DeferredObject<Block> ICE_STATUE = block("ice_statue", () -> new StatueBlock(true), false, false, false);
+    public static final DeferredObject<Block> DRY_FROSTED_ICE = block("dry_frosted_ice", DryFrostedIceBlock::new, false, false, false);
 
     private EBBlocks() {
     }

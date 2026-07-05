@@ -131,7 +131,9 @@ public final class Spells {
     public static final Spell FIRE_BREATH;
     public static final Spell SUMMON_PHOENIX;
     public static final Spell ICE_AGE;
-    // wall of frost
+    public static final Spell WALL_OF_FROST;
+    public static final Spell ICE_STATUE;
+    public static final Spell PETRIFY;
     public static final Spell SUMMON_ICE_GIANT;
     public static final Spell THUNDERSTORM;
     public static final Spell LIGHTNING_HAMMER;
@@ -1109,6 +1111,12 @@ public final class Spells {
         MIND_CONTROL = spell("mind_control", com.binaris.wizardry.content.spell.necromancy.MindControl::new);
 
         METAMORPHOSIS = spell("metamorphosis", () -> new com.binaris.wizardry.content.spell.necromancy.Metamorphosis().soundValues(0.5f, 1f, 0));
+
+        ICE_STATUE = spell("ice_statue", () -> new IceStatue().soundValues(1, 1.4f, 0.4f));
+
+        PETRIFY = spell("petrify", () -> new Petrify().soundValues(1, 1.1f, 0.2f));
+
+        WALL_OF_FROST = spell("wall_of_frost", () -> new WallOfFrost().soundValues(0.5f, 1, 0));
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override

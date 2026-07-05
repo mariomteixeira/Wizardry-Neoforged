@@ -46,6 +46,11 @@ public final class EBBlockEntities {
             "thorns", () -> BlockEntityType.Builder.of(ThornsBlockEntity::new, EBBlocks.THORNS.get()).build(null)
     );
 
+    public static final DeferredObject<BlockEntityType<com.binaris.wizardry.content.blockentity.StatueBlockEntity>> STATUE = blockEntity(
+            "statue", () -> BlockEntityType.Builder.of(com.binaris.wizardry.content.blockentity.StatueBlockEntity::new,
+                    EBBlocks.PETRIFIED_STONE.get(), EBBlocks.ICE_STATUE.get()).build(null)
+    );
+
 
 
     public static final DeferredObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH = blockEntity(

@@ -27,6 +27,7 @@ public final class EBBlockEntityRenderers {
         registerBlockEntityRenderer(EBBlockEntities.IMBUEMENT_ALTAR, ImbuementAltarRenderer::new);
         registerBlockEntityRenderer(EBBlockEntities.BOOKSHELF, BookshelfRenderer::new);
         registerBlockEntityRenderer(EBBlockEntities.MAGIC_LIGHT, com.binaris.wizardry.client.renderer.blockentity.MagicLightRenderer::new);
+        registerBlockEntityRenderer(EBBlockEntities.STATUE, com.binaris.wizardry.client.renderer.blockentity.StatueRenderer::new);
     }
 
     private static <T extends BlockEntity> void registerBlockEntityRenderer(
