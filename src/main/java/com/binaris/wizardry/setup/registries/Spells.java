@@ -211,7 +211,7 @@ public final class Spells {
     public static final Spell SPEED_TIME;
     public static final Spell SLOW_TIME;
     // resurrection
-    // frost barrier
+    public static final Spell FROST_BARRIER;
     public static final Spell BLINDING_FLASH;
     public static final Spell ENRAGE;
     public static final Spell MARK_SACRIFICE;
@@ -996,6 +996,8 @@ public final class Spells {
                                 .add(DefaultProperties.SUMMON_RADIUS, 2)
                                 .build()
                 ));
+
+        FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
 
         SUMMON_SPIRIT_WOLF = spell("summon_spirit_wolf", () -> new SummonSpiritWolf().soundValues(0.7f, 1.2f, 0.4f));
 

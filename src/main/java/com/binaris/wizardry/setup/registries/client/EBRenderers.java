@@ -42,6 +42,7 @@ public final class EBRenderers {
         consumer.accept(IceGiantModel.LAYER_LOCATION, IceGiantModel::createBodyLayer);
         consumer.accept(BoulderModel.LAYER_LOCATION, BoulderModel::createBodyLayer);
         consumer.accept(com.binaris.wizardry.client.model.PhoenixModel.LAYER_LOCATION, com.binaris.wizardry.client.model.PhoenixModel::createBodyLayer);
+        consumer.accept(com.binaris.wizardry.client.model.IceBarrierModel.LAYER_LOCATION, com.binaris.wizardry.client.model.IceBarrierModel::createBodyLayer);
     }
 
     public static void registerRenderers() {
@@ -164,6 +165,7 @@ public final class EBRenderers {
             }
         }));
         registerEntityRender(EBEntities.BOULDER, BoulderRenderer::new);
+        registerEntityRender(EBEntities.ICE_BARRIER, IceBarrierRenderer::new);
         registerEntityRender(EBEntities.ZOMBIE_SPAWNER, ZombieSpawnerRenderer::new);
 
     }
