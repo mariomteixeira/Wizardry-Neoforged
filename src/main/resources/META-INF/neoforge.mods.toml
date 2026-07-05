@@ -6,7 +6,7 @@ issueTrackerURL = "https://github.com/mariomteixeira/Wizardry-Neoforged/issues"
 [[mods]]
 modId = "ebwizardry"
 version = "${mod_version}"
-displayName = "Electroblob's Wizardry Redux"
+displayName = "Wizardry Neoforged"
 authors = "Binaris, mariomteixeira"
 credits = "Electroblob (original), WinDanesz (1.12.2), Binaris (Redux), Min01, NinjaFrito, 19, e todos os contribuidores"
 description = '''Explore and discover an intuitive and big magic system. Unofficial NeoForge 1.21.1 port.'''
