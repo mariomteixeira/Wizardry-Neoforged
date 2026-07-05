@@ -141,7 +141,7 @@ public final class Spells {
     public static final Spell FOREST_CURSE;
     public static final Spell FLIGHT;
     public static final Spell SILVERFISH_SWARM;
-    // black hole
+    public static final Spell BLACK_HOLE;
     public static final Spell SHOCKWAVE;
     public static final Spell SUMMON_IRON_GOLEM;
     public static final Spell ARROW_RAIN;
@@ -1000,6 +1000,17 @@ public final class Spells {
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
 
         DECOY = spell("decoy", () -> new Decoy().soundValues(1, 0.9f, 0.2f));
+
+        BLACK_HOLE = spell("black_hole", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.BlackHoleConstruct::new, false))
+                .soundValues(2, 0.7f, 0)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.MASTER, Elements.SORCERY, SpellType.CONSTRUCT, SpellAction.POINT, 150, 25, 400)
+                                .add(DefaultProperties.RANGE, 10f)
+                                .add(DefaultProperties.DURATION, 400)
+                                .add(DefaultProperties.EFFECT_RADIUS, 3)
+                                .build()
+                );
 
         LIGHTNING_HAMMER = spell("lightning_hammer", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.HammerConstruct::new, false) {
             @Override

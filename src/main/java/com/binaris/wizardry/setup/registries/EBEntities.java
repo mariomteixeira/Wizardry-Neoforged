@@ -65,6 +65,7 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<WitheringTotemConstruct>> WITHERING_TOTEM = entity(WitheringTotemConstruct::new, "withering_totem", MobCategory.MISC, 1, 1, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<StormcloudConstruct>> STORMCLOUD = entity(StormcloudConstruct::new, "stormcloud", MobCategory.MISC, 6, 2, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<HammerConstruct>> LIGHTNING_HAMMER_ENTITY = entity(HammerConstruct::new, "lightning_hammer", MobCategory.MISC, 1.0F, 1.9F, MagicType.LIVING);
+    public static final DeferredObject<EntityType<BlackHoleConstruct>> BLACK_HOLE = entity(BlackHoleConstruct::new, "black_hole", MobCategory.MISC, 6, 3, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<CombustionRuneConstruct>> COMBUSTION_RUNE = entity(CombustionRuneConstruct::new, "combustion_rune", MobCategory.MISC, 2, 0.2F, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<BubbleConstruct>> BUBBLE = entity("bubble", EntityType.Builder.<BubbleConstruct>of(BubbleConstruct::new, MobCategory.MISC).sized(0.6f, 1.8f).updateInterval(3).clientTrackingRange(160));
     public static final DeferredObject<EntityType<HailstormConstruct>> HAILSTORM = entity(HailstormConstruct::new, "hailstorm", MobCategory.MISC, 5, 5, MagicType.CONSTRUCT);
