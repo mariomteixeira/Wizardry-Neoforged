@@ -1,3 +1,7 @@
+# Wizardry-Neoforged
+
+**Unofficial NeoForge 1.21.1 port of [Electroblob's Wizardry Redux](https://github.com/Binaris00/ElectroblobsWizardryRedux).**
+
 **Note: This mod is currently in Alpha. For development updates, bug reports, and community discussion, join our [Discord](https://discord.gg/9R3nw3uQTu) and check our [Wiki](https://electroblobs-redux-wiki.pages.dev/)**
 
 ## About
@@ -20,29 +24,21 @@ Start by mining Magic Crystals (though there are "easier" ways to find them if y
 
 ## Installation
 
-### Fabric
+### NeoForge
 
-**Required:** Fabric Loader 0.16.9+ (for Minecraft 1.20.1)
+**Required:** [NeoForge](https://neoforged.net/) 21.1.235+ (for Minecraft 1.21.1)
 
-**Required:** [Fabric API 0.92.2+](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
+**Required:** [Curios API](https://www.curseforge.com/minecraft/mc-mods/curios) (rings, amulets and charms)
 
-**Optional (Recommended):** Use [Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories) or [Trinkets](https://www.curseforge.com/minecraft/mc-mods/trinkets) for a better experience with the trinkets.
-
-**Important (WHEN USING ACCESSORIES):** If any other mods in your modpack list use 'Trinkets' as a dependency, download [Accessories Compatibility Layer](https://www.curseforge.com/minecraft/mc-mods/accessories-tc-layer) **instead** of Trinkets itself (this mod acts as a bridge to help mods with Accessories and Trinkets work together).
-
-### Forge
-
-**Required:** Forge Loader 47.2.30+ (for Minecraft 1.20.1)
-
-**Optional (Recommended):** Use [Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories) or [Curios](https://www.curseforge.com/minecraft/mc-mods/curios) for a better experience with the trinkets.
-
-**Important (WHEN USING ACCESSORIES):** If any other mods in your modpack list use 'Curios' as a dependency for trinkets, download [Accessories Compatibility Layer](https://www.curseforge.com/minecraft/mc-mods/accessories-cc-layer) **instead** of Curios itself (this mod acts as a bridge to help mods with Accessories and Curios work together).
+Drop the mod jar into your `mods` folder. Addons ported for this version (Wizardry Player Mana, WizardryUtils, Wizardry - Fates) require this mod.
 
 ## Credits
 
 **Electroblob:** The original author of Wizardry.
 
-**WinDanesz:** Maintainer of the 1.12.2 version.
+**Dan (WinDanesz):** Maintainer of the 1.12.2 version.
+
+**Binaris:** Author of Wizardry Redux, the recreation this port is based on.
 
 **Min01:** For the initial 1.19 WIP port and logic foundations.
 
@@ -51,3 +47,5 @@ Start by mining Magic Crystals (though there are "easier" ways to find them if y
 **NinjaFrito:** For the beautiful new textures in this port.
 
 **Contributors:** A huge thanks to everyone providing bug reports, translations, and suggestions!
+
+**mariomteixeira:** NeoForge 1.21.1 port.

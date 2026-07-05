@@ -64,6 +64,14 @@ dependencies {
 
 test { useJUnitPlatform() }
 
+processResources {
+    var replaceProperties = [mod_version: version]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
 // Consumido pelos addons via mavenLocal() — rodar `gradlew publishToMavenLocal` após cada bump
 publishing {
     publications {
