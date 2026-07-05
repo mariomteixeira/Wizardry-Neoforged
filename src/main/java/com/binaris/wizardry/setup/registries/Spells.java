@@ -217,10 +217,10 @@ public final class Spells {
     public static final Spell MARK_SACRIFICE;
     public static final Spell PERMAFROST;
     // storm cloud
-    // withering totem
+    public static final Spell WITHERING_TOTEM;
     public static final Spell FANGS;
     public static final Spell GUARDIAN_BEAM;
-    // radiant totem
+    public static final Spell RADIANT_TOTEM;
     public static final Spell FIRESTORM;
     public static final Spell FLAMECATCHER;
     public static final Spell ZOMBIE_APOCALYPSE;
@@ -1000,6 +1000,46 @@ public final class Spells {
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
 
         DECOY = spell("decoy", () -> new Decoy().soundValues(1, 0.9f, 0.2f));
+
+        RADIANT_TOTEM = spell("radiant_totem", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.RadiantTotemConstruct::new, false) {
+            @Override
+            protected void addConstructExtras(com.binaris.wizardry.api.content.spell.internal.CastContext ctx,
+                                              com.binaris.wizardry.content.entity.construct.RadiantTotemConstruct construct,
+                                              net.minecraft.core.Direction side) {
+                construct.setPos(construct.getX(), construct.getY() + 1.2, construct.getZ());
+            }
+        }.assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.CONSTRUCT, SpellAction.SUMMON, 40, 15, 175)
+                        .add(DefaultProperties.RANGE, 8f)
+                        .add(DefaultProperties.DURATION, 600)
+                        .add(DefaultProperties.EFFECT_RADIUS, 6)
+                        .add(DefaultProperties.MAX_TARGETS, 1)
+                        .add(DefaultProperties.HEALTH, 1f)
+                        .add(DefaultProperties.DAMAGE, 1f)
+                        .build()
+        ));
+
+        WITHERING_TOTEM = spell("withering_totem", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.WitheringTotemConstruct::new, false) {
+            @Override
+            protected void addConstructExtras(com.binaris.wizardry.api.content.spell.internal.CastContext ctx,
+                                              com.binaris.wizardry.content.entity.construct.WitheringTotemConstruct construct,
+                                              net.minecraft.core.Direction side) {
+                construct.setPos(construct.getX(), construct.getY() + 1.2, construct.getZ());
+            }
+        }.assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.NECROMANCY, SpellType.CONSTRUCT, SpellAction.SUMMON, 50, 20, 200)
+                        .add(DefaultProperties.RANGE, 8f)
+                        .add(DefaultProperties.DURATION, 600)
+                        .add(DefaultProperties.EFFECT_RADIUS, 6)
+                        .add(DefaultProperties.MAX_TARGETS, 1)
+                        .add(DefaultProperties.DAMAGE, 1f)
+                        .add(DefaultProperties.MAX_EXPLOSION_DAMAGE, 10f)
+                        .add(DefaultProperties.EFFECT_DURATION, 120)
+                        .add(DefaultProperties.EFFECT_STRENGTH, 0)
+                        .build()
+        ));
 
         SHIELD = spell("shield", com.binaris.wizardry.content.spell.healing.Shield::new);
 

@@ -169,6 +169,19 @@ public final class EBRenderers {
         registerEntityRender(EBEntities.SHIELD, ShieldRenderer::new);
         registerEntityRender(EBEntities.FORCEFIELD, ForcefieldRenderer::new);
         registerEntityRender(EBEntities.DECOY, DecoyRenderer::new);
+
+        registerEntityRender(EBEntities.RADIANT_TOTEM, (ctx -> new TotemRenderer<com.binaris.wizardry.content.entity.construct.RadiantTotemConstruct>(ctx, e -> 0xfff49b)));
+        registerEntityRender(EBEntities.WITHERING_TOTEM, (ctx -> new TotemRenderer<com.binaris.wizardry.content.entity.construct.WitheringTotemConstruct>(ctx, e -> {
+            // Gets redder the more health it drains (1.12.2 DrawingUtils.mix(0xb333e6, 0xff0044, redness))
+            float redness = Math.min(1, e.getHealthDrained() / com.binaris.wizardry.setup.registries.Spells.WITHERING_TOTEM
+                    .property(com.binaris.wizardry.content.spell.DefaultProperties.MAX_EXPLOSION_DAMAGE));
+            int r1 = 0xb3, g1 = 0x33, b1 = 0xe6;
+            int r2 = 0xff, g2 = 0x00, b2 = 0x44;
+            int r = (int) (r1 + (r2 - r1) * redness);
+            int g = (int) (g1 + (g2 - g1) * redness);
+            int b = (int) (b1 + (b2 - b1) * redness);
+            return (r << 16) | (g << 8) | b;
+        })));
         registerEntityRender(EBEntities.ZOMBIE_SPAWNER, ZombieSpawnerRenderer::new);
 
     }

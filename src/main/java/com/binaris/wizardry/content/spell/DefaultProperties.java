@@ -36,6 +36,9 @@ public final class DefaultProperties {
     public static final SpellProperty<Float> ACCELERATION = SpellProperty.floatProperty("acceleration");
     public static final SpellProperty<Integer> MAX_TARGETS = SpellProperty.intProperty("max_targets");
     public static final SpellProperty<Float> HEALTH = SpellProperty.floatProperty("health");
+    public static final SpellProperty<Float> MAX_EXPLOSION_DAMAGE = SpellProperty.floatProperty("max_explosion_damage");
+    public static final SpellProperty<Integer> ATTACK_INTERVAL = SpellProperty.intProperty("attack_interval");
+    public static final SpellProperty<Integer> SECONDARY_MAX_TARGETS = SpellProperty.intProperty("secondary_max_targets");
 
     // This is used by some spells to determine if they should be only for dev environment, only for ebw register logic
     // if you want this you should make the condition inside your register method
