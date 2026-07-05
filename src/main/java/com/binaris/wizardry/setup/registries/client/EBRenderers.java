@@ -41,6 +41,7 @@ public final class EBRenderers {
         consumer.accept(WizardModel.LAYER_LOCATION, WizardModel::createBodyLayer);
         consumer.accept(IceGiantModel.LAYER_LOCATION, IceGiantModel::createBodyLayer);
         consumer.accept(BoulderModel.LAYER_LOCATION, BoulderModel::createBodyLayer);
+        consumer.accept(com.binaris.wizardry.client.model.PhoenixModel.LAYER_LOCATION, com.binaris.wizardry.client.model.PhoenixModel::createBodyLayer);
     }
 
     public static void registerRenderers() {
@@ -113,6 +114,8 @@ public final class EBRenderers {
 
         registerEntityRender(EBEntities.SHADOW_WRAITH, BlankRenderer::new);
         registerEntityRender(EBEntities.STORM_ELEMENTAL, BlankRenderer::new);
+
+        registerEntityRender(EBEntities.PHOENIX, PhoenixRenderer::new);
 
         // 1.12.2 RenderSpectralGolem: vanilla golem model, spectral texture, translucent
         registerEntityRender(EBEntities.SPECTRAL_GOLEM, (ctx -> new net.minecraft.client.renderer.entity.IronGolemRenderer(ctx) {

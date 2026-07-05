@@ -128,7 +128,7 @@ public final class Spells {
     public static final Spell TRANSIENCE;
     public static final Spell METEOR;
     public static final Spell FIRE_BREATH;
-    // summon phoenix
+    public static final Spell SUMMON_PHOENIX;
     public static final Spell ICE_AGE;
     // wall of frost
     public static final Spell SUMMON_ICE_GIANT;
@@ -995,6 +995,17 @@ public final class Spells {
                                 .add(DefaultProperties.SUMMON_RADIUS, 2)
                                 .build()
                 ));
+
+        SUMMON_PHOENIX = spell("summon_phoenix", () -> new MinionSpell<>(com.binaris.wizardry.content.entity.living.Phoenix::new).flying(true))
+                .soundValues(1, 1.1f, 0.1f)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.MASTER, Elements.FIRE, SpellType.MINION, SpellAction.SUMMON, 150, 20, 400)
+                                .add(DefaultProperties.MINION_COUNT, 1)
+                                .add(DefaultProperties.MINION_LIFETIME, 600)
+                                .add(DefaultProperties.SUMMON_RADIUS, 2)
+                                .build()
+                );
 
         SUMMON_IRON_GOLEM = spell("summon_iron_golem", () -> new MinionSpell<>(com.binaris.wizardry.content.entity.living.SpectralGolem::new))
                 .soundValues(1, 1.1f, 0.1f)
