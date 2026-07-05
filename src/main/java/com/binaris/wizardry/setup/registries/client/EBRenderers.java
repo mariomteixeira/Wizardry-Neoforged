@@ -117,6 +117,40 @@ public final class EBRenderers {
 
         registerEntityRender(EBEntities.PHOENIX, PhoenixRenderer::new);
 
+        // 1.12.2 RenderSpiritWolf/RenderSpiritHorse: vanilla models, spirit texture, translucent, no extra layers
+        registerEntityRender(EBEntities.SPIRIT_WOLF, (ctx -> new net.minecraft.client.renderer.entity.MobRenderer<net.minecraft.world.entity.animal.Wolf, net.minecraft.client.model.WolfModel<net.minecraft.world.entity.animal.Wolf>>(
+                ctx, new net.minecraft.client.model.WolfModel<>(ctx.bakeLayer(net.minecraft.client.model.geom.ModelLayers.WOLF)), 0.5f) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull net.minecraft.world.entity.animal.Wolf entity) {
+                return WizardryMainMod.location("textures/entity/spirit_wolf.png");
+            }
+
+            @Override
+            protected net.minecraft.client.renderer.RenderType getRenderType(@NotNull net.minecraft.world.entity.animal.Wolf entity, boolean bodyVisible, boolean translucent, boolean glowing) {
+                return net.minecraft.client.renderer.RenderType.entityTranslucent(getTextureLocation(entity));
+            }
+        }));
+
+        // HorseRenderer is final; a plain MobRenderer with the vanilla horse model does the job (no markings/armor layers)
+        registerEntityRender(EBEntities.SPIRIT_HORSE, (ctx -> new net.minecraft.client.renderer.entity.MobRenderer<net.minecraft.world.entity.animal.horse.Horse, net.minecraft.client.model.HorseModel<net.minecraft.world.entity.animal.horse.Horse>>(
+                ctx, new net.minecraft.client.model.HorseModel<>(ctx.bakeLayer(net.minecraft.client.model.geom.ModelLayers.HORSE)), 0.75f) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull net.minecraft.world.entity.animal.horse.Horse entity) {
+                return WizardryMainMod.location("textures/entity/spirit_horse.png");
+            }
+
+            @Override
+            protected void scale(@NotNull net.minecraft.world.entity.animal.horse.Horse entity, @NotNull com.mojang.blaze3d.vertex.PoseStack poseStack, float partialTick) {
+                poseStack.scale(1.1F, 1.1F, 1.1F); // AbstractHorseRenderer scale
+                super.scale(entity, poseStack, partialTick);
+            }
+
+            @Override
+            protected net.minecraft.client.renderer.RenderType getRenderType(@NotNull net.minecraft.world.entity.animal.horse.Horse entity, boolean bodyVisible, boolean translucent, boolean glowing) {
+                return net.minecraft.client.renderer.RenderType.entityTranslucent(getTextureLocation(entity));
+            }
+        }));
+
         // 1.12.2 RenderSpectralGolem: vanilla golem model, spectral texture, translucent
         registerEntityRender(EBEntities.SPECTRAL_GOLEM, (ctx -> new net.minecraft.client.renderer.entity.IronGolemRenderer(ctx) {
             @Override

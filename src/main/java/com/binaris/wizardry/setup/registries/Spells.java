@@ -112,7 +112,8 @@ public final class Spells {
     public static final Spell WATER_BREATHING;
     public static final Spell TORNADO;
     public static final Spell GLIDE;
-    // summon spirit horse
+    public static final Spell SUMMON_SPIRIT_WOLF;
+    public static final Spell SUMMON_SPIRIT_HORSE;
     public static final Spell SPIDER_SWARM;
     public static final Spell SLIME;
     public static final Spell INVISIBILITY;
@@ -995,6 +996,10 @@ public final class Spells {
                                 .add(DefaultProperties.SUMMON_RADIUS, 2)
                                 .build()
                 ));
+
+        SUMMON_SPIRIT_WOLF = spell("summon_spirit_wolf", () -> new SummonSpiritWolf().soundValues(0.7f, 1.2f, 0.4f));
+
+        SUMMON_SPIRIT_HORSE = spell("summon_spirit_horse", () -> new SummonSpiritHorse().soundValues(0.7f, 1.2f, 0.4f));
 
         SUMMON_PHOENIX = spell("summon_phoenix", () -> new MinionSpell<>(com.binaris.wizardry.content.entity.living.Phoenix::new).flying(true))
                 .soundValues(1, 1.1f, 0.1f)

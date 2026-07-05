@@ -168,6 +168,9 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
             tag.putLong("transportationPos", transportationPos.asLong());
             tag.putString("transportationDimension", transportationDimension == null ? "" : transportationDimension);
         }
+
+        if (spiritWolfUUID != null) tag.putUUID("spiritWolfUUID", spiritWolfUUID);
+        if (spiritHorseUUID != null) tag.putUUID("spiritHorseUUID", spiritHorseUUID);
         return tag;
     }
 
@@ -191,6 +194,31 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
     @org.jetbrains.annotations.Nullable
     public String getClairvoyanceDimension() {
         return clairvoyanceDimension;
+    }
+
+    // ======= Spirit wolf/horse (permanent summons, one each per player) =======
+
+    @Nullable
+    private UUID spiritWolfUUID;
+    @Nullable
+    private UUID spiritHorseUUID;
+
+    public void setSpiritWolfUUID(@Nullable UUID uuid) {
+        this.spiritWolfUUID = uuid;
+    }
+
+    @Nullable
+    public UUID getSpiritWolfUUID() {
+        return spiritWolfUUID;
+    }
+
+    public void setSpiritHorseUUID(@Nullable UUID uuid) {
+        this.spiritHorseUUID = uuid;
+    }
+
+    @Nullable
+    public UUID getSpiritHorseUUID() {
+        return spiritHorseUUID;
     }
 
     // ======= Transportation saved stone circle + countdown =======
@@ -300,5 +328,8 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
             this.transportationPos = net.minecraft.core.BlockPos.of(tag.getLong("transportationPos"));
             this.transportationDimension = tag.getString("transportationDimension");
         }
+
+        if (tag.hasUUID("spiritWolfUUID")) this.spiritWolfUUID = tag.getUUID("spiritWolfUUID");
+        if (tag.hasUUID("spiritHorseUUID")) this.spiritHorseUUID = tag.getUUID("spiritHorseUUID");
     }
 }
