@@ -72,6 +72,9 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<SpectralGolem>> SPECTRAL_GOLEM = entity(SpectralGolem::new, "spectral_golem", MobCategory.MISC, 1.4F, 2.7F, MagicType.LIVING);
     public static final DeferredObject<EntityType<Phoenix>> PHOENIX = entity("phoenix", EntityType.Builder.<Phoenix>of(Phoenix::new, MobCategory.MONSTER)
             .sized(0.6F, 2.0F).eyeHeight(2.1F).fireImmune().clientTrackingRange(MagicType.LIVING.range).updateInterval(MagicType.LIVING.interval));
+    public static final DeferredObject<EntityType<com.binaris.wizardry.content.entity.ShieldEntity>> SHIELD = entity("shield",
+            EntityType.Builder.<com.binaris.wizardry.content.entity.ShieldEntity>of(com.binaris.wizardry.content.entity.ShieldEntity::new, MobCategory.MISC)
+                    .sized(1.2F, 1.4F).clientTrackingRange(MagicType.LIVING.range).updateInterval(MagicType.LIVING.interval));
     public static final DeferredObject<EntityType<SpiritWolf>> SPIRIT_WOLF = entity(SpiritWolf::new, "spirit_wolf", MobCategory.CREATURE, 0.6F, 0.85F, MagicType.LIVING);
     public static final DeferredObject<EntityType<SpiritHorse>> SPIRIT_HORSE = entity(SpiritHorse::new, "spirit_horse", MobCategory.CREATURE, 1.3965F, 1.6F, MagicType.LIVING);
     public static final DeferredObject<EntityType<MagicSlime>> MAGIC_SLIME = entity(MagicSlime::new, "magic_slime", MobCategory.CREATURE, 2.04F, 2.04F, MagicType.LIVING);

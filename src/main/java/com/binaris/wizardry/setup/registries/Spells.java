@@ -81,7 +81,7 @@ public final class Spells {
     public static final Spell CONJURE_PICKAXE;
     public static final Spell CONJURE_BOW;
     public static final Spell FORCE_ARROW;
-    // shield
+    public static final Spell SHIELD;
     public static final Spell REPLENISH_HUNGER;
     public static final Spell CURE_EFFECTS;
     public static final Spell HEAL_ALLY;
@@ -998,6 +998,8 @@ public final class Spells {
                 ));
 
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
+
+        SHIELD = spell("shield", com.binaris.wizardry.content.spell.healing.Shield::new);
 
         SUMMON_SPIRIT_WOLF = spell("summon_spirit_wolf", () -> new SummonSpiritWolf().soundValues(0.7f, 1.2f, 0.4f));
 

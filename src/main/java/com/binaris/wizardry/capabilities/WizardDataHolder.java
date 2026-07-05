@@ -253,6 +253,20 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
         return transportationCountdown;
     }
 
+    // ======= Shield entity (transient: tracks the active force shield while the spell is held) =======
+
+    @Nullable
+    private net.minecraft.world.entity.Entity shieldEntity;
+
+    public void setShieldEntity(@Nullable net.minecraft.world.entity.Entity shield) {
+        this.shieldEntity = shield;
+    }
+
+    @Nullable
+    public net.minecraft.world.entity.Entity getShieldEntity() {
+        return shieldEntity;
+    }
+
     // ======= Grapple hook target (transient: per-side instance state, never serialized) =======
 
     @Nullable
