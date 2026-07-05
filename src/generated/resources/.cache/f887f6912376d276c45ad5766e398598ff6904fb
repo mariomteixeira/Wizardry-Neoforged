@@ -1,11 +1,12 @@
-// 1.21.1	2026-07-04T22:47:44.1043283	Spell Documentation: ebwizardry
-d3a7d2ee710a736c4363361604459d74c668c221 docs/spells.md
+// 1.21.1	2026-07-04T23:30:32.7268667	Spell Documentation: ebwizardry
+6496d65b64ea95d0ea108c8c9dcaac95b93181b2 docs/spells.md
 b5ed5dfb6422a93452ce6148862262c78c017981 docs/spells/ebwizardry/agility.md
 ab2bb9f5beba5ca49328cf74e07a5089fcc63917 docs/spells/ebwizardry/arc.md
 3ec2137b79d6a69b340e3d8ca5998f51e13753ba docs/spells/ebwizardry/arcane_jammer.md
 9a9e8e6ece9a8507574baa2ebb8e0ffa3fa32618 docs/spells/ebwizardry/arcane_lock.md
 d304545c9bfda7d2a11d8c6da87ec169363dc6d6 docs/spells/ebwizardry/arrow_rain.md
 463f18501a83bc581f4faa6b3d0fbb90cf06ab04 docs/spells/ebwizardry/banish.md
+585e1875ea92d0caa5308b6d01cee39db2f6fa2f docs/spells/ebwizardry/black_hole.md
 5c57bf52e93fbe7aa8e329f489966e4df76404bb docs/spells/ebwizardry/blinding_flash.md
 bea4bd8b1d1cf1c66f858cbc046ff52dc55cc548 docs/spells/ebwizardry/blink.md
 92f4be3a2d261130870b32030eebfde19aad85a0 docs/spells/ebwizardry/blizzard.md
@@ -30,6 +31,7 @@ cab2f0f8156535feac48cd3feec89128a65f6de4 docs/spells/ebwizardry/darkness_orb.md
 56677c0379189e193473de7a282980d83a507b09 docs/spells/ebwizardry/dark_vision.md
 6fe0cb923fb7aa7479363115c726116ff237df3b docs/spells/ebwizardry/dart.md
 002027c29a14ac25563c5c74e74c4daf49f3ca8f docs/spells/ebwizardry/decay.md
+87ff2749db9128a52bd005568d9d6820f276caa4 docs/spells/ebwizardry/decoy.md
 081ff21afc874bb27af9be7b6e771cdeaf8faed0 docs/spells/ebwizardry/detonate.md
 e3deb951aa36689bee77bec21b1aaa9cd2a1d1bd docs/spells/ebwizardry/diamondflesh.md
 64ce989a5f4f54442b189719144bb30eb04b0d89 docs/spells/ebwizardry/disintegration.md
@@ -56,6 +58,7 @@ cba419083a53b9d3ce58dc361ab8bc1a23dd208b docs/spells/ebwizardry/flaming_axe.md
 c22c71f1edda12034ab1bad4ef5cd231fd6fed68 docs/spells/ebwizardry/flight.md
 e937e9dc03dd21bb6bec2daa264e7eb3800dc2fe docs/spells/ebwizardry/font_of_mana.md
 19735cfe4bb8d8c0db155dfc0926b70174355b89 docs/spells/ebwizardry/font_of_vitality.md
+03ce24bebddc1b8752567338bb803d0587b7a61b docs/spells/ebwizardry/forcefield.md
 4544eb68ae681bdb051153a29d8bb813048fe925 docs/spells/ebwizardry/force_arrow.md
 82c0bd2f6a236033bfddc726730d7def5b2eddfb docs/spells/ebwizardry/force_orb.md
 666484fe82145abf1d343010ca366f104788a67a docs/spells/ebwizardry/forests_curse.md
@@ -63,6 +66,7 @@ e937e9dc03dd21bb6bec2daa264e7eb3800dc2fe docs/spells/ebwizardry/font_of_mana.md
 da2125d5bc0058787b751cf92ee5d763f63da9ab docs/spells/ebwizardry/freeze.md
 a5565585ec67523e913aa936b16877052ff3a961 docs/spells/ebwizardry/freezing_weapon.md
 39ba14531b4077f23dbcdf9ebb4272fa649616df docs/spells/ebwizardry/frost_axe.md
+e566b469158596ec0fd25fc5492749965cb19243 docs/spells/ebwizardry/frost_barrier.md
 b5627ef0a2eab2f8c55454056f47492c765e28b1 docs/spells/ebwizardry/frost_ray.md
 2a2a1054d71c0b3af73272df2e674679a40b416c docs/spells/ebwizardry/frost_sigil.md
 2e42167ef1d7ba1fe9bffa19ae8ff1eeedd64f77 docs/spells/ebwizardry/frost_step.md
@@ -100,6 +104,7 @@ f2a86e6abef205024bd29b3fa35dda0e7c254c39 docs/spells/ebwizardry/leap.md
 a978c1ede4408dfd95827fa60d61c02202adc728 docs/spells/ebwizardry/lightning_arrow.md
 0acbf16685eec9c97f7386ca72dfd3187ff54b98 docs/spells/ebwizardry/lightning_bolt.md
 3362cf674f1b88a43fdd137823262680d8142943 docs/spells/ebwizardry/lightning_disc.md
+cd0f4d8d539ab01759ecf924ba20f77cb9a187cb docs/spells/ebwizardry/lightning_hammer.md
 943e783d5223c67567a07fbac6d379e76d48aae2 docs/spells/ebwizardry/lightning_ray.md
 97abd205522208c25ee2ef6494c405e447595a41 docs/spells/ebwizardry/lightning_sigil.md
 1148e6f497112679609d7108f792df02236ca324 docs/spells/ebwizardry/lightning_web.md
@@ -118,12 +123,14 @@ e08b7cf27cc04e474284ecd821e7e15f566c886c docs/spells/ebwizardry/permafrost.md
 7e70bdabd63de63e825ac0c4f89e18bc1da052ba docs/spells/ebwizardry/pocket_workbench.md
 955933bfff489209809b5a6b53a0695ac45f230e docs/spells/ebwizardry/poison.md
 46738ab14fc2a1e7404d7c7bd1396244d125fecc docs/spells/ebwizardry/poison_bomb.md
+697509bb76c4f09ad3d118e3166bcd4a475de696 docs/spells/ebwizardry/radiant_totem.md
 859f6ff1616a7e58a43a2ebac2a6350564320743 docs/spells/ebwizardry/ray_of_purification.md
 57b617ca7b33078cfd42a58f9a7333dfa8781d9b docs/spells/ebwizardry/remove_curse.md
 31fd74d2ffbbeca0d397d5aa1206d39cc5ed8622 docs/spells/ebwizardry/replenish_hunger.md
 d049eedf2db33637d02361ef7ce2b55fac8bf939 docs/spells/ebwizardry/reversal.md
 9781e2829c57336c2470be8cce183f770e5ee80b docs/spells/ebwizardry/ring_of_fire.md
 d11551e5dd0ef1bf57df1684bf019645d732a58b docs/spells/ebwizardry/satiety.md
+72252db03fae1b83cb8206ff0056be07005edac5 docs/spells/ebwizardry/shield.md
 4abdfaed6a0334ac35bd8c5872f444c9dceb0811 docs/spells/ebwizardry/shockwave.md
 3eddd70b5f0a6729aa07566b83a284cdeb653a33 docs/spells/ebwizardry/shulker_bullet.md
 62ffee35c1261b84d720e5560a29b2be60de8b1e docs/spells/ebwizardry/slime.md
@@ -135,6 +142,7 @@ f5de4b19b03e662b7c88484a897ee682bb0bc672 docs/spells/ebwizardry/smoke_bomb.md
 d5460f3dc9a3d4589bd0c570c9afda5e1bc2182b docs/spells/ebwizardry/speed_time.md
 8e451f779ea6c10134791fce1e4634854d9482de docs/spells/ebwizardry/spider_swarm.md
 83d01b19820978fcf8eac154741d3cfd2290dfdc docs/spells/ebwizardry/static_aura.md
+48bc249d9a65c923a52f44301cec4a2b83ca26c0 docs/spells/ebwizardry/stormcloud.md
 f3e7f67b0f18f0cf0e48008602a9e5d13415e584 docs/spells/ebwizardry/summon_blaze.md
 d01ead7d2d33f89386c42c0758834387f0d1ff42 docs/spells/ebwizardry/summon_ice_wraith.md
 2b1480bd3c04bd14138fec33891bf867b5434e28 docs/spells/ebwizardry/summon_iron_golem.md
@@ -160,5 +168,6 @@ fbde34cd455b3e8dbeab13512a7f008b5742da2b docs/spells/ebwizardry/ward.md
 0a08ce8c3bd30b3ad968f60bb411db2aa590ef37 docs/spells/ebwizardry/water_breathing.md
 6ebd806db27d1962f12fa4a28f3a965a9c83fe52 docs/spells/ebwizardry/whirlwind.md
 db1e76b8c7e3baa6201fbdcbbc4981d071029d17 docs/spells/ebwizardry/wither.md
+d24d4fb7949736a386a0d8811ff6c3d1e6422263 docs/spells/ebwizardry/withering_totem.md
 7b97920448df6bb42290093669635f316faa0177 docs/spells/ebwizardry/wither_skull.md
 a74c03028c30ef103b4334d5a2cfab0ba4e45d0d docs/spells/ebwizardry/zombie_apocalypse.md

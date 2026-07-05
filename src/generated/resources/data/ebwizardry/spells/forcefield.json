@@ -1,0 +1,24 @@
+{
+  "type": "defence",
+  "base_properties": {
+    "duration": 600,
+    "effect_radius": 3
+  },
+  "chargeup": 15,
+  "cooldown": 200,
+  "cost": 45,
+  "element": "ebwizardry:healing",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:thrust",
+  "tier": "ebwizardry:advanced"
+}

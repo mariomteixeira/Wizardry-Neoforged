@@ -1,0 +1,23 @@
+{
+  "type": "defence",
+  "base_properties": {
+    "duration": 400
+  },
+  "chargeup": 0,
+  "cooldown": 50,
+  "cost": 20,
+  "element": "ebwizardry:ice",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:summon",
+  "tier": "ebwizardry:apprentice"
+}

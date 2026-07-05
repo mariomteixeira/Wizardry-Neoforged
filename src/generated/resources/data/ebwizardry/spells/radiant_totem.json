@@ -1,0 +1,28 @@
+{
+  "type": "construct",
+  "base_properties": {
+    "damage": 1.0,
+    "duration": 600,
+    "effect_radius": 6,
+    "health": 1.0,
+    "max_targets": 1,
+    "range": 8.0
+  },
+  "chargeup": 15,
+  "cooldown": 175,
+  "cost": 40,
+  "element": "ebwizardry:healing",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:summon",
+  "tier": "ebwizardry:advanced"
+}

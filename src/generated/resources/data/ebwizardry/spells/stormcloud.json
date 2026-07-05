@@ -1,0 +1,26 @@
+{
+  "type": "construct",
+  "base_properties": {
+    "damage": 8.0,
+    "duration": 600,
+    "effect_radius": 3,
+    "range": 10.0
+  },
+  "chargeup": 10,
+  "cooldown": 150,
+  "cost": 60,
+  "element": "ebwizardry:lightning",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point",
+  "tier": "ebwizardry:advanced"
+}

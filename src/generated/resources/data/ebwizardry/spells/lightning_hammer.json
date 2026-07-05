@@ -1,0 +1,29 @@
+{
+  "type": "attack",
+  "base_properties": {
+    "attack_interval": 40,
+    "direct_damage": 10.0,
+    "duration": 600,
+    "effect_radius": 10,
+    "range": 40.0,
+    "secondary_max_targets": 8,
+    "splash_damage": 6.0
+  },
+  "chargeup": 25,
+  "cooldown": 300,
+  "cost": 100,
+  "element": "ebwizardry:lightning",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point",
+  "tier": "ebwizardry:master"
+}

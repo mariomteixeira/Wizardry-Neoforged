@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T22:47:44.1133601	Advancements
+// 1.21.1	2026-07-04T23:30:32.7364073	Advancements
 29d96b75ff5671c00eee53da851b2132549b0587 data/ebwizardry/advancement/advanced.json
 579b8b0e98756cb6d09e6c2dfd601c06cfc48eda data/ebwizardry/advancement/anger_wizard.json
 a27e52befa5b6128e6432a452604762d142f733a data/ebwizardry/advancement/apprentice.json
@@ -12,10 +12,10 @@ bcf7cfb12f7ce424f8832612cc618e22be79a41d data/ebwizardry/advancement/buy_master_
 39ff91105ac6ab5c9fe4f74ed9701c6b985da5ee data/ebwizardry/advancement/defeat_evil_wizard.json
 89318b5d91c9c50a950bd264595ad2c1864b06bf data/ebwizardry/advancement/defeat_remnant.json
 e1f9be4b7a78871df63b01b3b260fdba00a1ffd9 data/ebwizardry/advancement/discover_master_spell.json
-28ceab78a8eede42c74cc643dfde72daafcf2428 data/ebwizardry/advancement/discover_spell.json
+c52e27830a287be1fcbde932c14caafba3b13be8 data/ebwizardry/advancement/discover_spell.json
 ac7350c0e0226e0b308bd7a7c8b45a5143d2b796 data/ebwizardry/advancement/enchant_scroll.json
 73d94b0549f8d8136d573f2256d3b4ef3918ba51 data/ebwizardry/advancement/find_library_ruins.json
-ffd3386f79921208cc058de6afb303a87e5926a8 data/ebwizardry/advancement/identify_spell.json
+31462076afc69b6fe67ad15eda2f6bd34b4ac661 data/ebwizardry/advancement/identify_spell.json
 ff24f12b97a23edf973d93c261ce0a5a0e816a30 data/ebwizardry/advancement/master.json
 41d49c51b4d8318b8669ef8574ad2d3cfa816e8c data/ebwizardry/advancement/max_out_wand.json
 f8d0c9a9067af3cf2bf768ed067d4b4e4f8ce48f data/ebwizardry/advancement/restore_imbuement_altar.json
