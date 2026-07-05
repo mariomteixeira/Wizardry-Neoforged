@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T20:31:19.7416504	Loot Tables
+// 1.21.1	2026-07-05T00:15:19.8516986	Loot Tables
 3770f93b9b53f0fd4b09297525301407e419141c data/ebwizardry/loot_table/blocks/acacia_bookshelf.json
 88143e64aad1aa93d3e22696c4f728e9442b9b1b data/ebwizardry/loot_table/blocks/acacia_lectern.json
 bf581132b9cc6376faa77b60bdaade7f6a19df65 data/ebwizardry/loot_table/blocks/arcane_workbench.json
@@ -17,6 +17,7 @@ bf581132b9cc6376faa77b60bdaade7f6a19df65 data/ebwizardry/loot_table/blocks/arcan
 2150ebb3a46eb499a3371f029368e4c53f0145ad data/ebwizardry/loot_table/blocks/dark_oak_bookshelf.json
 1316ea8e6ee0c5bc009eb235e9e95bd10029e5a5 data/ebwizardry/loot_table/blocks/dark_oak_lectern.json
 fbd9b80fd98b349aad7e772d3e5049f9cfbce7f6 data/ebwizardry/loot_table/blocks/deepslate_crystal_ore.json
+3a9946580a27ad7862dd899c7f174126719d6115 data/ebwizardry/loot_table/blocks/dry_frosted_ice.json
 120aeabaec9f3ba17dbd5ec5b9461891b2249397 data/ebwizardry/loot_table/blocks/earth_runestone.json
 b17e2495d353a58deb497bf617d652fc81e9520b data/ebwizardry/loot_table/blocks/earth_runestone_pedestal.json
 72c562fd5516d7f3c590a2f80e1c4df3506061da data/ebwizardry/loot_table/blocks/fire_runestone.json
@@ -31,6 +32,7 @@ bea545851bb3c6db157cc26c7abdb64f453241ae data/ebwizardry/loot_table/blocks/gilde
 c5102f4f9b9ad738a1636c8034cb4b4c269c8dba data/ebwizardry/loot_table/blocks/healing_runestone_pedestal.json
 74ba0b41022ebd69ae8b10213ceba5202e87838c data/ebwizardry/loot_table/blocks/ice_runestone.json
 057cb7024baee77d243dd7ac9266282763bb8972 data/ebwizardry/loot_table/blocks/ice_runestone_pedestal.json
+881b138526960c5da13b52850b4c473ce265097c data/ebwizardry/loot_table/blocks/ice_statue.json
 2661449f2ccd47e7ad5223cdb23aea172c5b0398 data/ebwizardry/loot_table/blocks/imbuement_altar.json
 d9c095819408d7456b9f6113439b550e62a6969b data/ebwizardry/loot_table/blocks/jungle_bookshelf.json
 82abdd4fb14622dcbb482c5c4981cce621190dbf data/ebwizardry/loot_table/blocks/jungle_lectern.json
@@ -42,6 +44,7 @@ dd3687aa63fc9eba7110cbcccdae84d8c9d0b852 data/ebwizardry/loot_table/blocks/oak_b
 92a1618cf2858643aec30460a388b466709e7bb5 data/ebwizardry/loot_table/blocks/oak_lectern.json
 5400909e2963a7c16b8abf404b933617655433a8 data/ebwizardry/loot_table/blocks/obsidian_crust.json
 700a23e2a313d92c5b8608ea2cce6e732064464c data/ebwizardry/loot_table/blocks/permafrost.json
+49e987d47850284a3c1ffc2464343d55c073ce48 data/ebwizardry/loot_table/blocks/petrified_stone.json
 cee74f23f765fa567bf22382c6350259452cfee6 data/ebwizardry/loot_table/blocks/potted_crystal_flower.json
 5ed2b3e187bdf711559a70dccf11214664356723 data/ebwizardry/loot_table/blocks/receptacle.json
 6ffa861e477676864704fd9dbaf9dd5701e9e5d4 data/ebwizardry/loot_table/blocks/sorcery_runestone.json

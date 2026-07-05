@@ -40,8 +40,8 @@ public class StatueBlock extends BaseEntityBlock {
 
     public StatueBlock(boolean isIce) {
         super(isIce
-                ? Properties.of().mapColor(MapColor.ICE).friction(0.98f).sound(SoundType.GLASS).strength(0.5f).noOcclusion().noLootTable()
-                : Properties.of().mapColor(MapColor.STONE).sound(SoundType.STONE).strength(1.5f).noOcclusion().noLootTable());
+                ? Properties.of().mapColor(MapColor.ICE).friction(0.98f).sound(SoundType.GLASS).strength(0.5f).noOcclusion()
+                : Properties.of().mapColor(MapColor.STONE).sound(SoundType.STONE).strength(1.5f).noOcclusion());
         this.isIce = isIce;
     }
 

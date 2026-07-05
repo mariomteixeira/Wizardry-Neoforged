@@ -50,129 +50,139 @@ This is a complete list of all spells currently available.
 | 44 | ![](/resources/img/spell/enrage.png) | [Enrage](spell/enrage) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
 | 45 | ![](/resources/img/spell/intimidate.png) | [Intimidate](spell/intimidate) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-apprentice">Apprentice</span> |
 | 46 | ![](/resources/img/spell/life_drain.png) | [Life Drain](spell/life_drain) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
-| 47 | ![](/resources/img/spell/reversal.png) | [Reversal](spell/reversal) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-apprentice">Apprentice</span> |
-| 48 | ![](/resources/img/spell/summon_skeleton.png) | [Summon Skeleton](spell/summon_skeleton) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-apprentice">Apprentice</span> |
-| 49 | ![](/resources/img/spell/bubble.png) | [Bubble](spell/bubble) | <span class="element-earth">Earth</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
-| 50 | ![](/resources/img/spell/dark_vision.png) | [Dark Vision](spell/dark_vision) | <span class="element-earth">Earth</span> | Buff | <span class="tier-apprentice">Apprentice</span> |
-| 51 | ![](/resources/img/spell/grapple.png) | [Grapple](spell/grapple) | <span class="element-earth">Earth</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
-| 52 | ![](/resources/img/spell/growth_aura.png) | [Growth Aura](spell/growth_aura) | <span class="element-earth">Earth</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
-| 53 | ![](/resources/img/spell/poison.png) | [Poison](spell/poison) | <span class="element-earth">Earth</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
-| 54 | ![](/resources/img/spell/poison_bomb.png) | [Poison Bomb](spell/poison_bomb) | <span class="element-earth">Earth</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 55 | ![](/resources/img/spell/summon_spirit_wolf.png) | [Summon Spirit Wolf](spell/summon_spirit_wolf) | <span class="element-earth">Earth</span> | Minion | <span class="tier-apprentice">Apprentice</span> |
-| 56 | ![](/resources/img/spell/whirlwind.png) | [Whirlwind](spell/whirlwind) | <span class="element-earth">Earth</span> | Defense | <span class="tier-apprentice">Apprentice</span> |
-| 57 | ![](/resources/img/spell/fire_sigil.png) | [Fire Sigil](spell/fire_sigil) | <span class="element-fire">Fire</span> | Construct | <span class="tier-apprentice">Apprentice</span> |
-| 58 | ![](/resources/img/spell/fireball.png) | [Fireball](spell/fireball) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 59 | ![](/resources/img/spell/firebolt.png) | [Firebolt](spell/firebolt) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 60 | ![](/resources/img/spell/firebomb.png) | [Firebomb](spell/firebomb) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 61 | ![](/resources/img/spell/flame_ray.png) | [Flame Ray](spell/flame_ray) | <span class="element-fire">Fire</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
-| 62 | ![](/resources/img/spell/pocket_furnace.png) | [Pocket Furnace](spell/pocket_furnace) | <span class="element-fire">Fire</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
-| 63 | ![](/resources/img/spell/frost_barrier.png) | [Frost Barrier](spell/frost_barrier) | <span class="element-ice">Ice</span> | Defense | <span class="tier-apprentice">Apprentice</span> |
-| 64 | ![](/resources/img/spell/frost_ray.png) | [Frost Ray](spell/frost_ray) | <span class="element-ice">Ice</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
-| 65 | ![](/resources/img/spell/frost_sigil.png) | [Frost Sigil](spell/frost_sigil) | <span class="element-ice">Ice</span> | Construct | <span class="tier-apprentice">Apprentice</span> |
-| 66 | ![](/resources/img/spell/ice_charge.png) | [Ice Charge](spell/ice_charge) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 67 | ![](/resources/img/spell/ice_shard.png) | [Ice Shard](spell/ice_shard) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 68 | ![](/resources/img/spell/iceball.png) | [Iceball](spell/iceball) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
-| 69 | ![](/resources/img/spell/summon_snow_golem.png) | [Summon Snow Golem](spell/summon_snow_golem) | <span class="element-ice">Ice</span> | Minion | <span class="tier-apprentice">Apprentice</span> |
-| 70 | ![](/resources/img/spell/chain_lightning.png) | [Chain Lightning](spell/chain_lightning) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 71 | ![](/resources/img/spell/invoke_weather.png) | [Invoke Weather](spell/invoke_weather) | <span class="element-lightning">Lightning</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 72 | ![](/resources/img/spell/lightning_bolt.png) | [Lightning Bolt](spell/lightning_bolt) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 73 | ![](/resources/img/spell/lightning_disc.png) | [Lightning Disk](spell/lightning_disc) | <span class="element-lightning">Lightning</span> | Projectile | <span class="tier-advanced">Advanced</span> |
-| 74 | ![](/resources/img/spell/paralysis.png) | [Paralysis](spell/paralysis) | <span class="element-lightning">Lightning</span> | Alteration | <span class="tier-advanced">Advanced</span> |
-| 75 | ![](/resources/img/spell/static_aura.png) | [Static Aura](spell/static_aura) | <span class="element-lightning">Lightning</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 76 | ![](/resources/img/spell/stormcloud.png) | [Stormcloud](spell/stormcloud) | <span class="element-lightning">Lightning</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 77 | ![](/resources/img/spell/summon_lightning_wraith.png) | [Summon Lightning Wraith](spell/summon_lightning_wraith) | <span class="element-lightning">Lightning</span> | Minion | <span class="tier-advanced">Advanced</span> |
-| 78 | ![](/resources/img/spell/arcane_jammer.png) | [Arcane Jammer](spell/arcane_jammer) | <span class="element-healing">Healing</span> | Alteration | <span class="tier-advanced">Advanced</span> |
-| 79 | ![](/resources/img/spell/forcefield.png) | [Forcefield](spell/forcefield) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 80 | ![](/resources/img/spell/greater_heal.png) | [Greater Heal](spell/greater_heal) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 81 | ![](/resources/img/spell/greater_ward.png) | [Greater Ward](spell/greater_ward) | <span class="element-healing">Healing</span> | Buff | <span class="tier-advanced">Advanced</span> |
-| 82 | ![](/resources/img/spell/group_heal.png) | [Group Heal](spell/group_heal) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 83 | ![](/resources/img/spell/healing_aura.png) | [Healing Aura](spell/healing_aura) | <span class="element-healing">Healing</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 84 | ![](/resources/img/spell/ironflesh.png) | [Ironflesh](spell/ironflesh) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 85 | ![](/resources/img/spell/oakflesh.png) | [Oakflesh](spell/oakflesh) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 86 | ![](/resources/img/spell/radiant_totem.png) | [Radiant Totem](spell/radiant_totem) | <span class="element-healing">Healing</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 87 | ![](/resources/img/spell/ray_of_purification.png) | [Ray of Purification](spell/ray_of_purification) | <span class="element-healing">Healing</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 88 | ![](/resources/img/spell/remove_curse.png) | [Remove Curse](spell/remove_curse) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 89 | ![](/resources/img/spell/satiety.png) | [Satiety](spell/satiety) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 90 | ![](/resources/img/spell/transience.png) | [Transience](spell/transience) | <span class="element-healing">Healing</span> | Buff | <span class="tier-advanced">Advanced</span> |
-| 91 | ![](/resources/img/spell/arcane_lock.png) | [Arcane Lock](spell/arcane_lock) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 92 | ![](/resources/img/spell/containment.png) | [Containment](spell/containment) | <span class="element-sorcery">Sorcery</span> | Alteration | <span class="tier-advanced">Advanced</span> |
-| 93 | ![](/resources/img/spell/decoy.png) | [Decoy](spell/decoy) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 94 | ![](/resources/img/spell/force_orb.png) | [Force Orb](spell/force_orb) | <span class="element-sorcery">Sorcery</span> | Projectile | <span class="tier-advanced">Advanced</span> |
-| 95 | ![](/resources/img/spell/guardian_beam.png) | [Guardian Beam](spell/guardian_beam) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 96 | ![](/resources/img/spell/invisibility.png) | [Invisibility](spell/invisibility) | <span class="element-sorcery">Sorcery</span> | Buff | <span class="tier-advanced">Advanced</span> |
-| 97 | ![](/resources/img/spell/levitation.png) | [Levitation](spell/levitation) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 98 | ![](/resources/img/spell/phase_step.png) | [Phase Step](spell/phase_step) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 99 | ![](/resources/img/spell/spectral_pathway.png) | [Spectral Pathway](spell/spectral_pathway) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 100 | ![](/resources/img/spell/transportation.png) | [Transportation](spell/transportation) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 101 | ![](/resources/img/spell/vanishing_box.png) | [Vanishing Box](spell/vanishing_box) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 102 | ![](/resources/img/spell/banish.png) | [Banish](spell/banish) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 103 | ![](/resources/img/spell/curse_of_soulbinding.png) | [Curse of Soulbinding](spell/curse_of_soulbinding) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-advanced">Advanced</span> |
-| 104 | ![](/resources/img/spell/curse_of_undeath.png) | [Curse of Undeath](spell/curse_of_undeath) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-advanced">Advanced</span> |
-| 105 | ![](/resources/img/spell/darkness_orb.png) | [Darkness Orb](spell/darkness_orb) | <span class="element-necromancy">Necromancy</span> | Projectile | <span class="tier-advanced">Advanced</span> |
-| 106 | ![](/resources/img/spell/decay.png) | [Decay](spell/decay) | <span class="element-necromancy">Necromancy</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 107 | ![](/resources/img/spell/dragon_fireball.png) | [Dragon Fireball](spell/dragon_fireball) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 108 | ![](/resources/img/spell/entrapment.png) | [Entrapment](spell/entrapment) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 109 | ![](/resources/img/spell/shulker_bullet.png) | [Shulker Bullet](spell/shulker_bullet) | <span class="element-necromancy">Necromancy</span> | Projectile | <span class="tier-advanced">Advanced</span> |
-| 110 | ![](/resources/img/spell/summon_wither_skeleton.png) | [Summon Wither Skeleton](spell/summon_wither_skeleton) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-advanced">Advanced</span> |
-| 111 | ![](/resources/img/spell/wither.png) | [Wither](spell/wither) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 112 | ![](/resources/img/spell/wither_skull.png) | [Wither Skull](spell/wither_skull) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 113 | ![](/resources/img/spell/withering_totem.png) | [Withering Totem](spell/withering_totem) | <span class="element-necromancy">Necromancy</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 114 | ![](/resources/img/spell/cobwebs.png) | [Cobwebs](spell/cobwebs) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 115 | ![](/resources/img/spell/fangs.png) | [Fangs](spell/fangs) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 116 | ![](/resources/img/spell/glide.png) | [Glide](spell/glide) | <span class="element-earth">Earth</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 117 | ![](/resources/img/spell/slime.png) | [Slime](spell/slime) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 118 | ![](/resources/img/spell/spider_swarm.png) | [Spider Swarm](spell/spider_swarm) | <span class="element-earth">Earth</span> | Minion | <span class="tier-advanced">Advanced</span> |
-| 119 | ![](/resources/img/spell/summon_spirit_horse.png) | [Summon Spirit Horse](spell/summon_spirit_horse) | <span class="element-earth">Earth</span> | Minion | <span class="tier-advanced">Advanced</span> |
-| 120 | ![](/resources/img/spell/tornado.png) | [Tornado](spell/tornado) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 121 | ![](/resources/img/spell/water_breathing.png) | [Water Breathing](spell/water_breathing) | <span class="element-earth">Earth</span> | Buff | <span class="tier-advanced">Advanced</span> |
-| 122 | ![](/resources/img/spell/combustion_rune.png) | [Combustion Rune](spell/combustion_rune) | <span class="element-fire">Fire</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 123 | ![](/resources/img/spell/detonate.png) | [Detonate](spell/detonate) | <span class="element-fire">Fire</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 124 | ![](/resources/img/spell/disintegration.png) | [Disintegration](spell/disintegration) | <span class="element-fire">Fire</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 125 | ![](/resources/img/spell/fire_resistance.png) | [Fire Resistance](spell/fire_resistance) | <span class="element-fire">Fire</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 126 | ![](/resources/img/spell/fire_skin.png) | [Fire Skin](spell/fire_skin) | <span class="element-fire">Fire</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 127 | ![](/resources/img/spell/flaming_axe.png) | [Flaming Axe](spell/flaming_axe) | <span class="element-fire">Fire</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 128 | ![](/resources/img/spell/flaming_weapon.png) | [Flaming Weapon](spell/flaming_weapon) | <span class="element-fire">Fire</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 129 | ![](/resources/img/spell/greater_fireball.png) | [Greater Fireball](spell/greater_fireball) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-advanced">Advanced</span> |
-| 130 | ![](/resources/img/spell/ring_of_fire.png) | [Ring of Fire](spell/ring_of_fire) | <span class="element-fire">Fire</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 131 | ![](/resources/img/spell/summon_blaze.png) | [Summon Blaze](spell/summon_blaze) | <span class="element-fire">Fire</span> | Minion | <span class="tier-advanced">Advanced</span> |
-| 132 | ![](/resources/img/spell/blizzard.png) | [Blizzard](spell/blizzard) | <span class="element-ice">Ice</span> | Construct | <span class="tier-advanced">Advanced</span> |
-| 133 | ![](/resources/img/spell/freezing_weapon.png) | [Freezing Weapon](spell/freezing_weapon) | <span class="element-ice">Ice</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 134 | ![](/resources/img/spell/frost_axe.png) | [Frost Axe](spell/frost_axe) | <span class="element-ice">Ice</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 135 | ![](/resources/img/spell/frost_step.png) | [Frost Step](spell/frost_step) | <span class="element-ice">Ice</span> | Utility | <span class="tier-advanced">Advanced</span> |
-| 136 | ![](/resources/img/spell/ice_lance.png) | [Ice Lance](spell/ice_lance) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-advanced">Advanced</span> |
-| 137 | ![](/resources/img/spell/ice_shroud.png) | [Ice Shroud](spell/ice_shroud) | <span class="element-ice">Ice</span> | Defense | <span class="tier-advanced">Advanced</span> |
-| 138 | ![](/resources/img/spell/ice_spikes.png) | [Ice Spikes](spell/ice_spikes) | <span class="element-ice">Ice</span> | Attack | <span class="tier-advanced">Advanced</span> |
-| 139 | ![](/resources/img/spell/permafrost.png) | [Permafrost](spell/permafrost) | <span class="element-ice">Ice</span> | Alteration | <span class="tier-advanced">Advanced</span> |
-| 140 | ![](/resources/img/spell/summon_ice_wraith.png) | [Summon Ice Wraith](spell/summon_ice_wraith) | <span class="element-ice">Ice</span> | Minion | <span class="tier-advanced">Advanced</span> |
-| 141 | ![](/resources/img/spell/lightning_hammer.png) | [Lightning Hammer](spell/lightning_hammer) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-master">Master</span> |
-| 142 | ![](/resources/img/spell/lightning_web.png) | [Lightning Web](spell/lightning_web) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-master">Master</span> |
-| 143 | ![](/resources/img/spell/summon_storm_elemental.png) | [Summon Storm Elemental](spell/summon_storm_elemental) | <span class="element-lightning">Lightning</span> | Minion | <span class="tier-master">Master</span> |
-| 144 | ![](/resources/img/spell/celestial_smite.png) | [Celestial Smite](spell/celestial_smite) | <span class="element-healing">Healing</span> | Attack | <span class="tier-master">Master</span> |
-| 145 | ![](/resources/img/spell/diamondflesh.png) | [Diamondflesh](spell/diamondflesh) | <span class="element-healing">Healing</span> | Defense | <span class="tier-master">Master</span> |
-| 146 | ![](/resources/img/spell/font_of_mana.png) | [Font of Mana](spell/font_of_mana) | <span class="element-healing">Healing</span> | Utility | <span class="tier-master">Master</span> |
-| 147 | ![](/resources/img/spell/font_of_vitality.png) | [Font of Vitality](spell/font_of_vitality) | <span class="element-healing">Healing</span> | Defense | <span class="tier-master">Master</span> |
-| 148 | ![](/resources/img/spell/arrow_rain.png) | [Arrow Rain](spell/arrow_rain) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-master">Master</span> |
-| 149 | ![](/resources/img/spell/black_hole.png) | [Black Hole](spell/black_hole) | <span class="element-sorcery">Sorcery</span> | Construct | <span class="tier-master">Master</span> |
-| 150 | ![](/resources/img/spell/shockwave.png) | [Shockwave](spell/shockwave) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-master">Master</span> |
-| 151 | ![](/resources/img/spell/slow_time.png) | [Slow Time](spell/slow_time) | <span class="element-sorcery">Sorcery</span> | Alteration | <span class="tier-master">Master</span> |
-| 152 | ![](/resources/img/spell/speed_time.png) | [Speed Time](spell/speed_time) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-master">Master</span> |
-| 153 | ![](/resources/img/spell/summon_iron_golem.png) | [Summon Spectral Golem](spell/summon_iron_golem) | <span class="element-sorcery">Sorcery</span> | Minion | <span class="tier-master">Master</span> |
-| 154 | ![](/resources/img/spell/vex_swarm.png) | [Vex Swarm](spell/vex_swarm) | <span class="element-sorcery">Sorcery</span> | Minion | <span class="tier-master">Master</span> |
-| 155 | ![](/resources/img/spell/curse_of_enfeeblement.png) | [Curse of Enfeeblement](spell/curse_of_enfeeblement) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-master">Master</span> |
-| 156 | ![](/resources/img/spell/plague_of_darkness.png) | [Plague of Darkness](spell/plague_of_darkness) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-master">Master</span> |
-| 157 | ![](/resources/img/spell/summon_shadow_wraith.png) | [Summon Shadow Wraith](spell/summon_shadow_wraith) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-master">Master</span> |
-| 158 | ![](/resources/img/spell/summon_skeleton_legion.png) | [Summon Skeleton Legion](spell/summon_skeleton_legion) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-master">Master</span> |
-| 159 | ![](/resources/img/spell/zombie_apocalypse.png) | [Zombie Apocalypse](spell/zombie_apocalypse) | <span class="element-necromancy">Necromancy</span> | Construct | <span class="tier-master">Master</span> |
-| 160 | ![](/resources/img/spell/boulder.png) | [Boulder](spell/boulder) | <span class="element-earth">Earth</span> | Attack | <span class="tier-master">Master</span> |
-| 161 | ![](/resources/img/spell/earthquake.png) | [Earthquake](spell/earthquake) | <span class="element-earth">Earth</span> | Attack | <span class="tier-master">Master</span> |
-| 162 | ![](/resources/img/spell/flight.png) | [Flight](spell/flight) | <span class="element-earth">Earth</span> | Utility | <span class="tier-master">Master</span> |
-| 163 | ![](/resources/img/spell/forest_of_thorns.png) | [Forest of Thorns](spell/forest_of_thorns) | <span class="element-earth">Earth</span> | Construct | <span class="tier-master">Master</span> |
-| 164 | ![](/resources/img/spell/forests_curse.png) | [Forest's Curse](spell/forests_curse) | <span class="element-earth">Earth</span> | Attack | <span class="tier-master">Master</span> |
-| 165 | ![](/resources/img/spell/fire_breath.png) | [Fire Breath](spell/fire_breath) | <span class="element-fire">Fire</span> | Attack | <span class="tier-master">Master</span> |
-| 166 | ![](/resources/img/spell/firestorm.png) | [Firestorm](spell/firestorm) | <span class="element-fire">Fire</span> | Attack | <span class="tier-master">Master</span> |
-| 167 | ![](/resources/img/spell/flamecatcher.png) | [Flamecatcher](spell/flamecatcher) | <span class="element-fire">Fire</span> | Utility | <span class="tier-master">Master</span> |
-| 168 | ![](/resources/img/spell/meteor.png) | [Meteor](spell/meteor) | <span class="element-fire">Fire</span> | Attack | <span class="tier-master">Master</span> |
-| 169 | ![](/resources/img/spell/summon_phoenix.png) | [Summon Phoenix](spell/summon_phoenix) | <span class="element-fire">Fire</span> | Minion | <span class="tier-master">Master</span> |
-| 170 | ![](/resources/img/spell/hailstorm.png) | [Hailstorm](spell/hailstorm) | <span class="element-ice">Ice</span> | Attack | <span class="tier-master">Master</span> |
-| 171 | ![](/resources/img/spell/ice_age.png) | [Ice Age](spell/ice_age) | <span class="element-ice">Ice</span> | Attack | <span class="tier-master">Master</span> |
+| 47 | ![](/resources/img/spell/metamorphosis.png) | [Metamorphosis](spell/metamorphosis) | <span class="element-necromancy">Necromancy</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
+| 48 | ![](/resources/img/spell/reversal.png) | [Reversal](spell/reversal) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-apprentice">Apprentice</span> |
+| 49 | ![](/resources/img/spell/summon_skeleton.png) | [Summon Skeleton](spell/summon_skeleton) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-apprentice">Apprentice</span> |
+| 50 | ![](/resources/img/spell/bubble.png) | [Bubble](spell/bubble) | <span class="element-earth">Earth</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
+| 51 | ![](/resources/img/spell/dark_vision.png) | [Dark Vision](spell/dark_vision) | <span class="element-earth">Earth</span> | Buff | <span class="tier-apprentice">Apprentice</span> |
+| 52 | ![](/resources/img/spell/grapple.png) | [Grapple](spell/grapple) | <span class="element-earth">Earth</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
+| 53 | ![](/resources/img/spell/growth_aura.png) | [Growth Aura](spell/growth_aura) | <span class="element-earth">Earth</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
+| 54 | ![](/resources/img/spell/poison.png) | [Poison](spell/poison) | <span class="element-earth">Earth</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
+| 55 | ![](/resources/img/spell/poison_bomb.png) | [Poison Bomb](spell/poison_bomb) | <span class="element-earth">Earth</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 56 | ![](/resources/img/spell/sixth_sense.png) | [Sixth Sense](spell/sixth_sense) | <span class="element-earth">Earth</span> | Buff | <span class="tier-apprentice">Apprentice</span> |
+| 57 | ![](/resources/img/spell/summon_spirit_wolf.png) | [Summon Spirit Wolf](spell/summon_spirit_wolf) | <span class="element-earth">Earth</span> | Minion | <span class="tier-apprentice">Apprentice</span> |
+| 58 | ![](/resources/img/spell/whirlwind.png) | [Whirlwind](spell/whirlwind) | <span class="element-earth">Earth</span> | Defense | <span class="tier-apprentice">Apprentice</span> |
+| 59 | ![](/resources/img/spell/fire_sigil.png) | [Fire Sigil](spell/fire_sigil) | <span class="element-fire">Fire</span> | Construct | <span class="tier-apprentice">Apprentice</span> |
+| 60 | ![](/resources/img/spell/fireball.png) | [Fireball](spell/fireball) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 61 | ![](/resources/img/spell/firebolt.png) | [Firebolt](spell/firebolt) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 62 | ![](/resources/img/spell/firebomb.png) | [Firebomb](spell/firebomb) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 63 | ![](/resources/img/spell/flame_ray.png) | [Flame Ray](spell/flame_ray) | <span class="element-fire">Fire</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
+| 64 | ![](/resources/img/spell/pocket_furnace.png) | [Pocket Furnace](spell/pocket_furnace) | <span class="element-fire">Fire</span> | Utility | <span class="tier-apprentice">Apprentice</span> |
+| 65 | ![](/resources/img/spell/frost_barrier.png) | [Frost Barrier](spell/frost_barrier) | <span class="element-ice">Ice</span> | Defense | <span class="tier-apprentice">Apprentice</span> |
+| 66 | ![](/resources/img/spell/frost_ray.png) | [Frost Ray](spell/frost_ray) | <span class="element-ice">Ice</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
+| 67 | ![](/resources/img/spell/frost_sigil.png) | [Frost Sigil](spell/frost_sigil) | <span class="element-ice">Ice</span> | Construct | <span class="tier-apprentice">Apprentice</span> |
+| 68 | ![](/resources/img/spell/ice_charge.png) | [Ice Charge](spell/ice_charge) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 69 | ![](/resources/img/spell/ice_shard.png) | [Ice Shard](spell/ice_shard) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 70 | ![](/resources/img/spell/ice_statue.png) | [Ice Statue](spell/ice_statue) | <span class="element-ice">Ice</span> | Attack | <span class="tier-apprentice">Apprentice</span> |
+| 71 | ![](/resources/img/spell/iceball.png) | [Iceball](spell/iceball) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-apprentice">Apprentice</span> |
+| 72 | ![](/resources/img/spell/summon_snow_golem.png) | [Summon Snow Golem](spell/summon_snow_golem) | <span class="element-ice">Ice</span> | Minion | <span class="tier-apprentice">Apprentice</span> |
+| 73 | ![](/resources/img/spell/chain_lightning.png) | [Chain Lightning](spell/chain_lightning) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 74 | ![](/resources/img/spell/invoke_weather.png) | [Invoke Weather](spell/invoke_weather) | <span class="element-lightning">Lightning</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 75 | ![](/resources/img/spell/lightning_bolt.png) | [Lightning Bolt](spell/lightning_bolt) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 76 | ![](/resources/img/spell/lightning_disc.png) | [Lightning Disk](spell/lightning_disc) | <span class="element-lightning">Lightning</span> | Projectile | <span class="tier-advanced">Advanced</span> |
+| 77 | ![](/resources/img/spell/paralysis.png) | [Paralysis](spell/paralysis) | <span class="element-lightning">Lightning</span> | Alteration | <span class="tier-advanced">Advanced</span> |
+| 78 | ![](/resources/img/spell/static_aura.png) | [Static Aura](spell/static_aura) | <span class="element-lightning">Lightning</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 79 | ![](/resources/img/spell/stormcloud.png) | [Stormcloud](spell/stormcloud) | <span class="element-lightning">Lightning</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 80 | ![](/resources/img/spell/summon_lightning_wraith.png) | [Summon Lightning Wraith](spell/summon_lightning_wraith) | <span class="element-lightning">Lightning</span> | Minion | <span class="tier-advanced">Advanced</span> |
+| 81 | ![](/resources/img/spell/arcane_jammer.png) | [Arcane Jammer](spell/arcane_jammer) | <span class="element-healing">Healing</span> | Alteration | <span class="tier-advanced">Advanced</span> |
+| 82 | ![](/resources/img/spell/forcefield.png) | [Forcefield](spell/forcefield) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 83 | ![](/resources/img/spell/greater_heal.png) | [Greater Heal](spell/greater_heal) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 84 | ![](/resources/img/spell/greater_ward.png) | [Greater Ward](spell/greater_ward) | <span class="element-healing">Healing</span> | Buff | <span class="tier-advanced">Advanced</span> |
+| 85 | ![](/resources/img/spell/group_heal.png) | [Group Heal](spell/group_heal) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 86 | ![](/resources/img/spell/healing_aura.png) | [Healing Aura](spell/healing_aura) | <span class="element-healing">Healing</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 87 | ![](/resources/img/spell/ironflesh.png) | [Ironflesh](spell/ironflesh) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 88 | ![](/resources/img/spell/oakflesh.png) | [Oakflesh](spell/oakflesh) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 89 | ![](/resources/img/spell/radiant_totem.png) | [Radiant Totem](spell/radiant_totem) | <span class="element-healing">Healing</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 90 | ![](/resources/img/spell/ray_of_purification.png) | [Ray of Purification](spell/ray_of_purification) | <span class="element-healing">Healing</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 91 | ![](/resources/img/spell/remove_curse.png) | [Remove Curse](spell/remove_curse) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 92 | ![](/resources/img/spell/satiety.png) | [Satiety](spell/satiety) | <span class="element-healing">Healing</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 93 | ![](/resources/img/spell/transience.png) | [Transience](spell/transience) | <span class="element-healing">Healing</span> | Buff | <span class="tier-advanced">Advanced</span> |
+| 94 | ![](/resources/img/spell/arcane_lock.png) | [Arcane Lock](spell/arcane_lock) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 95 | ![](/resources/img/spell/containment.png) | [Containment](spell/containment) | <span class="element-sorcery">Sorcery</span> | Alteration | <span class="tier-advanced">Advanced</span> |
+| 96 | ![](/resources/img/spell/decoy.png) | [Decoy](spell/decoy) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 97 | ![](/resources/img/spell/force_orb.png) | [Force Orb](spell/force_orb) | <span class="element-sorcery">Sorcery</span> | Projectile | <span class="tier-advanced">Advanced</span> |
+| 98 | ![](/resources/img/spell/guardian_beam.png) | [Guardian Beam](spell/guardian_beam) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 99 | ![](/resources/img/spell/invisibility.png) | [Invisibility](spell/invisibility) | <span class="element-sorcery">Sorcery</span> | Buff | <span class="tier-advanced">Advanced</span> |
+| 100 | ![](/resources/img/spell/levitation.png) | [Levitation](spell/levitation) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 101 | ![](/resources/img/spell/petrify.png) | [Petrify](spell/petrify) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 102 | ![](/resources/img/spell/phase_step.png) | [Phase Step](spell/phase_step) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 103 | ![](/resources/img/spell/spectral_pathway.png) | [Spectral Pathway](spell/spectral_pathway) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 104 | ![](/resources/img/spell/transportation.png) | [Transportation](spell/transportation) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 105 | ![](/resources/img/spell/vanishing_box.png) | [Vanishing Box](spell/vanishing_box) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 106 | ![](/resources/img/spell/banish.png) | [Banish](spell/banish) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 107 | ![](/resources/img/spell/curse_of_soulbinding.png) | [Curse of Soulbinding](spell/curse_of_soulbinding) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-advanced">Advanced</span> |
+| 108 | ![](/resources/img/spell/curse_of_undeath.png) | [Curse of Undeath](spell/curse_of_undeath) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-advanced">Advanced</span> |
+| 109 | ![](/resources/img/spell/darkness_orb.png) | [Darkness Orb](spell/darkness_orb) | <span class="element-necromancy">Necromancy</span> | Projectile | <span class="tier-advanced">Advanced</span> |
+| 110 | ![](/resources/img/spell/decay.png) | [Decay](spell/decay) | <span class="element-necromancy">Necromancy</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 111 | ![](/resources/img/spell/dragon_fireball.png) | [Dragon Fireball](spell/dragon_fireball) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 112 | ![](/resources/img/spell/entrapment.png) | [Entrapment](spell/entrapment) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 113 | ![](/resources/img/spell/mind_control.png) | [Mind Control](spell/mind_control) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 114 | ![](/resources/img/spell/shadow_ward.png) | [Shadow Ward](spell/shadow_ward) | <span class="element-necromancy">Necromancy</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 115 | ![](/resources/img/spell/shulker_bullet.png) | [Shulker Bullet](spell/shulker_bullet) | <span class="element-necromancy">Necromancy</span> | Projectile | <span class="tier-advanced">Advanced</span> |
+| 116 | ![](/resources/img/spell/summon_wither_skeleton.png) | [Summon Wither Skeleton](spell/summon_wither_skeleton) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-advanced">Advanced</span> |
+| 117 | ![](/resources/img/spell/wither.png) | [Wither](spell/wither) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 118 | ![](/resources/img/spell/wither_skull.png) | [Wither Skull](spell/wither_skull) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 119 | ![](/resources/img/spell/withering_totem.png) | [Withering Totem](spell/withering_totem) | <span class="element-necromancy">Necromancy</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 120 | ![](/resources/img/spell/cobwebs.png) | [Cobwebs](spell/cobwebs) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 121 | ![](/resources/img/spell/fangs.png) | [Fangs](spell/fangs) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 122 | ![](/resources/img/spell/glide.png) | [Glide](spell/glide) | <span class="element-earth">Earth</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 123 | ![](/resources/img/spell/slime.png) | [Slime](spell/slime) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 124 | ![](/resources/img/spell/spider_swarm.png) | [Spider Swarm](spell/spider_swarm) | <span class="element-earth">Earth</span> | Minion | <span class="tier-advanced">Advanced</span> |
+| 125 | ![](/resources/img/spell/summon_spirit_horse.png) | [Summon Spirit Horse](spell/summon_spirit_horse) | <span class="element-earth">Earth</span> | Minion | <span class="tier-advanced">Advanced</span> |
+| 126 | ![](/resources/img/spell/tornado.png) | [Tornado](spell/tornado) | <span class="element-earth">Earth</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 127 | ![](/resources/img/spell/water_breathing.png) | [Water Breathing](spell/water_breathing) | <span class="element-earth">Earth</span> | Buff | <span class="tier-advanced">Advanced</span> |
+| 128 | ![](/resources/img/spell/combustion_rune.png) | [Combustion Rune](spell/combustion_rune) | <span class="element-fire">Fire</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 129 | ![](/resources/img/spell/detonate.png) | [Detonate](spell/detonate) | <span class="element-fire">Fire</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 130 | ![](/resources/img/spell/disintegration.png) | [Disintegration](spell/disintegration) | <span class="element-fire">Fire</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 131 | ![](/resources/img/spell/fire_resistance.png) | [Fire Resistance](spell/fire_resistance) | <span class="element-fire">Fire</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 132 | ![](/resources/img/spell/fire_skin.png) | [Fire Skin](spell/fire_skin) | <span class="element-fire">Fire</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 133 | ![](/resources/img/spell/flaming_axe.png) | [Flaming Axe](spell/flaming_axe) | <span class="element-fire">Fire</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 134 | ![](/resources/img/spell/flaming_weapon.png) | [Flaming Weapon](spell/flaming_weapon) | <span class="element-fire">Fire</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 135 | ![](/resources/img/spell/greater_fireball.png) | [Greater Fireball](spell/greater_fireball) | <span class="element-fire">Fire</span> | Projectile | <span class="tier-advanced">Advanced</span> |
+| 136 | ![](/resources/img/spell/ring_of_fire.png) | [Ring of Fire](spell/ring_of_fire) | <span class="element-fire">Fire</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 137 | ![](/resources/img/spell/summon_blaze.png) | [Summon Blaze](spell/summon_blaze) | <span class="element-fire">Fire</span> | Minion | <span class="tier-advanced">Advanced</span> |
+| 138 | ![](/resources/img/spell/blizzard.png) | [Blizzard](spell/blizzard) | <span class="element-ice">Ice</span> | Construct | <span class="tier-advanced">Advanced</span> |
+| 139 | ![](/resources/img/spell/freezing_weapon.png) | [Freezing Weapon](spell/freezing_weapon) | <span class="element-ice">Ice</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 140 | ![](/resources/img/spell/frost_axe.png) | [Frost Axe](spell/frost_axe) | <span class="element-ice">Ice</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 141 | ![](/resources/img/spell/frost_step.png) | [Frost Step](spell/frost_step) | <span class="element-ice">Ice</span> | Utility | <span class="tier-advanced">Advanced</span> |
+| 142 | ![](/resources/img/spell/ice_lance.png) | [Ice Lance](spell/ice_lance) | <span class="element-ice">Ice</span> | Projectile | <span class="tier-advanced">Advanced</span> |
+| 143 | ![](/resources/img/spell/ice_shroud.png) | [Ice Shroud](spell/ice_shroud) | <span class="element-ice">Ice</span> | Defense | <span class="tier-advanced">Advanced</span> |
+| 144 | ![](/resources/img/spell/ice_spikes.png) | [Ice Spikes](spell/ice_spikes) | <span class="element-ice">Ice</span> | Attack | <span class="tier-advanced">Advanced</span> |
+| 145 | ![](/resources/img/spell/permafrost.png) | [Permafrost](spell/permafrost) | <span class="element-ice">Ice</span> | Alteration | <span class="tier-advanced">Advanced</span> |
+| 146 | ![](/resources/img/spell/summon_ice_wraith.png) | [Summon Ice Wraith](spell/summon_ice_wraith) | <span class="element-ice">Ice</span> | Minion | <span class="tier-advanced">Advanced</span> |
+| 147 | ![](/resources/img/spell/lightning_hammer.png) | [Lightning Hammer](spell/lightning_hammer) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-master">Master</span> |
+| 148 | ![](/resources/img/spell/lightning_web.png) | [Lightning Web](spell/lightning_web) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-master">Master</span> |
+| 149 | ![](/resources/img/spell/summon_storm_elemental.png) | [Summon Storm Elemental](spell/summon_storm_elemental) | <span class="element-lightning">Lightning</span> | Minion | <span class="tier-master">Master</span> |
+| 150 | ![](/resources/img/spell/thunderstorm.png) | [Thunderstorm](spell/thunderstorm) | <span class="element-lightning">Lightning</span> | Attack | <span class="tier-master">Master</span> |
+| 151 | ![](/resources/img/spell/celestial_smite.png) | [Celestial Smite](spell/celestial_smite) | <span class="element-healing">Healing</span> | Attack | <span class="tier-master">Master</span> |
+| 152 | ![](/resources/img/spell/diamondflesh.png) | [Diamondflesh](spell/diamondflesh) | <span class="element-healing">Healing</span> | Defense | <span class="tier-master">Master</span> |
+| 153 | ![](/resources/img/spell/font_of_mana.png) | [Font of Mana](spell/font_of_mana) | <span class="element-healing">Healing</span> | Utility | <span class="tier-master">Master</span> |
+| 154 | ![](/resources/img/spell/font_of_vitality.png) | [Font of Vitality](spell/font_of_vitality) | <span class="element-healing">Healing</span> | Defense | <span class="tier-master">Master</span> |
+| 155 | ![](/resources/img/spell/resurrection.png) | [Resurrection](spell/resurrection) | <span class="element-healing">Healing</span> | Alteration | <span class="tier-master">Master</span> |
+| 156 | ![](/resources/img/spell/arrow_rain.png) | [Arrow Rain](spell/arrow_rain) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-master">Master</span> |
+| 157 | ![](/resources/img/spell/black_hole.png) | [Black Hole](spell/black_hole) | <span class="element-sorcery">Sorcery</span> | Construct | <span class="tier-master">Master</span> |
+| 158 | ![](/resources/img/spell/shockwave.png) | [Shockwave](spell/shockwave) | <span class="element-sorcery">Sorcery</span> | Attack | <span class="tier-master">Master</span> |
+| 159 | ![](/resources/img/spell/slow_time.png) | [Slow Time](spell/slow_time) | <span class="element-sorcery">Sorcery</span> | Alteration | <span class="tier-master">Master</span> |
+| 160 | ![](/resources/img/spell/speed_time.png) | [Speed Time](spell/speed_time) | <span class="element-sorcery">Sorcery</span> | Utility | <span class="tier-master">Master</span> |
+| 161 | ![](/resources/img/spell/summon_iron_golem.png) | [Summon Spectral Golem](spell/summon_iron_golem) | <span class="element-sorcery">Sorcery</span> | Minion | <span class="tier-master">Master</span> |
+| 162 | ![](/resources/img/spell/vex_swarm.png) | [Vex Swarm](spell/vex_swarm) | <span class="element-sorcery">Sorcery</span> | Minion | <span class="tier-master">Master</span> |
+| 163 | ![](/resources/img/spell/curse_of_enfeeblement.png) | [Curse of Enfeeblement](spell/curse_of_enfeeblement) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-master">Master</span> |
+| 164 | ![](/resources/img/spell/plague_of_darkness.png) | [Plague of Darkness](spell/plague_of_darkness) | <span class="element-necromancy">Necromancy</span> | Attack | <span class="tier-master">Master</span> |
+| 165 | ![](/resources/img/spell/possession.png) | [Possession](spell/possession) | <span class="element-necromancy">Necromancy</span> | Alteration | <span class="tier-master">Master</span> |
+| 166 | ![](/resources/img/spell/summon_shadow_wraith.png) | [Summon Shadow Wraith](spell/summon_shadow_wraith) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-master">Master</span> |
+| 167 | ![](/resources/img/spell/summon_skeleton_legion.png) | [Summon Skeleton Legion](spell/summon_skeleton_legion) | <span class="element-necromancy">Necromancy</span> | Minion | <span class="tier-master">Master</span> |
+| 168 | ![](/resources/img/spell/zombie_apocalypse.png) | [Zombie Apocalypse](spell/zombie_apocalypse) | <span class="element-necromancy">Necromancy</span> | Construct | <span class="tier-master">Master</span> |
+| 169 | ![](/resources/img/spell/boulder.png) | [Boulder](spell/boulder) | <span class="element-earth">Earth</span> | Attack | <span class="tier-master">Master</span> |
+| 170 | ![](/resources/img/spell/earthquake.png) | [Earthquake](spell/earthquake) | <span class="element-earth">Earth</span> | Attack | <span class="tier-master">Master</span> |
+| 171 | ![](/resources/img/spell/flight.png) | [Flight](spell/flight) | <span class="element-earth">Earth</span> | Utility | <span class="tier-master">Master</span> |
+| 172 | ![](/resources/img/spell/forest_of_thorns.png) | [Forest of Thorns](spell/forest_of_thorns) | <span class="element-earth">Earth</span> | Construct | <span class="tier-master">Master</span> |
+| 173 | ![](/resources/img/spell/forests_curse.png) | [Forest's Curse](spell/forests_curse) | <span class="element-earth">Earth</span> | Attack | <span class="tier-master">Master</span> |
+| 174 | ![](/resources/img/spell/fire_breath.png) | [Fire Breath](spell/fire_breath) | <span class="element-fire">Fire</span> | Attack | <span class="tier-master">Master</span> |
+| 175 | ![](/resources/img/spell/firestorm.png) | [Firestorm](spell/firestorm) | <span class="element-fire">Fire</span> | Attack | <span class="tier-master">Master</span> |
+| 176 | ![](/resources/img/spell/flamecatcher.png) | [Flamecatcher](spell/flamecatcher) | <span class="element-fire">Fire</span> | Utility | <span class="tier-master">Master</span> |
+| 177 | ![](/resources/img/spell/meteor.png) | [Meteor](spell/meteor) | <span class="element-fire">Fire</span> | Attack | <span class="tier-master">Master</span> |
+| 178 | ![](/resources/img/spell/summon_phoenix.png) | [Summon Phoenix](spell/summon_phoenix) | <span class="element-fire">Fire</span> | Minion | <span class="tier-master">Master</span> |
+| 179 | ![](/resources/img/spell/hailstorm.png) | [Hailstorm](spell/hailstorm) | <span class="element-ice">Ice</span> | Attack | <span class="tier-master">Master</span> |
+| 180 | ![](/resources/img/spell/ice_age.png) | [Ice Age](spell/ice_age) | <span class="element-ice">Ice</span> | Attack | <span class="tier-master">Master</span> |
+| 181 | ![](/resources/img/spell/wall_of_frost.png) | [Wall of Frost](spell/wall_of_frost) | <span class="element-ice">Ice</span> | Utility | <span class="tier-master">Master</span> |
 

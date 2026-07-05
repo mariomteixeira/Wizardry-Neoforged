@@ -1,0 +1,30 @@
+{
+  "type": "attack",
+  "base_properties": {
+    "effect_radius": 10,
+    "lightning_bolts": 10,
+    "secondary_damage": 10.0,
+    "secondary_max_targets": 12,
+    "secondary_range": 10.0,
+    "tertiary_damage": 8.0,
+    "tertiary_max_targets": 3,
+    "tertiary_range": 10.0
+  },
+  "chargeup": 20,
+  "cooldown": 250,
+  "cost": 100,
+  "element": "ebwizardry:lightning",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:point_up",
+  "tier": "ebwizardry:master"
+}
