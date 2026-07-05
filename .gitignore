@@ -27,3 +27,8 @@ run
 .claude/
 
 run12_boot*.log
+
+# docs internos - nunca commitar
+/CLAUDE.md
+/PORT_NOTES.md
+/docs/
