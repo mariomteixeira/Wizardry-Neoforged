@@ -153,7 +153,7 @@ public final class Spells {
     public static final Spell POCKET_FURNACE;
     public static final Spell INTIMIDATE;
     public static final Spell BANISH;
-    // sixth sense
+    public static final Spell SIXTH_SENSE;
     public static final Spell DARK_VISION;
     public static final Spell CLAIRVOYANCE;
     public static final Spell POCKET_WORKBENCH;
@@ -1101,6 +1101,8 @@ public final class Spells {
         SHIELD = spell("shield", com.binaris.wizardry.content.spell.healing.Shield::new);
 
         SHADOW_WARD = spell("shadow_ward", () -> new com.binaris.wizardry.content.spell.necromancy.ShadowWard().soundValues(0.6f, 1, 0));
+
+        SIXTH_SENSE = spell("sixth_sense", () -> new SixthSense().soundValues(1, 1.1f, 0.2f));
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override

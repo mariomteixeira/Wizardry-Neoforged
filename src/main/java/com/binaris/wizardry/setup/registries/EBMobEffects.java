@@ -60,6 +60,11 @@ public final class EBMobEffects {
         public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {
         }
     });
+    public static final DeferredObject<MobEffect> SIXTH_SENSE = mobEffect("sixth_sense", () -> new MagicMobEffect(MobEffectCategory.BENEFICIAL, 0xc6ff01) {
+        @Override
+        public void spawnCustomParticle(net.minecraft.world.level.Level world, double x, double y, double z) {
+        }
+    });
     public static final DeferredObject<MobEffect> CURSE_OF_ENFEEBLEMENT = mobEffect("curse_of_enfeeblement", EnfeeblementCurse::new);
     public static final DeferredObject<MobEffect> CURSE_OF_UNDEATH = mobEffect("curse_of_undeath", UndeathCurse::new);
     public static final DeferredObject<MobEffect> DECAY = mobEffect("decay", DecayMobEffect::new);
