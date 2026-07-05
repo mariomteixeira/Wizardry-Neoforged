@@ -169,6 +169,7 @@ public final class EBRenderers {
         registerEntityRender(EBEntities.SHIELD, ShieldRenderer::new);
         registerEntityRender(EBEntities.FORCEFIELD, ForcefieldRenderer::new);
         registerEntityRender(EBEntities.DECOY, DecoyRenderer::new);
+        registerEntityRender(EBEntities.STORMCLOUD, BlankRenderer::new);
 
         registerEntityRender(EBEntities.RADIANT_TOTEM, (ctx -> new TotemRenderer<com.binaris.wizardry.content.entity.construct.RadiantTotemConstruct>(ctx, e -> 0xfff49b)));
         registerEntityRender(EBEntities.WITHERING_TOTEM, (ctx -> new TotemRenderer<com.binaris.wizardry.content.entity.construct.WitheringTotemConstruct>(ctx, e -> {

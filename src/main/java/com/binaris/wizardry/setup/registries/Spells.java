@@ -216,7 +216,7 @@ public final class Spells {
     public static final Spell ENRAGE;
     public static final Spell MARK_SACRIFICE;
     public static final Spell PERMAFROST;
-    // storm cloud
+    public static final Spell STORMCLOUD;
     public static final Spell WITHERING_TOTEM;
     public static final Spell FANGS;
     public static final Spell GUARDIAN_BEAM;
@@ -1000,6 +1000,23 @@ public final class Spells {
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
 
         DECOY = spell("decoy", () -> new Decoy().soundValues(1, 0.9f, 0.2f));
+
+        STORMCLOUD = spell("stormcloud", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.StormcloudConstruct::new, false) {
+            @Override
+            protected void addConstructExtras(com.binaris.wizardry.api.content.spell.internal.CastContext ctx,
+                                              com.binaris.wizardry.content.entity.construct.StormcloudConstruct construct,
+                                              net.minecraft.core.Direction side) {
+                construct.setPos(construct.getX(), construct.getY() + 5, construct.getZ());
+            }
+        }.floor(true).assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.LIGHTNING, SpellType.CONSTRUCT, SpellAction.POINT, 60, 10, 150)
+                        .add(DefaultProperties.RANGE, 10f)
+                        .add(DefaultProperties.DURATION, 600)
+                        .add(DefaultProperties.DAMAGE, 8f)
+                        .add(DefaultProperties.EFFECT_RADIUS, 3)
+                        .build()
+        ));
 
         RADIANT_TOTEM = spell("radiant_totem", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.RadiantTotemConstruct::new, false) {
             @Override
