@@ -1,0 +1,29 @@
+package com.koomplo.wizardry.client.sound;
+
+import com.koomplo.wizardry.api.content.item.ICastItem;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+
+public class MovingSoundSpellCharge extends MovingSoundEntity<LivingEntity> {
+    public MovingSoundSpellCharge(LivingEntity entity, SoundEvent sound, SoundSource category, float volume, float pitch, boolean repeat) {
+        super(entity, sound, category, volume, pitch, repeat);
+    }
+
+    @Override
+    public void tick() {
+        if (source.isUsingItem()) {
+            ItemStack stack = source.getUseItem();
+
+            if (stack.getItem() instanceof ICastItem) {
+                if (source.getTicksUsingItem() < ((ICastItem) stack.getItem()).getCurrentSpell(stack).getChargeUp()) {
+                    super.tick();
+                    return;
+                }
+            }
+        }
+
+        this.stop();
+    }
+}

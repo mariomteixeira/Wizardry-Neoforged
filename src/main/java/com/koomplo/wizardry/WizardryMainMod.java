@@ -1,0 +1,33 @@
+package com.koomplo.wizardry;
+
+import com.koomplo.wizardry.core.EBLogger;
+import com.koomplo.wizardry.content.ForfeitRegistry;
+import com.koomplo.wizardry.core.config.EBCommonConfig;
+import com.koomplo.wizardry.core.config.ConfigManager;
+import com.koomplo.wizardry.core.config.EBServerConfig;
+import com.koomplo.wizardry.setup.registries.EBArgumentTypeRegistry;
+import net.minecraft.resources.ResourceLocation;
+
+public final class WizardryMainMod {
+    public static final String MOD_ID = "ebwizardry";
+    public static final String MOD_NAME = "Electroblob's Wizardry";
+    public static boolean IS_THE_SEASON = false;
+
+    public static void init() {
+        ConfigManager.register(EBCommonConfig.INSTANCE);
+        ConfigManager.register(EBServerConfig.INSTANCE);
+        EBEventHelper.register();
+        ForfeitRegistry.register();
+        EBArgumentTypeRegistry.init();
+
+        EBLogger.info("Electroblob's Wizardry Started");
+    }
+
+    public static ResourceLocation location(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    }
+
+    public static ResourceLocation location(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
+}

@@ -1,0 +1,72 @@
+package com.koomplo.wizardry.network;
+
+import com.koomplo.wizardry.capabilities.*;
+import com.koomplo.wizardry.client.effect.ArcaneLockRender;
+import com.koomplo.wizardry.setup.registries.EBAttachments;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+/**
+ * Handles messages received on the client side, we may only call client-side methods from here because we don't want to
+ * accidentally reference client-only code on the server side.
+ */
+public final class ClientMessageHandlerForge {
+    private ClientMessageHandlerForge() {
+    }
+
+    public static void arcaneLock(ArcaneLockSyncPacketS2C m) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Level level = minecraft.level;
+        if (level == null) return;
+
+        BlockEntity blockEntity = level.getBlockEntity(m.getPos());
+        if (blockEntity == null) return;
+
+        ArcaneLockDataHolder arcaneLockData = blockEntity.getData(EBAttachments.ARCANE_LOCK_DATA);
+        arcaneLockData.deserializeNBT(level.registryAccess(), m.getData());
+        ArcaneLockRender.markDirty();
+    }
+
+    public static void minionSync(MinionSyncPacketS2C m) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Level level = minecraft.level;
+        if (level == null) return;
+
+        var entity = level.getEntity(m.getEntityId());
+        if (!(entity instanceof Mob)) return;
+
+        MinionDataHolder minionData = entity.getData(EBAttachments.MINION_DATA);
+        minionData.deserializeNBT(level.registryAccess(), m.getData());
+    }
+
+    public static void containmentSync(ContainmentSyncPacketS2C m) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Level level = minecraft.level;
+        if (level == null) return;
+
+        var entity = level.getEntity(m.getEntityId());
+        if (!(entity instanceof LivingEntity)) return;
+
+        ContainmentDataHolder containmentData = entity.getData(EBAttachments.CONTAINMENT_DATA);
+        containmentData.deserializeNBT(level.registryAccess(), m.getData());
+    }
+
+    public static void playerCapabilitySync(PlayerCapabilitySyncPacketS2C m) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+        if (player == null) return;
+
+        switch (m.getType()) {
+            case CAST_COMMAND -> player.getData(EBAttachments.CAST_COMMAND_DATA)
+                    .deserializeNBT(player.level().registryAccess(), m.getData());
+            case SPELL_MANAGER -> player.getData(EBAttachments.SPELL_MANAGER_DATA)
+                    .deserializeNBT(player.level().registryAccess(), m.getData());
+            case WIZARD_DATA -> player.getData(EBAttachments.WIZARD_DATA)
+                    .deserializeNBT(player.level().registryAccess(), m.getData());
+        }
+    }
+}

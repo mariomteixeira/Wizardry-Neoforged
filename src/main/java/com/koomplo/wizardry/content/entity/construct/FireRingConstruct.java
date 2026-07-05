@@ -1,0 +1,54 @@
+package com.koomplo.wizardry.content.entity.construct;
+
+import com.koomplo.wizardry.api.content.entity.construct.ScaledConstructEntity;
+import com.koomplo.wizardry.api.content.util.EntityUtil;
+import com.koomplo.wizardry.api.content.util.MagicDamageSource;
+import com.koomplo.wizardry.content.spell.DefaultProperties;
+import com.koomplo.wizardry.setup.registries.EBDamageSources;
+import com.koomplo.wizardry.setup.registries.EBEntities;
+import com.koomplo.wizardry.setup.registries.EBSounds;
+import com.koomplo.wizardry.setup.registries.Spells;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
+
+public class FireRingConstruct extends ScaledConstructEntity {
+    public FireRingConstruct(EntityType<?> entityType, Level level) {
+        super(entityType, level);
+        this.setBaseSize(Spells.RING_OF_FIRE.property(DefaultProperties.EFFECT_RADIUS).floatValue() * 2, 1);
+    }
+
+    public FireRingConstruct(Level world) {
+        super(EBEntities.RING_OF_FIRE.get(), world);
+        this.lifetime = Spells.RING_OF_FIRE.property(DefaultProperties.DURATION);
+        this.setBaseSize(Spells.RING_OF_FIRE.property(DefaultProperties.EFFECT_RADIUS).floatValue() * 2, 1);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.tickCount % 40 == 1) this.playSound(EBSounds.ENTITY_FIRE_RING_AMBIENT.get(), 4.0f, 0.7f);
+        if (this.tickCount % 5 != 0 || this.level().isClientSide) return;
+
+        List<LivingEntity> targets = EntityUtil.getLivingWithinRadius(getBbWidth() / 2, this.getX(), this.getY(), this.getZ(), this.level());
+
+        for (LivingEntity target : targets) {
+            if (this.isValidTarget(target) && !MagicDamageSource.isEntityImmune(EBDamageSources.FIRE, target)) {
+                Vec3 originalVec = target.getDeltaMovement();
+                target.igniteForSeconds(Spells.RING_OF_FIRE.property(DefaultProperties.EFFECT_DURATION));
+
+                float damage = Spells.RING_OF_FIRE.property(DefaultProperties.DAMAGE) * damageMultiplier;
+                MagicDamageSource.causeMagicDamage(this, target, damage, EBDamageSources.FIRE);
+                target.setDeltaMovement(originalVec);
+            }
+        }
+    }
+
+    @Override
+    protected boolean shouldScaleHeight() {
+        return false;
+    }
+}

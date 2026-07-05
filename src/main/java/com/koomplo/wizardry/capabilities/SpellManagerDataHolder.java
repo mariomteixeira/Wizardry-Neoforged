@@ -1,0 +1,119 @@
+package com.koomplo.wizardry.capabilities;
+
+import com.koomplo.wizardry.core.EBLogger;
+import com.koomplo.wizardry.api.content.data.ISpellVar;
+import com.koomplo.wizardry.api.content.data.IStoredSpellVar;
+import com.koomplo.wizardry.api.content.data.SpellManagerData;
+import com.koomplo.wizardry.api.content.spell.NoneSpell;
+import com.koomplo.wizardry.api.content.spell.Spell;
+import com.koomplo.wizardry.core.platform.Services;
+import com.koomplo.wizardry.network.PlayerCapabilitySyncPacketS2C;
+import com.koomplo.wizardry.setup.registries.Spells;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+
+public class SpellManagerDataHolder implements INBTSerializable<CompoundTag>, SpellManagerData {
+    @SuppressWarnings("rawtypes")
+    public static final Set<IStoredSpellVar> storedVariables = new HashSet<>();
+    @SuppressWarnings("rawtypes")
+    public final Map<ISpellVar, Object> spellData = new HashMap<>();
+    private final Player provider;
+    public Set<Spell> spellsDiscovered = new HashSet<>();
+
+    public SpellManagerDataHolder(Player player) {
+        this.provider = player;
+        spellsDiscovered.add(Spells.NONE);
+        spellsDiscovered.add(Spells.MAGIC_MISSILE);
+    }
+
+    @Override
+    public void sync() {
+        if (!this.provider.level().isClientSide()) {
+            CompoundTag tag = this.serializeNBT(this.provider.level().registryAccess());
+
+            PlayerCapabilitySyncPacketS2C packet = new PlayerCapabilitySyncPacketS2C(PlayerCapabilitySyncPacketS2C.CapabilityType.SPELL_MANAGER, tag);
+            Services.NETWORK_HELPER.sendTo((ServerPlayer) this.provider, packet);
+        }
+    }
+
+    @Override
+    public <T> T getVariable(ISpellVar<T> var) {
+        return (T) spellData.get(var);
+    }
+
+    @Override
+    public <T> void setVariable(ISpellVar<? super T> variable, T value) {
+        this.spellData.put(variable, value);
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public Map<ISpellVar, Object> getSpellData() {
+        return spellData;
+    }
+
+    @Override
+    public boolean hasSpellBeenDiscovered(Spell spell) {
+        return spellsDiscovered.contains(spell) || spell instanceof NoneSpell;
+    }
+
+    @Override
+    public boolean discoverSpell(Spell spell) {
+        if (spell instanceof NoneSpell) return false;
+        boolean result = spellsDiscovered.add(spell);
+        if (result) sync();
+        return result;
+    }
+
+    @Override
+    public boolean undiscoverSpell(Spell spell) {
+        boolean result = spellsDiscovered.remove(spell);
+        if (result) sync();
+        return result;
+    }
+
+    @Override
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        CompoundTag tag = new CompoundTag();
+        ListTag spellsDiscoveredTag = new ListTag();
+        spellsDiscovered.forEach((spell -> {
+            if (spell != null) spellsDiscoveredTag.add(StringTag.valueOf(spell.getLocation().toString()));
+        }));
+        tag.put("spellsDiscovered", spellsDiscoveredTag);
+        storedVariables.forEach(k -> k.write(tag, this.spellData.get(k)));
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
+        spellsDiscovered.clear();
+        if (tag.contains("spellsDiscovered", Tag.TAG_LIST)) {
+            ListTag listTag = tag.getList("spellsDiscovered", Tag.TAG_STRING);
+            for (Tag element : listTag) {
+                ResourceLocation location = ResourceLocation.tryParse(element.getAsString());
+                if (location != null) {
+                    spellsDiscovered.add(Services.REGISTRY_UTIL.getSpell(location));
+                }
+            }
+        }
+
+        try {
+            storedVariables.forEach(k -> spellData.put(k, k.read(tag)));
+        } catch (ClassCastException e) {
+            EBLogger.error("Wizard data NBT tag was not of expected type!", e);
+        }
+    }
+}

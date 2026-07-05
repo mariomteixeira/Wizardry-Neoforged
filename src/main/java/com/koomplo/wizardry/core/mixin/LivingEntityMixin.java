@@ -1,0 +1,115 @@
+package com.koomplo.wizardry.core.mixin;
+
+import com.koomplo.wizardry.api.content.event.EBLivingDeathEvent;
+import com.koomplo.wizardry.api.content.event.EBLivingHurtEvent;
+import com.koomplo.wizardry.api.content.event.EBLivingTick;
+import com.koomplo.wizardry.content.effect.FrostStepEffect;
+import com.koomplo.wizardry.core.event.WizardryEventBus;
+import com.koomplo.wizardry.core.integrations.ArtifactChannel;
+import com.koomplo.wizardry.core.platform.Services;
+import com.koomplo.wizardry.setup.registries.EBItems;
+import com.koomplo.wizardry.setup.registries.EBMobEffects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(LivingEntity.class)
+public abstract class LivingEntityMixin {
+    @Unique
+    LivingEntity livingEntity = (LivingEntity) (Object) this;
+
+    @Unique
+    boolean eventCanceled = false;
+
+    @Inject(at = @At("HEAD"), method = "tick")
+    public void EBWIZARDRY$tick(CallbackInfo ci) {
+        WizardryEventBus.getInstance().fire(new EBLivingTick(livingEntity, livingEntity.level()));
+    }
+
+    @Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)
+    public void EBWIZARDRY$livingCanBeAffected(MobEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
+        if (!(livingEntity instanceof Player player)) return;
+
+        if (ArtifactChannel.isEquipped(player, EBItems.AMULET_ICE_IMMUNITY.get()))
+            if (effect.getEffect() == EBMobEffects.holder(EBMobEffects.FROST)) cir.setReturnValue(false);
+
+        if (ArtifactChannel.isEquipped(player, EBItems.AMULET_WITHER_IMMUNITY.get()))
+            if (effect.getEffect() == MobEffects.WITHER) cir.setReturnValue(false);
+    }
+
+    @Inject(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/WalkAnimationState;setSpeed(F)V", shift = At.Shift.AFTER), cancellable = true)
+    public void EBWIZARDRY$livingEntityHurtCancel(DamageSource source, float f, CallbackInfoReturnable<Boolean> cir) {
+        if (eventCanceled) {
+            cir.setReturnValue(false);
+            eventCanceled = false;
+        }
+    }
+
+    @ModifyVariable(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/WalkAnimationState;setSpeed(F)V", shift = At.Shift.BEFORE), argsOnly = true, ordinal = 0)
+    private float EBWIZARDRY$livingEntityHurtAmount(float amount, DamageSource source) {
+        EBLivingHurtEvent event = new EBLivingHurtEvent(livingEntity, source, amount);
+        WizardryEventBus.getInstance().fire(event);
+        eventCanceled = event.isCanceled();
+        return event.getAmount();
+    }
+
+
+    @Inject(at = @At("HEAD"), method = "jumpFromGround")
+    public void EBWIZARDRY$LivingEntityJump(CallbackInfo ci) {
+        if (livingEntity.hasEffect(EBMobEffects.holder(EBMobEffects.FROST))) {
+            if (livingEntity.getEffect(EBMobEffects.holder(EBMobEffects.FROST)).getAmplifier() == 0) {
+                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().x, 0.5, livingEntity.getDeltaMovement().z);
+            } else {
+                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().x, 0, livingEntity.getDeltaMovement().y);
+            }
+        }
+    }
+
+    @Inject(method = "die", at = @At("HEAD"))
+    public void EBWIZARDRY$LivingEntityDie(DamageSource damageSource, CallbackInfo ci) {
+        WizardryEventBus.getInstance().fire(new EBLivingDeathEvent(livingEntity, damageSource));
+    }
+
+    @Inject(method = "shouldDropLoot", at = @At(value = "RETURN"), cancellable = true)
+    public void EBWIZARDRY$dropLoot(CallbackInfoReturnable<Boolean> cir) {
+        if (livingEntity instanceof Mob mob) {
+            if (Services.OBJECT_DATA.isMinion(mob)) cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "shouldDropExperience", at = @At(value = "RETURN"), cancellable = true)
+    public void EBWIZARDRY$dropExperience(CallbackInfoReturnable<Boolean> cir) {
+        if (livingEntity instanceof Mob mob) {
+            if (Services.OBJECT_DATA.isMinion(mob)) cir.setReturnValue(false);
+        }
+    }
+
+    @Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+    public boolean EBWIZARDRY$avoidDamageOnFrost(LivingEntity living, DamageSource entity, float ev) {
+        if (living.hasEffect(EBMobEffects.holder(EBMobEffects.FROST))) {
+            return false;
+        }
+        return living.hurt(entity, ev);
+    }
+
+    @Inject(method = "onChangedBlock", at = @At("HEAD"))
+    public void EBWIZARDRY$frostStep(ServerLevel level, BlockPos pos, CallbackInfo ci) {
+        if (livingEntity.hasEffect(EBMobEffects.holder(EBMobEffects.FROST_STEP))) {
+            FrostStepEffect.onEntityMoved(livingEntity, level, pos,
+                    livingEntity.getEffect(EBMobEffects.holder(EBMobEffects.FROST_STEP)).getAmplifier());
+        }
+    }
+}

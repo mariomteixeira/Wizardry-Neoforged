@@ -1,0 +1,24 @@
+package com.koomplo.wizardry.gametest;
+
+import com.koomplo.wizardry.WizardryMainMod;
+import com.koomplo.wizardry.core.gametest.EBTestCentral;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+
+@SuppressWarnings("unused")
+@PrefixGameTestTemplate(false)
+@GameTestHolder(WizardryMainMod.MOD_ID)
+public class ConjureItemTest {
+
+    @GameTest(template = "empty_3x3x3")
+    public static void spawnConjureItem(GameTestHelper helper) {
+        EBTestCentral.ConjureSpells.spawnConjureItem(helper);
+    }
+
+    @GameTest(template = "empty_3x3x3")
+    public static void conjureItemDespawn(GameTestHelper helper) {
+        EBTestCentral.ConjureSpells.conjureItemDespawn(helper);
+    }
+}

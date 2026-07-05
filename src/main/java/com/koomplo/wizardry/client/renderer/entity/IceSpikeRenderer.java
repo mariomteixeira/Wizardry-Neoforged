@@ -1,0 +1,72 @@
+package com.koomplo.wizardry.client.renderer.entity;
+
+import com.koomplo.wizardry.WizardryMainMod;
+import com.koomplo.wizardry.content.entity.construct.IceSpikeConstruct;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Axis;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+
+public class IceSpikeRenderer extends EntityRenderer<IceSpikeConstruct> {
+    private static final ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/entity/ice_spike.png");
+
+    public IceSpikeRenderer(EntityRendererProvider.Context $$0) {
+        super($$0);
+    }
+
+    @Override
+    public void render(IceSpikeConstruct entity, float p_114486_, float p_114487_, PoseStack p_114488_, MultiBufferSource p_114489_, int p_114490_) {
+        p_114488_.pushPose();
+        RenderSystem.enableDepthTest();
+        p_114488_.mulPose(Axis.YP.rotationDegrees(entity.getYRot() - 90.0F));
+        p_114488_.mulPose(Axis.ZP.rotationDegrees(entity.getXRot() - 90));
+
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+
+        Tesselator tessellator = Tesselator.getInstance();
+        BufferBuilder buffer;
+
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, texture);
+
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, 0.5f).setUv(1, 1);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, 0.5f).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, -0.5f).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, -0.5f).setUv(0, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
+
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 0, 0).setUv(1, 1);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 1, 0).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 1, 0).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 0, 0).setUv(0, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
+
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, -0.5f).setUv(0, 1);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, -0.5f).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 1, 0.5f).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0, 0, 0.5f).setUv(1, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
+
+        buffer = tessellator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 0, 0).setUv(0, 1);
+        buffer.addVertex(p_114488_.last().pose(), -0.5f, 1, 0).setUv(0, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 1, 0).setUv(1, 0);
+        buffer.addVertex(p_114488_.last().pose(), 0.5f, 0, 0).setUv(1, 1);
+        BufferUploader.drawWithShader(buffer.buildOrThrow());
+
+        p_114488_.popPose();
+    }
+
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull IceSpikeConstruct var1) {
+        return texture;
+    }
+}

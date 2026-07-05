@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.binaris.wizardry.mixin",
+  "package": "com.koomplo.wizardry.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "WizardItemStackMixin"

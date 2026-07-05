@@ -1,0 +1,124 @@
+package com.koomplo.wizardry.datagen.provider;
+
+import com.koomplo.wizardry.WizardryMainMod;
+import com.koomplo.wizardry.api.content.DeferredObject;
+import com.koomplo.wizardry.setup.datagen.EBDataGenProcessor;
+import com.koomplo.wizardry.setup.registries.EBBlocks;
+import com.koomplo.wizardry.setup.registries.EBItems;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+public final class EBItemModelProvider extends ItemModelProvider {
+
+    public EBItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+        super(output, WizardryMainMod.MOD_ID, existingFileHelper);
+    }
+
+    @Override
+    protected void registerModels() {
+        EBDataGenProcessor.items().forEach((name, item) -> simpleItem(name));
+        generateWandPointModel();
+        EBDataGenProcessor.wandItems().forEach((name, item) -> simpleWand(name));
+        simpleBlockItemBlockTexture(EBBlocks.CRYSTAL_FLOWER);
+
+        simpleItem(BuiltInRegistries.ITEM.getKey(EBItems.APPRENTICE_ARCANE_TOME.get()).getPath(), "arcane_tome");
+        simpleItem(BuiltInRegistries.ITEM.getKey(EBItems.ADVANCED_ARCANE_TOME.get()).getPath(), "arcane_tome");
+        simpleItem(BuiltInRegistries.ITEM.getKey(EBItems.MASTER_ARCANE_TOME.get()).getPath(), "arcane_tome");
+
+        spawnEgg(EBItems.WIZARD_SPAWN_EGG);
+        spawnEgg(EBItems.EVIL_WIZARD_SPAWN_EGG);
+        spawnEgg(EBItems.REMNANT_SPAWN_EGG);
+    }
+
+    private void simpleBlockItemBlockTexture(DeferredObject<Block> item) {
+        ResourceLocation id = BuiltInRegistries.BLOCK.getKey(item.get());
+
+        withExistingParent(id.getPath(),
+                ResourceLocation.parse("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "block/" + id.getPath()));
+    }
+
+    private void spawnEgg(DeferredObject<Item> item) {
+        ResourceLocation id = BuiltInRegistries.ITEM.getKey(item.get());
+        withExistingParent(id.getPath(), mcLoc("item/template_spawn_egg"));
+    }
+
+    private void simpleItem(String name) {
+        simpleItem(name, name);
+    }
+
+    private void simpleItem(String modelName, String textureName) {
+        withExistingParent(modelName,
+                ResourceLocation.parse("item/generated")).texture(
+                "layer0",
+                ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/" + textureName)
+        );
+    }
+
+    private void simpleWand(String name) {
+        ItemModelBuilder pointModel = withExistingParent(name + "_casting", "item/handheld")
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/" + name));
+
+        pointModel.transforms()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+                .rotation(0, -90, 105)
+                .translation(0, 0, -3.25f)
+                .scale(0.85f)
+                .end()
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+                .rotation(0, 90, -105)
+                .translation(0, 0, -3.25f)
+                .scale(0.85f)
+                .end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0, -90, 105)
+                .translation(1.13f, 3.2f, 0.5f)
+                .scale(0.68f)
+                .end()
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+                .rotation(0, 90, -105)
+                .translation(1.13f, 3.2f, 0.5f)
+                .scale(0.68f)
+                .end();
+
+        withExistingParent(name, ResourceLocation.parse("item/handheld"))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "item/" + name))
+                .override().predicate(ResourceLocation.parse("casting"), 1)
+                .model(pointModel).end();
+    }
+
+    private void generateWandPointModel() {
+        ItemModelBuilder builder = withExistingParent("wand_point", "item/handheld");
+
+        builder.transforms()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+                .rotation(0, -90, 105)
+                .translation(0, 0, -3.25f)
+                .scale(0.85f)
+                .end()
+                .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+                .rotation(0, 90, -105)
+                .translation(0, 0, -3.25f)
+                .scale(0.85f)
+                .end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+                .rotation(0, -90, 105)
+                .translation(1.13f, 3.2f, 0.5f)
+                .scale(0.68f)
+                .end()
+                .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+                .rotation(0, 90, -105)
+                .translation(1.13f, 3.2f, 0.5f)
+                .scale(0.68f)
+                .end();
+    }
+
+
+}
