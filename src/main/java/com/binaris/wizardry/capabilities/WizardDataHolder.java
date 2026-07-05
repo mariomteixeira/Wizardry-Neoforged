@@ -253,6 +253,38 @@ public class WizardDataHolder implements INBTSerializable<CompoundTag>, WizardDa
         return transportationCountdown;
     }
 
+    // ======= Possession (transient: the discarded body, the countdown, and the projectile cooldown) =======
+
+    @Nullable
+    private net.minecraft.world.entity.Mob possessee;
+    private int possessionTimer;
+    private int possessionShootCooldown;
+
+    public void setPossessee(@Nullable net.minecraft.world.entity.Mob possessee) {
+        this.possessee = possessee;
+    }
+
+    @Nullable
+    public net.minecraft.world.entity.Mob getPossessee() {
+        return possessee;
+    }
+
+    public void setPossessionTimer(int timer) {
+        this.possessionTimer = timer;
+    }
+
+    public int getPossessionTimer() {
+        return possessionTimer;
+    }
+
+    public void setPossessionShootCooldown(int cooldown) {
+        this.possessionShootCooldown = cooldown;
+    }
+
+    public int getPossessionShootCooldown() {
+        return possessionShootCooldown;
+    }
+
     // ======= Shield entity (transient: tracks the active force shield while the spell is held) =======
 
     @Nullable

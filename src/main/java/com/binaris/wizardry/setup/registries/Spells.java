@@ -207,7 +207,7 @@ public final class Spells {
     public static final Spell GREATER_WARD;
     public static final Spell RAY_OF_PURIFICATION;
     public static final Spell REMOVE_CURSE;
-    // possession
+    public static final Spell POSSESSION;
     public static final Spell CURSE_OF_ENFEEBLEMENT;
     public static final Spell FOREST_OF_THORNS;
     public static final Spell SPEED_TIME;
@@ -1119,6 +1119,8 @@ public final class Spells {
         WALL_OF_FROST = spell("wall_of_frost", () -> new WallOfFrost().soundValues(0.5f, 1, 0));
 
         RESURRECTION = spell("resurrection", com.binaris.wizardry.content.spell.healing.Resurrection::new);
+
+        POSSESSION = spell("possession", com.binaris.wizardry.content.spell.necromancy.Possession::new);
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override

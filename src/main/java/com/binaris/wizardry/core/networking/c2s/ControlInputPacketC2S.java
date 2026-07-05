@@ -62,6 +62,9 @@ public record ControlInputPacketC2S(ControlType controlType) implements CustomPa
                     } else {
                         menu.onClearButtonPressed(player);
                     }
+                    break;
+                case POSSESSION_PROJECTILE:
+                    com.binaris.wizardry.content.spell.necromancy.Possession.shootProjectile(player);
             }
         });
     }
@@ -69,6 +72,6 @@ public record ControlInputPacketC2S(ControlType controlType) implements CustomPa
     public enum ControlType {
         APPLY_BUTTON, NEXT_SPELL_KEY,
         PREVIOUS_SPELL_KEY, RESURRECT_BUTTON,
-        CLEAR_BUTTON
+        CLEAR_BUTTON, POSSESSION_PROJECTILE
     }
 }

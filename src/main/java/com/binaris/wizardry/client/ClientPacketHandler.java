@@ -61,6 +61,15 @@ public final class ClientPacketHandler {
                 .time((int) (duration * packet.durationMultiplier())).color(1f, 1f, 1f).spawn(world);
     }
 
+    /** Starts/stops rendering a possessing player as the possessed creature (1.12.2 PacketPossession). */
+    public static void handlePossession(com.binaris.wizardry.core.networking.s2c.PossessionS2C packet) {
+        if (packet.entityTypeId().isEmpty()) {
+            PossessionClientHandler.endDisplay(packet.playerId());
+        } else {
+            PossessionClientHandler.startDisplay(packet.playerId(), packet.entityTypeId(), packet.entityNbt());
+        }
+    }
+
     /** Revives the client-side copy of a resurrected player and closes the death screen if it's us (1.12.2 PacketResurrection). */
     public static void handleResurrection(com.binaris.wizardry.core.networking.s2c.ResurrectionS2C packet) {
         var minecraft = net.minecraft.client.Minecraft.getInstance();

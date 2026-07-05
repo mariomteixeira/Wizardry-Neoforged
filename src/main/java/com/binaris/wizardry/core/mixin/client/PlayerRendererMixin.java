@@ -15,10 +15,37 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * Pitches the player model horizontal while casting glide/flight, reproducing the vanilla elytra branch of
  * {@code setupRotations} (which is gated on the fall-flying shared flag — forcing that flag would also swap
- * the movement physics, so the rotation is replicated here instead).
+ * the movement physics, so the rotation is replicated here instead). Also swaps the player's body for the
+ * possessed creature while possessing.
  */
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin {
+
+    // Possession: the possessing player renders as the possessed creature instead
+    @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+            at = @At("HEAD"), cancellable = true)
+    private void EBWIZARDRY$renderPossessee(AbstractClientPlayer player, float entityYaw, float partialTicks,
+                                            PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource bufferSource,
+                                            int packedLight, CallbackInfo ci) {
+        net.minecraft.world.entity.Mob possessee =
+                com.binaris.wizardry.client.PossessionClientHandler.getDisplayPossessee(player.getId());
+
+        if (possessee != null) {
+            possessee.setPos(player.getX(), player.getY(), player.getZ());
+            possessee.yBodyRot = player.yBodyRot;
+            possessee.yBodyRotO = player.yBodyRotO;
+            possessee.yHeadRot = player.yHeadRot;
+            possessee.yHeadRotO = player.yHeadRotO;
+            possessee.setXRot(player.getXRot());
+            possessee.xRotO = player.xRotO;
+            possessee.walkAnimation.update(player.walkAnimation.speed(), 1);
+            possessee.tickCount = player.tickCount;
+
+            net.minecraft.client.Minecraft.getInstance().getEntityRenderDispatcher()
+                    .render(possessee, 0, 0, 0, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
+            ci.cancel();
+        }
+    }
 
     @Inject(method = "setupRotations(Lnet/minecraft/client/player/AbstractClientPlayer;Lcom/mojang/blaze3d/vertex/PoseStack;FFFF)V", at = @At("TAIL"))
     private void EBWIZARDRY$flightSpellRotations(AbstractClientPlayer entity, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale, CallbackInfo ci) {

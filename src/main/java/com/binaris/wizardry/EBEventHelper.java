@@ -103,6 +103,7 @@ public final class EBEventHelper {
         bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.sorcery.Transportation::onLivingTick);
         bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.earth.Glide::onLivingTick);
         bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.necromancy.MindControl::onLivingTick);
+        bus.register(EBLivingTick.class, com.binaris.wizardry.content.spell.necromancy.Possession::onLivingTick);
     }
 
     private static void onSpellDiscovery(WizardryEventBus bus) {

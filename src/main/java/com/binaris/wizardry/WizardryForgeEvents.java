@@ -117,6 +117,87 @@ public class WizardryForgeEvents {
             com.binaris.wizardry.content.block.SpectralBlock.onBlockPlace(event);
         }
 
+        // Possession: damage diverted through the possessed body, targeting rules, interaction blocks
+        @SubscribeEvent
+        public static void onLivingIncomingDamagePossession(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
+            com.binaris.wizardry.content.spell.necromancy.Possession.onIncomingDamage(event);
+        }
+
+        @SubscribeEvent
+        public static void onLivingChangeTargetPossession(net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
+            com.binaris.wizardry.content.spell.necromancy.Possession.onLivingChangeTarget(event);
+        }
+
+        @SubscribeEvent
+        public static void onLivingDeathPossession(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
+            com.binaris.wizardry.content.spell.necromancy.Possession.onLivingDeath(event);
+        }
+
+        @SubscribeEvent
+        public static void onPlayerLoggedOutPossession(net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedOutEvent event) {
+            if (com.binaris.wizardry.content.spell.necromancy.Possession.isPossessing(event.getEntity())) {
+                ((com.binaris.wizardry.content.spell.necromancy.Possession) com.binaris.wizardry.setup.registries.Spells.POSSESSION)
+                        .endPossession(event.getEntity());
+            }
+        }
+
+        private static boolean blockIfPossessing(PlayerInteractEvent event) {
+            // Possessing players can't interact with the world (except using items); right-clicks fire the
+            // possessed creature's projectile instead (client side sends the control packet)
+            if (!com.binaris.wizardry.content.spell.necromancy.Possession.isPossessing(event.getEntity())) return false;
+
+            if (event.getLevel().isClientSide
+                    && (event instanceof PlayerInteractEvent.RightClickBlock || event instanceof PlayerInteractEvent.EntityInteract
+                    || event instanceof PlayerInteractEvent.RightClickEmpty)) {
+                com.binaris.wizardry.core.platform.Services.NETWORK_HELPER.sendToServer(
+                        new com.binaris.wizardry.core.networking.c2s.ControlInputPacketC2S(
+                                com.binaris.wizardry.core.networking.c2s.ControlInputPacketC2S.ControlType.POSSESSION_PROJECTILE));
+            }
+            return true;
+        }
+
+        @SubscribeEvent
+        public static void onPossessionRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+            if (blockIfPossessing(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onPossessionLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+            if (blockIfPossessing(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onPossessionEntityInteract(PlayerInteractEvent.EntityInteract event) {
+            if (blockIfPossessing(event)) event.setCanceled(true);
+        }
+
+        @SubscribeEvent
+        public static void onPossessionRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
+            blockIfPossessing(event); // Not cancellable, but still fires the projectile
+        }
+
+        @SubscribeEvent
+        public static void onPossessionAttackEntity(net.neoforged.neoforge.event.entity.player.AttackEntityEvent event) {
+            if (com.binaris.wizardry.content.spell.necromancy.Possession.shouldBlockMeleeAttack(event.getEntity())) {
+                event.setCanceled(true); // Can't melee with a non-melee mob
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPossessionItemToss(net.neoforged.neoforge.event.entity.item.ItemTossEvent event) {
+            if (com.binaris.wizardry.content.spell.necromancy.Possession.isPossessing(event.getPlayer())) {
+                event.setCanceled(true); // Can't drop items while possessing
+                event.getPlayer().getInventory().add(event.getEntity().getItem());
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPossessionItemPickup(net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent.Pre event) {
+            if (com.binaris.wizardry.content.spell.necromancy.Possession.isPossessing(event.getPlayer())) {
+                event.setCanPickup(net.neoforged.neoforge.common.util.TriState.FALSE); // Mobs don't have pockets
+            }
+        }
+
         // Resurrection: stamps the death game time on players (deathTime freezes when the corpse despawns)
         @SubscribeEvent
         public static void onLivingDeathResurrection(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
