@@ -7,7 +7,10 @@ import com.binaris.wizardry.api.content.spell.SpellAction;
 import com.binaris.wizardry.api.content.spell.SpellType;
 import com.binaris.wizardry.api.content.spell.properties.SpellProperties;
 import com.binaris.wizardry.content.entity.construct.*;
+import com.binaris.wizardry.content.entity.living.IceWraith;
 import com.binaris.wizardry.content.entity.living.LightningWraith;
+import com.binaris.wizardry.content.entity.living.ShadowWraith;
+import com.binaris.wizardry.content.entity.living.StormElemental;
 import com.binaris.wizardry.content.entity.projectile.*;
 import com.binaris.wizardry.content.spell.necromancy.BlockWithSurprise;
 import com.binaris.wizardry.content.spell.DefaultProperties;
@@ -89,7 +92,7 @@ public final class Spells {
     public static final Spell FIRE_SKIN;
     public static final Spell FLAMING_AXE;
     public static final Spell BLIZZARD;
-    // summon ice wraith
+    public static final Spell SUMMON_ICE_WRAITH;
     public static final Spell ICE_SHROUD;
     public static final Spell ICE_CHARGE;
     public static final Spell FROST_AXE;
@@ -133,7 +136,7 @@ public final class Spells {
     // lightning hammer
     public static final Spell PLAGUE_DARKNESS;
     public static final Spell SUMMON_SKELETON_LEGION;
-    // summon shadow wraith
+    public static final Spell SUMMON_SHADOW_WRAITH;
     public static final Spell FOREST_CURSE;
     public static final Spell FLIGHT;
     public static final Spell SILVERFISH_SWARM;
@@ -172,7 +175,7 @@ public final class Spells {
     public static final Spell GROUP_HEAL;
     public static final Spell HAILSTORM;
     public static final Spell LIGHTNING_WEB;
-    // summon storm elemental
+    public static final Spell SUMMON_STORM_ELEMENTAL;
     public static final Spell EARTHQUAKE;
     public static final Spell FONT_OF_MANA;
     public static final Spell MINE;
@@ -960,6 +963,44 @@ public final class Spells {
                 .assignProperties(
                         SpellProperties.builder()
                                 .assignBaseProperties(SpellTiers.ADVANCED, Elements.LIGHTNING, SpellType.MINION, SpellAction.SUMMON, 40, 10, 200)
+                                .add(DefaultProperties.MINION_COUNT, 1)
+                                .add(DefaultProperties.MINION_LIFETIME, 600)
+                                .add(DefaultProperties.SUMMON_RADIUS, 2)
+                                .build()
+                );
+
+        SUMMON_ICE_WRAITH = spell("summon_ice_wraith", () -> new MinionSpell<>(IceWraith::new))
+                .soundValues(1, 1.1f, 0.2f)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.ADVANCED, Elements.ICE, SpellType.MINION, SpellAction.SUMMON, 40, 10, 200)
+                                .add(DefaultProperties.MINION_COUNT, 1)
+                                .add(DefaultProperties.MINION_LIFETIME, 600)
+                                .add(DefaultProperties.SUMMON_RADIUS, 2)
+                                .build()
+                );
+
+        SUMMON_SHADOW_WRAITH = spell("summon_shadow_wraith", () -> new MinionSpell<>(ShadowWraith::new) {
+            @Override
+            public net.minecraft.network.chat.Component getDesc() {
+                // 1.12.2 shows the shadow wraith's description obfuscated
+                return ((net.minecraft.network.chat.MutableComponent) super.getDesc()).withStyle(net.minecraft.ChatFormatting.OBFUSCATED);
+            }
+        }.soundValues(1, 1.1f, 0.1f)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.MASTER, Elements.NECROMANCY, SpellType.MINION, SpellAction.SUMMON, 100, 20, 400)
+                                .add(DefaultProperties.MINION_COUNT, 1)
+                                .add(DefaultProperties.MINION_LIFETIME, 600)
+                                .add(DefaultProperties.SUMMON_RADIUS, 2)
+                                .build()
+                ));
+
+        SUMMON_STORM_ELEMENTAL = spell("summon_storm_elemental", () -> new MinionSpell<>(StormElemental::new))
+                .soundValues(1, 1.1f, 0.1f)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.MASTER, Elements.LIGHTNING, SpellType.MINION, SpellAction.SUMMON, 100, 20, 400)
                                 .add(DefaultProperties.MINION_COUNT, 1)
                                 .add(DefaultProperties.MINION_LIFETIME, 600)
                                 .add(DefaultProperties.SUMMON_RADIUS, 2)
