@@ -60,6 +60,7 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<BoulderConstruct>> BOULDER = entity(BoulderConstruct::new, "boulder", MobCategory.MISC, 2.375f, 2.375f, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<ZombieSpawnerConstruct>> ZOMBIE_SPAWNER = entity(ZombieSpawnerConstruct::new, "zombie_spawner", MobCategory.MISC, 4f, 2f, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<IceBarrierConstruct>> ICE_BARRIER = entity(IceBarrierConstruct::new, "ice_barrier", MobCategory.MISC, 3, 3, MagicType.CONSTRUCT);
+    public static final DeferredObject<EntityType<ForcefieldConstruct>> FORCEFIELD = entity(ForcefieldConstruct::new, "forcefield", MobCategory.MISC, 6, 6, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<CombustionRuneConstruct>> COMBUSTION_RUNE = entity(CombustionRuneConstruct::new, "combustion_rune", MobCategory.MISC, 2, 0.2F, MagicType.CONSTRUCT);
     public static final DeferredObject<EntityType<BubbleConstruct>> BUBBLE = entity("bubble", EntityType.Builder.<BubbleConstruct>of(BubbleConstruct::new, MobCategory.MISC).sized(0.6f, 1.8f).updateInterval(3).clientTrackingRange(160));
     public static final DeferredObject<EntityType<HailstormConstruct>> HAILSTORM = entity(HailstormConstruct::new, "hailstorm", MobCategory.MISC, 5, 5, MagicType.CONSTRUCT);

@@ -117,6 +117,53 @@ public class WizardryForgeEvents {
             com.binaris.wizardry.content.block.SpectralBlock.onBlockPlace(event);
         }
 
+        // Forcefield: no attacks, interactions, or explosion effects across the boundary (1.12.2 EntityForcefield)
+        @SubscribeEvent
+        public static void onLivingIncomingDamageForcefield(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
+            if (com.binaris.wizardry.content.entity.construct.ForcefieldConstruct.shouldBlockAttack(
+                    event.getSource().getEntity(), event.getEntity(), event.getSource().getDirectEntity())) {
+                event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onRightClickBlockForcefield(PlayerInteractEvent.RightClickBlock event) {
+            if (com.binaris.wizardry.content.entity.construct.ForcefieldConstruct.shouldBlockInteraction(
+                    event.getLevel(), event.getEntity(), new net.minecraft.world.phys.AABB(event.getPos()))) {
+                event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onLeftClickBlockForcefield(PlayerInteractEvent.LeftClickBlock event) {
+            if (com.binaris.wizardry.content.entity.construct.ForcefieldConstruct.shouldBlockInteraction(
+                    event.getLevel(), event.getEntity(), new net.minecraft.world.phys.AABB(event.getPos()))) {
+                event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityInteractForcefield(PlayerInteractEvent.EntityInteract event) {
+            if (com.binaris.wizardry.content.entity.construct.ForcefieldConstruct.shouldBlockInteraction(
+                    event.getLevel(), event.getEntity(), event.getTarget().getBoundingBox())) {
+                event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityInteractSpecificForcefield(PlayerInteractEvent.EntityInteractSpecific event) {
+            if (com.binaris.wizardry.content.entity.construct.ForcefieldConstruct.shouldBlockInteraction(
+                    event.getLevel(), event.getEntity(), event.getTarget().getBoundingBox())) {
+                event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onExplosionDetonateForcefield(net.neoforged.neoforge.event.level.ExplosionEvent.Detonate event) {
+            com.binaris.wizardry.content.entity.construct.ForcefieldConstruct.filterExplosion(
+                    event.getLevel(), event.getExplosion().center(), event.getAffectedBlocks(), event.getAffectedEntities());
+        }
+
         // Lightning bolt spell: replaces vanilla strike damage with attributed shock damage
         @SubscribeEvent
         public static void onEntityStruckByLightning(net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent event) {

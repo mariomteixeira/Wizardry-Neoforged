@@ -125,7 +125,7 @@ public final class Spells {
     public static final Spell VANISHING_BOX;
     public static final Spell GREATER_HEAL;
     public static final Spell HEALING_AURA;
-    // force field
+    public static final Spell FORCEFIELD;
     public static final Spell TRANSIENCE;
     public static final Spell METEOR;
     public static final Spell FIRE_BREATH;
@@ -1000,6 +1000,22 @@ public final class Spells {
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
 
         SHIELD = spell("shield", com.binaris.wizardry.content.spell.healing.Shield::new);
+
+        FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
+            @Override
+            protected void addConstructExtras(com.binaris.wizardry.api.content.spell.internal.CastContext ctx,
+                                              com.binaris.wizardry.content.entity.construct.ForcefieldConstruct construct,
+                                              net.minecraft.core.Direction side) {
+                construct.setRadius(property(DefaultProperties.EFFECT_RADIUS)
+                        * ctx.modifiers().get(com.binaris.wizardry.api.content.spell.internal.SpellModifiers.BLAST));
+            }
+        }.assignProperties(
+                SpellProperties.builder()
+                        .assignBaseProperties(SpellTiers.ADVANCED, Elements.HEALING, SpellType.DEFENCE, SpellAction.THRUST, 45, 15, 200)
+                        .add(DefaultProperties.DURATION, 600)
+                        .add(DefaultProperties.EFFECT_RADIUS, 3)
+                        .build()
+        ));
 
         SUMMON_SPIRIT_WOLF = spell("summon_spirit_wolf", () -> new SummonSpiritWolf().soundValues(0.7f, 1.2f, 0.4f));
 
