@@ -1,5 +1,5 @@
-// 1.21.1	2026-07-04T20:31:19.735566	Spell Documentation: ebwizardry
-83da5f717291d278c73d0fc46a111be8c8a19e0d docs/spells.md
+// 1.21.1	2026-07-04T22:47:44.1043283	Spell Documentation: ebwizardry
+d3a7d2ee710a736c4363361604459d74c668c221 docs/spells.md
 b5ed5dfb6422a93452ce6148862262c78c017981 docs/spells/ebwizardry/agility.md
 ab2bb9f5beba5ca49328cf74e07a5089fcc63917 docs/spells/ebwizardry/arc.md
 3ec2137b79d6a69b340e3d8ca5998f51e13753ba docs/spells/ebwizardry/arcane_jammer.md
@@ -136,10 +136,17 @@ d5460f3dc9a3d4589bd0c570c9afda5e1bc2182b docs/spells/ebwizardry/speed_time.md
 8e451f779ea6c10134791fce1e4634854d9482de docs/spells/ebwizardry/spider_swarm.md
 83d01b19820978fcf8eac154741d3cfd2290dfdc docs/spells/ebwizardry/static_aura.md
 f3e7f67b0f18f0cf0e48008602a9e5d13415e584 docs/spells/ebwizardry/summon_blaze.md
+d01ead7d2d33f89386c42c0758834387f0d1ff42 docs/spells/ebwizardry/summon_ice_wraith.md
+2b1480bd3c04bd14138fec33891bf867b5434e28 docs/spells/ebwizardry/summon_iron_golem.md
 05b58576daf0951a0251911cdb1532c3732ec890 docs/spells/ebwizardry/summon_lightning_wraith.md
+dd1e3167f096358c88e08a7c7bd4f35d06c2d2b6 docs/spells/ebwizardry/summon_phoenix.md
+1e3c8b7a7b264f1e997694d8a69eb70baf31e502 docs/spells/ebwizardry/summon_shadow_wraith.md
 81b63245b9ca3cdc1067e03707e95ca32f319d11 docs/spells/ebwizardry/summon_skeleton.md
 c45d4825fb7d2db812092c78a9ef9da98064f7fc docs/spells/ebwizardry/summon_skeleton_legion.md
 726219f38a36a7b141e8517a7364fa5cdcd33982 docs/spells/ebwizardry/summon_snow_golem.md
+7e9c897faac2b319b8d135f0c32b7f2313f10409 docs/spells/ebwizardry/summon_spirit_horse.md
+f9b37c0edbf7c5894581a6a556e6658f90633940 docs/spells/ebwizardry/summon_spirit_wolf.md
+241ffbfe28473a519c0a844f15bee5b25a5c2035 docs/spells/ebwizardry/summon_storm_elemental.md
 f50068c878b5ef506e78a0838ad452618aa18301 docs/spells/ebwizardry/summon_wither_skeleton.md
 52e9d92bd4e874622539c3e13ee4258a1b8c7061 docs/spells/ebwizardry/summon_zombie.md
 1d5ec66c0c4fededd56a873c1abfecabc67574d0 docs/spells/ebwizardry/telekinesis.md

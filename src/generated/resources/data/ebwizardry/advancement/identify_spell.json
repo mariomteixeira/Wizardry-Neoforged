@@ -6,18 +6,18 @@
         "source": "identification_scroll",
         "spell": {
           "elements": [
-            "ebwizardry:healing",
-            "ebwizardry:earth",
-            "ebwizardry:ice",
             "ebwizardry:sorcery",
-            "ebwizardry:fire",
-            "ebwizardry:magic",
             "ebwizardry:necromancy",
-            "ebwizardry:lightning"
+            "ebwizardry:magic",
+            "ebwizardry:healing",
+            "ebwizardry:ice",
+            "ebwizardry:earth",
+            "ebwizardry:lightning",
+            "ebwizardry:fire"
           ],
           "tiers": [
-            "ebwizardry:advanced",
             "ebwizardry:master",
+            "ebwizardry:advanced",
             "ebwizardry:novice",
             "ebwizardry:apprentice"
           ]

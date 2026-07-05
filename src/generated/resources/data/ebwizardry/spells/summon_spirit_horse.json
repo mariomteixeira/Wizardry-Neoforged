@@ -1,0 +1,23 @@
+{
+  "type": "minion",
+  "base_properties": {
+    "summon_radius": 2
+  },
+  "chargeup": 10,
+  "cooldown": 150,
+  "cost": 50,
+  "element": "ebwizardry:earth",
+  "enabled": {
+    "book": true,
+    "commands": true,
+    "dispensers": true,
+    "looting": true,
+    "npcs": true,
+    "scroll": true,
+    "trades": true,
+    "treasure": true,
+    "wands": true
+  },
+  "spell_action": "ebwizardry:summon",
+  "tier": "ebwizardry:advanced"
+}

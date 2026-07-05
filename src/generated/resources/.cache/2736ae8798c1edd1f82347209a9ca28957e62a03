@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T21:00:36.4627675	Spell Data Provider: ebwizardry
+// 1.21.1	2026-07-04T22:47:44.1088313	Spell Data Provider: ebwizardry
 59709226fef8219dd2c5cd41cb6bb719de55c656 data/ebwizardry/spells/agility.json
 12e12c73b30c50363edbf0bbe8132934b20111d1 data/ebwizardry/spells/arc.json
 9fee9a6638261052b8101e8197dbef3e9aac6521 data/ebwizardry/spells/arcane_jammer.json
@@ -136,10 +136,17 @@ f5c8e83c22c5c6a7498ee9dd49d46aaa1483c287 data/ebwizardry/spells/spark_bomb.json
 38cd383fe392675eb1d0e1ea004d8820053b175c data/ebwizardry/spells/spider_swarm.json
 eb7c6ce2ab40c74f936d246299768bb1aee4a298 data/ebwizardry/spells/static_aura.json
 c32882214361ba8f6158042b76c4d7fc4a3d7f0f data/ebwizardry/spells/summon_blaze.json
+76f8ad28fd65edbe44f7a1d6bd934c0ee42f93b2 data/ebwizardry/spells/summon_ice_wraith.json
+6645531da27b9114daecc6c768f0a5a88a6e8500 data/ebwizardry/spells/summon_iron_golem.json
 3493c5a3a9e4e21130b55c872c4c0071a6ba3e69 data/ebwizardry/spells/summon_lightning_wraith.json
+5803d605b8f015626b665b7f96e16e9153f2f200 data/ebwizardry/spells/summon_phoenix.json
+b65a1e086a1d2ace5099f1f67ae3afa2fc4fee5b data/ebwizardry/spells/summon_shadow_wraith.json
 5b66a3a53a02c08a77dbbfb98b8363c52f6dca76 data/ebwizardry/spells/summon_skeleton.json
 03eb8c82853642a60154ffe19cb3a94aed89230c data/ebwizardry/spells/summon_skeleton_legion.json
 1a59c2c695866e8eeb9b55ba1a04ff8edbe6a5b4 data/ebwizardry/spells/summon_snow_golem.json
+f056415eeb929ae99316b9a4a45b767ca6cd2cf4 data/ebwizardry/spells/summon_spirit_horse.json
+1610106dadf8b048548e024d014e5c46bf28cb44 data/ebwizardry/spells/summon_spirit_wolf.json
+514e9483f8810287fecdc39348c5fecddd996d8d data/ebwizardry/spells/summon_storm_elemental.json
 251b54655551901451e7c1c8b9017916b1f5bc2f data/ebwizardry/spells/summon_wither_skeleton.json
 5fe2ccabd274748cb09ae527d8fd54768356ec0b data/ebwizardry/spells/summon_zombie.json
 fcdbb45772f348f6e37db3b8e848db3808b863e5 data/ebwizardry/spells/telekinesis.json
