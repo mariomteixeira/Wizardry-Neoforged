@@ -133,7 +133,7 @@ public final class Spells {
     public static final Spell ICE_AGE;
     // wall of frost
     public static final Spell SUMMON_ICE_GIANT;
-    // thunderstorm
+    public static final Spell THUNDERSTORM;
     public static final Spell LIGHTNING_HAMMER;
     public static final Spell PLAGUE_DARKNESS;
     public static final Spell SUMMON_SKELETON_LEGION;
@@ -1103,6 +1103,8 @@ public final class Spells {
         SHADOW_WARD = spell("shadow_ward", () -> new com.binaris.wizardry.content.spell.necromancy.ShadowWard().soundValues(0.6f, 1, 0));
 
         SIXTH_SENSE = spell("sixth_sense", () -> new SixthSense().soundValues(1, 1.1f, 0.2f));
+
+        THUNDERSTORM = spell("thunderstorm", () -> new com.binaris.wizardry.content.spell.lightning.Thunderstorm().soundValues(1, 1.7f, 0.2f));
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override
