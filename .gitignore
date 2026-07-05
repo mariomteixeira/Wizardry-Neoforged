@@ -25,3 +25,5 @@ run
 
 # Claude Code (local only)
 .claude/
+
+run12_boot*.log
