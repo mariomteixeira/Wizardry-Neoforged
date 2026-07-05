@@ -61,6 +61,35 @@ public final class ClientPacketHandler {
                 .time((int) (duration * packet.durationMultiplier())).color(1f, 1f, 1f).spawn(world);
     }
 
+    /** Revives the client-side copy of a resurrected player and closes the death screen if it's us (1.12.2 PacketResurrection). */
+    public static void handleResurrection(com.binaris.wizardry.core.networking.s2c.ResurrectionS2C packet) {
+        var minecraft = net.minecraft.client.Minecraft.getInstance();
+        if (minecraft.level == null || minecraft.player == null) return;
+
+        net.minecraft.world.entity.player.Player player;
+
+        if (packet.entityId() == minecraft.player.getId()) {
+            player = minecraft.player;
+            minecraft.setScreen(null); // Off the death screen and back into the fight
+        } else {
+            var entity = minecraft.level.getEntity(packet.entityId());
+            if (!(entity instanceof net.minecraft.world.entity.player.Player otherPlayer)) return;
+            player = otherPlayer;
+        }
+
+        player.revive();
+        ((com.binaris.wizardry.core.mixin.accessor.LivingEntityDeadAccessor) player).EBWIZARDRY$setDead(false);
+        player.deathTime = 0;
+        player.setHealth(player.getMaxHealth() / 2);
+
+        com.binaris.wizardry.api.client.ParticleBuilder.spawnHealParticles(minecraft.level, player);
+
+        var sound = net.minecraft.sounds.SoundEvent.createVariableRangeEvent(
+                com.binaris.wizardry.WizardryMainMod.location("spell.resurrection"));
+        minecraft.level.playLocalSound(player.getX(), player.getY(), player.getZ(), sound,
+                net.minecraft.sounds.SoundSource.PLAYERS, 1, 1, false);
+    }
+
     /** Arrival effects of the transportation spell: dismount, travel sound and particle rings (1.12.2 ClientProxy). */
     public static void handleTransportation(com.binaris.wizardry.core.networking.s2c.TransportationS2C packet) {
         var world = net.minecraft.client.Minecraft.getInstance().level;

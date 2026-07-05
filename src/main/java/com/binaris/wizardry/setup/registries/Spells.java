@@ -212,7 +212,7 @@ public final class Spells {
     public static final Spell FOREST_OF_THORNS;
     public static final Spell SPEED_TIME;
     public static final Spell SLOW_TIME;
-    // resurrection
+    public static final Spell RESURRECTION;
     public static final Spell FROST_BARRIER;
     public static final Spell BLINDING_FLASH;
     public static final Spell ENRAGE;
@@ -1117,6 +1117,8 @@ public final class Spells {
         PETRIFY = spell("petrify", () -> new Petrify().soundValues(1, 1.1f, 0.2f));
 
         WALL_OF_FROST = spell("wall_of_frost", () -> new WallOfFrost().soundValues(0.5f, 1, 0));
+
+        RESURRECTION = spell("resurrection", com.binaris.wizardry.content.spell.healing.Resurrection::new);
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override

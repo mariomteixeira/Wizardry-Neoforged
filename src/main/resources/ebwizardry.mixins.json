@@ -21,6 +21,7 @@
     "ServerPlayerMixin",
     "SlotMixin",
     "accessor.BlazeAccessor",
+    "accessor.LivingEntityDeadAccessor",
     "accessor.FallingBlockEntityAccessor",
     "accessor.MerchantMenuAccessor",
     "accessor.MobGoalsAccessor",

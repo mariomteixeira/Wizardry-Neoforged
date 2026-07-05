@@ -117,6 +117,12 @@ public class WizardryForgeEvents {
             com.binaris.wizardry.content.block.SpectralBlock.onBlockPlace(event);
         }
 
+        // Resurrection: stamps the death game time on players (deathTime freezes when the corpse despawns)
+        @SubscribeEvent
+        public static void onLivingDeathResurrection(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
+            com.binaris.wizardry.content.spell.healing.Resurrection.onLivingDeath(event);
+        }
+
         // Shadow ward: reflects part of incoming damage while held
         @SubscribeEvent
         public static void onLivingIncomingDamageShadowWard(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
