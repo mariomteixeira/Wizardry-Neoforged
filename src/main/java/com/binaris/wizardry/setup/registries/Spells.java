@@ -67,7 +67,7 @@ public final class Spells {
     public static final Spell LIGHTNING_ARROW;
     public static final Spell LIFE_DRAIN;
     public static final Spell SUMMON_SKELETON;
-    // metamorphosis
+    public static final Spell METAMORPHOSIS;
     public static final Spell WITHER;
     public static final Spell POISON;
     public static final Spell GROWTH_AURA;
@@ -1107,6 +1107,8 @@ public final class Spells {
         THUNDERSTORM = spell("thunderstorm", () -> new com.binaris.wizardry.content.spell.lightning.Thunderstorm().soundValues(1, 1.7f, 0.2f));
 
         MIND_CONTROL = spell("mind_control", com.binaris.wizardry.content.spell.necromancy.MindControl::new);
+
+        METAMORPHOSIS = spell("metamorphosis", () -> new com.binaris.wizardry.content.spell.necromancy.Metamorphosis().soundValues(0.5f, 1f, 0));
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override
