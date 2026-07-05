@@ -100,7 +100,7 @@ public class Flight extends Spell {
     @Override
     protected @NotNull SpellProperties properties() {
         return SpellProperties.builder()
-                .assignBaseProperties(SpellTiers.MASTER, Elements.EARTH, SpellType.UTILITY, SpellAction.NONE, 10, 0, 0)
+                .assignBaseProperties(SpellTiers.MASTER, Elements.EARTH, SpellType.UTILITY, SpellAction.FLYING, 10, 0, 0)
                 .add(DefaultProperties.ACCELERATION, 0.05F)
                 .add(DefaultProperties.SPEED, 0.5F)
                 .build();

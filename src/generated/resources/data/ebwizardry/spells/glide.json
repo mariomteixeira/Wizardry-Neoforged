@@ -20,6 +20,6 @@
     "treasure": true,
     "wands": true
   },
-  "spell_action": "ebwizardry:point_down",
+  "spell_action": "ebwizardry:flying",
   "tier": "ebwizardry:advanced"
 }

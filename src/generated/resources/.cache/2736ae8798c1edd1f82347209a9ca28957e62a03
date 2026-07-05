@@ -1,4 +1,4 @@
-// 1.21.1	2026-07-04T20:31:19.7482551	Spell Data Provider: ebwizardry
+// 1.21.1	2026-07-04T21:00:36.4627675	Spell Data Provider: ebwizardry
 59709226fef8219dd2c5cd41cb6bb719de55c656 data/ebwizardry/spells/agility.json
 12e12c73b30c50363edbf0bbe8132934b20111d1 data/ebwizardry/spells/arc.json
 9fee9a6638261052b8101e8197dbef3e9aac6521 data/ebwizardry/spells/arcane_jammer.json
@@ -52,7 +52,7 @@ ce4f215b45eda18b02ee9109d2328d1d61b6b92e data/ebwizardry/spells/flamecatcher.jso
 19ebda9d5d88f91050c3e0b828a6d9b87c65f604 data/ebwizardry/spells/flame_ray.json
 0841ecefd05480a63e80770aea61bc7c492c0a32 data/ebwizardry/spells/flaming_axe.json
 ae6c50c35bf5886522821c16693c877a23a441e7 data/ebwizardry/spells/flaming_weapon.json
-a255f93b22d5b1abaadf9d7dc8e8a6c4c81b4441 data/ebwizardry/spells/flight.json
+b016e236990af383167f8ad19e8d57be6483a490 data/ebwizardry/spells/flight.json
 72f9ad9fce937d9b88a8f1e18ca208b4ba3b6fb9 data/ebwizardry/spells/font_of_mana.json
 ac4bc22b076bba86df4ae974e77509eebc8efae4 data/ebwizardry/spells/font_of_vitality.json
 963775141342c444a16500826ef5ede9b91ec393 data/ebwizardry/spells/force_arrow.json
@@ -65,7 +65,7 @@ a5b83db0e52b278db0d20f1bb3dce95cc6600498 data/ebwizardry/spells/freezing_weapon.
 d8e3114d5d43df84c2c52b1329521f38d2db1e3d data/ebwizardry/spells/frost_ray.json
 d60779173abcfc7bdaa6cb56efb9b2d5ccd126df data/ebwizardry/spells/frost_sigil.json
 17625877d71faf534d0ee034522ca7230c2c7b3f data/ebwizardry/spells/frost_step.json
-e396b6562f4ddc7433928865e705ba069eea41c1 data/ebwizardry/spells/glide.json
+bd99fd9c0284c6d667cbc2cc28da11c7af2a59aa data/ebwizardry/spells/glide.json
 fb40b8af25176956f268cb6985ee546afa61e3a9 data/ebwizardry/spells/grapple.json
 10d5d70a2f1457a11c90b73e5d944e1e5bdd996c data/ebwizardry/spells/greater_fireball.json
 1e9a73f34f25648c9585f5c3ec209954ac7e41d5 data/ebwizardry/spells/greater_heal.json

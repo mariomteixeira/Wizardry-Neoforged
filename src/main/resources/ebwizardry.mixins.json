@@ -33,7 +33,8 @@
     "MinecraftMixin",
     "client.ConjureBarMixin",
     "client.LocalPlayerMixin",
-    "client.MouseHandlerMixin"
+    "client.MouseHandlerMixin",
+    "client.PlayerRendererMixin"
   ],
   "server": [
   ],

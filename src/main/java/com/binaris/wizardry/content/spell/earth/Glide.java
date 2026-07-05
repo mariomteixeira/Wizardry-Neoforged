@@ -1,6 +1,8 @@
 package com.binaris.wizardry.content.spell.earth;
 
 import com.binaris.wizardry.api.client.ParticleBuilder;
+import com.binaris.wizardry.api.content.event.EBLivingTick;
+import com.binaris.wizardry.api.content.item.ICastItem;
 import com.binaris.wizardry.api.content.spell.Spell;
 import com.binaris.wizardry.api.content.spell.SpellAction;
 import com.binaris.wizardry.api.content.spell.SpellType;
@@ -13,6 +15,9 @@ import com.binaris.wizardry.setup.registries.Elements;
 import com.binaris.wizardry.setup.registries.SpellTiers;
 import com.binaris.wizardry.setup.registries.client.EBParticles;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -60,6 +65,29 @@ public class Glide extends Spell {
         return false;
     }
 
+    /** True while the entity is mid-cast of a flight-stance spell (glide or flight). */
+    public static boolean isCastingFlightSpell(LivingEntity entity) {
+        if (!entity.isUsingItem()) return false;
+        ItemStack stack = entity.getUseItem();
+        if (!(stack.getItem() instanceof ICastItem castItem)) return false;
+        Spell spell = castItem.getCurrentSpell(stack);
+        return spell instanceof Glide || spell instanceof Flight;
+    }
+
+    /**
+     * Holds the vanilla elytra pose (hitbox + eye height) while gliding/flying, via the NeoForge forced pose.
+     * Runs on both sides: the server syncs the pose, the caster's client predicts it.
+     */
+    public static void onLivingTick(EBLivingTick event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+
+        if (isCastingFlightSpell(player)) {
+            if (player.getForcedPose() != Pose.FALL_FLYING) player.setForcedPose(Pose.FALL_FLYING);
+        } else if (player.getForcedPose() == Pose.FALL_FLYING) {
+            player.setForcedPose(null);
+        }
+    }
+
     @Override
     protected void playSound(Level world, LivingEntity entity, int castTicks, int duration) {
         this.playSoundLoop(world, entity, castTicks);
@@ -73,7 +101,7 @@ public class Glide extends Spell {
     @Override
     protected @NotNull SpellProperties properties() {
         return SpellProperties.builder()
-                .assignBaseProperties(SpellTiers.ADVANCED, Elements.EARTH, SpellType.UTILITY, SpellAction.POINT_DOWN, 5, 0, 0)
+                .assignBaseProperties(SpellTiers.ADVANCED, Elements.EARTH, SpellType.UTILITY, SpellAction.FLYING, 5, 0, 0)
                 .add(SPEED, 0.4f)
                 .add(FALL_SPEED, 0.1f)
                 .add(ACCELERATION, 0.1f)

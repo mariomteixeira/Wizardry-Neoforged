@@ -19,6 +19,6 @@
     "treasure": true,
     "wands": true
   },
-  "spell_action": "ebwizardry:none",
+  "spell_action": "ebwizardry:flying",
   "tier": "ebwizardry:master"
 }
