@@ -107,7 +107,7 @@ public final class Spells {
     public static final Spell ENTRAPMENT;
     public static final Spell WITHER_SKULL;
     public static final Spell DARKNESS_ORB;
-    // shadow ward
+    public static final Spell SHADOW_WARD;
     public static final Spell DECAY;
     public static final Spell WATER_BREATHING;
     public static final Spell TORNADO;
@@ -1099,6 +1099,8 @@ public final class Spells {
         ));
 
         SHIELD = spell("shield", com.binaris.wizardry.content.spell.healing.Shield::new);
+
+        SHADOW_WARD = spell("shadow_ward", () -> new com.binaris.wizardry.content.spell.necromancy.ShadowWard().soundValues(0.6f, 1, 0));
 
         FORCEFIELD = spell("forcefield", () -> new ConstructSpell<>(com.binaris.wizardry.content.entity.construct.ForcefieldConstruct::new, false) {
             @Override

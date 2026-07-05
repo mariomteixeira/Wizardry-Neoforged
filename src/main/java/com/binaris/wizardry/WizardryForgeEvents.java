@@ -117,6 +117,12 @@ public class WizardryForgeEvents {
             com.binaris.wizardry.content.block.SpectralBlock.onBlockPlace(event);
         }
 
+        // Shadow ward: reflects part of incoming damage while held
+        @SubscribeEvent
+        public static void onLivingIncomingDamageShadowWard(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
+            com.binaris.wizardry.content.spell.necromancy.ShadowWard.onIncomingDamage(event);
+        }
+
         // Forcefield: no attacks, interactions, or explosion effects across the boundary (1.12.2 EntityForcefield)
         @SubscribeEvent
         public static void onLivingIncomingDamageForcefield(net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {

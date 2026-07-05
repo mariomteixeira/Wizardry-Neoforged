@@ -73,8 +73,28 @@ public class MagicDamageSource extends DamageSource {
      * @param directEntity     The direct entity that dealt the damage (could be a projectile or other entity), or {@code null}.
      * @param causingEntity    The indirect/owner entity that ultimately caused the damage (could be {@code null}).
      */
+    /** Retaliatory damage (e.g. shadow ward reflections) is never reflected again, preventing infinite loops. */
+    private boolean retaliatory = false;
+
     public MagicDamageSource(Holder<DamageType> damageTypeHolder, @Nullable Entity directEntity, @Nullable Entity causingEntity) {
         super(damageTypeHolder, directEntity, causingEntity);
+    }
+
+    public boolean isRetaliatory() {
+        return retaliatory;
+    }
+
+    public MagicDamageSource setRetaliatory(boolean retaliatory) {
+        this.retaliatory = retaliatory;
+        return this;
+    }
+
+    /**
+     * Create a direct magic damage source flagged as retaliatory: handlers that reflect damage must skip it,
+     * or two reflecting entities would bounce damage forever.
+     */
+    public static DamageSource causeDirectMagicDamage(Entity caster, ResourceKey<DamageType> type, boolean retaliatory) {
+        return ((MagicDamageSource) createMagicDamage(caster, null, type)).setRetaliatory(retaliatory);
     }
 
     /**
