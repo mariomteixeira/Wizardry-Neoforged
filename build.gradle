@@ -1,6 +1,7 @@
 plugins {
     id 'idea'
     id 'java-library'
+    id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
 }
 
@@ -62,3 +63,14 @@ dependencies {
 }
 
 test { useJUnitPlatform() }
+
+// Consumido pelos addons via mavenLocal() — rodar `gradlew publishToMavenLocal` após cada bump
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = base.archivesName.get()
+            from components.java
+        }
+    }
+    repositories { mavenLocal() }
+}
