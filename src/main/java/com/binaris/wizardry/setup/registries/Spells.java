@@ -134,7 +134,7 @@ public final class Spells {
     // wall of frost
     public static final Spell SUMMON_ICE_GIANT;
     // thunderstorm
-    // lightning hammer
+    public static final Spell LIGHTNING_HAMMER;
     public static final Spell PLAGUE_DARKNESS;
     public static final Spell SUMMON_SKELETON_LEGION;
     public static final Spell SUMMON_SHADOW_WRAITH;
@@ -1000,6 +1000,35 @@ public final class Spells {
         FROST_BARRIER = spell("frost_barrier", com.binaris.wizardry.content.spell.ice.FrostBarrier::new);
 
         DECOY = spell("decoy", () -> new Decoy().soundValues(1, 0.9f, 0.2f));
+
+        LIGHTNING_HAMMER = spell("lightning_hammer", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.HammerConstruct::new, false) {
+            @Override
+            protected boolean spawnConstruct(com.binaris.wizardry.api.content.spell.internal.CastContext ctx,
+                                             net.minecraft.world.phys.Vec3 vec3, net.minecraft.core.Direction side) {
+                // The hammer falls from the sky, so it needs to be able to see it
+                if (!ctx.world().canSeeSky(net.minecraft.core.BlockPos.containing(vec3).above())) return false;
+                return super.spawnConstruct(ctx, vec3.add(0, 50, 0), side);
+            }
+
+            @Override
+            protected void addConstructExtras(com.binaris.wizardry.api.content.spell.internal.CastContext ctx,
+                                              com.binaris.wizardry.content.entity.construct.HammerConstruct construct,
+                                              net.minecraft.core.Direction side) {
+                construct.setDeltaMovement(0, -2, 0);
+            }
+        }.floor(true).overlap(true).soundValues(3, 1, 0)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.MASTER, Elements.LIGHTNING, SpellType.ATTACK, SpellAction.POINT, 100, 25, 300)
+                                .add(DefaultProperties.RANGE, 40f)
+                                .add(DefaultProperties.DURATION, 600)
+                                .add(DefaultProperties.EFFECT_RADIUS, 10)
+                                .add(DefaultProperties.SECONDARY_MAX_TARGETS, 8)
+                                .add(DefaultProperties.ATTACK_INTERVAL, 40)
+                                .add(DefaultProperties.DIRECT_DAMAGE, 10f)
+                                .add(DefaultProperties.SPLASH_DAMAGE, 6f)
+                                .build()
+                ));
 
         STORMCLOUD = spell("stormcloud", () -> new ConstructRangedSpell<>(com.binaris.wizardry.content.entity.construct.StormcloudConstruct::new, false) {
             @Override
