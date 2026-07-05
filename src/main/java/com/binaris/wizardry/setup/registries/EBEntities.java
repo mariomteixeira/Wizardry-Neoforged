@@ -10,6 +10,7 @@ import com.binaris.wizardry.content.entity.projectile.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -68,6 +69,7 @@ public final class EBEntities {
     public static final DeferredObject<EntityType<IceWraith>> ICE_WRAITH = entity(IceWraith::new, "ice_wraith", MobCategory.MONSTER, 0.6F, 1.8F, MagicType.LIVING);
     public static final DeferredObject<EntityType<StormElemental>> STORM_ELEMENTAL = entity(StormElemental::new, "storm_elemental", MobCategory.MONSTER, 0.6F, 1.8F, MagicType.LIVING);
     public static final DeferredObject<EntityType<ShadowWraith>> SHADOW_WRAITH = entity(ShadowWraith::new, "shadow_wraith", MobCategory.MONSTER, 0.6F, 1.8F, MagicType.LIVING);
+    public static final DeferredObject<EntityType<SpectralGolem>> SPECTRAL_GOLEM = entity(SpectralGolem::new, "spectral_golem", MobCategory.MISC, 1.4F, 2.7F, MagicType.LIVING);
     public static final DeferredObject<EntityType<MagicSlime>> MAGIC_SLIME = entity(MagicSlime::new, "magic_slime", MobCategory.CREATURE, 2.04F, 2.04F, MagicType.LIVING);
     public static final DeferredObject<EntityType<Remnant>> REMNANT = entity(Remnant::new, "remnant", MobCategory.CREATURE, 0.8f, 0.8f, MagicType.LIVING);
     public static final DeferredObject<EntityType<Wizard>> WIZARD = entity(Wizard::new, "wizard", MobCategory.CREATURE, 0.6f, 1.8f, MagicType.LIVING);
@@ -92,6 +94,7 @@ public final class EBEntities {
         consumer.accept(STORM_ELEMENTAL.get(), Blaze.createAttributes().build());
         consumer.accept(SHADOW_WRAITH.get(), Blaze.createAttributes().build());
         consumer.accept(ICE_GIANT.get(), IceGiant.createAttributes().build());
+        consumer.accept(SPECTRAL_GOLEM.get(), IronGolem.createAttributes().build());
     }
 
     public static void registerSpawns(net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent event) {

@@ -142,7 +142,7 @@ public final class Spells {
     public static final Spell SILVERFISH_SWARM;
     // black hole
     public static final Spell SHOCKWAVE;
-    // summon iron golem
+    public static final Spell SUMMON_IRON_GOLEM;
     public static final Spell ARROW_RAIN;
     // diamond flesh
     public static final Spell FONT_OF_VITALITY;
@@ -995,6 +995,17 @@ public final class Spells {
                                 .add(DefaultProperties.SUMMON_RADIUS, 2)
                                 .build()
                 ));
+
+        SUMMON_IRON_GOLEM = spell("summon_iron_golem", () -> new MinionSpell<>(com.binaris.wizardry.content.entity.living.SpectralGolem::new))
+                .soundValues(1, 1.1f, 0.1f)
+                .assignProperties(
+                        SpellProperties.builder()
+                                .assignBaseProperties(SpellTiers.MASTER, Elements.SORCERY, SpellType.MINION, SpellAction.SUMMON, 175, 20, 400)
+                                .add(DefaultProperties.MINION_COUNT, 1)
+                                .add(DefaultProperties.MINION_LIFETIME, 600)
+                                .add(DefaultProperties.SUMMON_RADIUS, 2)
+                                .build()
+                );
 
         SUMMON_STORM_ELEMENTAL = spell("summon_storm_elemental", () -> new MinionSpell<>(StormElemental::new))
                 .soundValues(1, 1.1f, 0.1f)

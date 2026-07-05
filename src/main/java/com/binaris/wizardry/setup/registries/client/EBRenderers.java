@@ -113,6 +113,19 @@ public final class EBRenderers {
 
         registerEntityRender(EBEntities.SHADOW_WRAITH, BlankRenderer::new);
         registerEntityRender(EBEntities.STORM_ELEMENTAL, BlankRenderer::new);
+
+        // 1.12.2 RenderSpectralGolem: vanilla golem model, spectral texture, translucent
+        registerEntityRender(EBEntities.SPECTRAL_GOLEM, (ctx -> new net.minecraft.client.renderer.entity.IronGolemRenderer(ctx) {
+            @Override
+            public @NotNull ResourceLocation getTextureLocation(@NotNull net.minecraft.world.entity.animal.IronGolem entity) {
+                return WizardryMainMod.location("textures/entity/spectral_golem.png");
+            }
+
+            @Override
+            protected net.minecraft.client.renderer.RenderType getRenderType(@NotNull net.minecraft.world.entity.animal.IronGolem entity, boolean bodyVisible, boolean translucent, boolean glowing) {
+                return net.minecraft.client.renderer.RenderType.entityTranslucent(getTextureLocation(entity));
+            }
+        }));
         registerEntityRender(EBEntities.BOULDER, BoulderRenderer::new);
         registerEntityRender(EBEntities.ZOMBIE_SPAWNER, ZombieSpawnerRenderer::new);
 
