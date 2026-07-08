@@ -90,7 +90,7 @@ public final class EBCreativeTabs {
         List<Element> elements = Services.REGISTRY_UTIL.getElements().stream().toList();
         Services.REGISTRY_UTIL.getSpells()
                 .stream()
-                .filter(spell -> spell != Spells.NONE)
+                .filter(spell -> spell != Spells.NONE && spell.applicableForItem(EBItems.SPELL_BOOK.get()))
                 .sorted(Comparator.<Spell>comparingInt(s -> s.getTier().getLevel())
                         .thenComparingInt(s -> elements.indexOf(s.getElement())))
                 .forEach(spell -> list.add(RegistryUtils.setSpell(new ItemStack(EBItems.SPELL_BOOK.get()), spell)));
@@ -101,7 +101,7 @@ public final class EBCreativeTabs {
         List<ItemStack> list = new ArrayList<>();
         List<Element> elements = Services.REGISTRY_UTIL.getElements().stream().toList();
         Services.REGISTRY_UTIL.getSpells()
-                .stream().filter(spell -> spell != Spells.NONE)
+                .stream().filter(spell -> spell != Spells.NONE && spell.applicableForItem(EBItems.SCROLL.get()))
                 .sorted(Comparator.<Spell>comparingInt(s -> s.getTier().getLevel())
                         .thenComparingInt(s -> elements.indexOf(s.getElement())))
                 .forEach(spell -> list.add(RegistryUtils.setSpell(new ItemStack(EBItems.SCROLL.get()), spell)));

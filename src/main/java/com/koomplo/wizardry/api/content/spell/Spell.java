@@ -153,6 +153,18 @@ public abstract class Spell {
     }
 
     /**
+     * Whether this spell can be bound to (and generated as) the given spell book or scroll item. Addons with their
+     * own spell book items (e.g. Ancient Spellcraft) override this so their spells only appear on their books and
+     * the base wizardry books skip them. Parity with 1.12.2 {@code applicableForItem}.
+     *
+     * @param item the candidate item, typically a spell book or scroll
+     * @return true if this spell may be carried by the given item (default: true)
+     */
+    public boolean applicableForItem(net.minecraft.world.item.Item item) {
+        return true;
+    }
+
+    /**
      * Whether this spell is instant or not. An instant spell is a spell that is cast in a single tick, (it could have
      * cooldown and/or charge-up time) and does not have a duration. By default, this returns true, as most spells are
      * instant, but you can override this to return false if your spell is meant to have a duration and be cast over
