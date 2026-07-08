@@ -141,7 +141,7 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
         if (Services.PLATFORM.isDedicatedServer()) return;
         Spell spell = RegistryUtils.getSpell(stack);
 
-        if (ClientUtils.shouldDisplayDiscovered(spell, stack) && tooltipFlag.isAdvanced()) {
+        if (ClientUtils.shouldDisplayDiscovered(spell, stack)) {
             list.add(Component.translatable(spell.getTier().getDescriptionId()).withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable(spell.getElement().getDescriptionId()).withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable(spell.getType().getName()).withStyle(ChatFormatting.GRAY));

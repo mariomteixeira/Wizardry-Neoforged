@@ -60,6 +60,7 @@ dependencies {
     runtimeOnly "top.theillusivec4.curios:curios-neoforge:${project.curios_version}"
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
     compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${project.jei_version}"
+    compileOnly "mezz.jei:jei-1.21.1-common-api:${project.jei_version}"
 }
 
 test { useJUnitPlatform() }

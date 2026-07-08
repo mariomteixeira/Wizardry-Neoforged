@@ -64,7 +64,7 @@ public class SpellBookItem extends Item {
         boolean discovered = ClientUtils.shouldDisplayDiscovered(spell, stack);
         list.add(spell.getTier().getDescriptionFormatted());
 
-        if (discovered && tooltipFlag.isAdvanced()) {
+        if (discovered) {
             list.add(Component.translatable(spell.getElement().getDescriptionId()).withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable(spell.getType().getDisplayName()).withStyle(ChatFormatting.GRAY));
         }
