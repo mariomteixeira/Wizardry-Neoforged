@@ -13,7 +13,9 @@ public enum SpellType {
     BUFF("buff"),
     CONSTRUCT("construct"),
     PROJECTILE("projectile"),
-    ALTERATION("alteration");
+    ALTERATION("alteration"),
+    /** Usado por addons (AncientSpellcraft): spells que modificam o próximo cast. */
+    METAMAGIC("metamagic");
 
     private final String modid;
     private final String name;

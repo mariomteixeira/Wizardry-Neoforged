@@ -76,6 +76,7 @@
   "spelltype.construct": "Construct",
   "spelltype.projectile": "Projectile",
   "spelltype.alteration": "Alteration",
+  "spelltype.metamagic": "Metamagic",
   "ebwizardry.raw_line_4": "========================================================",
   "ebwizardry.elements.desc": "EBWIZARDRY ELEMENTS (With wizard names)",
   "ebwizardry.raw_line_5": "========================================================",
