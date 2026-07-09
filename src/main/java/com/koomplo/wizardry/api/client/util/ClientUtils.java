@@ -73,19 +73,23 @@ public class ClientUtils {
 
     public static Component getScrollDisplayName(ItemStack scroll) {
         Spell spell = RegistryUtils.getSpell(scroll);
-        boolean discovered = ClientUtils.shouldDisplayDiscovered(spell, scroll);
-        Component name = discovered ? spell.getDescriptionFormatted() :
-                SpellGlyphData.getGlyphNameFormatted(spell, GlyphClientHandler.INSTANCE.getGlyphData());
-        return Component.translatable("item.ebwizardry.scroll", name);
+        return Component.translatable("item.ebwizardry.scroll", getSpellDisplayName(spell, scroll));
     }
 
     public static Component getBookDisplayName(ItemStack book) {
         Spell spell = RegistryUtils.getSpell(book);
         if (spell == Spells.NONE) return Component.translatable("item.ebwizardry.spell_book.empty");
-        boolean discovered = ClientUtils.shouldDisplayDiscovered(spell, book);
-        Component name = discovered ? spell.getDescriptionFormatted() :
-                SpellGlyphData.getGlyphNameFormatted(spell, GlyphClientHandler.INSTANCE.getGlyphData());
-        return Component.translatable("item.ebwizardry.spell_book", name);
+        return Component.translatable("item.ebwizardry.spell_book", getSpellDisplayName(spell, book));
+    }
+
+    private static Component getSpellDisplayName(Spell spell, ItemStack stack) {
+        if (shouldDisplayDiscovered(spell, stack)) return spell.getDescriptionFormatted();
+        SpellGlyphData glyphData = GlyphClientHandler.INSTANCE.getGlyphData();
+        // Antes do SpellGlyphPacketS2C chegar (JEI monta a lista no join, no ClientboundUpdateRecipesPacket)
+        // não há glyph data - cair no nome real em vez de NPE/nome vazio
+        if (glyphData == null || SpellGlyphData.getGlyphName(spell, glyphData).isEmpty())
+            return spell.getDescriptionFormatted();
+        return SpellGlyphData.getGlyphNameFormatted(spell, glyphData);
     }
 
     public static void openSpellBook(ItemStack stack) {
