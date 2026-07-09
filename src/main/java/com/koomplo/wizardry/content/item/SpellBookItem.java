@@ -61,7 +61,7 @@ public class SpellBookItem extends Item {
         Spell spell = RegistryUtils.getSpell(stack);
         if (spell == Spells.NONE) return;
         // Elemento/tipo sem gate de descoberta: classificação não revela o que a spell faz e o JEI
-        // cacheia tooltips no join (antes do sync de descobertas) - gate mataria a busca #elemento
+        // cacheia tooltips no join (antes do sync de descobertas) - gate mataria a busca $elemento
         list.add(spell.getTier().getDescriptionFormatted());
         list.add(Component.translatable(spell.getElement().getDescriptionId()).withStyle(ChatFormatting.GRAY));
         list.add(Component.translatable(spell.getType().getDisplayName()).withStyle(ChatFormatting.GRAY));

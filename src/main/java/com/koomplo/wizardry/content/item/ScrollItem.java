@@ -141,7 +141,7 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
         Spell spell = RegistryUtils.getSpell(stack);
 
         // Elemento/tipo sem gate de descoberta: classificação não revela o que a spell faz e o JEI
-        // cacheia tooltips no join (antes do sync de descobertas) - gate mataria a busca #elemento
+        // cacheia tooltips no join (antes do sync de descobertas) - gate mataria a busca $elemento
         list.add(Component.translatable(spell.getTier().getDescriptionId()).withStyle(ChatFormatting.GRAY));
         list.add(Component.translatable(spell.getElement().getDescriptionId()).withStyle(ChatFormatting.GRAY));
         list.add(Component.translatable(spell.getType().getName()).withStyle(ChatFormatting.GRAY));
