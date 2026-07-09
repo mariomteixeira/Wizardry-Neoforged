@@ -33,7 +33,9 @@ public enum SpellType {
             if (type.name.equals(name) || type.name.equals(name.toLowerCase())) return type;
         }
 
-        EBLogger.error("No such spell type with unlocalized name: '%s', maybe some spell is bad registered?!".formatted(name));
+        // Vazio = properties de datapack ainda não carregadas (ex.: JEI indexando na title screen) - transitório
+        if (!name.isEmpty())
+            EBLogger.error("No such spell type with unlocalized name: '%s', maybe some spell is bad registered?!".formatted(name));
         return SpellType.UTILITY; //default
     }
 

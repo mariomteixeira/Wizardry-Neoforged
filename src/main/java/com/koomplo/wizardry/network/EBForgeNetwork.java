@@ -30,7 +30,8 @@ public final class EBForgeNetwork {
         registrar.playToClient(SpellCastS2C.TYPE, SpellCastS2C.STREAM_CODEC, SpellCastS2C::handle);
         registrar.playToClient(NPCSpellCastS2C.TYPE, NPCSpellCastS2C.STREAM_CODEC, NPCSpellCastS2C::handle);
         registrar.playToClient(ConfigSyncS2C.TYPE, ConfigSyncS2C.STREAM_CODEC, ConfigSyncS2C::handle);
-        registrar.playToClient(SpellPropertiesSyncS2C.TYPE, SpellPropertiesSyncS2C.STREAM_CODEC, SpellPropertiesSyncS2C::handle);
+        // commonToClient: enviado na fase de configuration (SpellPropertiesConfigTask) e no play (join)
+        registrar.commonToClient(SpellPropertiesSyncS2C.TYPE, SpellPropertiesSyncS2C.STREAM_CODEC, SpellPropertiesSyncS2C::handle);
         registrar.playToClient(ParticleBuilderS2C.TYPE, ParticleBuilderS2C.STREAM_CODEC, ParticleBuilderS2C::handle);
         registrar.playToClient(MinionSyncPacketS2C.TYPE, MinionSyncPacketS2C.STREAM_CODEC, MinionSyncPacketS2C::handle);
         registrar.playToClient(ContainmentSyncPacketS2C.TYPE, ContainmentSyncPacketS2C.STREAM_CODEC, ContainmentSyncPacketS2C::handle);

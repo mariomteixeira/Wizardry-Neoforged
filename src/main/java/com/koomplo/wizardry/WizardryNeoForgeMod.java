@@ -30,6 +30,8 @@ public final class WizardryNeoForgeMod {
 
         modBus.addListener(WizardryNeoForgeMod::commonSetup);
         modBus.addListener(EBForgeNetwork::registerPayloads);
+        modBus.addListener((net.neoforged.neoforge.network.event.RegisterConfigurationTasksEvent event) ->
+                event.register(new com.koomplo.wizardry.network.SpellPropertiesConfigTask(event.getListener())));
         if (FMLEnvironment.dist.isClient()) {
             modBus.addListener(WizardryForgeClient::clientSetup);
         }
