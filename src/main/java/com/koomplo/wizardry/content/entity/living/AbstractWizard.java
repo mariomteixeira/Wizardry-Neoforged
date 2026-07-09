@@ -190,6 +190,7 @@ public abstract class AbstractWizard extends PathfinderMob implements ISpellCast
         if (this.random.nextBoolean()) {
             List<Element> elements = new ArrayList<>(Services.REGISTRY_UTIL.getElements());
             elements.remove(Elements.MAGIC);
+            elements.removeIf(e -> !e.isNpcSelectable());
             return elements.get(this.random.nextInt(elements.size()));
         }
         return Elements.MAGIC;

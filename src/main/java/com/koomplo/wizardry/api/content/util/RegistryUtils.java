@@ -108,7 +108,8 @@ public final class RegistryUtils {
      * @return A random Element.
      */
     public static Element getRandomElement(RandomSource random) {
-        return Services.REGISTRY_UTIL.getElements().stream().toList().get(random.nextInt(Services.REGISTRY_UTIL.getElements().size()));
+        List<Element> elements = Services.REGISTRY_UTIL.getElements().stream().filter(Element::isNpcSelectable).toList();
+        return elements.get(random.nextInt(elements.size()));
     }
 
     /**

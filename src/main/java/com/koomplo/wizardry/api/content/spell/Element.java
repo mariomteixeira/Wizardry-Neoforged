@@ -1,6 +1,5 @@
 package com.koomplo.wizardry.api.content.spell;
 
-import com.koomplo.wizardry.WizardryMainMod;
 import com.koomplo.wizardry.core.platform.Services;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -10,13 +9,27 @@ import net.minecraft.resources.ResourceLocation;
 public class Element {
     private final ChatFormatting color;
     private final int[] colors;
+    private final boolean npcSelectable;
     private String descriptionId;
     private ResourceLocation location;
     private ResourceLocation icon;
 
     public Element(ChatFormatting colour, int... colors) {
+        this(colour, true, colors);
+    }
+
+    /**
+     * @param npcSelectable false para elementos só de classificação: wizards NPC nunca o sorteiam
+     *                      (não há armor/wand/cristal correspondentes).
+     */
+    public Element(ChatFormatting colour, boolean npcSelectable, int... colors) {
         this.color = colour;
+        this.npcSelectable = npcSelectable;
         this.colors = colors;
+    }
+
+    public boolean isNpcSelectable() {
+        return npcSelectable;
     }
 
     public int[] getColors() {
@@ -89,7 +102,7 @@ public class Element {
 
     public ResourceLocation getIconId() {
         if (icon == null)
-            icon = ResourceLocation.fromNamespaceAndPath(WizardryMainMod.MOD_ID, "textures/gui/container/element_icon_" + getOrCreateLocation().getPath() + ".png");
+            icon = ResourceLocation.fromNamespaceAndPath(getOrCreateLocation().getNamespace(), "textures/gui/container/element_icon_" + getOrCreateLocation().getPath() + ".png");
         return icon;
     }
 }
