@@ -31,7 +31,8 @@ public class ClientUtils {
 
     public static boolean shouldDisplayDiscovered(Spell spell, @Nullable ItemStack stack) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null) return false;
+        // Sem player = indexacao de tooltips (JEI na inicializacao): mostrar tudo para o #search funcionar
+        if (player == null) return true;
 
         if (Minecraft.getInstance().screen instanceof MerchantScreen) {
             MerchantOffers recipes = ((MerchantScreen) Minecraft.getInstance().screen).getMenu().getOffers();

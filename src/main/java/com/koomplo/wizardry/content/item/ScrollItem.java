@@ -136,7 +136,6 @@ public class ScrollItem extends Item implements ICastItem, IWorkbenchItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context, @NotNull List<Component> list, @NotNull TooltipFlag tooltipFlag) {
-        if (context.level() == null) return;
         // ClientUtils touches Minecraft.getInstance(); never build this tooltip on a dedicated server
         if (Services.PLATFORM.isDedicatedServer()) return;
         Spell spell = RegistryUtils.getSpell(stack);

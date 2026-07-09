@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public class ConjureItemSpell extends Spell {
     public static Set<Item> SUPPORTED_ITEMS = new HashSet<>();
-    private final Item item;
+    protected final Item item;
 
     public ConjureItemSpell(Item item) {
         this.item = item;

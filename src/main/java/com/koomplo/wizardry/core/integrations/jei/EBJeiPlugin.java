@@ -32,8 +32,13 @@ public class EBJeiPlugin implements IModPlugin {
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
         ISubtypeInterpreter<ItemStack> bySpell = byComponent(EBDataComponents.SPELL.get());
-        registration.registerSubtypeInterpreter(EBItems.SPELL_BOOK.get(), bySpell);
-        registration.registerSubtypeInterpreter(EBItems.SCROLL.get(), bySpell);
+        // Todos os livros/scrolls do ecossistema (inclui os dos addons que estendem as classes base)
+        for (net.minecraft.world.item.Item item : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            if (item instanceof com.koomplo.wizardry.content.item.SpellBookItem
+                    || item instanceof com.koomplo.wizardry.content.item.ScrollItem) {
+                registration.registerSubtypeInterpreter(item, bySpell);
+            }
+        }
         registration.registerSubtypeInterpreter(EBItems.ARCANE_TOME.get(), byComponent(EBDataComponents.TIER.get()));
     }
 
