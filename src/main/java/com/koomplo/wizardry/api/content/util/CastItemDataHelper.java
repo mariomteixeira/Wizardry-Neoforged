@@ -383,6 +383,34 @@ public final class CastItemDataHelper {
     }
 
     /**
+     * Removes one level of the given upgrade from the stack (API for addons, e.g. AncientSpellcraft's
+     * words_of_unbinding). Returns true if a level was actually removed.
+     */
+    public static boolean removeUpgrade(ItemStack stack, Item upgrade) {
+        Map<String, Integer> current = stack.get(EBDataComponents.UPGRADES.get());
+        if (current == null) return false;
+        for (var entry : WandUpgrades.getWandUpgrades().entrySet()) {
+            if (entry.getKey().equals(upgrade)) {
+                String key = entry.getValue();
+                int level = current.getOrDefault(key, 0);
+                if (level <= 0) return false;
+                Map<String, Integer> upgrades = new HashMap<>(current);
+                if (level == 1) upgrades.remove(key);
+                else upgrades.put(key, level - 1);
+                stack.set(EBDataComponents.UPGRADES.get(), upgrades);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Total de níveis de upgrade aplicados no item. */
+    public static int getTotalUpgrades(ItemStack stack) {
+        Map<String, Integer> upgrades = stack.get(EBDataComponents.UPGRADES.get());
+        return upgrades == null ? 0 : upgrades.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    /**
      * Returns the stack's current progression level.
      *
      * @param stack The ItemStack.
