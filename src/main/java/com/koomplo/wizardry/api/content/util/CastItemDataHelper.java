@@ -404,12 +404,6 @@ public final class CastItemDataHelper {
         return false;
     }
 
-    /** Total de níveis de upgrade aplicados no item. */
-    public static int getTotalUpgrades(ItemStack stack) {
-        Map<String, Integer> upgrades = stack.get(EBDataComponents.UPGRADES.get());
-        return upgrades == null ? 0 : upgrades.values().stream().mapToInt(Integer::intValue).sum();
-    }
-
     /**
      * Returns the stack's current progression level.
      *
