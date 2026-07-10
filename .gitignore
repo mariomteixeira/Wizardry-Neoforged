@@ -32,3 +32,6 @@ run12_boot*.log
 /CLAUDE.md
 /PORT_NOTES.md
 /docs/
+
+# graphify (grafo de conhecimento local - nunca commitar)
+graphify-out/

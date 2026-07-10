@@ -41,6 +41,11 @@ public class BuffSpell extends Spell {
     protected final float r, g, b;
     /** set of mob effects applied by this spell. */
     protected Set<Holder<MobEffect>> mobEffects = new java.util.HashSet<>();
+
+    /** Exposes the effects applied by this buff (read-only), e.g. for addon artifacts that re-cast expired buffs. */
+    public Set<Holder<MobEffect>> getMobEffects() {
+        return java.util.Collections.unmodifiableSet(mobEffects);
+    }
     /** amount of particles spawned when the spell is cast. */
     protected float particleCount = 10;
 
