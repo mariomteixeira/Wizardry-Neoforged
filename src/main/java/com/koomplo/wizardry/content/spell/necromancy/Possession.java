@@ -185,8 +185,8 @@ public class Possession extends RaySpell {
             possessor.onUpdateAbilities();
         }
 
-        // Attribute inheritance: the player's value becomes the target's value
-        // TODO marco 6: pular atributos vindos do equipamento do mob (1.12.2 evitava herdar a espada do piglin)
+        // Attribute inheritance: the player's value becomes the target's value. Attributes modified by the
+        // mob's equipment are skipped entirely (1.12.2: inheriting a piglin's sword one-shots most mobs)
         inheritAttribute(possessor, target, Attributes.MOVEMENT_SPEED, SPEED_MODIFIER_ID, possessor.getAbilities().getWalkingSpeed() / 0.1f);
         inheritAttribute(possessor, target, Attributes.ATTACK_DAMAGE, DAMAGE_MODIFIER_ID, 1);
         inheritAttribute(possessor, target, Attributes.KNOCKBACK_RESISTANCE, KNOCKBACK_MODIFIER_ID, 1);
@@ -236,6 +236,7 @@ public class Possession extends RaySpell {
         AttributeInstance targetInstance = target.getAttribute(attribute);
         AttributeInstance playerInstance = possessor.getAttribute(attribute);
         if (targetInstance == null || playerInstance == null) return;
+        if (equipmentModifies(target, attribute)) return;
 
         double targetValue = targetInstance.getValue();
         double currentValue = playerInstance.getValue() / playerValueDivisor;
@@ -244,6 +245,18 @@ public class Possession extends RaySpell {
         playerInstance.removeModifier(modifierId);
         playerInstance.addTransientModifier(new AttributeModifier(modifierId,
                 targetValue / currentValue - 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+    }
+
+    /** True se alguma peça de equipamento do mob tem modifier do atributo dado (1.12.2 Possession:244). */
+    private static boolean equipmentModifies(Mob target, Holder<net.minecraft.world.entity.ai.attributes.Attribute> attribute) {
+        boolean[] found = {false};
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            target.getItemBySlot(slot).forEachModifier(slot, (holder, modifier) -> {
+                if (holder.equals(attribute)) found[0] = true;
+            });
+            if (found[0]) return true;
+        }
+        return false;
     }
 
     public void endPossession(Player player) {
