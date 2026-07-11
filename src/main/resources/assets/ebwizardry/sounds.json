@@ -2645,5 +2645,85 @@
     "sounds": [
       "mob/guardian/curse"
     ]
+  },
+  "spell.bubble.shoot": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:ice"
+    ]
+  },
+  "spell.bubble.splash": {
+    "category": "spells",
+    "sounds": [
+      {
+        "name": "minecraft:entity.generic.swim",
+        "type": "event",
+        "volume": 2.0
+      }
+    ]
+  },
+  "spell.conjure_armour": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:conjure"
+    ]
+  },
+  "spell.darkvision": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:heal"
+    ]
+  },
+  "spell.fireskin": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:buff"
+    ]
+  },
+  "spell.lightning_pulse.spark": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:lightning_ray_start"
+    ]
+  },
+  "spell.lightning_pulse.explosion": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:shockwave"
+    ]
+  },
+  "spell.slime.shoot": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:ice"
+    ]
+  },
+  "spell.slime.squelch": {
+    "category": "spells",
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.attack",
+        "type": "event",
+        "pitch": 0.5
+      }
+    ]
+  },
+  "spell.zombie_apocalypse.start": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:dark_aura_start"
+    ]
+  },
+  "spell.zombie_apocalypse.loop": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:dark_aura_loop"
+    ]
+  },
+  "spell.zombie_apocalypse.end": {
+    "category": "spells",
+    "sounds": [
+      "ebwizardry:dark_aura_end"
+    ]
   }
 }
