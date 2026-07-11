@@ -6,12 +6,15 @@ import com.koomplo.wizardry.api.content.util.MagicDamageSource;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.content.spell.earth.Boulder;
 import com.koomplo.wizardry.core.ClientSpellSoundManager;
+import com.koomplo.wizardry.core.networking.s2c.ScreenShakeS2C;
+import com.koomplo.wizardry.core.platform.Services;
 import com.koomplo.wizardry.setup.registries.EBDamageSources;
 import com.koomplo.wizardry.setup.registries.EBEntities;
 import com.koomplo.wizardry.setup.registries.EBSounds;
 import com.koomplo.wizardry.setup.registries.Spells;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -117,8 +120,9 @@ public class BoulderConstruct extends ScaledConstructEntity {
 
 
     private void shakeNearbyPlayers() {
-        // TODO Shake screen
-        //EntityUtil.getEntitiesWithinRadius(10, getX(), getY(), getZ(), level(), Player.class).forEach(p -> Wizardry.proxy.shakeScreen(p, 8));
+        if (level().isClientSide) return;
+        EntityUtil.getEntitiesWithinRadius(10, getX(), getY(), getZ(), level(), ServerPlayer.class)
+                .forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(8f)));
     }
 
     @Override

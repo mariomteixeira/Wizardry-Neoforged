@@ -92,7 +92,7 @@ public class Shockwave extends AreaEffectSpell {
             double radius = property(DefaultProperties.EFFECT_RADIUS) * ctx.modifiers().get(SpellModifiers.BLAST);
             // 1.12.2 shook every nearby player's screen (shakiness 10); intensity mapped to the port's handler
             EntityUtil.getEntitiesWithinRadius(radius, ctx.caster().getX(), ctx.caster().getY(), ctx.caster().getZ(),
-                    ctx.world(), ServerPlayer.class).forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(2f, 15)));
+                    ctx.world(), ServerPlayer.class).forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(10f)));
         }
         return result;
     }

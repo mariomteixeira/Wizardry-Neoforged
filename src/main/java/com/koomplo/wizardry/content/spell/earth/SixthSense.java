@@ -30,8 +30,6 @@ public class SixthSense extends Spell {
                     (int) ((ctx.modifiers().get(SpellModifiers.RANGE) - 1f) / EBServerConfig.RANGE_INCREASE_PER_LEVEL.get())));
         }
 
-        // TODO shader/overlay do sixth_sense do 1.12.2 (sem loader no port — marco 6)
-
         this.playSound(ctx.world(), ctx.caster(), ctx.castingTicks(), -1);
         return true;
     }

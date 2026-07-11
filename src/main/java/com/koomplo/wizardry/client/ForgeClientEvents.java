@@ -6,6 +6,7 @@ import com.koomplo.wizardry.client.effect.ContainmentFieldRender;
 import com.koomplo.wizardry.core.config.ConfigManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -27,5 +28,10 @@ public class ForgeClientEvents {
     @SubscribeEvent
     public static void onClientLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         ConfigManager.restoreLocalConfigs();
+    }
+
+    @SubscribeEvent
+    public static void onComputeFovModifier(ComputeFovModifierEvent event) {
+        ScreenOverlays.onComputeFovModifier(event);
     }
 }

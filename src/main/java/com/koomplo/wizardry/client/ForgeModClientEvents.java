@@ -33,6 +33,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 public class ForgeModClientEvents {
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
+        event.registerAbove(VanillaGuiLayers.CAMERA_OVERLAYS, WizardryMainMod.location("screen_overlays"),
+                (guiGraphics, deltaTracker) -> ScreenOverlays.render(guiGraphics));
         event.registerBelow(VanillaGuiLayers.CROSSHAIR, WizardryMainMod.location("charge_meter"), (guiGraphics, deltaTracker) -> {
             Player player = Minecraft.getInstance().player;
             if (player == null) return;

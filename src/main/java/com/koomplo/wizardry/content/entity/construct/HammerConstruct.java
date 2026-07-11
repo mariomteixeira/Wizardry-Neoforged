@@ -177,7 +177,7 @@ public class HammerConstruct extends MagicConstructEntity {
                     }
 
                     EntityUtil.getEntitiesWithinRadius(10, getX(), getY(), getZ(), level(), ServerPlayer.class)
-                            .forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(6f, 18)));
+                            .forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(6f)));
                 }
 
                 this.playSound(EBSounds.ENTITY_HAMMER_LAND.get(), 1.0F, 0.6f);

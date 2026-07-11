@@ -23,7 +23,6 @@ public class Transience extends Spell {
     public boolean cast(PlayerCastContext ctx) {
         if (ctx.caster().hasEffect(EBMobEffects.holder(EBMobEffects.TRANSIENCE))) return false;
 
-        // TODO shader pós-processamento do 1.12.2 (shaders/post/transience.json) — port ainda não tem loader de shader (cosmético, marco 6)
         if (!ctx.world().isClientSide) {
             int duration = (int) (property(DefaultProperties.EFFECT_DURATION) * ctx.modifiers().get(SpellModifiers.DURATION));
             ctx.caster().addEffect(new MobEffectInstance(EBMobEffects.holder(EBMobEffects.TRANSIENCE), duration, 0));

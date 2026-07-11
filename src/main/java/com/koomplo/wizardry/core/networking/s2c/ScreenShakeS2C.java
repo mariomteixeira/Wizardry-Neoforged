@@ -8,14 +8,13 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record ScreenShakeS2C(float intensity, int duration) implements CustomPacketPayload {
+public record ScreenShakeS2C(float intensity) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<ScreenShakeS2C> TYPE =
             new CustomPacketPayload.Type<>(WizardryMainMod.location("screen_shake"));
 
     public static final StreamCodec<FriendlyByteBuf, ScreenShakeS2C> STREAM_CODEC =
             StreamCodec.composite(
                     ByteBufCodecs.FLOAT, ScreenShakeS2C::intensity,
-                    ByteBufCodecs.INT, ScreenShakeS2C::duration,
                     ScreenShakeS2C::new);
 
     @Override

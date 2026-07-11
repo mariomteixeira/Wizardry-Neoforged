@@ -228,8 +228,6 @@ public class Possession extends RaySpell {
                     PossessionS2C.start(possessor, target, duration), possessor.level().dimension());
         }
 
-        // TODO shader/overlay de possession do 1.12.2 (sem loader — marco 6)
-
         return true;
     }
 

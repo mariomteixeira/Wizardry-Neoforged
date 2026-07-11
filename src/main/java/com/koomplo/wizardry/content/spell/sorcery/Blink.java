@@ -9,6 +9,7 @@ import com.koomplo.wizardry.api.content.spell.properties.SpellProperties;
 import com.koomplo.wizardry.api.content.util.EntityUtil;
 import com.koomplo.wizardry.api.content.util.GeometryUtil;
 import com.koomplo.wizardry.api.content.util.RayTracer;
+import com.koomplo.wizardry.client.ScreenOverlays;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.core.integrations.ArtifactChannel;
 import com.koomplo.wizardry.setup.registries.EBItems;
@@ -46,7 +47,7 @@ public class Blink extends Spell {
                         ctx.world().random.nextDouble() - 0.5,
                         ctx.world().random.nextDouble() - 0.5);
             }
-            // TODO overlay de blink do 1.12.2 (proxy.playBlinkEffect) — sem loader de shader/overlay ainda (marco 6)
+            ScreenOverlays.playBlinkEffect(caster);
         }
 
         if (rayTrace instanceof BlockHitResult blockHit && rayTrace.getType() == HitResult.Type.BLOCK) {

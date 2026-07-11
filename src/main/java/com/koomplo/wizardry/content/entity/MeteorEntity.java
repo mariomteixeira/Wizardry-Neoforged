@@ -1,11 +1,15 @@
 package com.koomplo.wizardry.content.entity;
 
+import com.koomplo.wizardry.api.content.util.EntityUtil;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.core.ClientSpellSoundManager;
+import com.koomplo.wizardry.core.networking.s2c.ScreenShakeS2C;
+import com.koomplo.wizardry.core.platform.Services;
 import com.koomplo.wizardry.setup.registries.EBEntities;
 import com.koomplo.wizardry.setup.registries.EBSounds;
 import com.koomplo.wizardry.setup.registries.Spells;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -72,12 +76,9 @@ public class MeteorEntity extends FallingBlockEntity {
             this.level().explode(this, this.getX(), this.getY(), this.getZ(),
                     Spells.METEOR.property(DefaultProperties.DAMAGE) * blastMultiplier,
                     damageBlocks, damageBlocks ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE);
+            EntityUtil.getEntitiesWithinRadius(15, getX(), getY(), getZ(), level(), ServerPlayer.class)
+                    .forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(10f)));
             this.discard();
-
-        } else {
-            // TODO SHAKE SHADER
-//				EntityUtil.getEntitiesWithinRadius(15, getX(), getY(), getZ(), level(), Player.class)
-//						.forEach(p -> Wizardry.proxy.shakeScreen(p, 10));
         }
 
     }

@@ -66,7 +66,7 @@ public class Earthquake extends ConstructSpell<EarthquakeConstruct> {
             }
         } else {
             EntityUtil.getEntitiesWithinRadius(15, vec3.x, vec3.y, vec3.z, ctx.world(), ServerPlayer.class)
-                    .forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(2.5f, 18)));
+                    .forEach(p -> Services.NETWORK_HELPER.sendTo(p, new ScreenShakeS2C(12f)));
         }
 
         return super.spawnConstruct(ctx, vec3, side);

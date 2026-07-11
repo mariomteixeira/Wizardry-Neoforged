@@ -30,7 +30,7 @@ public final class ClientPacketHandler {
     }
 
     public static void handleScreenShake(ScreenShakeS2C packet) {
-        ScreenShakeHandler.triggerScreenShake(packet.intensity(), packet.duration());
+        ScreenShakeHandler.shakeScreen(packet.intensity());
     }
 
     /** Spawns the clairvoyance guiding trail along the received path (1.12.2 Clairvoyance#spawnPathPaticles). */

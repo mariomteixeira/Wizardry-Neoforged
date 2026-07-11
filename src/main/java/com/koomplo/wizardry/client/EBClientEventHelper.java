@@ -28,6 +28,7 @@ public final class EBClientEventHelper {
         bus.register(EBClientTickEvent.class, EBKeyBinding::onClientTick);
         bus.register(EBClientTickEvent.class, ScreenShakeHandler::onClientTick);
         bus.register(EBClientTickEvent.class, PostEffects::onClientTick);
+        bus.register(EBClientTickEvent.class, ScreenOverlays::onClientTick);
     }
 
     private static void onJoin(WizardryEventBus bus) {

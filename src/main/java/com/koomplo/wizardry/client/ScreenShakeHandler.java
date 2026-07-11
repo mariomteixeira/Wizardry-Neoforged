@@ -1,34 +1,35 @@
 package com.koomplo.wizardry.client;
 
 import com.koomplo.wizardry.api.content.event.EBClientTickEvent;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.player.LocalPlayer;
 
+/**
+ * Tremor de tela do 1.12.2: pitch alterna de lado a cada tick com magnitude decaindo
+ * (counter * SHAKINESS), começando meio pitch para baixo.
+ */
 public final class ScreenShakeHandler {
-    private static float shakeIntensity = 0f;
-    private static int shakeDuration = 0;
+    private static final float SHAKINESS = 0.5f;
+    private static int screenShakeCounter = 0;
 
     public static void onClientTick(EBClientTickEvent event) {
-        if (shakeDuration > 0) {
-            shakeDuration--;
-
-            Entity camera = event.getMinecraft().cameraEntity;
-            if (camera != null) {
-                // Apply a simple shake effect by modifying the camera's position
-                float yawOffset = (float) (Math.sin(System.currentTimeMillis() * 0.1) * shakeIntensity);
-                float pitchOffset = (float) (Math.cos(System.currentTimeMillis() * 0.1) * shakeIntensity);
-                camera.setYRot(camera.getYRot() + yawOffset);
-                camera.setXRot(camera.getXRot() + pitchOffset);
-            }
+        LocalPlayer player = event.getMinecraft().player;
+        if (player == null) {
+            screenShakeCounter = 0;
+            return;
+        }
+        if (screenShakeCounter > 0) {
+            float magnitude = screenShakeCounter * SHAKINESS;
+            player.setXRot(player.getXRot() + (screenShakeCounter % 2 == 0 ? magnitude : -magnitude));
+            screenShakeCounter--;
         }
     }
 
-    public static void triggerScreenShake(float intensity, int duration) {
-        shakeIntensity = intensity;
-        shakeDuration = duration;
+    public static void shakeScreen(float intensity) {
+        screenShakeCounter = (int) (intensity / SHAKINESS);
+        LocalPlayer player = net.minecraft.client.Minecraft.getInstance().player;
+        if (player != null) player.setXRot(player.getXRot() - intensity * 0.5f);
     }
 
     private ScreenShakeHandler() {
     }
-
-
 }

@@ -8,6 +8,7 @@ import com.koomplo.wizardry.api.content.spell.internal.SpellModifiers;
 import com.koomplo.wizardry.api.content.spell.properties.SpellProperties;
 import com.koomplo.wizardry.api.content.spell.properties.SpellProperty;
 import com.koomplo.wizardry.api.content.util.BlockUtil;
+import com.koomplo.wizardry.client.ScreenOverlays;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.content.spell.abstr.RaySpell;
 import com.koomplo.wizardry.setup.registries.Elements;
@@ -17,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -71,8 +73,7 @@ public class Banish extends RaySpell {
                 world.addParticle(ParticleTypes.PORTAL, dx1, dy1, dz1, world.random.nextDouble() - 0.5, world.random.nextDouble() - 0.5, world.random.nextDouble() - 0.5);
             }
 
-            // TODO BIN BLINK EFFECT
-            //if (entity instanceof Player) Wizardry.proxy.playBlinkEffect((Player) entity);
+            if (entity instanceof Player player) ScreenOverlays.playBlinkEffect(player);
         }
 
         if (y != null) {

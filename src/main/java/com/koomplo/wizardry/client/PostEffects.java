@@ -32,13 +32,18 @@ public final class PostEffects {
         if (desired == null) {
             if (active != null) {
                 if (isOurs(renderer)) renderer.shutdownEffect();
+                // 1.12.2: fim do shader de sixth sense/transience dispara o flash de blink
+                if (SIXTH_SENSE.equals(active) || TRANSIENCE.equals(active)) ScreenOverlays.playBlinkEffect();
                 active = null;
             }
         } else if (!desired.equals(active) || !isOurs(renderer)) {
             // Não atropela shaders de terceiros nem os de espectador (creeper/spider/invert)
             if (renderer.currentEffect() == null || isOurs(renderer)) {
+                boolean firstLoad = active == null;
                 renderer.loadEffect(desired);
                 active = desired;
+                // 1.12.2: sixth sense/transience/possession também piscam ao LIGAR (cast das spells)
+                if (firstLoad && !SLOW_TIME.equals(desired)) ScreenOverlays.playBlinkEffect();
             }
         }
     }

@@ -8,6 +8,7 @@ import com.koomplo.wizardry.api.content.spell.properties.SpellProperties;
 import com.koomplo.wizardry.api.content.spell.properties.SpellProperty;
 import com.koomplo.wizardry.api.content.util.BlockUtil;
 import com.koomplo.wizardry.api.content.util.EntityUtil;
+import com.koomplo.wizardry.client.ScreenOverlays;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.core.integrations.ArtifactChannel;
 import com.koomplo.wizardry.setup.registries.EBItems;
@@ -47,6 +48,7 @@ public class PhaseStep extends Spell {
                         world.random.nextDouble() - 0.5,
                         world.random.nextDouble() - 0.5);
             }
+            ScreenOverlays.playBlinkEffect(caster);
         }
 
         Entity subject = teleportMount ? caster.getVehicle() : caster;
