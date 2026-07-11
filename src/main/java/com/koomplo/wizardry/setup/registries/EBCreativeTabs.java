@@ -4,6 +4,7 @@ import com.koomplo.wizardry.WizardryMainMod;
 import com.koomplo.wizardry.api.content.spell.Element;
 import com.koomplo.wizardry.api.content.spell.Spell;
 import com.koomplo.wizardry.api.content.util.RegistryUtils;
+import com.koomplo.wizardry.client.NotImplementedItems;
 import com.koomplo.wizardry.core.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -22,7 +23,9 @@ public final class EBCreativeTabs {
                     .icon(() -> new ItemStack(EBItems.MAGIC_CRYSTAL.get()))
                     .title(Component.translatable("creativetab.ebwizardry"))
                     .displayItems((parameters, output) ->
-                            EBItems.GENERAL_ITEMS.forEach((item) -> output.accept(item.get())))
+                            EBItems.GENERAL_ITEMS.forEach((item) -> {
+                                if (!NotImplementedItems.notImplemented(item.get())) output.accept(item.get());
+                            }))
                     .build()
     );
     // All Wands
@@ -44,10 +47,12 @@ public final class EBCreativeTabs {
     // All Artifacts
     public static final Supplier<CreativeModeTab> ARTIFACTS = creativeTab("ebwizardry_artifacts",
             () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
-                    .icon(() -> new ItemStack(EBItems.AMULET_RESURRECTION.get()))
+                    .icon(() -> new ItemStack(EBItems.RING_PALADIN.get()))
                     .title(Component.translatable("creativetab.ebwizardry_artifacts"))
                     .displayItems((parameters, output) ->
-                            EBItems.ARTIFACTS.forEach((i, t) -> output.accept(i.get()))
+                            EBItems.ARTIFACTS.forEach((i, t) -> {
+                                if (!NotImplementedItems.notImplemented(i.get())) output.accept(i.get());
+                            })
                     )
                     .build()
     );

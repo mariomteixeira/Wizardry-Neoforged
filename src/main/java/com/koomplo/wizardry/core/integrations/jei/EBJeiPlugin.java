@@ -30,6 +30,14 @@ public class EBJeiPlugin implements IModPlugin {
     }
 
     @Override
+    public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime jeiRuntime) {
+        // Itens sem efeito no port não aparecem no JEI (seguem registrados por compat de mundo)
+        var hidden = com.koomplo.wizardry.client.NotImplementedItems.all().stream().map(ItemStack::new).toList();
+        jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(
+                mezz.jei.api.constants.VanillaTypes.ITEM_STACK, hidden);
+    }
+
+    @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
         ISubtypeInterpreter<ItemStack> bySpell = byComponent(EBDataComponents.SPELL.get());
         // Todos os livros/scrolls do ecossistema (inclui os dos addons que estendem as classes base)
