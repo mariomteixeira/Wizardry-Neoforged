@@ -15,6 +15,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -52,7 +53,7 @@ public class SlowTimeMobEffect extends MagicMobEffect {
         targetsInRange.remove(host);
         // Other entities with the slow time effect are unaffected
         targetsInRange.removeIf(t -> t instanceof LivingEntity living && living.hasEffect(EBMobEffects.holder(EBMobEffects.SLOW_TIME)));
-        // TODO config (marco 7): slowTimeAffectsPlayers (default 1.12.2 = true)
+        if (!EBServerConfig.SLOW_TIME_AFFECTS_PLAYERS.get()) targetsInRange.removeIf(t -> t instanceof Player);
         targetsInRange.removeIf(t -> t instanceof AbstractArrow && t.isInWall());
 
         for (Entity entity : targetsInRange) {

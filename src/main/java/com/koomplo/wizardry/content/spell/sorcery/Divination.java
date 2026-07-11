@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -65,10 +66,11 @@ public class Divination extends Spell {
 
         List<BlockPos> sphere = BlockUtil.getBlockSphere(ctx.caster().blockPosition(), range);
 
-        // TODO config (marco 7): divinationOreWhitelist do 1.12.2
         sphere.removeIf(b -> {
             BlockState state = ctx.world().getBlockState(b);
-            return !(state.is(Tags.Blocks.ORES) || state.is(EBBlocks.CRYSTAL_ORE.get()) || state.is(EBBlocks.DEEPSLATE_CRYSTAL_ORE.get()));
+            return !(state.is(Tags.Blocks.ORES) || state.is(EBBlocks.CRYSTAL_ORE.get()) || state.is(EBBlocks.DEEPSLATE_CRYSTAL_ORE.get())
+                    || EBServerConfig.DIVINATION_ORE_WHITELIST.get().contains(
+                            net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock())));
         });
 
         Strength strength = Strength.NOTHING;

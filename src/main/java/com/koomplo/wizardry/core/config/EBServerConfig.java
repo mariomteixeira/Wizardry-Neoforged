@@ -62,6 +62,14 @@ public class EBServerConfig implements ConfigProvider {
     public static final ConfigOption<Boolean> BLOCK_PLAYERS_ALLIES_DAMAGE = addOption(BoolConfigOption.booleanOption("block_players_allies_damage", true));
     public static final ConfigOption<Boolean> BLOCK_OWNED_ALLIES_DAMAGE = addOption(BoolConfigOption.booleanOption("block_owned_allies_damage", true));
     public static final ConfigOption<Float> FORFEIT_CHANCE = addOption(NumberConfigOption.floating("forfeit_chance", 0.2F, 0.0F, 1.0F));
+    public static final ConfigOption<List<ResourceLocation>> DIVINATION_ORE_WHITELIST = addOption(ListConfigOption.resourceLocation("divination_ore_whitelist", List.of()));
+    public static final ConfigOption<List<ResourceLocation>> MIND_CONTROL_TARGETS_BLACKLIST = addOption(ListConfigOption.resourceLocation("mind_control_targets_blacklist", List.of()));
+    public static final ConfigOption<Boolean> SLOW_TIME_AFFECTS_PLAYERS = addOption(BoolConfigOption.booleanOption("slow_time_affects_players", true));
+    public static final ConfigOption<Boolean> FLESH_SPELLS_CAUSE_SLOWNESS = addOption(BoolConfigOption.booleanOption("flesh_spells_cause_slowness", true));
+    public static final ConfigOption<Float> IRON_FLESH_ARMOR_BONUS = addOption(NumberConfigOption.floating("iron_flesh_armor_bonus", 4.0F, 0.0F, 30.0F));
+    public static final ConfigOption<Float> DIAMOND_FLESH_ARMOR_BONUS = addOption(NumberConfigOption.floating("diamond_flesh_armor_bonus", 4.0F, 0.0F, 30.0F));
+    public static final ConfigOption<Float> DIAMOND_FLESH_TOUGHNESS_BONUS = addOption(NumberConfigOption.floating("diamond_flesh_toughness_bonus", 3.0F, 0.0F, 30.0F));
+    public static final ConfigOption<Float> OAK_FLESH_ARMOR_BONUS = addOption(NumberConfigOption.floating("oak_flesh_armor_bonus", 3.0F, 0.0F, 30.0F));
 
     private static <T> ConfigOption<T> addOption(ConfigOption<T> option) {
         OPTIONS.add(option);

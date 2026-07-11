@@ -26,6 +26,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.npc.Npc;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
@@ -113,9 +114,10 @@ public class MindControl extends RaySpell {
 
     /** Returns true if the given entity can be mind controlled (i.e. is not a player, npc, wizard or boss). */
     public static boolean canControl(Entity target) {
-        // TODO config (marco 7): mindControlTargetsBlacklist do 1.12.2
         return target instanceof Mob && !target.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES)
-                && !(target instanceof Npc) && !(target instanceof AbstractWizard);
+                && !(target instanceof Npc) && !(target instanceof AbstractWizard)
+                && !EBServerConfig.MIND_CONTROL_TARGETS_BLACKLIST.get().contains(
+                        net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getKey(target.getType()));
     }
 
     public static void startControlling(Mob target, LivingEntity controller, int duration) {
