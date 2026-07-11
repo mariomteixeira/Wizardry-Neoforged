@@ -15,6 +15,7 @@ import com.koomplo.wizardry.api.content.util.GeometryUtil;
 import com.koomplo.wizardry.api.content.util.RayTracer;
 import com.koomplo.wizardry.capabilities.WizardDataHolder;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import com.koomplo.wizardry.core.integrations.ArtifactChannel;
 import com.koomplo.wizardry.setup.registries.EBAttachments;
 import com.koomplo.wizardry.setup.registries.EBItems;
@@ -146,8 +147,8 @@ public class Grapple extends Spell {
                             (velocity.y - motion.y) * REEL_ACCELERATION, (velocity.z - motion.z) * REEL_ACCELERATION));
 
                     // Reset fall distance if the caster moves upwards
-                    // TODO config (marco 7): 1.12.2 pulava este reset com replaceVanillaFallDamage (sistema que o port não tem)
-                    if (caster.getDeltaMovement().y > 0) caster.fallDistance = 0;
+                    if (caster.getDeltaMovement().y > 0 && !EBServerConfig.REPLACE_VANILLA_FALL_DAMAGE.get())
+                        caster.fallDistance = 0;
 
                     if (world.isClientSide) {
                         ParticleBuilder.create(EBParticles.VINE).entity(caster).pos(0, caster.getEyeHeight() - Y_OFFSET, 0)

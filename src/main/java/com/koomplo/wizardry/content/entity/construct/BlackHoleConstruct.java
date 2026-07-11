@@ -3,6 +3,7 @@ package com.koomplo.wizardry.content.entity.construct;
 import com.koomplo.wizardry.api.content.entity.construct.ScaledConstructEntity;
 import com.koomplo.wizardry.api.content.util.EntityUtil;
 import com.koomplo.wizardry.api.content.util.MagicDamageSource;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import com.koomplo.wizardry.core.integrations.ArtifactChannel;
 import com.koomplo.wizardry.setup.registries.EBDamageSources;
 import com.koomplo.wizardry.setup.registries.EBEntities;
@@ -77,9 +78,9 @@ public class BlackHoleConstruct extends ScaledConstructEntity {
                 if (this.isValidTarget(target)) {
 
                     // If the target can't be moved, it isn't sucked in but is still damaged if it gets too close
-                    // TODO config (marco 7): playersMoveEachOther do 1.12.2
                     boolean anchored = target instanceof Player player
-                            && ArtifactChannel.isEquipped(player, EBItems.AMULET_ANCHORING.get());
+                            && ((getCaster() instanceof Player && !EBServerConfig.PLAYERS_MOVE_EACH_OTHER.get())
+                            || ArtifactChannel.isEquipped(player, EBItems.AMULET_ANCHORING.get()));
 
                     if (!anchored) {
 

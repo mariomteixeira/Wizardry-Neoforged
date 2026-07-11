@@ -10,6 +10,7 @@ import com.koomplo.wizardry.api.content.util.EntityUtil;
 import com.koomplo.wizardry.api.content.util.MagicDamageSource;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.content.spell.abstr.RaySpell;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import com.koomplo.wizardry.setup.registries.EBDamageSources;
 import com.koomplo.wizardry.setup.registries.Elements;
 import com.koomplo.wizardry.setup.registries.SpellTiers;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -55,7 +57,11 @@ public class LightningBoltSpell extends RaySpell {
 
         if (ctx.world().canSeeSky(pos.above())) {
             if (!ctx.world().isClientSide) {
-                // TODO config (marco 7): 1.12.2 suppressed doFireTick while striking when playerBlockDamage was off
+                // 1.12.2: desliga doFireTick durante o strike quando playerBlockDamage está off
+                var fireTickRule = ctx.world().getGameRules().getRule(GameRules.RULE_DOFIRETICK);
+                boolean suppressFire = fireTickRule.get() && !EBServerConfig.PLAYER_BLOCK_DAMAGE.get();
+                if (suppressFire) fireTickRule.set(false, ctx.world().getServer());
+
                 LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(ctx.world());
                 if (lightning != null) {
                     lightning.moveTo(Vec3.atBottomCenterOf(pos));
@@ -63,6 +69,8 @@ public class LightningBoltSpell extends RaySpell {
                     lightning.getPersistentData().putFloat(DAMAGE_MODIFIER_NBT_KEY, ctx.modifiers().get(SpellModifiers.POTENCY));
                     ctx.world().addFreshEntity(lightning);
                 }
+
+                if (suppressFire) fireTickRule.set(true, ctx.world().getServer());
             }
             return true;
         }

@@ -4,6 +4,7 @@ import com.koomplo.wizardry.api.client.ParticleBuilder;
 import com.koomplo.wizardry.api.content.DeferredObject;
 import com.koomplo.wizardry.api.content.entity.construct.ScaledConstructEntity;
 import com.koomplo.wizardry.api.content.util.BlockUtil;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import com.koomplo.wizardry.api.content.util.EntityUtil;
 import com.koomplo.wizardry.api.content.util.MagicDamageSource;
 import com.koomplo.wizardry.client.particle.ParticleTornado;
@@ -94,7 +95,8 @@ public class TornadoConstruct extends ScaledConstructEntity {
             List<LivingEntity> targets = EntityUtil.getLivingWithinRadius(radius, this.getX(), this.getY(), this.getZ(), this.level());
 
             for (LivingEntity target : targets) {
-                if (target instanceof Player && getCaster() instanceof Player) continue;
+                if (target instanceof Player && getCaster() instanceof Player
+                        && !EBServerConfig.PLAYERS_MOVE_EACH_OTHER.get()) continue;
 
                 if (this.isValidTarget(target)) {
                     applyTornadoEffects(target);

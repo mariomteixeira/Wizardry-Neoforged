@@ -12,6 +12,7 @@ import com.koomplo.wizardry.api.content.util.EntityUtil;
 import com.koomplo.wizardry.api.content.util.MagicDamageSource;
 import com.koomplo.wizardry.content.spell.DefaultProperties;
 import com.koomplo.wizardry.content.spell.abstr.AreaEffectSpell;
+import com.koomplo.wizardry.core.config.EBServerConfig;
 import com.koomplo.wizardry.core.integrations.ArtifactChannel;
 import com.koomplo.wizardry.core.networking.s2c.ScreenShakeS2C;
 import com.koomplo.wizardry.core.platform.Services;
@@ -51,7 +52,7 @@ public class Shockwave extends AreaEffectSpell {
         float radius = property(DefaultProperties.EFFECT_RADIUS) * ctx.modifiers().get(SpellModifiers.BLAST);
 
         if (target instanceof Player targetPlayer) {
-            // TODO config (marco 7): playersMoveEachOther (default 1.12.2 = true)
+            if (!EBServerConfig.PLAYERS_MOVE_EACH_OTHER.get()) return false;
             if (ArtifactChannel.isEquipped(targetPlayer, EBItems.AMULET_ANCHORING.get())) {
                 if (!ctx.world().isClientSide && ctx instanceof PlayerCastContext playerCtx) {
                     playerCtx.caster().displayClientMessage(
